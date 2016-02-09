@@ -1,0 +1,67 @@
+'use strict';
+
+var Template = require('dw/util/Template');
+var HashMap = require('dw/util/HashMap');
+var FormField = require('dw/web/FormField');
+var FormGroup = require('dw/web/FormGroup');
+
+var inputFieldTemplate = new Template('util/inputfield.isml');
+
+/**
+ * @description parse FormField element, create context and apply inputfield template to generate form field markup
+ * @param {dw.web.FormField} field
+ * @param {Object} fieldData extra data that contains context for the template
+ * @return {String} HTML markup of the field
+ */
+function parseFormField(field, fieldData) {
+	var context = new HashMap();
+	var type;
+	switch (field.type) {
+		case FormField.FIELD_TYPE_BOOLEAN:
+			type = 'checkbox';
+			break;
+		case FormField.FIELD_TYPE_DATE:
+			type = 'date';
+			break;
+		case FormField.FIELD_TYPE_INTEGER:
+		case FormField.FIELD_TYPE_NUMBER:
+			type = 'number';
+			break;
+		case FormField.FIELD_TYPE_STRING:
+			type = 'text';
+			break;
+	}
+	context.put('formfield', field);
+	context.put('type', type);
+	if (fieldData) {
+		for (var prop in fieldData) {
+			if (fieldData.hasOwnProperty(prop)) {
+				context.put(prop, fieldData[prop]);
+			}
+		}
+	}
+	return inputFieldTemplate.render(context).text;
+}
+
+module.exports = function (formObject, formData) {
+	var form = '';
+	for (var formElementName in formObject) {
+		var formElement = formObject[formElementName];
+		var fieldData;
+		if (formData) {
+			fieldData = formData[formElementName]
+		}
+		if (formElement instanceof FormField) {
+			if (fieldData && fieldData.skip) {
+				continue;
+			}
+			form += parseFormField(formElement, fieldData);
+		} else if (formElement instanceof FormGroup) {
+			if (fieldData && fieldData.isFormGroup && fieldData.childField) {
+				var childFieldElement = formElement[fieldData.childField];
+				form += parseFormField(childFieldElement, fieldData);
+			}
+		}
+	}
+	return form;
+};

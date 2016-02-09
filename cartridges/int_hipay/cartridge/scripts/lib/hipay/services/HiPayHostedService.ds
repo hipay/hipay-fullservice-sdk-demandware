@@ -1,0 +1,22 @@
+var HTTPService = require('dw/svc/HTTPService');
+var ServiceRegistry = require('dw/svc/ServiceRegistry');
+/**
+* Initiates HiPay hosted payment request.
+*/
+function HiPayHostedService() {}
+
+HiPayHostedService.prototype.loadHostedPayment = function(params, serviceName: String) {
+	var service : HTTPService = ServiceRegistry.get(serviceName);
+
+	var content = "";
+	for (var param in params) { 
+		if(empty(params[param])) continue;
+		
+		content+=  param + '=' + encodeURIComponent(params[param]) + '&';
+	}
+	
+	var response = service.call(content);
+	return response;
+}
+
+module.exports = HiPayHostedService;

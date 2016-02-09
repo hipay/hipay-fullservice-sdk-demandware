@@ -1,0 +1,89 @@
+var dwOrder	 	= 	require( 'dw/order' );
+
+var HiPayMaintenanceService = require("int_hipay/cartridge/scripts/lib/hipay/services/HiPayMaintenanceService");
+var HiPayLogger = require("int_hipay/cartridge/scripts/lib/hipay/HiPayLogger");
+var HiPayHelper = require("int_hipay/cartridge/scripts/lib/hipay/HiPayHelper");
+
+/**
+ * Initiates HiPay maintenance call as builds all the request parameters.
+ *
+ *   @input Order : dw.order.Order
+ *   @input Amount : Object
+ *
+ *   @output HiPayMaintenanceResponse : String
+ */
+function execute(args: PipelineDictionary): Number {
+
+		var log = new HiPayLogger("HiPayMaintenanceRequest.ds");
+		var helper = new HiPayHelper();
+		var hiPayMaintenanceService = new HiPayMaintenanceService();
+		var amountToCapture = args.Amount;
+		var order : dwOrder.Order = args.Order;
+		
+		//Validate for possitive number
+		var regEx = /^[+]?([.]\d+|\d+[.]?\d*)$/;
+		if (!amountToCapture.match(regEx)) {
+			log.error("Calling HiPayMaintenance Capture ::: \n Wrong Capture amount value!");
+			return PIPELET_ERROR;
+		}
+		
+		var paymentInstr : dwOrder.OrderPaymentInstrument = helper.getOrderPaymentInstrument(order);
+		var transactionReference = paymentInstr.getPaymentTransaction().getTransactionID();
+		
+		var captureRequestAmount = 0;
+		if("hipayTransactionCaptureRequestAmount" in paymentInstr.custom) {
+			captureRequestAmount = paymentInstr.custom.hipayTransactionCaptureRequestAmount;
+		}
+		
+		var orderTotal = 0;
+		if(order.totalGrossPrice.available) {
+			orderTotal = order.totalGrossPrice.decimalValue;
+		} else {
+			orderTotal = order.getAdjustedMerchandizeTotalPrice(true).add(LineItemCtnr.giftCertificateTotalPrice).decimalValue;
+		}
+		
+		if( (orderTotal - captureRequestAmount) <  amountToCapture ) {
+			log.error("Calling HiPayMaintenance Capture ::: \n The Capture amount is higher than the avilable total amount!");
+			return PIPELET_ERROR;
+		}
+			
+		
+	try {
+		log.debug("Calling HiPayMaintenance Capture ::: \n" + transactionReference);
+
+		if (empty(transactionReference)) {
+			log.error("HiPay maintenance service ::: Missing transaction Reference");
+			return PIPELET_ERROR;
+		}
+
+		var serviceAmount = amountToCapture;
+		if (amountToCapture == orderTotal) {
+			serviceAmount = '';
+		}
+		
+		var hipayResponse = hiPayMaintenanceService.initiateCapture(transactionReference, HiPayMaintenanceService.OPERATION_CAPTURE, serviceAmount);
+		var msg = null;
+
+		if (hipayResponse.ok === true) {
+
+			msg = JSON.parse(hipayResponse.object.text);
+			
+			//update capture amount
+			paymentInstr.custom.hipayTransactionCaptureRequestAmount = +captureRequestAmount + +amountToCapture;
+			
+			log.debug("HiPay Hosted Page Response ::: \n" + JSON.stringify(msg, undefined, 2));
+
+		} else {
+			log.error(hipayResponse.msg);
+			return PIPELET_ERROR;
+		}
+
+		args.HiPayMaintenanceResponse = JSON.stringify(msg, undefined, 2);
+
+	} catch (e) {
+		log.error(e);
+		return PIPELET_ERROR;
+	}
+
+	return PIPELET_NEXT;
+}

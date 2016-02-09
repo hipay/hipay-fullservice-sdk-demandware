@@ -1,0 +1,24 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<div id="fb-root"></div>
+	<isinclude template="account/facebook/facebookinit"/>
+	
+	<iscomment>Let the customer choice between the standard or facebook for registration</iscomment>
+	<div class="registration-selection">
+		<label for="register-here">${Resource.msg('account.facebook.newcustomer','account',null)}</label>
+		<input type="radio" name="registration" value="new-customer-registration" checked="checked" id="register-here"/>
+		<label for="register-facebook">${Resource.msg('account.facebook.usefbtoregister','account',null)}</label>
+		<input type="radio" name="registration" value="facebook-registration"  id="register-facebook"/> 
+	</div>
+
+	<iscomment>Builds a registration page for the user using facebook registration plugin.</iscomment>
+	<div class="facebook-registration">
+		<fb:registration 
+			fields="[{'name':'name'},
+		 		{'name':'first_name'},
+		 		{'name':'last_name'},
+		 		{'name':'email'},
+		 		{'name':'phone','description':'Phone Number Format: 333-333-3333', 'type':'text'},
+		 		{'name':'password'}]" 
+		 	redirect-uri="${URLUtils.https(dw.system.Site.getCurrent().getCustomPreferenceValue('facebookURI'))}">
+		</fb:registration>
+	</div>

@@ -1,0 +1,16 @@
+<div class="breadcrumb">
+{{#each elements}}
+	<a class="breadcrumb-element" href="{{link}}" title="{{title}}">{{title}}</a>
+{{/each}}
+{{#if refinements}}
+	<span class="breadcrumb-refined-by">Refined by</span>
+	{{#each refinements}}
+	<span class="breadcrumb-refinement" data-divider="and">
+		<span class="breadcrumb-refinement-name">{{name}}</span>
+		<span class="breadcrumb-refinement-value">{{value}}
+			<a class="breadcrumb-relax" href="#" title="Remove">x</a>
+		</span>
+	</span>
+	{{/each}}
+{{/if}}
+</div>

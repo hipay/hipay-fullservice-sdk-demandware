@@ -1,0 +1,14 @@
+{
+  "name": "app_hipay",
+  "version": "1.0.0",
+  "description": "HiPay integration files changed from SiteGenesis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "HiPay"
+  ],
+  "author": "OSF Global",
+  "license": "ISC"
+}

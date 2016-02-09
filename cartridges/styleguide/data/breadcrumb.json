@@ -1,0 +1,25 @@
+{
+	"elements": [{
+		"title": "Home",
+		"link": "#home"
+	}, {
+		"title": "Mens",
+		"link": "#mens"
+	}, {
+		"title": "Clothing",
+		"link": "#clothing"
+	}, {
+		"title": "Suits",
+		"link": "#suits"
+	}],
+	"refinements": [{
+		"name": "Price",
+		"value": "$250 - $299.99"
+	}, {
+		"name": "Color",
+		"value": "Blue"
+	}, {
+		"name": "Size",
+		"value": "38"
+	}]
+}

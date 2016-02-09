@@ -1,0 +1,1082 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="http://www.demandware.com/xml/impex/catalog/2006-10-31" catalog-id="apparel-catalog">
+    <header>
+        <image-settings>
+            <internal-location base-path="/images"/>
+            <view-types>
+                <view-type>large</view-type>
+                <view-type>medium</view-type>
+                <view-type>small</view-type>
+                <view-type>swatch</view-type>
+                <view-type>hi-res</view-type>
+            </view-types>
+            <variation-attribute-id>color</variation-attribute-id>
+            <alt-pattern>${productname}, ${variationvalue}, ${viewtype}</alt-pattern>
+            <title-pattern>${productname}, ${variationvalue}</title-pattern>
+        </image-settings>
+    </header>
+
+    <product product-id="740357431040">
+        <ean/>
+        <upc>740357431040</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-03-16T04:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">BLKBKPA</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">black</custom-attribute>
+            <custom-attribute attribute-id="size">060</custom-attribute>
+            <custom-attribute attribute-id="width">M</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="740357431101">
+        <ean/>
+        <upc>740357431101</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-03-16T04:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">BLKBKPA</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">black</custom-attribute>
+            <custom-attribute attribute-id="size">090</custom-attribute>
+            <custom-attribute attribute-id="width">M</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="750518548203">
+        <ean/>
+        <upc>750518548203</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-02-07T05:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">NAVYWL</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">blue</custom-attribute>
+            <custom-attribute attribute-id="size">040</custom-attribute>
+            <custom-attribute attribute-id="width">V</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="750518548371">
+        <ean/>
+        <upc>750518548371</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-02-07T05:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">NAVYWL</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">blue</custom-attribute>
+            <custom-attribute attribute-id="size">044</custom-attribute>
+            <custom-attribute attribute-id="width">S</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="701642808251">
+        <ean/>
+        <upc>701642808251</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2010-09-23T04:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">JJ3UEA3</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">red</custom-attribute>
+            <custom-attribute attribute-id="size">9MD</custom-attribute>
+            <custom-attribute attribute-id="width">Z</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="740357431057">
+        <ean/>
+        <upc>740357431057</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-03-16T04:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">BLKBKPA</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">black</custom-attribute>
+            <custom-attribute attribute-id="size">065</custom-attribute>
+            <custom-attribute attribute-id="width">M</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="750518548234">
+        <ean/>
+        <upc>750518548234</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-02-07T05:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">NAVYWL</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">blue</custom-attribute>
+            <custom-attribute attribute-id="size">043</custom-attribute>
+            <custom-attribute attribute-id="width">V</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="740357431125">
+        <ean/>
+        <upc>740357431125</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-03-16T04:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">BLKBKPA</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">black</custom-attribute>
+            <custom-attribute attribute-id="size">100</custom-attribute>
+            <custom-attribute attribute-id="width">M</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="740357431118">
+        <ean/>
+        <upc>740357431118</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-03-16T04:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">BLKBKPA</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">black</custom-attribute>
+            <custom-attribute attribute-id="size">095</custom-attribute>
+            <custom-attribute attribute-id="width">M</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="750518548432">
+        <ean/>
+        <upc>750518548432</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-02-07T05:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">NAVYWL</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">blue</custom-attribute>
+            <custom-attribute attribute-id="size">040</custom-attribute>
+            <custom-attribute attribute-id="width">L</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="701642808244">
+        <ean/>
+        <upc>701642808244</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2010-09-23T04:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">JJ3UEA3</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">red</custom-attribute>
+            <custom-attribute attribute-id="size">9LG</custom-attribute>
+            <custom-attribute attribute-id="width">Z</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="750518548357">
+        <ean/>
+        <upc>750518548357</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-02-07T05:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">NAVYWL</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">blue</custom-attribute>
+            <custom-attribute attribute-id="size">042</custom-attribute>
+            <custom-attribute attribute-id="width">S</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="750518548197">
+        <ean/>
+        <upc>750518548197</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-02-07T05:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">NAVYWL</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">blue</custom-attribute>
+            <custom-attribute attribute-id="size">039</custom-attribute>
+            <custom-attribute attribute-id="width">V</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="701643489442">
+        <ean/>
+        <upc>701643489442</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2010-12-29T05:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">JJ493XX</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">brown</custom-attribute>
+            <custom-attribute attribute-id="size">016</custom-attribute>
+            <custom-attribute attribute-id="width">Z</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="701642808268">
+        <ean/>
+        <upc>701642808268</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2010-09-23T04:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">JJ3UEA3</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">red</custom-attribute>
+            <custom-attribute attribute-id="size">9SM</custom-attribute>
+            <custom-attribute attribute-id="width">Z</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="750518548319">
+        <ean/>
+        <upc>750518548319</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-02-07T05:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">NAVYWL</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">blue</custom-attribute>
+            <custom-attribute attribute-id="size">038</custom-attribute>
+            <custom-attribute attribute-id="width">S</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="750518548296">
+        <ean/>
+        <upc>750518548296</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-02-07T05:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">NAVYWL</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">blue</custom-attribute>
+            <custom-attribute attribute-id="size">036</custom-attribute>
+            <custom-attribute attribute-id="width">S</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="25686514">
+        <ean/>
+        <upc/>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <display-name xml:lang="x-default">Navy Single Pleat Wool Suit</display-name>
+        <short-description xml:lang="x-default">This suit is great for any occasion. Add a shirt and a tie and you are ready for any event. </short-description>
+        <long-description xml:lang="x-default">This suit is great for any occasion. Add a shirt and a tie and you are ready for any event. </long-description>
+        <online-flag>true</online-flag>
+        <online-from>2011-02-07T05:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <images>
+            <image-group view-type="large">
+                <image path="large/PG.52002RUBN4Q.NAVYWL.PZ.jpg"/>
+                <image path="large/PG.52002RUBN4Q.NAVYWL.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="large" variation-value="NAVYWL">
+                <image path="large/PG.52002RUBN4Q.NAVYWL.PZ.jpg"/>
+                <image path="large/PG.52002RUBN4Q.NAVYWL.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="medium">
+                <image path="medium/PG.52002RUBN4Q.NAVYWL.PZ.jpg"/>
+                <image path="medium/PG.52002RUBN4Q.NAVYWL.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="medium" variation-value="NAVYWL">
+                <image path="medium/PG.52002RUBN4Q.NAVYWL.PZ.jpg"/>
+                <image path="medium/PG.52002RUBN4Q.NAVYWL.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="small">
+                <image path="small/PG.52002RUBN4Q.NAVYWL.PZ.jpg"/>
+                <image path="small/PG.52002RUBN4Q.NAVYWL.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="small" variation-value="NAVYWL">
+                <image path="small/PG.52002RUBN4Q.NAVYWL.PZ.jpg"/>
+                <image path="small/PG.52002RUBN4Q.NAVYWL.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="swatch" variation-value="NAVYWL">
+                <image path="swatch/PG.52002RUBN4Q.NAVYWL.CP.jpg"/>
+            </image-group>
+        </images>
+        <tax-class-id>standard</tax-class-id>
+        <sitemap-included-flag>true</sitemap-included-flag>
+        <sitemap-changefrequency>daily</sitemap-changefrequency>
+        <sitemap-priority>1.0</sitemap-priority>
+        <page-attributes>
+            <page-title xml:lang="x-default">Navy Single Pleat Wool Suit</page-title>
+            <page-description xml:lang="x-default">This suit is great for any occasion. Add a shirt and a tie and you are ready for any event. </page-description>
+        </page-attributes>
+        <custom-attributes>
+            <custom-attribute attribute-id="isNew">true</custom-attribute>
+        </custom-attributes>
+        <variations>
+            <attributes>
+                <variation-attribute attribute-id="color" variation-attribute-id="color">
+                    <variation-attribute-values>
+                        <variation-attribute-value value="NAVYWL">
+                            <display-value xml:lang="x-default">Navy</display-value>
+                        </variation-attribute-value>
+                    </variation-attribute-values>
+                </variation-attribute>
+                <variation-attribute attribute-id="size" variation-attribute-id="size">
+                    <variation-attribute-values>
+                        <variation-attribute-value value="036">
+                            <display-value xml:lang="x-default">36</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="037">
+                            <display-value xml:lang="x-default">037</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="038">
+                            <display-value xml:lang="x-default">38</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="039">
+                            <display-value xml:lang="x-default">39</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="040">
+                            <display-value xml:lang="x-default">40</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="041">
+                            <display-value xml:lang="x-default">41</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="042">
+                            <display-value xml:lang="x-default">42</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="043">
+                            <display-value xml:lang="x-default">43</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="044">
+                            <display-value xml:lang="x-default">44</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="046">
+                            <display-value xml:lang="x-default">46</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="048">
+                            <display-value xml:lang="x-default">48</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="050">
+                            <display-value xml:lang="x-default">50</display-value>
+                        </variation-attribute-value>
+                    </variation-attribute-values>
+                </variation-attribute>
+                <variation-attribute attribute-id="width" variation-attribute-id="width">
+                    <variation-attribute-values>
+                        <variation-attribute-value value="S">
+                            <display-value xml:lang="x-default">Short</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="V">
+                            <display-value xml:lang="x-default">Regular</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="L">
+                            <display-value xml:lang="x-default">Long</display-value>
+                        </variation-attribute-value>
+                    </variation-attribute-values>
+                </variation-attribute>
+            </attributes>
+            <variants>
+                <variant product-id="750518548272"/>
+                <variant product-id="750518548180"/>
+                <variant product-id="750518548258"/>
+                <variant product-id="750518548265"/>
+                <variant product-id="750518548227"/>
+                <variant product-id="750518548197"/>
+                <variant product-id="750518548234"/>
+                <variant product-id="750518548203"/>
+                <variant product-id="750518548241"/>
+                <variant product-id="750518548432"/>
+                <variant product-id="750518548487"/>
+                <variant product-id="750518548456"/>
+                <variant product-id="750518548319"/>
+                <variant product-id="750518548357"/>
+                <variant product-id="750518548371"/>
+                <variant product-id="750518548296"/>
+            </variants>
+        </variations>
+        <classification-category>mens-clothing-suits</classification-category>
+    </product>
+
+    <product product-id="740357431064">
+        <ean/>
+        <upc>740357431064</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-03-16T04:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">BLKBKPA</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">black</custom-attribute>
+            <custom-attribute attribute-id="size">070</custom-attribute>
+            <custom-attribute attribute-id="width">M</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="25791388">
+        <ean/>
+        <upc/>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <display-name xml:lang="x-default">Zacco</display-name>
+        <short-description xml:lang="x-default">These patent kitten heel pumps look great from 9 - 5 and beyond. Bring feminine to the office with a peep toe and ribbon detail.</short-description>
+        <long-description xml:lang="x-default">These patent kitten heel pumps look great from 9 - 5 and beyond. Bring feminine to the office with a peep toe and ribbon detail.</long-description>
+        <online-flag>true</online-flag>
+        <online-from>2011-03-16T04:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <images>
+            <image-group view-type="large">
+                <image path="large/PG.CJZACCO.BLKBKPA.PZ.jpg"/>
+                <image path="large/PG.CJZACCO.BLKBKPA.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="large" variation-value="BLKBKPA">
+                <image path="large/PG.CJZACCO.BLKBKPA.PZ.jpg"/>
+                <image path="large/PG.CJZACCO.BLKBKPA.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="medium">
+                <image path="medium/PG.CJZACCO.BLKBKPA.PZ.jpg"/>
+                <image path="medium/PG.CJZACCO.BLKBKPA.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="medium" variation-value="BLKBKPA">
+                <image path="medium/PG.CJZACCO.BLKBKPA.PZ.jpg"/>
+                <image path="medium/PG.CJZACCO.BLKBKPA.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="small">
+                <image path="small/PG.CJZACCO.BLKBKPA.PZ.jpg"/>
+                <image path="small/PG.CJZACCO.BLKBKPA.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="small" variation-value="BLKBKPA">
+                <image path="small/PG.CJZACCO.BLKBKPA.PZ.jpg"/>
+                <image path="small/PG.CJZACCO.BLKBKPA.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="swatch" variation-value="BLKBKPA">
+                <image path="swatch/PG.CJZACCO.BLKBKPA.CP.jpg"/>
+            </image-group>
+        </images>
+        <tax-class-id>standard</tax-class-id>
+        <sitemap-included-flag>true</sitemap-included-flag>
+        <sitemap-changefrequency>daily</sitemap-changefrequency>
+        <sitemap-priority>1.0</sitemap-priority>
+        <page-attributes>
+            <page-title xml:lang="x-default">Zacco</page-title>
+            <page-description xml:lang="x-default">These patent kitten heel pumps look great from 9 - 5 and beyond. Bring feminine to the office with a peep toe and ribbon detail.</page-description>
+        </page-attributes>
+        <custom-attributes>
+            <custom-attribute attribute-id="isNewtest">true</custom-attribute>
+        </custom-attributes>
+        <variations>
+            <attributes>
+                <variation-attribute attribute-id="color" variation-attribute-id="color">
+                    <variation-attribute-values>
+                        <variation-attribute-value value="BLKBKPA">
+                            <display-value xml:lang="x-default">Black</display-value>
+                        </variation-attribute-value>
+                    </variation-attribute-values>
+                </variation-attribute>
+                <variation-attribute attribute-id="size" variation-attribute-id="size">
+                    <variation-attribute-values>
+                        <variation-attribute-value value="060">
+                            <display-value xml:lang="x-default">6</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="065">
+                            <display-value xml:lang="x-default">6.5</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="070">
+                            <display-value xml:lang="x-default">7</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="075">
+                            <display-value xml:lang="x-default">7.5</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="080">
+                            <display-value xml:lang="x-default">8</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="085">
+                            <display-value xml:lang="x-default">8.5</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="090">
+                            <display-value xml:lang="x-default">9</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="095">
+                            <display-value xml:lang="x-default">9.5</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="100">
+                            <display-value xml:lang="x-default">10</display-value>
+                        </variation-attribute-value>
+                    </variation-attribute-values>
+                </variation-attribute>
+                <variation-attribute attribute-id="width" variation-attribute-id="width">
+                    <variation-attribute-values>
+                        <variation-attribute-value value="M">
+                            <display-value xml:lang="x-default">M</display-value>
+                        </variation-attribute-value>
+                    </variation-attribute-values>
+                </variation-attribute>
+            </attributes>
+            <variants>
+                <variant product-id="740357431057"/>
+                <variant product-id="740357431071"/>
+                <variant product-id="740357431125"/>
+                <variant product-id="740357431101"/>
+                <variant product-id="740357431064"/>
+                <variant product-id="740357431040"/>
+                <variant product-id="740357431118"/>
+                <variant product-id="740357431088"/>
+                <variant product-id="740357431095"/>
+            </variants>
+        </variations>
+    </product>
+
+    <product product-id="750518548241">
+        <ean/>
+        <upc>750518548241</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-02-07T05:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">NAVYWL</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">blue</custom-attribute>
+            <custom-attribute attribute-id="size">044</custom-attribute>
+            <custom-attribute attribute-id="width">V</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="25553432">
+        <ean/>
+        <upc/>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <display-name xml:lang="x-default">Trouser Leg Pant</display-name>
+        <short-description xml:lang="x-default">Our best selling trouser leg pant is a must have wardrobe completer. We love the way it looks with a great Demandware Store top!</short-description>
+        <long-description xml:lang="x-default">Our best selling trouser leg pant is a must have wardrobe completer. We love the way it looks with a great Demandware Store top!</long-description>
+        <online-flag>true</online-flag>
+        <online-from>2010-12-29T05:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <images>
+            <image-group view-type="large">
+                <image path="large/PG.10239570.JJ0VWXX.PZ.jpg"/>
+                <image path="large/PG.10239570.JJ0VWXX.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="large" variation-value="JJ0VWXX">
+                <image path="large/PG.10239570.JJ0VWXX.PZ.jpg"/>
+                <image path="large/PG.10239570.JJ0VWXX.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="large" variation-value="JJ493XX">
+                <image path="large/PG.10239570.JJ493XX.PZ.jpg"/>
+                <image path="large/PG.10239570.JJ493XX.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="medium">
+                <image path="medium/PG.10239570.JJ0VWXX.PZ.jpg"/>
+                <image path="medium/PG.10239570.JJ0VWXX.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="medium" variation-value="JJ0VWXX">
+                <image path="medium/PG.10239570.JJ0VWXX.PZ.jpg"/>
+                <image path="medium/PG.10239570.JJ0VWXX.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="medium" variation-value="JJ493XX">
+                <image path="medium/PG.10239570.JJ493XX.PZ.jpg"/>
+                <image path="medium/PG.10239570.JJ493XX.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="small">
+                <image path="small/PG.10239570.JJ0VWXX.PZ.jpg"/>
+                <image path="small/PG.10239570.JJ0VWXX.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="small" variation-value="JJ0VWXX">
+                <image path="small/PG.10239570.JJ0VWXX.PZ.jpg"/>
+                <image path="small/PG.10239570.JJ0VWXX.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="small" variation-value="JJ493XX">
+                <image path="small/PG.10239570.JJ493XX.PZ.jpg"/>
+                <image path="small/PG.10239570.JJ493XX.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="swatch" variation-value="JJ0VWXX">
+                <image path="swatch/PG.10239570.JJ0VWXX.CP.jpg"/>
+            </image-group>
+            <image-group view-type="swatch" variation-value="JJ493XX">
+                <image path="swatch/PG.10239570.JJ493XX.CP.jpg"/>
+            </image-group>
+        </images>
+        <tax-class-id>standard</tax-class-id>
+        <sitemap-included-flag>true</sitemap-included-flag>
+        <sitemap-changefrequency>daily</sitemap-changefrequency>
+        <sitemap-priority>1.0</sitemap-priority>
+        <page-attributes>
+            <page-title xml:lang="x-default">Trouser Leg Pant</page-title>
+            <page-description xml:lang="x-default">Our best selling trouser leg pant is a must have wardrobe completer. We love the way it looks with a great Demandware Store top!</page-description>
+        </page-attributes>
+        <custom-attributes>
+            <custom-attribute attribute-id="isNewtest">true</custom-attribute>
+        </custom-attributes>
+        <variations>
+            <attributes>
+                <variation-attribute attribute-id="color" variation-attribute-id="color">
+                    <variation-attribute-values>
+                        <variation-attribute-value value="JJ0VWXX">
+                            <display-value xml:lang="x-default">midnight navy</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="JJ493XX">
+                            <display-value xml:lang="x-default">Chino</display-value>
+                        </variation-attribute-value>
+                    </variation-attribute-values>
+                </variation-attribute>
+                <variation-attribute attribute-id="size" variation-attribute-id="size">
+                    <variation-attribute-values>
+                        <variation-attribute-value value="004">
+                            <display-value xml:lang="x-default">4</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="006">
+                            <display-value xml:lang="x-default">6</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="008">
+                            <display-value xml:lang="x-default">8</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="010">
+                            <display-value xml:lang="x-default">10</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="012">
+                            <display-value xml:lang="x-default">12</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="014">
+                            <display-value xml:lang="x-default">14</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="016">
+                            <display-value xml:lang="x-default">16</display-value>
+                        </variation-attribute-value>
+                    </variation-attribute-values>
+                </variation-attribute>
+            </attributes>
+            <variants>
+                <variant product-id="701643489442"/>
+                <variant product-id="701643489398"/>
+            </variants>
+        </variations>
+    </product>
+
+    <product product-id="750518548456">
+        <ean/>
+        <upc>750518548456</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-02-07T05:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">NAVYWL</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">blue</custom-attribute>
+            <custom-attribute attribute-id="size">042</custom-attribute>
+            <custom-attribute attribute-id="width">L</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="750518548258">
+        <ean/>
+        <upc>750518548258</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-02-07T05:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">NAVYWL</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">blue</custom-attribute>
+            <custom-attribute attribute-id="size">046</custom-attribute>
+            <custom-attribute attribute-id="width">V</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="740357431095">
+        <ean/>
+        <upc>740357431095</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-03-16T04:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">BLKBKPA</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">black</custom-attribute>
+            <custom-attribute attribute-id="size">085</custom-attribute>
+            <custom-attribute attribute-id="width">M</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="750518548227">
+        <ean/>
+        <upc>750518548227</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-02-07T05:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">NAVYWL</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">blue</custom-attribute>
+            <custom-attribute attribute-id="size">042</custom-attribute>
+            <custom-attribute attribute-id="width">V</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="spring-look">
+        <ean/>
+        <upc/>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <display-name xml:lang="x-default">Spring Look</display-name>
+        <short-description xml:lang="x-default">Spring Look</short-description>
+        <long-description xml:lang="x-default">&lt;p&gt;Shirt&lt;/p&gt;&#13;
+&lt;p&gt;Pants&lt;/p&gt;&#13;
+&lt;p&gt;Bracelet&lt;/p&gt;</long-description>
+        <online-flag>true</online-flag>
+        <available-flag>false</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <images>
+            <image-group view-type="large">
+                <image path="large/PG.10216917.JJ3UEA3.PZ.jpg"/>
+            </image-group>
+            <image-group view-type="medium">
+                <image path="medium/PG.10216917.JJ3UEA3.PZ.jpg"/>
+            </image-group>
+            <image-group view-type="small">
+                <image path="small/PG.10216917.JJ3UEA3.BZ.jpg"/>
+            </image-group>
+        </images>
+        <page-attributes/>
+        <product-set-products>
+            <product-set-product product-id="25517787"/>
+            <product-set-product product-id="25553432"/>
+            <product-set-product product-id="25791388"/>
+        </product-set-products>
+    </product>
+
+    <product product-id="25517787">
+        <ean/>
+        <upc/>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <display-name xml:lang="x-default">Long Sleeve Raglan Button Out Turtle Neck</display-name>
+        <short-description xml:lang="x-default">Cozy up to the fire in this Nordic inspired button collar turtleneck.</short-description>
+        <long-description xml:lang="x-default">Cozy up to the fire in this Nordic inspired button collar turtleneck.</long-description>
+        <online-flag>true</online-flag>
+        <online-from>2010-09-23T04:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <images>
+            <image-group view-type="large">
+                <image path="large/PG.10216917.JJ3UEA3.PZ.jpg"/>
+                <image path="large/PG.10216917.JJ3UEA3.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="large" variation-value="JJ3UEA3">
+                <image path="large/PG.10216917.JJ3UEA3.PZ.jpg"/>
+                <image path="large/PG.10216917.JJ3UEA3.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="medium">
+                <image path="medium/PG.10216917.JJ3UEA3.PZ.jpg"/>
+                <image path="medium/PG.10216917.JJ3UEA3.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="medium" variation-value="JJ3UEA3">
+                <image path="medium/PG.10216917.JJ3UEA3.PZ.jpg"/>
+                <image path="medium/PG.10216917.JJ3UEA3.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="small">
+                <image path="small/PG.10216917.JJ3UEA3.PZ.jpg"/>
+                <image path="small/PG.10216917.JJ3UEA3.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="small" variation-value="JJ3UEA3">
+                <image path="small/PG.10216917.JJ3UEA3.PZ.jpg"/>
+                <image path="small/PG.10216917.JJ3UEA3.BZ.jpg"/>
+            </image-group>
+            <image-group view-type="swatch" variation-value="JJ3UEA3">
+                <image path="swatch/PG.10216917.JJ3UEA3.CP.jpg"/>
+            </image-group>
+        </images>
+        <tax-class-id>standard</tax-class-id>
+        <sitemap-included-flag>true</sitemap-included-flag>
+        <sitemap-changefrequency>daily</sitemap-changefrequency>
+        <sitemap-priority>1.0</sitemap-priority>
+        <page-attributes>
+            <page-title xml:lang="x-default">Long Sleeve Raglan Button Out Turtle Neck</page-title>
+            <page-description xml:lang="x-default">Cozy up to the fire in this Nordic inspired button collar turtleneck.</page-description>
+        </page-attributes>
+        <variations>
+            <attributes>
+                <variation-attribute attribute-id="color" variation-attribute-id="color">
+                    <variation-attribute-values>
+                        <variation-attribute-value value="JJ0CZXX">
+                            <display-value xml:lang="x-default">Black &amp; Sugar</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="JJ3UEA3">
+                            <display-value xml:lang="x-default">Fire Red Multi</display-value>
+                        </variation-attribute-value>
+                    </variation-attribute-values>
+                </variation-attribute>
+                <variation-attribute attribute-id="size" variation-attribute-id="size">
+                    <variation-attribute-values>
+                        <variation-attribute-value value="9SM">
+                            <display-value xml:lang="x-default">S</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="9MD">
+                            <display-value xml:lang="x-default">M</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="9LG">
+                            <display-value xml:lang="x-default">L</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="9XL">
+                            <display-value xml:lang="x-default">XL</display-value>
+                        </variation-attribute-value>
+                    </variation-attribute-values>
+                </variation-attribute>
+            </attributes>
+            <variants>
+                <variant product-id="701642808244"/>
+                <variant product-id="701642808268"/>
+                <variant product-id="701642808275"/>
+                <variant product-id="701642808251"/>
+            </variants>
+        </variations>
+    </product>
+
+    <product product-id="701642808275">
+        <ean/>
+        <upc>701642808275</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2010-09-23T04:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">JJ3UEA3</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">red</custom-attribute>
+            <custom-attribute attribute-id="size">9XL</custom-attribute>
+            <custom-attribute attribute-id="width">Z</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="740357431071">
+        <ean/>
+        <upc>740357431071</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-03-16T04:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">BLKBKPA</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">black</custom-attribute>
+            <custom-attribute attribute-id="size">075</custom-attribute>
+            <custom-attribute attribute-id="width">M</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="740357431088">
+        <ean/>
+        <upc>740357431088</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-03-16T04:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">BLKBKPA</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">black</custom-attribute>
+            <custom-attribute attribute-id="size">080</custom-attribute>
+            <custom-attribute attribute-id="width">M</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="750518548487">
+        <ean/>
+        <upc>750518548487</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-02-07T05:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">NAVYWL</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">blue</custom-attribute>
+            <custom-attribute attribute-id="size">046</custom-attribute>
+            <custom-attribute attribute-id="width">L</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <product product-id="750518548265">
+        <ean/>
+        <upc>750518548265</upc>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <online-flag>true</online-flag>
+        <online-from>2011-02-07T05:00:00.000Z</online-from>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <tax-class-id>standard</tax-class-id>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="color">NAVYWL</custom-attribute>
+            <custom-attribute attribute-id="refinementColor">blue</custom-attribute>
+            <custom-attribute attribute-id="size">048</custom-attribute>
+            <custom-attribute attribute-id="width">V</custom-attribute>
+        </custom-attributes>
+    </product>
+
+    <category-assignment category-id="womens-accessories-shoes" product-id="25791388">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="womens-clothing-bottoms" product-id="25553432">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="mens-clothing-suits" product-id="25686514">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="womens-clothing-tops" product-id="25517787">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+</catalog>

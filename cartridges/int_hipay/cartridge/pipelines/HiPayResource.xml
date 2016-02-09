@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?demandware-pipeline version="2.0"?>
+
+<pipeline type="view">
+  <branch basename="_ANONYMOUS_BRANCH_1">
+    <segment>
+      <node>
+        <text-node>
+          <description>Load merchant CSS style for HiPay</description>
+        </text-node>
+        <node-display x="1" y="0"/>
+      </node>
+    </segment>
+  </branch>
+  <branch basename="Style">
+    <segment>
+      <node>
+        <start-node call-mode="public" name="Style" secure="true"/>
+        <node-display x="1" y="1"/>
+      </node>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="target" x="0" y="-1"/>
+        </transition-display>
+      </simple-transition>
+      <node>
+        <interaction-node transaction-required="false">
+          <template buffered="true" dynamic="false" name="hipay/hosted/hipaycss"/>
+        </interaction-node>
+        <node-display x="0" y="2"/>
+      </node>
+    </segment>
+  </branch>
+</pipeline>

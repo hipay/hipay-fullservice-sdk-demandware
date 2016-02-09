@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?demandware-pipeline version="2.0"?>
+
+<pipeline group="ProductList">
+  <description>Utility workflows associated with product lists such as a wish list of a gift registry</description>
+  <branch basename="_ANONYMOUS_BRANCH_1">
+    <segment>
+      <node>
+        <text-node>
+          <description>Initializes the product list and creates a new list if none was found. The pipeline additional determines a selected product list item based on the given ID.</description>
+        </text-node>
+        <node-display width="2" x="1" y="1"/>
+      </node>
+    </segment>
+  </branch>
+  <branch basename="Init">
+    <segment>
+      <node>
+        <start-node call-mode="private" name="Init" secure="false"/>
+        <node-display x="1" y="2"/>
+      </node>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="source" x="0" y="1"/>
+        </transition-display>
+      </simple-transition>
+      <node>
+        <decision-node condition-key="ProductList == null" condition-operator="expr"/>
+        <node-display x="0" y="1"/>
+        <branch basename="b2" source-connector="yes">
+          <transition target-connector="in">
+            <transition-display>
+              <bend-point relative-to="source" x="0" y="1"/>
+            </transition-display>
+          </transition>
+          <segment>
+            <node>
+              <pipelet-node pipelet-name="GetProductList" pipelet-set-identifier="bc_api">
+                <config-property key="Create" value="false"/>
+                <key-binding alias="null" key="Type"/>
+                <key-binding alias="ProductList" key="ProductList"/>
+                <key-binding alias="null" key="Customer"/>
+                <key-binding alias="productListId" key="ProductListID"/>
+              </pipelet-node>
+              <node-display x="0" y="1"/>
+              <branch basename="b2" source-connector="error">
+                <transition target-connector="in1" target-path="../+1"/>
+              </branch>
+            </node>
+            <transition target-connector="in1" target-path="../+2"/>
+          </segment>
+        </branch>
+      </node>
+      <transition target-connector="in1" target-path="./+1">
+        <transition-display>
+          <bend-point relative-to="source" x="2" y="0"/>
+        </transition-display>
+      </transition>
+    </segment>
+    <segment>
+      <node>
+        <join-node/>
+        <node-display x="1" y="1"/>
+      </node>
+      <transition target-connector="in1" target-path="./+1">
+        <transition-display>
+          <bend-point relative-to="source" x="0" y="2"/>
+        </transition-display>
+      </transition>
+    </segment>
+    <segment>
+      <node>
+        <join-node/>
+        <node-display x="-1" y="1"/>
+      </node>
+      <simple-transition/>
+      <node>
+        <decision-node condition-key="ProductListItem == null" condition-operator="expr"/>
+        <node-display x="0" y="1"/>
+        <branch basename="b2" source-connector="yes">
+          <transition target-connector="in">
+            <transition-display>
+              <bend-point relative-to="source" x="0" y="1"/>
+            </transition-display>
+          </transition>
+          <segment>
+            <node>
+              <pipelet-node pipelet-name="Assign" pipelet-set-identifier="bc_api">
+                <key-binding alias="ProductList.getItem(listItemId)" key="From_0"/>
+                <key-binding alias="ProductListItem" key="To_0"/>
+                <key-binding alias="null" key="From_1"/>
+                <key-binding alias="null" key="To_1"/>
+                <key-binding alias="null" key="From_2"/>
+                <key-binding alias="null" key="To_2"/>
+                <key-binding alias="null" key="From_3"/>
+                <key-binding alias="null" key="To_3"/>
+                <key-binding alias="null" key="From_4"/>
+                <key-binding alias="null" key="To_4"/>
+                <key-binding alias="null" key="From_5"/>
+                <key-binding alias="null" key="To_5"/>
+                <key-binding alias="null" key="From_6"/>
+                <key-binding alias="null" key="To_6"/>
+                <key-binding alias="null" key="From_7"/>
+                <key-binding alias="null" key="To_7"/>
+                <key-binding alias="null" key="From_8"/>
+                <key-binding alias="null" key="To_8"/>
+                <key-binding alias="null" key="From_9"/>
+                <key-binding alias="null" key="To_9"/>
+              </pipelet-node>
+              <node-display x="0" y="1"/>
+            </node>
+            <simple-transition>
+              <transition-display>
+                <bend-point relative-to="source" x="0" y="1"/>
+              </transition-display>
+            </simple-transition>
+            <node>
+              <pipelet-node pipelet-name="UpdateProductOptionSelections" pipelet-set-identifier="bc_api">
+                <key-binding alias="ProductListItem.product" key="Product"/>
+                <key-binding alias="ProductOptionModel" key="ProductOptionModel"/>
+                <key-binding alias="null" key="CustomFormPrefix"/>
+              </pipelet-node>
+              <node-display x="0" y="1"/>
+            </node>
+            <transition target-connector="in1" target-path="../+1"/>
+          </segment>
+        </branch>
+      </node>
+      <transition target-connector="in1" target-path="./+1">
+        <transition-display>
+          <bend-point relative-to="source" x="4" y="0"/>
+          <bend-point relative-to="target" x="4" y="0"/>
+        </transition-display>
+      </transition>
+    </segment>
+    <segment>
+      <node>
+        <join-node/>
+        <node-display x="0" y="3"/>
+      </node>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="source" x="0" y="1"/>
+        </transition-display>
+      </simple-transition>
+      <node>
+        <end-node/>
+        <node-display x="0" y="1"/>
+      </node>
+    </segment>
+  </branch>
+  <branch basename="_ANONYMOUS_BRANCH_3">
+    <segment>
+      <node>
+        <text-node>
+          <description>Ensure shipment locates a shipment associated with a product list. If it cannot find one, one is created.</description>
+        </text-node>
+        <node-display x="5" y="1"/>
+      </node>
+    </segment>
+  </branch>
+  <branch basename="EnsureShipment">
+    <segment>
+      <node>
+        <start-node call-mode="private" name="EnsureShipment" secure="false"/>
+        <node-display x="5" y="2"/>
+      </node>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="source" x="0" y="1"/>
+        </transition-display>
+      </simple-transition>
+      <node>
+        <pipelet-node pipelet-name="Assign" pipelet-set-identifier="bc_api">
+          <key-binding alias="ProductListItem.list.name" key="From_0"/>
+          <key-binding alias="ShipmentID" key="To_0"/>
+          <key-binding alias="null" key="From_2"/>
+          <key-binding alias="null" key="To_2"/>
+          <key-binding alias="null" key="From_3"/>
+          <key-binding alias="null" key="To_3"/>
+          <key-binding alias="null" key="From_4"/>
+          <key-binding alias="null" key="To_4"/>
+          <key-binding alias="null" key="From_5"/>
+          <key-binding alias="null" key="To_5"/>
+          <key-binding alias="null" key="From_6"/>
+          <key-binding alias="null" key="To_6"/>
+          <key-binding alias="null" key="From_7"/>
+          <key-binding alias="null" key="To_7"/>
+          <key-binding alias="null" key="From_8"/>
+          <key-binding alias="null" key="To_8"/>
+          <key-binding alias="null" key="From_9"/>
+          <key-binding alias="null" key="To_9"/>
+        </pipelet-node>
+        <node-display x="0" y="1"/>
+      </node>
+      <simple-transition/>
+      <node>
+        <decision-node condition-key="empty(ShipmentID) || ProductListItem.list.shippingAddress == null" condition-operator="expr"/>
+        <node-display x="0" y="1"/>
+        <branch basename="b2" source-connector="yes">
+          <transition target-connector="in"/>
+          <segment>
+            <node>
+              <call-node start-name-ref="ProductList-GenerateShipmentName"/>
+              <node-display x="0" y="1"/>
+            </node>
+            <transition target-connector="in1" target-path="../+1"/>
+          </segment>
+        </branch>
+      </node>
+      <transition target-connector="in1" target-path="./+1">
+        <transition-display>
+          <bend-point relative-to="source" x="1" y="0"/>
+          <bend-point relative-to="target" x="1" y="0"/>
+        </transition-display>
+      </transition>
+    </segment>
+    <segment>
+      <node>
+        <join-node/>
+        <node-display x="0" y="2"/>
+      </node>
+      <simple-transition/>
+      <node>
+        <decision-node condition-key="Basket.getShipment(ShipmentID) != null" condition-operator="expr"/>
+        <node-display x="0" y="1"/>
+        <branch basename="b2" source-connector="yes">
+          <transition target-connector="in"/>
+          <segment>
+            <node>
+              <pipelet-node pipelet-name="Assign" pipelet-set-identifier="bc_api">
+                <key-binding alias="Basket.getShipment(ShipmentID)" key="From_0"/>
+                <key-binding alias="Shipment" key="To_0"/>
+                <key-binding alias="null" key="From_1"/>
+                <key-binding alias="null" key="To_1"/>
+                <key-binding alias="null" key="From_2"/>
+                <key-binding alias="null" key="To_2"/>
+                <key-binding alias="null" key="From_3"/>
+                <key-binding alias="null" key="To_3"/>
+                <key-binding alias="null" key="From_4"/>
+                <key-binding alias="null" key="To_4"/>
+                <key-binding alias="null" key="From_5"/>
+                <key-binding alias="null" key="To_5"/>
+                <key-binding alias="null" key="From_6"/>
+                <key-binding alias="null" key="To_6"/>
+                <key-binding alias="null" key="From_7"/>
+                <key-binding alias="null" key="To_7"/>
+                <key-binding alias="null" key="From_8"/>
+                <key-binding alias="null" key="To_8"/>
+                <key-binding alias="null" key="From_9"/>
+                <key-binding alias="null" key="To_9"/>
+              </pipelet-node>
+              <node-display x="0" y="1"/>
+            </node>
+            <transition target-connector="in1" target-path="../+1"/>
+          </segment>
+        </branch>
+      </node>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="source" x="2" y="0"/>
+          <bend-point relative-to="target" x="0" y="-1"/>
+        </transition-display>
+      </simple-transition>
+      <node>
+        <pipelet-node pipelet-name="CreateShipment" pipelet-set-identifier="bc_api">
+          <key-binding alias="Basket" key="Basket"/>
+          <key-binding alias="ShipmentID" key="ID"/>
+          <key-binding alias="Shipment" key="Shipment"/>
+        </pipelet-node>
+        <node-display x="1" y="1"/>
+      </node>
+      <transition target-connector="in1" target-path="./+1">
+        <transition-display>
+          <bend-point relative-to="source" x="0" y="2"/>
+        </transition-display>
+      </transition>
+    </segment>
+    <segment>
+      <node>
+        <join-node/>
+        <node-display x="-1" y="1"/>
+      </node>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="source" x="0" y="1"/>
+        </transition-display>
+      </simple-transition>
+      <node>
+        <end-node/>
+        <node-display x="0" y="1"/>
+      </node>
+    </segment>
+  </branch>
+  <branch basename="_ANONYMOUS_BRANCH_5">
+    <segment>
+      <node>
+        <text-node>
+          <description>Generates a shipment ID based on the type of product list passed in. Also assigns this name to the product list itself. Note that if the product list does not have a shipping address, the default shipping address name is used.</description>
+        </text-node>
+        <node-display width="2" x="8" y="1"/>
+      </node>
+    </segment>
+  </branch>
+  <branch basename="GenerateShipmentName">
+    <segment>
+      <node>
+        <start-node call-mode="private" name="GenerateShipmentName" secure="false">
+          <description>Generates a name for a shipment representing a product list.</description>
+        </start-node>
+        <node-display x="8" y="2"/>
+      </node>
+      <simple-transition/>
+      <node>
+        <decision-node condition-key="ProductList.shippingAddress != null" condition-operator="expr"/>
+        <node-display x="0" y="1"/>
+        <branch basename="b2" source-connector="yes">
+          <transition target-connector="in"/>
+          <segment>
+            <node>
+              <pipelet-node pipelet-name="Script" pipelet-set-identifier="bc_api">
+                <config-property key="Transactional" value="true"/>
+                <config-property key="OnError" value="PIPELET_ERROR"/>
+                <config-property key="ScriptFile" value="productlist/GenerateShipmentName.ds"/>
+                <key-binding alias="ccoolscript" key="ScriptLog"/>
+                <key-binding alias="ProductList" key="ProductList"/>
+                <key-binding alias="ShipmentID" key="ShipmentID"/>
+              </pipelet-node>
+              <node-display x="0" y="1"/>
+              <branch basename="b2" source-connector="error">
+                <transition target-connector="in1" target-path="../+1"/>
+              </branch>
+            </node>
+            <transition target-connector="in1" target-path="../+3"/>
+          </segment>
+        </branch>
+      </node>
+      <transition target-connector="in1" target-path="./+1">
+        <transition-display>
+          <bend-point relative-to="source" x="2" y="0"/>
+        </transition-display>
+      </transition>
+    </segment>
+    <segment>
+      <node>
+        <join-node/>
+        <node-display x="1" y="1"/>
+      </node>
+      <simple-transition/>
+      <node>
+        <pipelet-node pipelet-name="Assign" pipelet-set-identifier="bc_api">
+          <config-property key="Transactional" value="false"/>
+          <key-binding alias="Basket.defaultShipment.ID" key="From_0"/>
+          <key-binding alias="ShipmentID" key="To_0"/>
+          <key-binding alias="null" key="From_1"/>
+          <key-binding alias="null" key="To_1"/>
+          <key-binding alias="null" key="From_2"/>
+          <key-binding alias="null" key="To_2"/>
+          <key-binding alias="null" key="From_3"/>
+          <key-binding alias="null" key="To_3"/>
+          <key-binding alias="null" key="From_4"/>
+          <key-binding alias="null" key="To_4"/>
+          <key-binding alias="null" key="From_5"/>
+          <key-binding alias="null" key="To_5"/>
+          <key-binding alias="null" key="From_6"/>
+          <key-binding alias="null" key="To_6"/>
+          <key-binding alias="null" key="From_7"/>
+          <key-binding alias="null" key="To_7"/>
+          <key-binding alias="null" key="From_8"/>
+          <key-binding alias="null" key="To_8"/>
+          <key-binding alias="null" key="From_9"/>
+          <key-binding alias="null" key="To_9"/>
+        </pipelet-node>
+        <node-display x="0" y="1"/>
+      </node>
+      <transition target-connector="in2" target-path="./+1"/>
+    </segment>
+    <segment>
+      <node>
+        <join-node/>
+        <node-display x="0" y="1"/>
+      </node>
+      <transition target-connector="in1" target-path="./+1"/>
+    </segment>
+    <segment>
+      <node>
+        <join-node/>
+        <node-display x="-1" y="0"/>
+      </node>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="source" x="0" y="1"/>
+        </transition-display>
+      </simple-transition>
+      <node>
+        <end-node/>
+        <node-display x="0" y="1"/>
+      </node>
+    </segment>
+  </branch>
+</pipeline>

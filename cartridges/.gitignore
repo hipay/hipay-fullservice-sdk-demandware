@@ -1,0 +1,13 @@
+target
+.DS_Store
+.project
+.settings
+node_modules
+*.log
+src
+storefront_refapp
+docs
+pom.xml
+*.swp
+*.map
+.idea/

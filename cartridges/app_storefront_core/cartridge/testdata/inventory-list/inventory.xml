@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inventory xmlns="http://www.demandware.com/xml/impex/inventory/2007-05-31">
+    <inventory-list>
+        <header list-id="inventory">
+            <default-instock>false</default-instock>
+            <description>Inventory list for store: Demandware</description>
+            <use-bundle-inventory-only>false</use-bundle-inventory-only>
+            <on-order>false</on-order>
+        </header>
+
+        <records>
+
+            <record product-id="microsoft-xbox360-bundle">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+            </record>
+
+            <record product-id="microsoft-xbox360-console">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+            </record>
+
+            <record product-id="easports-fight-night-round-3-xbox360">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+            </record>
+
+            <record product-id="rockstar-games-grand-theft-auto-iv-xbox360">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+            </record>
+
+            <record product-id="sierra-the-bourne-conspiracy-xbox360">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+            </record>
+
+            <record product-id="samsung-ln55a950">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+            </record>
+
+            <record product-id="701642808268">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="701642808251">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="701642808244">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="701642808275">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="701643489442">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+                <ats>99</ats>
+                <on-order>0</on-order>
+                <turnover>1</turnover>
+            </record>
+
+            <record product-id="701643489398">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="740357431040">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="740357431057">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="740357431064">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="740357431071">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="740357431088">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="740357431095">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="740357431101">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="740357431118">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="740357431125">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="750518548258">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="750518548265">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="750518548227">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="750518548197">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="750518548234">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="750518548203">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="750518548241">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="750518548432">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="750518548487">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="750518548456">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="750518548319">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="750518548357">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="750518548371">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="750518548296">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="750518548272">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+            <record product-id="750518548180">
+                <allocation>100</allocation>
+                <perpetual>false</perpetual>
+                <preorder-backorder-handling>none</preorder-backorder-handling>
+                <preorder-backorder-allocation>0</preorder-backorder-allocation>
+            </record>
+
+        </records>
+
+    </inventory-list>
+</inventory>

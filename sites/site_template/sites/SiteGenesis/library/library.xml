@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library xmlns="http://www.demandware.com/xml/impex/library/2006-10-31" library-id="SiteGenesisSharedLibrary">
+    <content content-id="hipaycss">
+        <display-name xml:lang="x-default">hipaycss</display-name>
+        <description xml:lang="x-default">hipaycss</description>
+        <online-flag>true</online-flag>
+        <searchable-flag>false</searchable-flag>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="body" xml:lang="x-default">&lt;style type="text/css"&gt;&#13;
+	.client-logo { // Add merchant logo&#13;
+		display: block;&#13;
+		width: 261px;&#13;
+		height: 100px;&#13;
+		background: url(images/logo.png?$staticlink$);&#13;
+	}&#13;
+	body.script-body { // Add merchant background&#13;
+		background-image: url("https://mysite.com/img/background.jpg");&#13;
+		background-position: center top;&#13;
+		background-repeat: no-repeat;&#13;
+	}&#13;
+	.prefilled { // Hide prefilled fields (like card holder)&#13;
+		display: none;&#13;
+	}&#13;
+&lt;/style&gt;</custom-attribute>
+        </custom-attributes>
+    </content>
+</library>

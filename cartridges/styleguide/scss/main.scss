@@ -1,0 +1,144 @@
+@import "../../app_storefront_core/cartridge/scss/default/style.scss";
+
+body {
+	background: none;
+	font-size: 16px;
+	position: relative;
+}
+
+#main {
+	box-sizing: border-box;
+	width: calc(100% - 10rem);
+	margin-left: 10rem;
+	position: relative;
+	padding-left: 2rem;
+	padding-right: 1rem;
+}
+
+// Nav
+#nav {
+	margin-top: 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 10rem;
+	height: 100%;
+}
+.nav {
+	margin: 0 0 0 0.5em;
+	padding: 0;
+	.nested-nav {
+		display: none;
+		font-size: 0.9em;
+		margin: 0 0 0 1em;
+		li {
+			margin: 0.5em 0;
+		}
+	}
+	.active {
+		.nested-nav {
+			display: block;
+		}
+	}
+}
+.nav-item {
+	display: block;
+	padding: 1em 0 1em 1em;
+	border-right: 3px solid transparent;
+	.active > & {
+		border-color: $sangria;
+		color: $sangria;
+	}
+	.nested-nav & {
+		padding: 0.5em 0 0.5em 1em;
+	}
+}
+
+.section {
+	@extend %clearfix;
+	border-bottom: 1px solid $very-light-gray;
+	margin-bottom: 1em;
+	.subheader {
+		color: $sangria;
+	}
+}
+
+.wrapper {
+	@extend %clearfix;
+	border: 1px solid $very-light-gray;
+	border-radius: 2px;
+	margin-bottom: 1em;
+	padding: 0.8em;
+	position: relative;
+	#typography & {
+		background-color: $white-smoke;
+	}
+}
+
+// demo with code
+.demo {
+	margin-top: 1rem;
+	margin-bottom: 2rem;
+	.sample {
+		@extend %clearfix;
+		border: 1px dashed $very-light-gray;
+		box-sizing: border-box;
+		font-size: 12px; // match sitegenesis font size
+		margin: 1rem 0;
+		padding: 1em;
+		position: relative;
+	}
+	.code {
+		margin-top: 1rem;
+		a {
+			color: inherit;
+		}
+		pre {
+			// background-color: $white-smoke;
+			border: 1px solid $very-light-gray;
+			border-radius: 2px;
+		}
+	}
+	.toggle-markup {
+		cursor: pointer;
+		text-decoration: underline;
+	}
+}
+
+// colors
+.fragment {
+	float: left;
+	width: 5em;
+	height: 8em;
+	overflow: scroll;
+	margin: 0 1.5em 1em 0;
+	.sample {
+		width: 100%;
+		height: 4em;
+	}
+	.code {
+		font-family: monospace;
+		font-size: 0.8em;
+		margin-top: 0.5em;
+		word-break: break-word;
+		p {
+			margin: 0;
+			text-align: center;
+		}
+	}
+}
+
+// typography
+.font {
+	margin-bottom: 0.5em;
+}
+
+// variations
+.product-variations {
+	// remove default ul styles
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+}

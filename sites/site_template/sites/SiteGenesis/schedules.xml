@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schedules xmlns="http://www.demandware.com/xml/impex/schedules/2007-03-31">
+    <schedule schedule-id="ClearHungOrders">
+        <description>Clear all orders which are hung status CREATED</description>
+        <enabled-flag>true</enabled-flag>
+        <execution-scope>site</execution-scope>
+        <pipeline>
+            <name>HiPayProcess</name>
+            <startnode>ClearHungOrders</startnode>
+        </pipeline>
+        <sites>
+            <site site-id="SiteGenesis"/>
+        </sites>
+        <recurrence>
+            <date-from>2015-07-10Z</date-from>
+            <start-time>05:00:00.000Z</start-time>
+            <interval>30m</interval>
+            <day-of-week>
+                <weekday>Sunday</weekday>
+                <weekday>Monday</weekday>
+                <weekday>Tuesday</weekday>
+                <weekday>Wednesday</weekday>
+                <weekday>Thursday</weekday>
+                <weekday>Friday</weekday>
+                <weekday>Saturday</weekday>
+            </day-of-week>
+        </recurrence>
+        <notification>
+            <enabled-flag>false</enabled-flag>
+            <max-execution-time>5</max-execution-time>
+            <hang-detection-enabled-flag>true</hang-detection-enabled-flag>
+            <failure-rule>continue</failure-rule>
+        </notification>
+    </schedule>
+
+</schedules>

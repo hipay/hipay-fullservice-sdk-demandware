@@ -1,0 +1,12 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscomment>TEMPLATENAME: multicurrency.isml</iscomment>
+<isif condition="${(dw.system.Site.getCurrent().getCustomPreferenceValue('enableMultiCurrency')) && (dw.system.Site.getCurrent().getAllowedCurrencies().length > 1)}">
+	<div class="currency-converter">
+		<select name="currencyMnemonic">
+			<isset name="sessionCurrency" value="${session.getCurrency().getCurrencyCode()}" scope="page"/>
+			<isloop items="${dw.system.Site.getCurrent().getAllowedCurrencies()}" var="currencyCode" status="loopstate">
+				<option class="currency-converter-option" value="<isprint value="${currencyCode}">" <isif condition="${currencyCode == sessionCurrency}">selected="selected"</isif>><isprint value="${currencyCode}"></option>
+			</isloop>
+		</select>
+	</div>
+</isif>

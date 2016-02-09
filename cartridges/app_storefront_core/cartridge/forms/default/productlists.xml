@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+
+	<list formid="items">
+			<action formid="select" valid-form="false" label="resource.select"/>
+	</list>
+
+	<group formid="search">
+
+		<field formid="registrantFirstName" label="giftregistry.registrantFirstName" regexp="[^*?]*" type="string" mandatory="true"
+				parse-error="giftregistry.registrantFirstName.parse-error"/>
+
+		<field formid="registrantLastName" label="giftregistry.registrantLastName" regexp="[^*?]*" type="string" mandatory="true"
+			missing-error="giftregistry.registrantLastName.missing-error" parse-error="giftregistry.registrantLastName.parse-error"/>
+
+		<field formid="eventType" label="giftregistry.eventType" type="string" mandatory="false"
+			missing-error="giftregistry.eventType.missing-error">
+			<options>
+				<option optionid="blank" label="resource.select" value=""/>
+				<option optionid="wedding" label="giftregistry.wedding" value="Wedding"/>
+				<option optionid="weddingshower" label="giftregistry.weddingshower" value="Wedding Shower"/>
+				<option optionid="babyshower" label="giftregistry.babyshower" value="Baby Shower"/>
+				<option optionid="other" label="giftregistry.other" value="Other"/>
+			</options>
+		</field>
+
+		<field formid="eventName" label="giftregistry.eventName" type="string" mandatory="false" />
+
+		<field formid="eventCity" label="giftregistry.eventCity" type="string" mandatory="false" />
+
+		<field formid="eventState" label="giftregistry.eventState" type="string" mandatory="false">
+			<options>
+				<option optionid="" 	label="resource.select" 		value=""/>
+
+				<!-- regular US states -->
+				<option optionid="AL" 	label="state.us.alabama" 		value="AL"/>
+				<option optionid="AK" 	label="state.us.alaska" 		value="AK"/>
+				<option optionid="AS" 	label="state.us.americansamoa" 	value="AS"/>
+				<option optionid="AZ" 	label="state.us.arizona" 		value="AZ"/>
+				<option optionid="AR" 	label="state.us.arkansas" 		value="AR"/>
+				<option optionid="CA" 	label="state.us.california" 	value="CA"/>
+				<option optionid="CO" 	label="state.us.colorado" 		value="CO"/>
+				<option optionid="CT" 	label="state.us.connecticut" 	value="CT"/>
+				<option optionid="DE" 	label="state.us.delaware" 		value="DE"/>
+				<option optionid="DC" 	label="state.us.dc" 			value="DC"/>
+				<option optionid="FL" 	label="state.us.florida" 		value="FL"/>
+				<option optionid="GA" 	label="state.us.georgia" 		value="GA"/>
+				<option optionid="GU" 	label="state.us.guam" 			value="GU"/>
+				<option optionid="HI" 	label="state.us.hawaii" 		value="HI"/>
+				<option optionid="ID" 	label="state.us.idaho" 			value="ID"/>
+				<option optionid="IL"	label="state.us.illinois" 		value="IL"/>
+				<option optionid="IN"	label="state.us.indiana" 		value="IN"/>
+				<option optionid="IA"	label="state.us.iowa" 			value="IA"/>
+				<option optionid="KS"	label="state.us.kansas" 		value="KS"/>
+				<option optionid="KY"	label="state.us.kentucky" 		value="KY"/>
+				<option optionid="LA"	label="state.us.louisiana" 		value="LA"/>
+				<option optionid="ME"	label="state.us.maine" 			value="ME"/>
+				<option optionid="MD"	label="state.us.maryland" 		value="MD"/>
+				<option optionid="MA"	label="state.us.massachusetts"	value="MA"/>
+				<option optionid="MI"	label="state.us.michigan" 		value="MI"/>
+				<option optionid="MN"	label="state.us.minnesota" 		value="MN"/>
+				<option optionid="MS"	label="state.us.mississippi" 	value="MS"/>
+				<option optionid="MO"	label="state.us.missouri" 		value="MO"/>
+				<option optionid="MT"	label="state.us.montana" 		value="MT"/>
+				<option optionid="NE"	label="state.us.nebraska" 		value="NE"/>
+				<option optionid="NV"	label="state.us.nevada" 		value="NV"/>
+				<option optionid="NH"	label="state.us.newhampshire" 	value="NH"/>
+				<option optionid="NJ"	label="state.us.newjersey" 		value="NJ"/>
+				<option optionid="NM"	label="state.us.newmexico" 		value="NM"/>
+				<option optionid="NY"	label="state.us.newyork" 		value="NY"/>
+				<option optionid="NC"	label="state.us.northcarolina" 	value="NC"/>
+				<option optionid="ND"	label="state.us.northdakota" 	value="ND"/>
+				<option optionid="OH"	label="state.us.ohio" 			value="OH"/>
+				<option optionid="OK"	label="state.us.oklahoma" 		value="OK"/>
+				<option optionid="OR"	label="state.us.oregon" 		value="OR"/>
+				<option optionid="PA"	label="state.us.pennsylvania" 	value="PA"/>
+				<option optionid="PR"	label="state.us.puertorico" 	value="PR"/>
+				<option optionid="RI"	label="state.us.rhodeisland" 	value="RI"/>
+				<option optionid="SC"	label="state.us.southcarolina" 	value="SC"/>
+				<option optionid="SD"	label="state.us.southdakota" 	value="SD"/>
+				<option optionid="TN" 	label="state.us.tennessee" 		value="TN"/>
+				<option optionid="TX" 	label="state.us.texas" 			value="TX"/>
+				<option optionid="UT" 	label="state.us.utah" 			value="UT"/>
+				<option optionid="VT" 	label="state.us.vermont" 		value="VT"/>
+				<option optionid="VI" 	label="state.us.virginislands"	value="VI"/>
+				<option optionid="VA" 	label="state.us.virginia" 		value="VA"/>
+				<option optionid="WA" 	label="state.us.washington" 	value="WA"/>
+				<option optionid="WV" 	label="state.us.westvirginia" 	value="WV"/>
+				<option optionid="WI" 	label="state.us.wisconsin" 		value="WI"/>
+				<option optionid="WY" 	label="state.us.wyoming" 		value="WY"/>
+
+
+				<!-- APO/FPO -->
+				<option optionid="AE" 	label="state.us.armedforcesafrica" 		value="AE"/>
+				<option optionid="AA" 	label="state.us.armedforcesamerica" 	value="AA"/>
+				<option optionid="AE" 	label="state.us.armedforcescanada" 		value="AE"/>
+				<option optionid="AE" 	label="state.us.armedforceseurope" 		value="AE"/>
+				<option optionid="AE" 	label="state.us.armedforcesmiddleeast" 	value="AE"/>
+				<option optionid="AP" 	label="state.us.armedforcespacific" 	value="AP"/>
+
+				<!-- Canadian provinces and territories -->
+				<option optionid="AB" 	label="state.ca.alberta" 				value="AB"/>
+				<option optionid="BC" 	label="state.ca.britishcolumbia" 		value="BC"/>
+				<option optionid="MB" 	label="state.ca.manitoba" 				value="MB"/>
+				<option optionid="NB" 	label="state.ca.newbrunswick" 			value="NB"/>
+				<option optionid="NL" 	label="state.ca.newfoundland" 			value="NL"/>
+				<option optionid="NT" 	label="state.ca.northwestterritories" 	value="NT"/>
+				<option optionid="NS" 	label="state.ca.novascotia" 			value="NS"/>
+				<option optionid="NU" 	label="state.ca.nunavut" 				value="NU"/>
+				<option optionid="ON" 	label="state.ca.ontario" 				value="ON"/>
+				<option optionid="PE" 	label="state.ca.princeedwardisland" 	value="PE"/>
+				<option optionid="QC" 	label="state.ca.quebec" 				value="QC"/>
+				<option optionid="SK" 	label="state.ca.saskatchewan" 			value="SK"/>
+				<option optionid="YT" 	label="state.ca.yukon" 					value="YT"/>
+
+				<!-- Other -->
+				<option optionid="OTHER" label="state.us.other" 				value="OTHER"/>
+			</options>
+		</field>
+
+		<field formid="eventCountry" label="giftregistry.eventCountry" type="string" mandatory="false">
+			<options>
+				<option optionid="" 	label="resource.select"	value=""/>
+				<option optionid="US" 	label="country.unitedstates"	value="US"/>
+				<option optionid="DE" 	label="country.germany" 	value="DE"/>
+				<option optionid="CA" 	label="country.canada" 	value="CA"/>
+			</options>
+		</field>
+
+		<field formid="eventMonth" label="productlist.eventmonth"  type="integer" mandatory="false">
+			<options>
+				<option optionid="blank" label="" value=""/>
+				<option optionid="jan" label="month.january" value="1"/>
+				<option optionid="feb" label="month.february" value="2"/>
+				<option optionid="mar" label="month.march" value="3"/>
+				<option optionid="apr" label="month.april" value="4"/>
+				<option optionid="may" label="month.may" value="5"/>
+				<option optionid="jun" label="month.june" value="6"/>
+				<option optionid="jul" label="month.july" value="7"/>
+				<option optionid="aug" label="month.august" value="8"/>
+				<option optionid="sep" label="month.september" value="9"/>
+				<option optionid="oct" label="month.october" value="10"/>
+				<option optionid="nov" label="month.november" value="11"/>
+				<option optionid="dec" label="month.december" value="12"/>
+			</options>
+		</field>
+
+		<field formid="eventYear" label="productlist.eventyear"  type="integer" mandatory="false"
+				value-error="productlist.eventyearerror">
+			<options>
+				<option optionid="" label="" value=""/>
+				<option optionid="2008" label="year.2008" value="2008"/>
+				<option optionid="2009" label="year.2009" value="2009"/>
+				<option optionid="2010" label="year.2010" value="2010"/>
+				<option optionid="2011" label="year.2011" value="2011"/>
+				<option optionid="2012" label="year.2012" value="2012"/>
+				<option optionid="2013" label="year.2013" value="2013"/>
+				<option optionid="2014" label="year.2014" value="2014"/>
+				<option optionid="2015" label="year.2015" value="2015"/>
+				<option optionid="2016" label="year.2016" value="2016"/>
+				<option optionid="2017" label="year.2017" value="2017"/>
+				<option optionid="2018" label="year.2018" value="2018"/>
+			</options>
+		</field>
+
+		<action formid="search" valid-form="true"/>
+
+	</group>
+
+</form>

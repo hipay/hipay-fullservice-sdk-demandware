@@ -1,0 +1,20 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isinclude template="util/modules"/>
+
+<isif condition="${pdict.ProductSearchResult != null}">
+
+<iscomment>
+	The following javascript code is necessary in order to update the refinements in the
+	left navigation:
+
+	- New refinements are registered as inline javascript calls from the
+	  refreshed product grid and will be rendered at the correct position in the left
+	  navigation with respect to the defined order.
+	- Obsolete refinements are removed from the left nevigation.
+	- Refinement values are also updated using this technique: unselectable values are
+	  either grayed out or are hidden; selectable values become activated (if grayed out
+	  before) or are rendered into the value list of the corresponding refinement.
+</iscomment>
+
+
+</isif>

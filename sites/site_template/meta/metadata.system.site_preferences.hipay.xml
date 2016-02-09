@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="hipayApiPassphrase">
+                <display-name xml:lang="x-default">HiPay API Signature Passphrase</display-name>
+                <description xml:lang="x-default">API Signature passphrase configured in HiPay backoffice. Use to verify the requests made to DW.</description>
+                <type>password</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <field-length>0</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayCSSContent">
+                <display-name xml:lang="x-default">HiPay CSS content</display-name>
+                <description xml:lang="x-default">CSS applied to either Hosted or IFrame page, not enclosed in style tags</description>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayDisplayCardSelector">
+                <display-name xml:lang="x-default">Display card selector</display-name>
+                <description xml:lang="x-default">Enable/disable the payment methods selector on iFrame and Hosted page</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayEnable3dSecure">
+                <display-name xml:lang="x-default">3D Secure</display-name>
+                <description xml:lang="x-default">Allows the activation of 3D secure if available on used card</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">Bypass 3-D Secure 3-D authentication</display>
+                        <value>0</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">3-D Secure authentication if available</display>
+                        <value>1</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">3-D Secure authentication mandatory</display>
+                        <value>2</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayEnable3dSecureThresholdRule">
+                <display-name xml:lang="x-default">3D Secure Threshold Rule</display-name>
+                <description xml:lang="x-default">If the Order total is higher than the specified sum then 3D Secure will be forced. If 0 is specified the rule is disabled.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>0</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayEnableTestMode">
+                <display-name xml:lang="x-default">Enable Tokenization Test Mode</display-name>
+                <description xml:lang="x-default">Test Mode: If enabled, the module will use the Hipay TPP test platform</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayIframeHeight">
+                <display-name xml:lang="x-default">iFrame Height</display-name>
+                <description xml:lang="x-default">If iFrame operating mode is chosen, you can select your iFrame height to fit with your CSS</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>750</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayIframeWidth">
+                <display-name xml:lang="x-default">iFrame Width</display-name>
+                <description xml:lang="x-default">If iFrame operating mode is chosen, you can select your iFrame width to fit with your CSS</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>900</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayOperationMode">
+                <display-name xml:lang="x-default">HiPay Operation Mode</display-name>
+                <description xml:lang="x-default">Defines which operation payment mode to be used</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">Hosted page</display>
+                        <value>hosted</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">IFrame</display>
+                        <value>iframe</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">API</display>
+                        <value>api</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayPaymentAction">
+                <display-name xml:lang="x-default">Payment Action</display-name>
+                <description xml:lang="x-default">Please refer to HiPayTPP-GatewayAPI documentation, chapter 3.1 Request a New Order – operation</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">Authorization + Capture</display>
+                        <value>Sale</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Authorization Only</display>
+                        <value>Authorization</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayHungOrderTimeout">
+                <display-name xml:lang="x-default">Hung Order Cleanup Time</display-name>
+                <description xml:lang="x-default">The time in minutes after which all Orders hung in status CREATED that are left by the payment processing are cleaned.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>30</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="HiPay">
+                <display-name xml:lang="x-default">HiPay Settings</display-name>
+                <attribute attribute-id="hipayOperationMode"/>
+                <attribute attribute-id="hipayEnableTestMode"/>
+                <attribute attribute-id="hipayEnable3dSecure"/>
+                <attribute attribute-id="hipayEnable3dSecureThresholdRule"/>
+                <attribute attribute-id="hipayApiPassphrase"/>
+                <attribute attribute-id="hipayPaymentAction"/>
+                <attribute attribute-id="hipayIframeHeight"/>
+                <attribute attribute-id="hipayIframeWidth"/>
+                <attribute attribute-id="hipayCSSContent"/>
+                <attribute attribute-id="hipayDisplayCardSelector"/>
+                <attribute attribute-id="hipayHungOrderTimeout"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+</metadata>

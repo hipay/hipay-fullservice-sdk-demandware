@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- TemplateComment :  EMail form for inviting someone to shop from a customer's wish list -->
+<iscontent type="text/html" charset="UTF-8"/>
+<subject><isif condition="${!empty(pdict.MailSubject)}">${pdict.MailSubject}<iselse/></isif></subject>
+<html>
+<head>
+<style type="text/css">
+body {
+	color: Black;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-style: normal;
+	border: none; }
+a {
+	font-family: 'Century Gothic',Arial,Verdana,sans-serif;
+	font-size: 11pt;
+	font-weight: normal; }
+</style>
+</head>
+<body>
+	<div class="previewpanel" id="previewPanel">		
+		<div class="previewfield stfmessage">
+			<span class="value"><isprint value="${pdict.CurrentForms.sendtofriend.message.htmlValue}"/></span>	
+			<a href='<isprint value="${pdict.CurrentForms.sendtofriend.messagelink.htmlValue}"/>'><isprint value="${pdict.CurrentForms.sendtofriend.messagelinktext.htmlValue}"/></a>			
+		</div>											
+	</div>
+</body>
+</html>

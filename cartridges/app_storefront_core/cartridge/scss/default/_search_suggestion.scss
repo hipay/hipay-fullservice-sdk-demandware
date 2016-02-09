@@ -1,0 +1,33 @@
+.js {
+	#suggestions {
+		background-color: $dim-gray;
+		color: $gainsboro;
+		cursor: pointer;
+		padding: 0;
+		display: none;
+		position: absolute;
+		z-index: 8184;
+		div {
+			clear: both;
+			height: 23px;
+			padding: 5px;
+			overflow: hidden;
+			white-space: nowrap;
+			&:hover {
+				background-color: $very-light-gray;
+				color: $night-rider;
+			}
+			.suggestionterm {
+				float: left;
+				overflow: hidden;
+				width: 110px;
+			}
+			.hits {
+				float: right;
+				line-height: 1.8em;
+				text-align: right;
+				margin-left: 3px;
+			}
+		}
+	}
+}

@@ -1,0 +1,55 @@
+[{
+	"name": "$black",
+	"code": "#000"
+}, {
+	"name": "$cerulean",
+	"code": "#0167af"
+}, {
+	"name": "$charcoal",
+	"code": "#424242"
+}, {
+	"name": "$citrus",
+	"code": "#84bd00"
+}, {
+	"name": "$dark-gray",
+	"code": "#aaa"
+}, {
+	"name": "$dim-gray",
+	"code": "#666"
+}, {
+	"name": "$gainsboro",
+	"code": "#e0e0e0"
+}, {
+	"name": "$islamic-green",
+	"code": "#019328"
+}, {
+	"name": "$night-rider",
+	"code": "#333"
+}, {
+	"name": "$nobel",
+	"code": "#999"
+}, {
+	"name": "$pacific-blue",
+	"code": "#00a4e4"
+}, {
+	"name": "$rain-forest",
+	"code": "#64772d"
+}, {
+	"name": "$sangria",
+	"code": "#990000"
+}, {
+	"name": "$stark-white",
+	"code": "#cebdb3"
+}, {
+	"name": "$tutu",
+	"code": "#faeded"
+}, {
+	"name": "$very-light-gray",
+	"code": "#ccc"
+}, {
+	"name": "$white-smoke",
+	"code": "#efefef"
+}, {
+	"name": "$white",
+	"code": "#fff"
+}]

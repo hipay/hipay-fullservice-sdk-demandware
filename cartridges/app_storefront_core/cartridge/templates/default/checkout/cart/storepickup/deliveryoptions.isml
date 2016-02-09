@@ -1,0 +1,76 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<div class="form-row label-inline">
+
+	<isif condition="${empty(lineItem.custom.fromStoreId)}">
+		<label for="deliver-options-home">${Resource.msg('cart.store.homedelivery','checkout',null)}</label>
+	</isif>
+
+	<iscomment>Product Existence and Product Availability</iscomment>
+	<isif condition="${!lineItem.bonusProductLineItem || lineItem.getBonusDiscountLineItem() != null}">
+		<isif condition="${lineItem.product == null}"> 
+			<span class="not-available">
+				${Resource.msg('cart.removeditem','checkout',null)}
+			</span>
+		<iselse/>
+			<isset name="product" value="${lineItem.product}" scope="page" /> 
+			<isset name="quantity"	value="${pdict.Basket.getAllProductQuantities().get(lineItem.product).value}" scope="page" />
+			<isinclude template="checkout/cart/cartavailability" />
+		</isif>
+	</isif>
+
+</div>
+
+<isif condition="${lineItem.product.custom.availableForInStorePickup}">
+
+	<isif condition="${!empty(lineItem.custom.fromStoreId)}">
+		<isset name="store" value="${dw.catalog.StoreMgr.getStore(lineItem.custom.fromStoreId)}" scope="page"/>
+	<iselseif condition="${!empty(session.custom.storeId)}">
+		<isset name="store" value="${dw.catalog.StoreMgr.getStore(session.custom.storeId)}" scope="page"/>
+	<iselse/>
+		<isset name="store" value="${null}" scope="page"/>
+	</isif>
+	<isif condition="${!empty(store)}">
+		<isset name="storeinventorylist" value="${dw.catalog.ProductInventoryMgr.getInventoryList(store.custom.inventoryListId)}" scope="page"/>		
+		<isif condition="${!empty(storeinventorylist) && !empty(storeinventorylist.getRecord(lineItem.productID))}">
+			<isset name="storeinventoryATS" value="${storeinventorylist.getRecord(lineItem.productID).stockLevel.value}" scope="page"/>
+		</isif>
+	</isif>
+
+	<div name="${lineItem.getUUID()}-sp" class="form-row label-inline">
+	
+		<label for="deliver-options-home">${Resource.msg('cart.store.instorepickup','checkout',null)}</label>
+	
+		<iscomment>Store Address</iscomment>
+		<input type="hidden" class="storeid" name="${lineItem.getUUID()}-store" value="${!empty(store) ? store.ID : ''}">	
+		<div class="selected-store-address">
+			<isif condition="${!empty(store)}">
+				<isprint value="${store.address1}"/> <br />
+				<isprint value="${store.city}"/> <isif condition="${store.city != null && store.stateCode != null}">,</isif> <isprint value="${store.stateCode}"/> <br /><isprint value="${store.postalCode}"/>
+			</isif>
+		</div>
+		<div name="${lineItem.UUID}-stock" class="selected-store-availability">
+		<isif condition="${!empty(store)}">
+			<isif condition="${!empty(storeinventoryATS) && storeinventoryATS >= lineItem.quantityValue}">
+				<span class="store-in-stock">${StringUtils.format(Resource.msg('global.instock','locale',null))}</span>
+			<iselse/>
+				<span class="store-error">${StringUtils.format(Resource.msg('cart.store.notavailable','checkout',null))}</span>			
+			</isif>
+		</isif>
+		</div>
+		<div class="form-row label-inline select-store" id="${lineItem.UUID}">
+			<span class="set-preferred-store">
+				<isif condition="${pdict.CurrentSession.custom.zipcode != null}">
+					<isif condition="${lineItem.custom.fromStoreId != null}">
+						<a href="${URLUtils.url('StoreInventory-CartSetZipCodeCore','pid', lineItem.UUID, 'fromCart', 'true', 'zipCode', pdict.CurrentSession.custom.zipcode,'storeid',lineItem.custom.fromStoreId)}" title="${pdict.Product.name}">${Resource.msg('storelist.lightbox.selectstore','storepickup',null)}</a>
+					<iselse/>
+						<a href="${URLUtils.url('StoreInventory-CartSetZipCodeCore','pid', lineItem.UUID, 'fromCart', 'true', 'zipCode', pdict.CurrentSession.custom.zipcode)}" title="${pdict.Product.name}">${Resource.msg('storelist.lightbox.selectstore','storepickup',null)}</a>
+					</isif>
+				<iselse/>
+					<a href="${URLUtils.url('StoreInventory-CartSetZipCodeCore','pid', lineItem.UUID, 'cart', 'true')}" title="${pdict.Product.name}">${Resource.msg('storelist.lightbox.selectstore','storepickup',null)}</a>
+				</isif>
+			</span>
+		</div>
+										
+	</div>
+
+</isif>

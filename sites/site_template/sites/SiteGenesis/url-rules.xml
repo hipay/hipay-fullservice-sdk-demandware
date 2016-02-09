@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<url-rules xmlns="http://www.demandware.com/xml/impex/urlrules/2012-12-01">
+    <general-settings>
+        <lower-case-urls>true</lower-case-urls>
+        <blank-substitute>%20</blank-substitute>
+        <character-replacements-enabled>false</character-replacements-enabled>
+    </general-settings>
+    <category-rule>[ category-path, [ attribute, displayName ], / ]</category-rule>
+    <category-page-url-override>true</category-page-url-override>
+    <category-trailing-slash>true</category-trailing-slash>
+    <product-rule>[ category ]</product-rule>
+    <product-page-url-override>true</product-page-url-override>
+    <product-id-separator>/</product-id-separator>
+    <folder-rule>[ folder-path, [ attribute, displayName, noname ], / ]</folder-rule>
+    <folder-page-url-override>true</folder-page-url-override>
+    <folder-trailing-slash>true</folder-trailing-slash>
+    <content-rule>[ folder ]</content-rule>
+    <content-page-url-override>true</content-page-url-override>
+    <content-id-separator>/</content-id-separator>
+    <pipeline-aliases xml:lang="x-default">
+        <pipeline-alias pipeline="Default-Offline">offline</pipeline-alias>
+        <pipeline-alias pipeline="Account-SetNewPasswordConfirm">confirmednewpassword</pipeline-alias>
+        <pipeline-alias pipeline="Home-Show">home</pipeline-alias>
+        <pipeline-alias pipeline="GiftRegistryCustomer-Show">giftregistryshow</pipeline-alias>
+        <pipeline-alias pipeline="PaymentInstruments-List">wallet</pipeline-alias>
+        <pipeline-alias pipeline="GiftCert-Edit">giftcertedit</pipeline-alias>
+        <pipeline-alias pipeline="Address-List">addressbook</pipeline-alias>
+        <pipeline-alias pipeline="Account-StartRegister">register</pipeline-alias>
+        <pipeline-alias pipeline="Stores-Find">stores</pipeline-alias>
+        <pipeline-alias pipeline="Search-Show">search</pipeline-alias>
+        <pipeline-alias pipeline="Wishlist-ShowOther">showotherwishlist</pipeline-alias>
+        <pipeline-alias pipeline="SiteMap-Start">sitemap</pipeline-alias>
+        <pipeline-alias pipeline="Compare-Show">compare</pipeline-alias>
+        <pipeline-alias pipeline="Default-Start">homepage</pipeline-alias>
+        <pipeline-alias pipeline="CustomerService-Show">help</pipeline-alias>
+        <pipeline-alias pipeline="Search-ShowContent">contentsearch</pipeline-alias>
+        <pipeline-alias pipeline="GiftRegistry-Start">giftregistry</pipeline-alias>
+        <pipeline-alias pipeline="COSummary-Submit">orderconfirmation</pipeline-alias>
+        <pipeline-alias pipeline="COSummary-Start">revieworder</pipeline-alias>
+        <pipeline-alias pipeline="COShipping-Start">shipping</pipeline-alias>
+        <pipeline-alias pipeline="Account-SetNewPassword">setpassword</pipeline-alias>
+        <pipeline-alias pipeline="Order-History">orders</pipeline-alias>
+        <pipeline-alias pipeline="Cart-Show">cart</pipeline-alias>
+        <pipeline-alias pipeline="Error-Start">error</pipeline-alias>
+        <pipeline-alias pipeline="Account-PasswordReset">passwordreset</pipeline-alias>
+        <pipeline-alias pipeline="Account-EditProfile">profile</pipeline-alias>
+        <pipeline-alias pipeline="Wishlist-Search">searchwishlists</pipeline-alias>
+        <pipeline-alias pipeline="COBilling-Start">billing</pipeline-alias>
+        <pipeline-alias pipeline="CustomerService-ContactUs">contactus</pipeline-alias>
+        <pipeline-alias pipeline="GiftRegistry-ShowRegistryByID">showgiftregistrybyid</pipeline-alias>
+        <pipeline-alias pipeline="Home-ErrorNotFound">404</pipeline-alias>
+        <pipeline-alias pipeline="GiftRegistry-Search">giftregistrysearch</pipeline-alias>
+        <pipeline-alias pipeline="Account-Show">account</pipeline-alias>
+        <pipeline-alias pipeline="GiftCert-Purchase">giftcertpurchase</pipeline-alias>
+        <pipeline-alias pipeline="Wishlist-Show">wishlist</pipeline-alias>
+        <pipeline-alias pipeline="COCustomer-Start">checkout</pipeline-alias>
+        
+        <!-- HiPay Redirects -->
+        <pipeline-alias pipeline="HiPayOrder-Accept">hipayorder/accept</pipeline-alias>
+        <pipeline-alias pipeline="HiPayOrder-Error">hipayorder/error</pipeline-alias>
+        <pipeline-alias pipeline="HiPayOrder-Pending">hipayorder/pending</pipeline-alias>
+        <pipeline-alias pipeline="HiPayOrder-Cancel">hipayorder/cancel</pipeline-alias>
+        <pipeline-alias pipeline="HiPayOrder-Decline">hipayorder/decline</pipeline-alias>
+    </pipeline-aliases>
+</url-rules>
+

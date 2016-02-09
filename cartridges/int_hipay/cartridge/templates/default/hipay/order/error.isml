@@ -1,0 +1,21 @@
+<!--- TEMPLATENAME: error.isml --->
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isset name="DecoratorTemplate" value="error/pt_error" scope="page"/>
+<isif condition="${!empty(pdict.nodecorator) && pdict.nodecorator == true}">
+	<isset name="DecoratorTemplate" value="util/pt_empty" scope="page"/>
+</isif>
+
+<isdecorate template="${DecoratorTemplate}">
+<isinclude template="util/modules"/>
+	
+	<br/>
+
+	<h1>${Resource.msg('hipay.generic.error.title','hipay',null)}</h1>
+
+	<isslot id="error-banner" description="Banner for error pages" context="global"/>
+
+	<div class="error-page-message">
+		<p>${Resource.msg('hipay.generic.error.text','hipay',null)}</p>
+	</div>
+
+</isdecorate>

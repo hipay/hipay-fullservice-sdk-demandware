@@ -1,0 +1,135 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscomment>This template renders the breadcrumb navigation for product search results</iscomment>
+
+<iscomment>get the current paging model for convenient reuse</iscomment>
+<isset name="pagingModel" value="${pdict.ProductPagingModel}" scope="page"/>
+
+<iscomment>Added to access unsanitizeOR()</iscomment>
+<isscript>
+	importScript('product/ProductUtils.ds');
+</isscript>
+
+<div class="breadcrumb">
+	<isif condition="${!empty(pdict.ProductSearchResult) && !empty(pdict.ProductSearchResult.searchPhrase)}">
+		<isif condition="${empty(pagingModel)}">
+			<isset name="breadcrumbHref" value="${URLUtils.url('Search-Show','q',pdict.ProductSearchResult.searchPhrase)}" scope="page" />
+		<iselse/>
+			<isset name="breadcrumbHref" value="${pagingModel.appendPaging(URLUtils.url('Search-Show','q',pdict.ProductSearchResult.searchPhrase), 0)}" scope="page" />
+		</isif>
+		<span class="breadcrumb-element breadcrumb-result-text">
+			${Resource.msg('searchbreadcrumbs.resultstext','search',null)}
+			&quot;<a href="${breadcrumbHref}" title="${pdict.ProductSearchResult.searchPhrase}">${pdict.ProductSearchResult.searchPhrase}</a>&quot;
+		</span>
+	</isif>
+
+	<isif condition="${!empty(pdict.ProductSearchResult) && pdict.ProductSearchResult.category != null}">
+		<isactivedatacontext category="${pdict.ProductSearchResult.category}"/>
+
+		<isscript>
+			var path = new dw.util.ArrayList();
+			var cat = pdict.ProductSearchResult.category;
+			while (cat.parent != null) {
+				if (cat.online) { path.addAt( 0, cat ); }
+				cat = cat.parent;
+			}
+		</isscript>
+
+		<isloop items="${path}" var="cat" status="loopstate">
+			<isif condition="${loopstate.first && !pdict.ProductSearchResult.categorySearch}">
+				<span class="breadcrumb-result-text">${Resource.msg('searchbreadcrumbs.in','search',null)}</span>
+			</isif>
+			<isif condition="${pdict.ProductSearchResult.categorySearch}">
+				<isset name="catLinkUrl" value="${dw.catalog.ProductSearchModel.urlForCategory('Search-Show', cat.ID)}" scope="page"/>
+			<iselse/>
+				<isset name="catLinkUrl" value="${dw.catalog.ProductSearchModel.urlForCategory(URLUtils.url('Search-Show','q', pdict.ProductSearchResult.searchPhrase), cat.ID)}" scope="page"/>
+			</isif>
+			<a class="breadcrumb-element" href="${catLinkUrl}" title="${cat.displayName}">${cat.displayName}</a>
+		</isloop>
+
+	</isif>
+
+	<iscomment>SORTING INFO </iscomment>
+	<isif condition="${!empty(pdict.ProductSearchResult) && !empty(pdict.ProductSearchResult.sortingRule) && (pdict.ProductSearchResult.category != null)}">
+		<isif condition="${pdict.ProductSearchResult.sortingRule.ID}">
+			<span class="breadcrumb-refined-by">${Resource.msg('searchbreadcrumbs.sortedby', 'search', null)}</span>
+		</isif>
+		<isloop items="${dw.catalog.CatalogMgr.getSortingOptions()}" var="sortingOption">
+			<isif condition="${sortingOption.getID() == pdict.ProductSearchResult.sortingRule.ID}">
+				<span class="breadcrumb-refinement">${sortingOption.getDisplayName()}</span>
+			</isif>
+		</isloop>
+	</isif>
+
+	<iscomment>REFINEMENT INFO </iscomment>
+	<isif condition="${!empty(pdict.ProductSearchResult) && (pdict.ProductSearchResult.refinedByPrice || pdict.ProductSearchResult.refinedByAttribute)}">
+
+		<isif condition="${(pdict.ProductSearchResult.refinements.priceRefinementDefinition && pdict.ProductSearchResult.refinedByPrice) || (pdict.ProductSearchResult.refinements.refinementDefinitions.size() > 0)}">
+			<span class="breadcrumb-refined-by">${Resource.msg('searchbreadcrumbs.refinedby', 'search', null)}</span>
+		</isif>
+
+		<iscomment>Price</iscomment>
+		<isif condition="${pdict.ProductSearchResult.refinements.priceRefinementDefinition && pdict.ProductSearchResult.refinedByPrice}">
+			<isscript>
+				// for price refinements, we use the display value of the price refinement definition's value
+				var breadcrumbLabel = null
+
+				var refinements = pdict.ProductSearchResult.refinements;
+				var prdValues = refinements.getRefinementValues(refinements.priceRefinementDefinition);
+				if (prdValues.iterator().hasNext()) {
+					breadcrumbLabel = prdValues.iterator().next().getDisplayValue();
+				}
+			</isscript>
+			<span class="breadcrumb-refinement" data-divider="${Resource.msg('searchbreadcrumbs.attributedivider','search',null)}">
+				<span class="breadcrumb-refinement-name">
+					<isprint value="${pdict.ProductSearchResult.refinements.priceRefinementDefinition.displayName}"/>
+				</span>
+
+				<span class="breadcrumb-refinement-value">
+					<isif condition="${!empty(breadcrumbLabel)}">
+						<isprint value="${breadcrumbLabel}"/>
+					<iselse/>
+						<isprint value="${pdict.ProductSearchResult.priceMin}"/>
+						${Resource.msg('searchbreadcrumbs.to','search',null)}
+						<isprint value="${pdict.ProductSearchResult.priceMax}"/>
+					</isif>
+
+					<isif condition="${empty(pagingModel)}">
+						<isset name="breadcrumbHref" value="${pdict.ProductSearchResult.urlRelaxPrice('Search-Show')}" scope="page" />
+					<iselse/>
+						<isset name="breadcrumbHref" value="${pagingModel.appendPaging(pdict.ProductSearchResult.urlRelaxPrice('Search-Show'), 0)}" scope="page" />
+					</isif>
+					<a class="breadcrumb-relax" href="${unsanitizeOR(breadcrumbHref)}" title="${Resource.msg('global.remove', 'locale', null)}">x</a>
+				</span>
+			</span>
+
+		</isif>
+
+		<iscomment>attributes</iscomment>
+		<isset name="hasAttributes" value="${false}" scope="page" />
+		<isloop items="${pdict.ProductSearchResult.refinements.refinementDefinitions}" var="definition" status="attributes">
+			<isif condition="${definition.isAttributeRefinement() && pdict.ProductSearchResult.isRefinedByAttribute(definition.attributeID)}">
+				<span class="breadcrumb-refinement" data-divider="${Resource.msg('searchbreadcrumbs.attributedivider','search',null)}">
+					<span class="breadcrumb-refinement-name">
+						<isprint value="${definition.displayName}"/>
+					</span>
+					<isset name="hasAttributes" value="${true}" scope="page" />
+					<isloop items="${pdict.ProductSearchResult.refinements.getRefinementValues(definition)}" var="value" status="values">
+						<isif condition="${pdict.ProductSearchResult.isRefinedByAttributeValue(definition.attributeID, value.value)}">
+							<span class="breadcrumb-refinement-value">
+								<isprint value="${value.displayValue}"/>
+								<isif condition="${empty(pagingModel)}">
+									<isset name="breadcrumbHref" value="${pdict.ProductSearchResult.urlRelaxAttributeValue('Search-Show', definition.attributeID, value.value)}" scope="page" />
+								<iselse/>
+									<isset name="breadcrumbHref" value="${pagingModel.appendPaging(pdict.ProductSearchResult.urlRelaxAttributeValue('Search-Show', definition.attributeID, value.value), 0)}" scope="page" />
+								</isif>
+								<a class="breadcrumb-relax" href="${unsanitizeOR(breadcrumbHref)}" title="${Resource.msg('global.remove', 'locale', null)}">x</a>
+							</span>
+						</isif>
+					</isloop>
+				</span>
+			</isif>
+		</isloop>
+	</isif>
+
+	<ispagingcurrentpage pageurl="${pdict.ProductSearchResult.url('Search-Show')}" pagingmodel="${pdict.ProductPagingModel}"/>
+</div><!-- END: breadcrumb -->

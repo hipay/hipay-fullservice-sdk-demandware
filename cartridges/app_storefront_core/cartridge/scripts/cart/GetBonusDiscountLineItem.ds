@@ -1,0 +1,20 @@
+/**
+ * GetBonusDiscountLineItem
+ *
+ * This script returns a bonus discount line item from a given uuid.
+ *
+ *   @input BonusDiscountLineItems : dw.util.Collection Collection of bonuslineitems to be searched.
+ *   @input uuid : String uuid of the bonus line item to be found.
+ *   @output BonusDiscountLineItem : dw.order.BonusDiscountLineItem
+ *
+ */
+function execute( pdict : PipelineDictionary ) : Number
+{
+   for each(var item in pdict.BonusDiscountLineItems) {
+   		if (item.UUID == pdict.uuid) {
+   			pdict.BonusDiscountLineItem = item;
+   			break;
+   		}		
+   }   		
+    return PIPELET_NEXT;
+}

@@ -1,0 +1,31 @@
+<iscontent type="application/json" charset="UTF-8" compact="true"/>
+
+<iscomment>
+	This template renders the search suggestions as JSON response.
+	Each suggestion is composed of a suggested phrase (the suggestion itself)
+	and a count of hits, the suggested phrase would produce.
+</iscomment>
+<isscript>
+	// initialize simple object
+	var o = [];
+	
+	// 	if suggestions are available, iterate through LinkedHashMap keys		
+	if (!empty(pdict.Suggestions)) {
+		var suggestIt = pdict.Suggestions.keySet().iterator();
+		// create array of suggestions with suggestion text, result count and formatted results count
+		while (suggestIt.hasNext()) {			
+			var text = suggestIt.next();
+			
+			var count = pdict.Suggestions.get(text);							
+			o.push({
+				suggestion : text,
+				count : count,
+				hits : dw.util.StringUtils.format("{0} {1}", count, (count==1 ? dw.web.Resource.msg("suggestions.result","search", "") : dw.web.Resource.msg("suggestions.results", "search", "")))
+								
+			});	
+		}
+	}		
+	
+	var ojson = JSON.stringify(o);
+</isscript>
+<isprint value="${ojson}" encoding="off"/>

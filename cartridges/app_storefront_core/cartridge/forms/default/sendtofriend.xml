@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+	<field formid="friendsname" label="sendtofriend.friendsName" type="string" mandatory="true" missing-error="sendtofriend.friendsName.missing-error"/>
+	<field formid="friendsemail" label="sendtofriend.friendsEmail" type="string" mandatory="true" regexp="^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$" missing-error="sendtofriend.email.missing-error" parse-error="profile.emailparseerror" max-length="50" value-error="sendtofriend.confirmFriendsEmail.value-error"/>
+	<field formid="confirmfriendsemail" label="sendtofriend.confirmFriendsEmail" type="string" mandatory="true" regexp="^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$" missing-error="sendtofriend.email.missing-error" parse-error="profile.emailparseerror" max-length="50" />
+	<field formid="yourname" label="sendtofriend.yourName" type="string" mandatory="false" binding="firstName"/>
+	<field formid="subject" label="sendtofriend.subject" type="string" mandatory="false"/>
+	<field formid="message" label="sendtofriend.personalMessage" type="string" mandatory="false" description=""/>
+	<field formid="messagelink" type="string" mandatory="false"/>
+	<field formid="messagelinktext" type="string" mandatory="false"/>
+	<field formid="addtoemaillist" label="sendtofriend.addemailtolist"  type="boolean"/>
+	<action formid="preview" label="sendtofriend.preview" valid-form="true"/>
+	<action formid="send" label="resource.send" valid-form="true"/>
+	<action formid="cancel" label="sendtofriend.cancel" valid-form="false"/>
+	<action formid="edit" label="sendtofriend.edit" valid-form="false"/>
+</form>

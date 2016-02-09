@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="http://www.demandware.com/xml/impex/catalog/2006-10-31" catalog-id="electronics-catalog">
+    <header>
+        <image-settings>
+            <internal-location base-path="/images"/>
+            <view-types>
+                <view-type>large</view-type>
+                <view-type>medium</view-type>
+                <view-type>small</view-type>
+                <view-type>swatch</view-type>
+                <view-type>hi-res</view-type>
+            </view-types>
+            <variation-attribute-id>color</variation-attribute-id>
+            <alt-pattern>${productname}, ${variationvalue}, ${viewtype}</alt-pattern>
+            <title-pattern>${productname}, ${variationvalue}</title-pattern>
+        </image-settings>
+    </header>
+
+    <product product-id="microsoft-xbox360-bundle">
+        <ean/>
+        <upc/>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <display-name xml:lang="x-default">Xbox 360 Bundle</display-name>
+        <online-flag>true</online-flag>
+        <available-flag>false</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <images>
+            <image-group view-type="large">
+                <image path="large/microsoft-xbox360-bundle.jpg"/>
+            </image-group>
+            <image-group view-type="medium">
+                <image path="medium/microsoft-xbox360-bundle.jpg"/>
+            </image-group>
+            <image-group view-type="small">
+                <image path="small/microsoft-xbox360-bundle.jpg"/>
+            </image-group>
+        </images>
+        <tax-class-id>standard</tax-class-id>
+        <brand>Microsoft</brand>
+        <page-attributes/>
+        <bundled-products>
+            <bundled-product product-id="microsoft-xbox360-console">
+                <quantity>1</quantity>
+            </bundled-product>
+            <bundled-product product-id="easports-fight-night-round-3-xbox360">
+                <quantity>1</quantity>
+            </bundled-product>
+            <bundled-product product-id="rockstar-games-grand-theft-auto-iv-xbox360">
+                <quantity>1</quantity>
+            </bundled-product>
+            <bundled-product product-id="sierra-the-bourne-conspiracy-xbox360">
+                <quantity>1</quantity>
+            </bundled-product>
+        </bundled-products>
+        <options>
+            <shared-option option-id="consoleWarranty"/>
+        </options>
+        <classification-category>electronics-game-consoles</classification-category>
+    </product>
+
+    <product product-id="sierra-the-bourne-conspiracy-xbox360">
+        <ean/>
+        <upc/>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <display-name xml:lang="x-default">Robert Ludlum's: The Bourne Conspiracy (for X-Box 360)</display-name>
+        <short-description xml:lang="x-default">You are the perfect weapon. You are Jason Bourne. Robert Ludlum's best-selling spy novels and blockbuster film adaptations have thrilled millions. Now become Ludlum's most famous spy Jason Bourne, going deeper than ever into his world of espionage and conspiracy. A signature Jason Bourne video game experience is born in an original title fusing the viscous tension and depth of the novels with the aggressive style and frenetic action of the films. </short-description>
+        <online-flag>true</online-flag>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <images>
+            <image-group view-type="large">
+                <image path="large/sierra-the-bourne-conspiracy-xbox360.jpg"/>
+            </image-group>
+            <image-group view-type="medium">
+                <image path="medium/sierra-the-bourne-conspiracy-xbox360.jpg"/>
+            </image-group>
+            <image-group view-type="small">
+                <image path="small/sierra-the-bourne-conspiracy-xbox360.jpg"/>
+            </image-group>
+        </images>
+        <tax-class-id>standard</tax-class-id>
+        <brand>Sierra</brand>
+        <page-attributes>
+            <page-title xml:lang="x-default">Robert Ludlum's: The Bourne Conspiracy (for X-Box 360)</page-title>
+            <page-description xml:lang="x-default">You are the perfect weapon. You are Jason Bourne. Robert Ludlum's best-selling spy novels and blockbuster film adaptations have thrilled millions. Now become Ludlum's most famous spy Jason Bourne, going deeper than ever into his world of espionage and conspiracy. A signature Jason Bourne video game experience is born in an original title fusing the viscous tension and depth of the novels with the aggressive style and frenetic action of the films. </page-description>
+            <page-keywords xml:lang="x-default">Sierra</page-keywords>
+        </page-attributes>
+        <custom-attributes>
+            <custom-attribute attribute-id="gameGenre">
+                <value>Action</value>
+            </custom-attribute>
+            <custom-attribute attribute-id="gameRating">T</custom-attribute>
+            <custom-attribute attribute-id="gameSystemType">X-Box 360</custom-attribute>
+            <custom-attribute attribute-id="tabDescription">You are the perfect weapon. You are Jason Bourne. Robert Ludlum's best-selling spy novels and blockbuster film adaptations have thrilled millions. Now become Ludlum's most famous spy Jason Bourne, going deeper than ever into his world of espionage and conspiracy. A signature Jason Bourne video game experience is born in an original title fusing the viscous tension and depth of the novels with the aggressive style and frenetic action of the films.</custom-attribute>
+        </custom-attributes>
+        <classification-category>electronics-games</classification-category>
+    </product>
+
+    <product product-id="easports-fight-night-round-3-xbox360">
+        <ean/>
+        <upc/>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <display-name xml:lang="x-default">Fight Night: Round 3 (for X-Box 360)</display-name>
+        <short-description xml:lang="x-default">The highly acclaimed EA SPORTS Fight Night franchise, the undisputed champion of boxing videogames, delivers another hit with EA SPORTS Fight Night Round 3. Feel what it's like to hit—or be hit by—great champions such as Muhammad Ali and Oscar De La Hoya with film-quality graphics that showcase the most devastating punches seen in any game or movie. Outside the ring, establish intense rivalries by calling out opponents and triggering press conference brawls on your way to becoming boxing's greatest legend. EA SPORTS Fight Night Round 3—the closest thing to being in the ring without getting punched. </short-description>
+        <online-flag>true</online-flag>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <images>
+            <image-group view-type="large">
+                <image path="large/easports-fight-night-round-3-xbox360.jpg"/>
+            </image-group>
+            <image-group view-type="medium">
+                <image path="medium/easports-fight-night-round-3-xbox360.jpg"/>
+            </image-group>
+            <image-group view-type="small">
+                <image path="small/easports-fight-night-round-3-xbox360.jpg"/>
+            </image-group>
+        </images>
+        <tax-class-id>standard</tax-class-id>
+        <brand>EASports</brand>
+        <page-attributes>
+            <page-title xml:lang="x-default">Fight Night: Round 3 (for X-Box 360)</page-title>
+            <page-description xml:lang="x-default">The highly acclaimed EA SPORTS Fight Night franchise, the undisputed champion of boxing videogames, delivers another hit with EA SPORTS Fight Night Round 3. Feel what it's like to hit—or be hit by—great champions such as Muhammad Ali and Oscar De La Hoya with film-quality graphics that showcase the most devastating punches seen in any game or movie. Outside the ring, establish intense rivalries by calling out opponents and triggering press conference brawls on your way to becoming boxing's greatest legend. EA SPORTS Fight Night Round 3—the closest thing to being in the ring without getting punched. </page-description>
+            <page-keywords xml:lang="x-default">EASports</page-keywords>
+        </page-attributes>
+        <custom-attributes>
+            <custom-attribute attribute-id="gameGenre">
+                <value>Action</value>
+            </custom-attribute>
+            <custom-attribute attribute-id="gameRating">T</custom-attribute>
+            <custom-attribute attribute-id="gameSystemType">X-Box 360</custom-attribute>
+            <custom-attribute attribute-id="tabDescription">The highly acclaimed EA SPORTS Fight Night franchise, the undisputed champion of boxing videogames, delivers another hit with EA SPORTS Fight Night Round 3. Feel what it's like to hit—or be hit by—great champions such as Muhammad Ali and Oscar De La Hoya with film-quality graphics that showcase the most devastating punches seen in any game or movie. Outside the ring, establish intense rivalries by calling out opponents and triggering press conference brawls on your way to becoming boxing's greatest legend. EA SPORTS Fight Night Round 3—the closest thing to being in the ring without getting punched.</custom-attribute>
+        </custom-attributes>
+        <classification-category>electronics-games</classification-category>
+    </product>
+
+    <product product-id="samsung-ln55a950">
+        <ean/>
+        <upc/>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <display-name xml:lang="x-default">Samsung Series 9 55" LCD High Definition Television</display-name>
+        <short-description xml:lang="x-default">This SAMSUNG LCD TV is absolutely stunning with revolutionary Touch of Color™ design. And you can customize your TV watching with up-to-the-minute content from USA Today. Ready for action scenes that look more real than you ever imagined? Auto Motion Plus 120Hz™ virtually eliminates any motion blur. Substance, style, and advanced high definition features you expect-the SAMSUNG LN55A950 delivers all of that and more.</short-description>
+        <long-description xml:lang="x-default">Your action-packed sports and movies have never looked this real. Auto Motion Plus 120Hz™ technology virtually eliminates any motion blur and creates smooth transitions between frames. What’s the secret? Auto Motion Plus calculates the image between frames and inserts it, creating a non-repetitive transition from one to the next. The result is a clearer picture you have to see to believe.</long-description>
+        <online-flag>true</online-flag>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <images>
+            <image-group view-type="large">
+                <image path="large/samsung-ln55a950.jpg"/>
+            </image-group>
+            <image-group view-type="medium">
+                <image path="medium/samsung-ln55a950.jpg"/>
+            </image-group>
+            <image-group view-type="small">
+                <image path="small/samsung-ln55a950.jpg"/>
+            </image-group>
+        </images>
+        <tax-class-id>standard</tax-class-id>
+        <brand>Samsung</brand>
+        <page-attributes>
+            <page-title xml:lang="x-default">Samsung Series 9 55" LCD High Definition Television</page-title>
+            <page-description xml:lang="x-default">This SAMSUNG LCD TV is absolutely stunning with revolutionary Touch of Color™ design. And you can customize your TV watching with up-to-the-minute content from USA Today. Ready for action scenes that look more real than you ever imagined? Auto Motion Plus 120Hz™ virtually eliminates any motion blur. Substance, style, and advanced high definition features you expect-the SAMSUNG LN55A950 delivers all of that and more.</page-description>
+            <page-keywords xml:lang="x-default">Samsung</page-keywords>
+        </page-attributes>
+        <custom-attributes>
+            <custom-attribute attribute-id="dimDepth">14 inches</custom-attribute>
+            <custom-attribute attribute-id="dimHeight">35 inches</custom-attribute>
+            <custom-attribute attribute-id="dimWeight">91 lbs</custom-attribute>
+            <custom-attribute attribute-id="dimWidth">54 inches</custom-attribute>
+            <custom-attribute attribute-id="resolution">1920 x 1080</custom-attribute>
+            <custom-attribute attribute-id="tabDescription">This SAMSUNG LCD TV is absolutely stunning with revolutionary Touch of Color™ design. And you can customize your TV watching with up-to-the-minute content from USA Today. Ready for action scenes that look more real than you ever imagined? Auto Motion Plus 120Hz™ virtually eliminates any motion blur. Substance, style, and advanced high definition features you expect-the SAMSUNG LN55A950 delivers all of that and more.</custom-attribute>
+            <custom-attribute attribute-id="tabDetails">Your action-packed sports and movies have never looked this real. Auto Motion Plus 120Hz™ technology virtually eliminates any motion blur and creates smooth transitions between frames. What’s the secret? Auto Motion Plus calculates the image between frames and inserts it, creating a non-repetitive transition from one to the next. The result is a clearer picture you have to see to believe.</custom-attribute>
+            <custom-attribute attribute-id="tvSignalFormat">1080p</custom-attribute>
+            <custom-attribute attribute-id="tvSize">55 inches</custom-attribute>
+            <custom-attribute attribute-id="tvType">0020</custom-attribute>
+        </custom-attributes>
+        <options>
+            <shared-option option-id="tvWarranty"/>
+        </options>
+        <classification-category>electronics-televisions-flat-screen</classification-category>
+    </product>
+
+    <product product-id="rockstar-games-grand-theft-auto-iv-xbox360">
+        <ean/>
+        <upc/>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <display-name xml:lang="x-default">Grand Theft Auto 4 (for X-Box 360)</display-name>
+        <short-description xml:lang="x-default">What does the American Dream mean today? For Niko Bellic, fresh off the boat from Europe, it is the hope he can escape his past. For his cousin, Roman, it is the vision that together they can find fortune in Liberty City, gateway to the land of opportunity. As they slip into debt and are dragged into a criminal underworld by a series of shysters, thieves and sociopaths, they discover that the reality is very different from the dream in a city that worships money and status, and is heaven for those who have them and a living nightmare for those who don’t.</short-description>
+        <online-flag>true</online-flag>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <images>
+            <image-group view-type="large">
+                <image path="large/rockstar-games-grand-theft-auto-iv-xbox360.jpg"/>
+            </image-group>
+            <image-group view-type="medium">
+                <image path="medium/rockstar-games-grand-theft-auto-iv-xbox360.jpg"/>
+            </image-group>
+            <image-group view-type="small">
+                <image path="small/rockstar-games-grand-theft-auto-iv-xbox360.jpg"/>
+            </image-group>
+        </images>
+        <tax-class-id>standard</tax-class-id>
+        <brand>Rockstar Games</brand>
+        <page-attributes>
+            <page-title xml:lang="x-default">Grand Theft Auto 4 (for X-Box 360)</page-title>
+            <page-description xml:lang="x-default">What does the American Dream mean today? For Niko Bellic, fresh off the boat from Europe, it is the hope he can escape his past. For his cousin, Roman, it is the vision that together they can find fortune in Liberty City, gateway to the land of opportunity. As they slip into debt and are dragged into a criminal underworld by a series of shysters, thieves and sociopaths, they discover that the reality is very different from the dream in a city that worships money and status, and is heaven for those who have them and a living nightmare for those who don’t.</page-description>
+            <page-keywords xml:lang="x-default">Rockstar Games</page-keywords>
+        </page-attributes>
+        <custom-attributes>
+            <custom-attribute attribute-id="gameGenre">
+                <value>Racing</value>
+            </custom-attribute>
+            <custom-attribute attribute-id="gameRating">M</custom-attribute>
+            <custom-attribute attribute-id="gameSystemType">X-Box 360</custom-attribute>
+            <custom-attribute attribute-id="tabDescription">What does the American Dream mean today? For Niko Bellic, fresh off the boat from Europe, it is the hope he can escape his past. For his cousin, Roman, it is the vision that together they can find fortune in Liberty City, gateway to the land of opportunity. As they slip into debt and are dragged into a criminal underworld by a series of shysters, thieves and sociopaths, they discover that the reality is very different from the dream in a city that worships money and status, and is heaven for those who have them and a living nightmare for those who don’t.</custom-attribute>
+        </custom-attributes>
+        <classification-category>electronics-games</classification-category>
+    </product>
+
+    <product product-id="microsoft-xbox360-console">
+        <ean/>
+        <upc/>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <display-name xml:lang="x-default">Microsoft X-Box 360 Game Console</display-name>
+        <short-description xml:lang="x-default">Xbox 360 puts you at the center of the most exciting games and entertainment experiences on earth. Xbox 360 not only has the best, highest-rated games, and the most robust title library, but it also offers access to the industry-leading Xbox LIVE service and tailored digital entertainment experiences that revolve around you.</short-description>
+        <online-flag>true</online-flag>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <images>
+            <image-group view-type="large">
+                <image path="large/microsoft-xbox360-console.jpg"/>
+            </image-group>
+            <image-group view-type="medium">
+                <image path="medium/microsoft-xbox360-console.jpg"/>
+            </image-group>
+            <image-group view-type="small">
+                <image path="small/microsoft-xbox360-console.jpg"/>
+            </image-group>
+        </images>
+        <tax-class-id>standard</tax-class-id>
+        <brand>Microsoft</brand>
+        <page-attributes>
+            <page-title xml:lang="x-default">Microsoft X-Box 360 Game Console</page-title>
+            <page-description xml:lang="x-default">Xbox 360 puts you at the center of the most exciting games and entertainment experiences on earth. Xbox 360 not only has the best, highest-rated games, and the most robust title library, but it also offers access to the industry-leading Xbox LIVE service and tailored digital entertainment experiences that revolve around you.</page-description>
+            <page-keywords xml:lang="x-default">Microsoft</page-keywords>
+        </page-attributes>
+        <custom-attributes>
+            <custom-attribute attribute-id="gameSystemType">X-Box 360</custom-attribute>
+            <custom-attribute attribute-id="tabDescription">Xbox 360 puts you at the center of the most exciting games and entertainment experiences on earth. Xbox 360 not only has the best, highest-rated games, and the most robust title library, but it also offers access to the industry-leading Xbox LIVE service and tailored digital entertainment experiences that revolve around you.</custom-attribute>
+        </custom-attributes>
+        <options>
+            <shared-option option-id="consoleWarranty"/>
+        </options>
+        <classification-category>electronics-game-consoles</classification-category>
+    </product>
+
+    <product-option option-id="consoleWarranty">
+        <display-name xml:lang="x-default">Extended Warranty</display-name>
+        <sort-mode>price</sort-mode>
+        <option-values>
+            <option-value value-id="001" default="false">
+                <display-value xml:lang="x-default">1 Year Warranty</display-value>
+                <option-value-prices>
+                    <option-value-price currency="USD">9.99</option-value-price>
+                </option-value-prices>
+            </option-value>
+            <option-value value-id="003" default="false">
+                <display-value xml:lang="x-default">5 Year Warranty</display-value>
+                <option-value-prices>
+                    <option-value-price currency="USD">29.99</option-value-price>
+                </option-value-prices>
+            </option-value>
+            <option-value value-id="000" default="true">
+                <display-value xml:lang="x-default">None</display-value>
+                <option-value-prices>
+                    <option-value-price currency="USD">0.00</option-value-price>
+                </option-value-prices>
+            </option-value>
+            <option-value value-id="002" default="false">
+                <display-value xml:lang="x-default">3 Year Warranty</display-value>
+                <option-value-prices>
+                    <option-value-price currency="USD">19.99</option-value-price>
+                </option-value-prices>
+            </option-value>
+        </option-values>
+    </product-option>
+
+    <product-option option-id="digitalCameraWarranty">
+        <display-name xml:lang="x-default">Extended Warranty</display-name>
+        <sort-mode>price</sort-mode>
+        <option-values>
+            <option-value value-id="001" default="true">
+                <display-value xml:lang="x-default">2 Year Warranty</display-value>
+                <option-value-prices>
+                    <option-value-price currency="USD">0.00</option-value-price>
+                </option-value-prices>
+            </option-value>
+            <option-value value-id="002" default="false">
+                <display-value xml:lang="x-default">5 Year Warranty</display-value>
+                <option-value-prices>
+                    <option-value-price currency="USD">39.99</option-value-price>
+                </option-value-prices>
+            </option-value>
+        </option-values>
+    </product-option>
+
+    <product-option option-id="gpsWarranty">
+        <display-name xml:lang="x-default">Extended Warranty</display-name>
+        <sort-mode>price</sort-mode>
+        <option-values>
+            <option-value value-id="001" default="false">
+                <display-value xml:lang="x-default">1 Year Warranty</display-value>
+                <option-value-prices>
+                    <option-value-price currency="USD">9.99</option-value-price>
+                </option-value-prices>
+            </option-value>
+            <option-value value-id="003" default="false">
+                <display-value xml:lang="x-default">5 Year Warranty</display-value>
+                <option-value-prices>
+                    <option-value-price currency="USD">29.99</option-value-price>
+                </option-value-prices>
+            </option-value>
+            <option-value value-id="000" default="true">
+                <display-value xml:lang="x-default">None</display-value>
+                <option-value-prices>
+                    <option-value-price currency="USD">0.00</option-value-price>
+                </option-value-prices>
+            </option-value>
+            <option-value value-id="002" default="false">
+                <display-value xml:lang="x-default">3 Year Warranty</display-value>
+                <option-value-prices>
+                    <option-value-price currency="USD">19.99</option-value-price>
+                </option-value-prices>
+            </option-value>
+            <option-value value-id="004" default="false">
+                <display-value xml:lang="x-default">2 Year Warranty</display-value>
+                <option-value-prices>
+                    <option-value-price currency="USD">15.99</option-value-price>
+                </option-value-prices>
+            </option-value>
+        </option-values>
+    </product-option>
+
+    <product-option option-id="tvWarranty">
+        <display-name xml:lang="x-default">Extended Warranty</display-name>
+        <sort-mode>price</sort-mode>
+        <option-values>
+            <option-value value-id="001" default="false">
+                <display-value xml:lang="x-default">1 Year Warranty</display-value>
+                <option-value-prices>
+                    <option-value-price currency="EUR">20.00</option-value-price>
+                    <option-value-price currency="USD">49.99</option-value-price>
+                </option-value-prices>
+            </option-value>
+            <option-value value-id="003" default="false">
+                <display-value xml:lang="x-default">5 Year Warranty</display-value>
+                <option-value-prices>
+                    <option-value-price currency="EUR">60.00</option-value-price>
+                    <option-value-price currency="USD">129.99</option-value-price>
+                </option-value-prices>
+            </option-value>
+            <option-value value-id="000" default="true">
+                <display-value xml:lang="x-default">None</display-value>
+                <option-value-prices>
+                    <option-value-price currency="EUR">0.00</option-value-price>
+                    <option-value-price currency="USD">0.00</option-value-price>
+                </option-value-prices>
+            </option-value>
+            <option-value value-id="002" default="false">
+                <display-value xml:lang="x-default">3 Year Warranty</display-value>
+                <option-value-prices>
+                    <option-value-price currency="EUR">40.00</option-value-price>
+                    <option-value-price currency="USD">99.99</option-value-price>
+                </option-value-prices>
+            </option-value>
+        </option-values>
+    </product-option>
+
+    <variation-attribute attribute-id="color" variation-attribute-id="color">
+        <display-name xml:lang="x-default">Color</display-name>
+        <variation-attribute-values>
+            <variation-attribute-value value="Silver">
+                <display-value xml:lang="x-default">Silver</display-value>
+            </variation-attribute-value>
+            <variation-attribute-value value="Black">
+                <display-value xml:lang="x-default">Black</display-value>
+            </variation-attribute-value>
+            <variation-attribute-value value="Purple">
+                <display-value xml:lang="x-default">Purple</display-value>
+            </variation-attribute-value>
+            <variation-attribute-value value="Blue">
+                <display-value xml:lang="x-default">Blue</display-value>
+            </variation-attribute-value>
+            <variation-attribute-value value="Green">
+                <display-value xml:lang="x-default">Green</display-value>
+            </variation-attribute-value>
+            <variation-attribute-value value="Yellow">
+                <display-value xml:lang="x-default">Yellow</display-value>
+            </variation-attribute-value>
+            <variation-attribute-value value="Orange">
+                <display-value xml:lang="x-default">Orange</display-value>
+            </variation-attribute-value>
+            <variation-attribute-value value="Red">
+                <display-value xml:lang="x-default">Red</display-value>
+            </variation-attribute-value>
+            <variation-attribute-value value="Fuscia">
+                <display-value xml:lang="x-default">Fuscia</display-value>
+            </variation-attribute-value>
+        </variation-attribute-values>
+    </variation-attribute>
+
+    <variation-attribute attribute-id="memorySize" variation-attribute-id="memorySize">
+        <display-name xml:lang="x-default">Memory Size</display-name>
+        <variation-attribute-values>
+            <variation-attribute-value value="1 GB">
+                <display-value xml:lang="x-default">1 GB</display-value>
+            </variation-attribute-value>
+            <variation-attribute-value value="2 GB">
+                <display-value xml:lang="x-default">2 GB</display-value>
+            </variation-attribute-value>
+            <variation-attribute-value value="8 GB">
+                <display-value xml:lang="x-default">8 GB</display-value>
+            </variation-attribute-value>
+            <variation-attribute-value value="16 GB">
+                <display-value xml:lang="x-default">16 GB</display-value>
+            </variation-attribute-value>
+            <variation-attribute-value value="32 GB">
+                <display-value xml:lang="x-default">32 GB</display-value>
+            </variation-attribute-value>
+            <variation-attribute-value value="120 GB">
+                <display-value xml:lang="x-default">120 GB</display-value>
+            </variation-attribute-value>
+        </variation-attribute-values>
+    </variation-attribute>
+
+    <category-assignment category-id="electronics-games" product-id="easports-fight-night-round-3-xbox360">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="electronics-game-consoles" product-id="microsoft-xbox360-bundle">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="electronics-game-consoles" product-id="microsoft-xbox360-console">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="electronics-games" product-id="rockstar-games-grand-theft-auto-iv-xbox360">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="electronics-televisions-flat-screen" product-id="samsung-ln55a950">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="electronics-games" product-id="sierra-the-bourne-conspiracy-xbox360">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+</catalog>

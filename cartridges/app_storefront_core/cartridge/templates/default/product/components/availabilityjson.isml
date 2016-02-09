@@ -1,0 +1,6 @@
+<iscontent type="application/json" charset="UTF-8" compact="true"/>
+<isscript>
+importScript("product/ProductUtils.ds");
+var av = ProductUtils.getAvailability(pdict.Product, pdict.CurrentHttpParameterMap.Quantity.stringValue);
+</isscript>
+<isprint value="${JSON.stringify(av)}" encoding="off"/>

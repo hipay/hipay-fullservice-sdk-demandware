@@ -1,0 +1,11 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isscript>
+	var Url = require('~/cartridge/scripts/util/Url');
+	var currentUrl = encodeURIComponent(Url.getCurrent(pdict));
+	var title = encodeURIComponent(pdict.Product.name);
+</isscript>
+<a class="share-icon" title="${Resource.msg('global.socialshare.facebook', 'locale', null)}" href="https://www.facebook.com/sharer/sharer.php?u=${currentUrl}" target="_blank"><i class="fa fa-facebook-official"></i></a>
+<a class="share-icon" title="${Resource.msg('global.socialshare.twitter', 'locale', null)}" href="https://twitter.com/intent/tweet/?url=${currentUrl}&text=${title}" target="_blank"><i class="fa fa-twitter"></i></a>
+<a class="share-icon" title="${Resource.msg('global.socialshare.googleplus', 'locale', null)}" href="https://plus.google.com/share?url=${currentUrl}" target="_blank"><i class="fa fa-google-plus"></i></a>
+<a class="share-icon" title="${Resource.msg('global.socialshare.pinterest', 'locale', null)}" href="https://www.pinterest.com/pin/create/button/?url=${currentUrl}&description=${title}" target="_blank"><i class="fa fa-pinterest"></i></a>
+<a class="share-icon" title="${Resource.msg('global.socialshare.email', 'locale', null)}" href="mailto:name@email.com?subject=${title}&body=${currentUrl}" target="_blank"><i class="fa fa-envelope"></i></a>

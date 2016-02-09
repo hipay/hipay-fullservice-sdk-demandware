@@ -1,0 +1,20 @@
+{
+	"curly": true,
+	"eqeqeq": true,
+	"quotmark": "single",
+	"undef": true,
+	"unused": true,
+	"browser": true,
+	"strict": true,
+	"jquery": true,
+	"browserify": true,
+	"esnext": true,
+	"mocha": true,
+	"multistr": true,
+	"globals": {
+		"SitePreferences": true,
+		"Urls": true,
+		"Resources": true,
+		"User": true
+	}
+}

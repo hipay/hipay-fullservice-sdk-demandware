@@ -1,0 +1,24 @@
+<div class="product-tile">
+	<div class="product-image">
+		<a class="thumb-link" href="#" title="{{title}}">
+			<img src="{{image}}" alt="{{title}}, {{color}}, {{size}}" title="{{title}}, {{color}}">
+		</a>
+	</div>
+	<div class="product-name">
+		<a class="name-link" href="#" title="{{title}}">{{title}}</a>
+	</div>
+
+	<div class="product-pricing">
+		{{#each prices}}
+		<span class="product-{{type}}-price" title="{{title}}">${{value}}</span>
+		{{/each}}
+	</div>
+
+	<div class="product-promo">
+	</div>
+
+	<div class="product-compare">
+		<input type="checkbox" class="compare-check" id="productID">
+		<label for="productID">Compare</label>
+	</div>
+</div>

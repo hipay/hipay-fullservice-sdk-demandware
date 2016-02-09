@@ -1,0 +1,54 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscomment>Expected parameters are product & quantity.</iscomment>
+
+<isset name="levels" value="${product.availabilityModel.getAvailabilityLevels(quantity)}" scope="page"/>
+
+<isif condition="${product.availabilityModel.inventoryRecord != null && product.availabilityModel.inventoryRecord.inStockDate != null}">
+	<isset name="inStockDate" value="${product.availabilityModel.inventoryRecord.inStockDate.toDateString()}" scope="page"/>
+<iselse/>
+	<isset name="inStockDate" value="${null}" scope="page"/>
+</isif>
+
+<ul class="product-availability-list">
+<isif condition="${levels.inStock.value > 0}">
+	<isif condition="${levels.inStock.value == quantity}">
+		<li class="is-in-stock">${StringUtils.format(Resource.msg('global.instock','locale',null))}</li>
+	<iselse/>
+		<li class="is-in-stock">${StringUtils.format(Resource.msg('global.quantityinstock','locale',null),levels.inStock.value)}</li>
+	</isif>
+</isif>
+
+<isif condition="${levels.preorder.value > 0}">
+	<isif condition="${levels.preorder.value == quantity}">
+		<li class="on-order">${StringUtils.format(Resource.msg('global.allpreorder','locale',null))}</li>
+	<iselseif condition="${levels.preorder.value == 0}">
+		<li class="on-order">${StringUtils.format(Resource.msg('global.remainingpreorder','locale',null))}</li>
+	<iselse/>
+		<li class="on-order">${StringUtils.format(Resource.msg('global.quantitypreorder','locale',null),levels.preorder.value)}</li>
+	</isif>
+	<isif condition="${inStockDate != null}">
+		<li class="on-order">${StringUtils.format(Resource.msg('global.inStockDate','locale',null), inStockDate)}</li>
+	</isif>
+</isif>
+
+<isif condition="${levels.backorder.value > 0}">
+	<isif condition="${levels.backorder.value == quantity}">
+		<li class="on-order">${StringUtils.format(Resource.msg('global.allbackorder','locale',null))}</li>
+	<iselseif condition="${levels.notAvailable.value == 0}">
+		<li class="on-order">${StringUtils.format(Resource.msg('global.remainingbackorder','locale',null))}</li>
+	<iselse/>
+		<li class="on-order">${StringUtils.format(Resource.msg('global.quantitybackorder','locale',null),levels.backorder.value)}</li>
+	</isif>
+	<isif condition="${inStockDate != null}">
+		<li class="on-order">${StringUtils.format(Resource.msg('global.inStockDate','locale',null), inStockDate)}</li>
+	</isif>
+</isif>
+
+<isif condition="${levels.notAvailable.value > 0}">
+	<isif condition="${levels.notAvailable.value == quantity}">
+		<li class="not-available">${StringUtils.format(Resource.msg('global.allnotavailable','locale',null))}</li>
+	<iselse/>
+		<li class="not-available">${StringUtils.format(Resource.msg('global.remainingnotavailable','locale',null))}</li>
+	</isif>
+</isif>
+</ul>

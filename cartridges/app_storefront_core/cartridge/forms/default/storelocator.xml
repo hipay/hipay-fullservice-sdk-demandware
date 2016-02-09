@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+ <field formid="countryCode" type="string" mandatory="false" />
+ <field formid="distanceUnit" type="string" mandatory="false" />
+ <field formid="postalCode" label="resource.zippostalcode" type="string" mandatory="true" binding="postalCode" parse-error="storelocator.ziperror" missing-error="storelocator.ziperror" regexp="(^\d{5}(-\d{4})?$)|(^[abceghjklmnprstvxyABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Za-z]{1} *\d{1}[A-Za-z]{1}\d{1}$)" value-error="resource.errorzip"/>
+ <field formid="maxdistance" label="storelocator.distancelabel" type="number" mandatory="false" binding="maxdistance">
+	<options>	
+		<option optionid="15" label="storelocator.distanceoption1" value="15"/>
+		<option optionid="30" label="storelocator.distanceoption2" value="30"/>
+		<option optionid="100" label="storelocator.distanceoption3" value="100"/>
+		<option optionid="300" label="storelocator.distanceoption4" value="300"/>
+		<option optionid="all" label="storelocator.distanceoption5" value="999999"/>
+	</options>	
+</field>
+<include formid="address" name="customeraddress"/>
+<action formid="findbyzip" label="resource.find" valid-form="true"/>
+<action formid="findbystate" label="resource.find" valid-form="false"/>
+<action formid="findbycountry" label="resource.find" valid-form="false"/>
+</form>

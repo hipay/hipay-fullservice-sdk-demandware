@@ -1,0 +1,7 @@
+[{
+	"name": "$sans-serif",
+	"stack": "Arial, sans-serif"
+}, {
+	"name": "$serif",
+	"stack": "Georgia, serif"
+}]

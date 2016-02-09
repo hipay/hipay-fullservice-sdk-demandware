@@ -1,0 +1,23 @@
+var HTTPService = require('dw/svc/HTTPService');
+var ServiceRegistry = require('dw/svc/ServiceRegistry');
+
+/**
+* Initiates HiPay order request.
+*/
+function HiPayOrderService() {}
+
+HiPayOrderService.prototype.loadOrderPayment = function(params) {
+	var service : HTTPService = ServiceRegistry.get("hipay.rest.order");
+
+	var content = "";
+	for (var param in params) { 
+		if(empty(params[param])) { continue; }
+		
+		content+=  param + '=' + encodeURIComponent(params[param]) + '&';
+	}
+	
+	var response = service.call(content);
+	return response;
+}
+
+module.exports = HiPayOrderService;

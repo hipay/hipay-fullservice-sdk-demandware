@@ -1,0 +1,15 @@
+{
+	"title": "Navy Single Pleat Wool Suit",
+	"color": "Navy",
+	"size": "medium",
+	"image": "http://placehold.it/195/447294",
+	"prices": [{
+		"type": "standard",
+		"title": "Regular Price",
+		"value": "500.00"
+	}, {
+		"type": "sales",
+		"title": "Sale Price",
+		"value": "299.99"
+	}]
+}

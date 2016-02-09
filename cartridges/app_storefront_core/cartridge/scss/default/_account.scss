@@ -1,0 +1,102 @@
+#PasswordResetForm {
+	fieldset {
+		position: relative;
+	}
+	button {
+		float: right;
+		position: absolute;
+		top: 0px;
+		left: 63%;
+	}
+}
+
+h1 .account-logout {
+	font-size: 0.6em;
+	float: none;
+}
+
+.registration-selection {
+	input, label {
+		display: inline;
+		float: none;
+	}
+}
+
+.address-list {
+	padding: 0;
+	li {
+		float: left;
+		list-style: none outside none;
+		margin: 0;
+		min-height: 135px;
+		padding: 1em 0;
+		width: 30%;
+		&.default {
+			border-bottom: 1px solid $white-smoke;
+			float: none;
+			width: auto;
+		}
+	}
+	.mini-address-title {
+		font-style: italic;
+	}
+}
+.payment-list {
+	overflow: hidden;
+	padding: 0;
+	li {
+		float: left;
+		list-style: none outside none;
+		margin: 0;
+		min-height: 110px;
+		width: 33%;
+	}
+}
+
+
+.order-history-header {
+	background: url("../images/interface/icon-double-line-header.png") repeat-x scroll left top $white-smoke;
+	overflow: hidden;
+	padding: 10px;
+	.label {
+		font-weight: 700;
+	}
+	button {
+		float: right;
+	}
+	.order-date, .order-status, .order-number {
+		float: left;
+		margin: 2px 0;
+		width: 60%;
+	}
+}
+
+.order-history-items {
+	margin: 20px 0;
+}
+
+.order-history-table {
+	th, td {
+		padding: 5px 10px;
+	}
+	ul {
+		margin: 0;
+		padding: 0;
+	}
+	li {
+		list-style: none outside none;
+	}
+	.order-shipped-to,
+	.order-items,
+	.order-total-price {
+		width: 33%;
+	}
+	.toggle {
+		cursor: pointer;
+		display: block;
+	}
+}
+
+.js .order-history-table .hidden {
+	display: none;
+}

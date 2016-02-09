@@ -1,0 +1,69 @@
+/**
+importScript('search/ProductGridUtils.ds');
+*/
+importPackage ( dw.system );
+importPackage ( dw.util );
+importPackage ( dw.catalog );
+importPackage ( dw.web );
+
+/**
+*	Provides functions to make work around the product grid easier and better readable
+*	@namespace
+*
+*/
+function ProductGridUtils(){};
+
+/*
+*	Gets a list of variation attribute values, which are referenced by a given product search hit
+* 	@param  productHit 				the product search hit, given by the Scripting API
+* 	@param	variationAttributeID  	ID of the varitiation attribute
+*/
+ProductGridUtils.getRepresentedVariationValueIDs = function (productHit : ProductSearchHit, variationAttributeID : String) {
+	var representedColors = new Array();
+	var colorValues = productHit.getRepresentedVariationValues(variationAttributeID);
+	for each (var colorValue in colorValues) {
+		representedColors.push(colorValue.ID);
+	}
+
+	return representedColors;
+}
+
+/*
+*	Build the URL used for the product grid to include a hit tile.
+* 	Use with care, as this is essential to the caching strategy. It should just use parameters gathered from the search hit.
+* 	@param  productHit 				the product search hit, given by the Scripting API
+*/
+ProductGridUtils.buildHitTileURL = function (productHit : ProductSearchHit, cgidValue : String) {
+	var productHitURL : URL = URLUtils.url('Product-HitTile');
+	// if (productHit.product.isVariant()) {
+	// 	productHitURL.append('pid',  productHit.product.masterProduct.ID);
+	// } else {
+	// 	productHitURL.append('pid',  productHit.product.ID);
+	// }
+	productHitURL.append('pid',  productHit.product.ID);
+	if (!empty(cgidValue)){
+		productHitURL.append('cgid',  cgidValue);
+	}
+	// productHitURL.append('vpid', productHit.firstRepresentedProduct.ID);
+	productHitURL.append('maxprice', productHit.maxPrice);
+	productHitURL.append('minprice', productHit.minPrice);
+	/*
+		Relies on the fact that the represented product is a variant if color slicing is enabled
+	 	See script API doc @ProductSearchHit.product
+	*/
+	productHitURL.append('showswatches', productHit.product.isMaster());
+	productHitURL.append('pricerange', productHit.isPriceRange());
+	return productHitURL;
+}
+/*
+*	Build the URL used for the product grid to include a hit tile.
+* 	Use with care, as this is essential to the caching strategy. It should just use parameters gathered from the search hit.
+* 	@param  productHit 				the product search hit, given by the Scripting API
+*/
+ProductGridUtils.getCompareClass = function (category : Category) {
+	if (category && 'enableCompare' in category.custom && category.custom.enableCompare) {
+		return 'show-compare';
+	} else {
+		return 'hide-compare';
+	}
+}

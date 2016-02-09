@@ -1,0 +1,22 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isinclude template="util/modules"/>
+<isset name="DecoratorTemplate" value="product/pt_productdetails" scope="page"/>
+
+<isif condition="${pdict.CurrentHttpParameterMap.format.stringValue == 'ajax' }">
+	<isset name="DecoratorTemplate" value="util/pt_empty" scope="page"/>
+</isif>
+
+<isdecorate template="${DecoratorTemplate}">
+
+
+<div class="sendtofriend sendtofriendmain">
+	
+	<div class="confirmation-container" id="confirmation-container" >
+		<h2>${Resource.msg('billing.newcreditcardadded','checkout',null)}</h2>
+					
+	</div>	
+	
+</div>
+
+
+</isdecorate>

@@ -1,0 +1,73 @@
+/**
+ * This script provides utility functions shared across other account
+ * related scripts. Reused script components for account management 
+ * should be contained here, while this script is imported into the 
+ * requiring script.
+ */
+importPackage( dw.customer );
+importPackage( dw.order );
+importPackage( dw.system );
+importPackage( dw.util );
+importPackage( dw.value );
+importPackage( dw.web );
+
+/**
+ * Determines a unique address ID for an address to be save the given
+ * address book. The function first checks the city as the candidate ID 
+ * or appends a counter to the city (if already used as address ID) and 
+ * checks the existence of the resulting ID candidate. If the resulting 
+ * ID is unique this ID is returned, if not the counter is incremented and
+ * checked again.
+ */
+function determineUniqueAddressID( city : String, addressBook : AddressBook )
+{
+	var counter : Number = 0;
+	var existingAddress : CustomerAddress = null;
+
+	// check, if attribute "city" is set and has a value
+	if( city == null || empty(city) )
+	{
+		Logger.debug("Cannot determine unique address ID from non existing or not set attribute \"city\".");
+		return null;
+	}
+
+	// initialize the candidate ID
+	var candidateID : String = city;
+
+	while( existingAddress == null )
+	{
+		existingAddress = addressBook.getAddress(candidateID);
+		if( existingAddress != null )
+		{
+			// this ID is already taken, increment the counter 
+			// and try the next one
+			counter++;
+			candidateID = city + "-" + counter;
+			existingAddress = null;
+		}
+		else
+		{
+			return candidateID;
+		}
+	}
+
+	// should never go here
+	return null;
+}
+
+/**
+ * Returns a possible equivalent address to the given order address from the 
+ * address book or null, if non equivalent address was found.
+ */
+function getEquivalentAddress(addressBook : AddressBook, orderAddress : OrderAddress) : CustomerAddress
+{
+	var address : CustomerAddress = null;
+	for each(address in addressBook.addresses)
+	{
+		if(address.isEquivalentAddress(orderAddress))
+		{
+			return address;
+		}
+	}
+	return null;
+}

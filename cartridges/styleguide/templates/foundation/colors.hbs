@@ -1,0 +1,10 @@
+<section id="colors" class="section">
+	<h2>Colors</h2>
+	{{#each model.colors}}
+		<div class="fragment">
+			<div class="sample" style="background-color: {{code}}"></div>
+			<div class="code"><p>{{code}}</p><p>{{name}}</p></div>
+		</div>
+	{{/each}}
+</section>
+

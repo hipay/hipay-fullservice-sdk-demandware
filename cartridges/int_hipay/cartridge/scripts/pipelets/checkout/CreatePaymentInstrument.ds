@@ -1,0 +1,88 @@
+var Collection = require('dw/util/Collection');
+var Iterator = require('dw/util/Iterator');
+var Basket = require('dw/order/Basket');
+var OrderPaymentInstrument = require('dw/order/OrderPaymentInstrument');
+var Money = require('dw/value/Money');
+
+/**
+ * Creates a payment instrument for the given basket. If any error occurs the pipelet
+ * returns PIPELET_ERROR with no payment instrument being created. If the creation succeeded
+ * the script returns the newly created payment instrument.
+ *
+ * @input Basket : dw.order.Basket The basket.
+ * @input PaymentType : String the type of the payment instrument.
+ * @input RemoveExisting : Boolean if true, removes any other payment instruments of the same type
+ * @output PaymentInstrument : dw.order.PaymentInstrument The created payment instrument.
+ */
+function execute(pdict: PipelineDictionary): Number {
+	var basket: Basket = pdict.Basket;
+	var paymentType: String = pdict.PaymentType;
+	var removeExisting: Boolean = pdict.RemoveExisting;
+
+	// verify that we have a basket and a valid credit card form
+	if (basket == null || paymentType == null || removeExisting == null) {
+		return PIPELET_ERROR;
+	}
+
+	// remove existing credit cards from the basket
+	if (removeExisting) {
+		removeExistingPaymentInstruments(basket, paymentType);
+	}
+
+	// calculate the amount to be charged for the credit card
+	var amount = calculateNonGiftCertificateAmount(basket);
+
+	// create a payment instrument for this credit card
+	var paymentInstr: dw.order.PaymentInstrument = basket.createPaymentInstrument(paymentType, amount);
+
+	pdict.PaymentInstrument = paymentInstr;
+	return PIPELET_NEXT;
+}
+
+/** 
+ * Determines if the basket already contains a credit card payment
+ * instrument and removes it from the basket.
+ */
+function removeExistingPaymentInstruments(basket: Basket, type: String) {
+	// get all credit card payment instruments
+	var ccPaymentInstrs: Collection = basket.getPaymentInstruments(type);
+	var iter: Iterator = ccPaymentInstrs.iterator();
+	var existingPI: OrderPaymentInstrument = null;
+
+	// remove them
+	while (iter.hasNext()) {
+		existingPI = iter.next();
+		basket.removePaymentInstrument(existingPI);
+	}
+}
+
+/**
+ * Calculates the amount to be payed by a non-gift certificate payment instrument based
+ * on the given basket. The method subtracts the amount of all redeemed gift certificates
+ * from the order total and returns this value.
+ */
+function calculateNonGiftCertificateAmount(basket: Basket) {
+	// the total redemption amount of all gift certificate payment instruments in the basket
+	var giftCertTotal: Money = new Money(0.0, basket.currencyCode);
+
+	// get the list of all gift certificate payment instruments 
+	var gcPaymentInstrs: Collection = basket.getGiftCertificatePaymentInstruments();
+	var iter: Iterator = gcPaymentInstrs.iterator();
+	var orderPI: OrderPaymentInstrument = null;
+
+	// sum the total redemption amount
+	while (iter.hasNext()) {
+		orderPI = iter.next();
+		giftCertTotal = giftCertTotal.add(orderPI.getPaymentTransaction().getAmount());
+	}
+
+	// get the order total
+	var orderTotal: Money = basket.totalGrossPrice;
+
+	// calculate the amount to charge for the payment instrument
+	// this is the remaining open order total which has to be paid
+	var amountOpen: Money = orderTotal.subtract(giftCertTotal);
+
+	// return the open amount
+	return amountOpen;
+}

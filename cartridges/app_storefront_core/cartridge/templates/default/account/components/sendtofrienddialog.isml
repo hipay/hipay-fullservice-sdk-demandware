@@ -1,0 +1,322 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isinclude template="util/modules"/>
+<isset name="DecoratorTemplate" value="product/pt_productdetails" scope="page"/>
+<isscript>
+	var sourceHash = {
+		productdetail: {
+			link: empty(pdict.ProductOptionModel) ? '' : pdict.ProductOptionModel.url('Product-Show'),
+			subject: dw.web.Resource.msg('product.sendfriendemailsubject','product',null)
+		},
+		wishlist: {
+			link: pdict.CurrentHttpParameterMap.plid.stringValue ? dw.web.URLUtils.https('Wishlist-ShowOther', 'WishListID', pdict.CurrentHttpParameterMap.plid.stringValue).toString() : "",
+			subject:dw.web.Resource.msg('wishlist.emailsubject','account',null)
+		},
+		registry: {
+			link: pdict.CurrentHttpParameterMap.plid.stringValue ? dw.web.URLUtils.https('GiftRegistry-ShowRegistryByID','ProductListID', pdict.CurrentHttpParameterMap.plid.stringValue).toString() : "",
+			subject:dw.web.Resource.msg('registry.emailsubject','account',null)
+		}
+	};
+</isscript>
+<isset name="IsRegistry" value="${false}" scope="page" />
+<isset name="IsWishList" value="${false}" scope="page" />
+<isset name="IsProductDetail" value="${false}" scope="page" />
+<isset name="productOptionModel" value="${pdict.ProductOptionModel}" scope="page"/>
+
+<isif condition="${pdict.CurrentHttpParameterMap.source.stringValue == 'registry' && pdict.CurrentHttpParameterMap.format.stringValue != 'ajax' }">
+	<isset name="DecoratorTemplate" value="account/giftregistry/pt_giftregistry" scope="page"/>
+	<isset name="IsRegistry" value="${true}" scope="page" />
+</isif>
+
+<isif condition="${pdict.CurrentHttpParameterMap.source.stringValue == 'wishlist' && pdict.CurrentHttpParameterMap.format.stringValue != 'ajax' }">
+	<isset name="DecoratorTemplate" value="account/wishlist/pt_wishlist" scope="page"/>
+	<isset name="IsWishList" value="${true}" scope="page" />
+</isif>
+
+<isif condition="${pdict.CurrentHttpParameterMap.source.stringValue == 'productdetail' && pdict.CurrentHttpParameterMap.format.stringValue != 'ajax'}">
+	<isset name="DecoratorTemplate" value="content/pt_customerservice" scope="page"/>
+	<isset name="IsProductDetail" value="${true}" scope="page" />
+</isif>
+<isif condition="${pdict.CurrentHttpParameterMap.format.stringValue == 'ajax' }">
+	<isset name="DecoratorTemplate" value="util/pt_empty" scope="page"/>
+</isif>
+
+
+<isdecorate template="${DecoratorTemplate}">
+<isif condition="${pdict.CurrentCustomer.registered}">
+<form action="${URLUtils.continueURL()}" method="post" name="${pdict.CurrentForms.sendtofriend.htmlName}" id="send-to-friend-form" class="form-horizontal ${empty(pdict.ViewMode) ? 'edit' : pdict.ViewMode}">
+	<div id="send-to-friend-main">
+		<isif condition="${IsRegistry || IsWishList || IsProductDetail}">
+			<h1>${Resource.msg('global.sendtoafriend','locale',null)}</h1>
+		</isif>
+		<div class="dialog-required"> <span class="required-indicator">&#8226;</span> <em>${Resource.msg('global.requiredfield','locale',null)}</em></div>
+		<fieldset>
+			<isif condition="${pdict.ViewMode != 'preview'}">
+
+				<isinputfield formfield="${pdict.CurrentForms.sendtofriend.yourname}" type="input"/>
+
+				<div class="form-row">
+					<span class="send-to-friend-sender">
+						<label class="send-to-friend-sender-label">
+							<span>${dw.web.Resource.msg('sendtofriend.yourEmail','forms',null)}</span>
+						</label>
+ 						${pdict.CurrentCustomer.profile.email}
+ 					</span>
+				</div>
+				<isinputfield formfield="${pdict.CurrentForms.sendtofriend.friendsname}" type="input" requiredtext="${Resource.msg('sendtofriend.friendsName.missing-error','forms',null)}"/>
+
+				<isinputfield formfield="${pdict.CurrentForms.sendtofriend.friendsemail}" type="input" xhtmlclass="email" requiredtext="${Resource.msg('sendtofriend.email.missing-error','forms',null)}"/>
+
+				<isinputfield formfield="${pdict.CurrentForms.sendtofriend.confirmfriendsemail}" type="input" xhtmlclass="email" requiredtext="${Resource.msg('sendtofriend.email.missing-error','forms',null)}"/>
+
+				<isinputfield formfield="${pdict.CurrentForms.sendtofriend.addtoemaillist}" type="checkbox" rowclass="form-indent label-inline"/>
+
+				<div class="form-caption">
+					${Resource.msg('global.email.policy','locale',null)}
+					<a href="${URLUtils.url('Page-Show', 'cid', 'privacy-policy')}" title="${Resource.msg('global.privacypolicy','locale',null)}" class="privacy-policy" >
+						${Resource.msg('global.privacypolicy','locale',null)}
+					</a>
+				</div>
+
+				<div class="send-to-friend-product form-indent">
+
+					<isif condition="${pdict.Product != null}">
+
+						<isif condition="${pdict.Product.master && pdict.CurrentVariationModel && pdict.CurrentVariationModel.variants.size() > 0}">
+							<isset name="imageProduct" value="${pdict.CurrentVariationModel.variants[0]}" scope="page"/>
+						<iselse/>
+							<isset name="imageProduct" value="${pdict.Product}" scope="page"/>
+						</isif>
+
+						<isif condition="${!empty(imageProduct.getImage('medium', 0))}">
+							<isset name="imageUrl" value="${imageProduct.getImage('medium', 0).getURL()}" scope="page"/>
+							<isset name="imageAlt" value="${imageProduct.getImage('medium', 0).alt}" scope="page"/>
+							<isset name="imageTitle" value="${imageProduct.getImage('medium', 0).title}" scope="page"/>
+						<iselse/>
+							<isset name="imageUrl" value="${URLUtils.staticURL('/images/noimagelarge.png')}" scope="page"/>
+							<isset name="imageAlt" value="${pdict.Product.name}" scope="page"/>
+							<isset name="imageTitle" value="${pdict.Product.name}" scope="page"/>
+						</isif>
+
+						<div class="product-image">
+							<img src="${imageUrl}" alt="${imageAlt}" title="${imageTitle}"/>
+						</div>
+
+						<div class="product-description">
+
+							<a title="${Resource.msg('global.storename','locale',null)}" href="${URLUtils.httpHome()}">
+								<img src="${URLUtils.staticURL('/images/logo.png')}" alt="${Resource.msg('global.storename','locale',null)}" />
+							</a>
+
+							<h2><isprint value="${pdict.Product.name}" encoding="off"/></h2>
+
+							<div class="product-number">
+								<span class="label">${Resource.msg('product.item','product',null)}</span>
+								<span itemprop="productID"><isprint value="${ pdict.Product.ID }"/></span>
+							</div>
+
+							<isif condition="${pdict.Product != null && pdict.Product.isVariant()}">
+								<isloop items="${pdict.Product.variationModel.getProductVariationAttributes()}" var="VA">
+									<isset name="SelectedVariationValue" value="${pdict.Product.variationModel.getSelectedValue(VA)}" scope="page"/>
+									<div class="attribute">
+										<span class="label">
+											${VA.displayName}:
+										</span>
+										<span class="value">
+											<isif condition="${SelectedVariationValue != null}">
+												<isprint value="${SelectedVariationValue.displayValue}"/>
+											<iselse/>
+												-
+											</isif>
+										</span>
+									</div>
+								</isloop>
+							</isif>
+							<isif condition="${!empty(productOptionModel)}">
+								<isloop iterator="${productOptionModel.options}" alias="productOption">
+									<isset name="selectedOptionValue" value="${productOptionModel.getSelectedOptionValue(productOption)}" scope="page"/>
+									<span class="label">
+										<isprint value="${productOption.displayName}"/>
+									</span>
+									<span class="value">
+										<isprint value="${selectedOptionValue.displayValue}"/>
+									</span>
+									<input type="hidden" name="dwopt_${pdict.Product.ID}_${productOption.ID}" value="${selectedOptionValue.ID}" />
+								</isloop>
+							</isif>
+							<isif condition="${pdict.Product.shortDescription!=null}">
+								<p>
+								<strong>${Resource.msg('global.description','locale',null)}</strong><br/>
+								<isprint value="${pdict.Product.shortDescription}" encoding="off"/></p>
+							</isif>
+
+						</div>
+
+					<iselse/>
+
+						<a title="${Resource.msg('global.storename','locale',null)}" href="${URLUtils.httpHome()}">
+							<img src="${URLUtils.staticURL('/images/logo.png')}" alt="${Resource.msg('global.storename','locale',null)}" />
+						</a>
+
+					</isif>
+
+				</div>
+
+				<isinputfield attribute1="rows" value1="8" attribute2="cols" value2="40" formfield="${pdict.CurrentForms.sendtofriend.message}" type="textarea" attribute3="data-character-limit" value3="250" />
+
+			<iselse/>
+
+				<iscomment>This is a request for send to friend preview</iscomment>
+
+				<h2>${Resource.msg('account.components.sendtoafrienddialog.reviewheader','account',null)}</h2>
+
+				<p>${Resource.msg('account.components.sendtoafrienddialog.reviewmessage','account',null)}</p>
+
+			<div class="send-to-friend-product">
+
+				<isif condition="${pdict.Product != null}">
+
+					<isset name="product" value="${pdict.Product}" scope="page"/>
+					<isset name="image" value="${product.getImage('large',0)}" scope="page"/>
+					<isif condition="${!empty(image)}">
+						<isset name="thumbnailUrl" value="${image.getURL()}" scope="page"/>
+					   	<isset name="imageAlt" value="${image.alt}" scope="page"/>
+					   	<isset name="imageTitle" value="${image.title}" scope="page"/>
+					<iselse/>
+					  	<isset name="thumbnailUrl" value="${URLUtils.staticURL('/images/noimagesmall.png')}" scope="page"/>
+					  	<isset name="imageTitle" value="${item.object.product.name}" scope="page"/>
+					 	<isset name="imageAlt" value="${item.object.product.name}" scope="page"/>
+					</isif>
+
+					<div class="product-image">
+						<img src="${thumbnailUrl}" alt="${imageAlt}" title="${imageTitle}"/>
+					</div>
+
+				<div class="product-description">
+
+					<div class="form-row">
+						<a title="${Resource.msg('global.storename','locale',null)}" href="${URLUtils.httpHome()}">
+							<img src="${URLUtils.staticURL('/images/logo.png')}" alt="${Resource.msg('global.storename','locale',null)}" />
+						</a>
+					</div>
+
+					<h2><isprint value="${product.name}" encoding="off"/></h2>
+
+					<dl>
+
+						<dt>${Resource.msg('account.components.sendtoafrienddialog.item','account',null)}</dt>
+						<dd><isprint value="${product.ID}" encoding="off"/></dd>
+
+						<isif condition="${product != null && product.isVariant()}">
+
+							<isloop items="${product.variationModel.getProductVariationAttributes()}" var="VA">
+
+								<isset name="SelectedVariationValue" value="${product.variationModel.getSelectedValue(VA)}" scope="page"/>
+
+								<dt>${VA.displayName}:</dt>
+								<dd>
+									<isif condition="${SelectedVariationValue != null}">
+										<isprint value="${SelectedVariationValue.displayValue}"/>
+									<iselse/>
+										-
+									</isif>
+								</dd>
+
+							</isloop>
+
+						</isif>
+
+					<isif condition="${!empty(productOptionModel)}">
+
+						<isloop iterator="${productOptionModel.options}" alias="productOption">
+
+							<isset name="selectedOptionValue" value="${productOptionModel.getSelectedOptionValue(productOption)}" scope="page"/>
+
+							<dt><isprint value="${productOption.displayName}"/><dt>
+							<dd><isprint value="${selectedOptionValue.displayValue}"/></dd>
+							<input type="hidden" name="dwopt_${product.ID}_${productOption.ID}" value="${selectedOptionValue.ID}" />
+						</isloop>
+
+					</isif>
+
+					<isif condition="${product.shortDescription!=null}">
+
+						<dt>${Resource.msg('global.description','locale',null)}</dt>
+						<dd><isprint value="${product.shortDescription}" encoding="off"/></dd>
+
+					</isif>
+
+				</isif>
+
+					<dt>${Resource.msg('global.to','locale',null)}:</dt>
+					<dd>
+						<isprint value="${pdict.CurrentForms.sendtofriend.friendsname.htmlValue}"/><br />
+						<isprint value="${pdict.CurrentForms.sendtofriend.friendsemail.htmlValue}"/>
+					</dd>
+
+					<dt>${Resource.msg('global.from','locale',null)}:</dt>
+					<dd>
+						<isprint value="${pdict.CurrentForms.sendtofriend.yourname.htmlValue}"/><br />
+						<isprint value="${pdict.CurrentUser.profile.email}"/>
+					</dd>
+
+					<dt>${Resource.msg('account.components.sendtoafrienddialog.subject','account',null)}</dt>
+					<dd><isprint value="${sourceHash[pdict.CurrentHttpParameterMap.source.stringValue].subject}"/></dd>
+
+					<dt>${Resource.msg('account.components.sendtoafrienddialog.message','account',null)}</dt>
+					<dd><isprint value="${pdict.CurrentForms.sendtofriend.message.htmlValue}"/></dd>
+
+					</dl>
+					<input type="hidden" name="pid" value="${pdict.CurrentHttpParameterMap.pid.stringValue}" />
+					<input type="hidden" name="plid" value="${pdict.CurrentHttpParameterMap.plid.stringValue}" />
+				</div>
+
+			</div>
+
+			</isif>
+
+			<input type="hidden" name="source" value="${pdict.CurrentHttpParameterMap.source.stringValue}" />
+			<isif condition="${'pid' in pdict.CurrentHttpParameterMap}">
+				<input type="hidden" name="pid" value="${pdict.CurrentHttpParameterMap.pid.stringValue}" />
+			</isif>
+			<isif condition="${'plid' in pdict.CurrentHttpParameterMap}">
+				<input type="hidden" name="plid" value="${pdict.CurrentHttpParameterMap.plid.stringValue}" />
+			</isif>
+			<input type="hidden" name="${pdict.CurrentForms.sendtofriend.subject.htmlName}" value="${sourceHash[pdict.CurrentHttpParameterMap.source.stringValue].subject}"/>
+			<input type="hidden" name="${pdict.CurrentForms.sendtofriend.messagelink.htmlName}" value="${sourceHash[pdict.CurrentHttpParameterMap.source.stringValue].link}"/>
+			<input type="hidden" name="${pdict.CurrentForms.sendtofriend.messagelinktext.htmlName}" value="${sourceHash[pdict.CurrentHttpParameterMap.source.stringValue].subject}"/>
+			<div class="form-row form-row-button">
+				<button class="edit-button" type="submit" value="${Resource.msg('global.edit','locale',null)}" name="${pdict.CurrentForms.sendtofriend.edit.htmlName}"${pdict.ViewMode == "preview" ? "" : " style='display:none'"}>
+					${Resource.msg('global.edit','locale',null)}
+				</button>
+				<button class="preview-button" type="submit" value="${Resource.msg('global.preview','locale',null)}" name="${pdict.CurrentForms.sendtofriend.preview.htmlName}"${pdict.ViewMode == "preview" ? " style='display:none'" : ""}>
+					${Resource.msg('global.preview','locale',null)}
+				</button>
+				<button class="send-button" value="${Resource.msg('global.send','locale',null)}" type="submit" name="${pdict.CurrentForms.sendtofriend.send.htmlName}">
+					${Resource.msg('global.send','locale',null)}
+				</button>
+				<button class="cancel cancel-button">
+					${Resource.msg('global.cancel','locale',null)}
+				</button>
+			</div>
+		</fieldset>
+
+	</div>
+</form>
+</isif>
+<isif condition="${!pdict.CurrentCustomer.registered}">
+	<div class="send-to-friend-login-message">
+		<span>
+			${Resource.msg('account.components.sendtoafrienddialog.unregistereduser','account',null)}
+		</span>
+	</div>
+
+	<span class="buttonstyle">
+		<a href="${URLUtils.https('SendToFriend-Login', 'pid', pdict.Product.ID)}" title="">${Resource.msg('account.components.sendtoafrienddialog.unregistereduser.button','account',null)}</a>
+	</span>
+
+	<span class="cancel cancel-button buttonstyle">
+		${Resource.msg('global.cancel','locale',null)}
+	</span>
+</isif>
+
+</isdecorate>

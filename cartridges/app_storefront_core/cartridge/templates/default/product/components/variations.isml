@@ -1,0 +1,184 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscomment>
+	Desc:
+		Creates the variation section if product is a variation or a master,
+		otherwise
+
+	Parameter:
+		Product - the product to use
+
+	Options:
+		none
+	Available if empty: no
+	Full-Block-Element: yes
+</iscomment>
+<isscript>
+	importPackage(dw.system);
+	importPackage(dw.util);
+	importScript('product/ProductUtils.ds');
+	var qs = ProductUtils.getQueryString(pdict.CurrentHttpParameterMap, ['source', 'uuid']),
+		qsAppend = qs.length == 0 ? '' : ('&' + qs),
+		pUtil = new ProductUtils(pdict),
+		PVM = pdict.CurrentVariationModel != null ? pdict.CurrentVariationModel : pdict.Product.variationModel,
+		selectedAtts = (pdict.Product.isVariant() || pdict.Product.isVariationGroup()) ? ProductUtils.getSelectedAttributes(PVM) : {},
+		sizeChartShown = false,
+		swatchAttributes = ['color', 'size', 'width', 'waist', 'length'],
+		selectedVariants = [],
+		selectedVariant;
+	if (pdict.Product.variationGroup) {
+		PVM = pdict.Product.variationGroup.getVariationModel();
+	}
+</isscript>
+<isif condition="${pdict.Product.variant || pdict.Product.variationGroup || pdict.Product.master}">
+	<div class="product-variations" data-attributes="${JSON.stringify(selectedAtts)}">
+		<h2 class="visually-hidden">Variations</h2>
+		<iscomment>
+			Filter out variation attribute values with no orderable variants.
+			The "clean" ProductVariationModel of the master without any selected attribute values is used to filter the variants.
+			Otherwise hasOrderableVariants() would use currently selected values resulting in a too narrow selection of variants.
+		</iscomment>
+		<isset name="cleanPVM" value="${(pdict.Product.variant ? pdict.Product.masterProduct.variationModel : pdict.Product.variationModel)}" scope="page"/>
+		<ul>
+		<isloop items="${PVM.productVariationAttributes}" var="VA">
+			<isset name="VAVALS" value="${PVM.getAllValues(VA)}" scope="page"/>
+			<isset name="Valength" value="${VAVALS.length}" scope="page"/>
+			<isset name="vaId" value="${VA.getAttributeID()}" scope="page"/>
+			<isif condition="${swatchAttributes.indexOf(vaId) >= 0}">
+				<li class="attribute">
+					<div class="label">
+						 ${Resource.msg('global.select', 'locale', null)} <isprint value="${VA.displayName}"/>
+					</div>
+					<div class="value">
+						<ul class="swatches ${vaId.toLowerCase()}">
+							<isset name="selectedSwatch" value="${''}" scope="page"/>
+							<isloop items="${VAVALS}" var="VV">
+								<isif condition="${cleanPVM.hasOrderableVariants(VA, VV)}">
+									<isscript>
+										var lgImage = PVM.getImage('large', VA, VV),
+											swImage = VV.getImage('swatch'),
+											selectable = PVM.hasOrderableVariants(VA, VV),
+											isSelected = PVM.isSelectedAttributeValue(VA, VV),
+											displayValue = VV.displayValue ? VV.displayValue : VV.value,
+											linkURL = PVM.urlSelectVariationValue('Product-Variation', VA, VV),
+											hiresURL = !empty(VV.getImage('hi-res')) ? VV.getImage('hi-res').getURL() : '',
+											swatchClass = selectable ? 'available' : 'unselectable',
+											variationGroup;
+
+										if (isSelected) {
+											swatchClass = 'selected';
+											selectedSwatch = displayValue;
+											linkURL = PVM.urlUnselectVariationValue('Product-Variation', VA);
+											selectedVariants.push(VA.ID + '-' + VV.value);
+										}
+										linkURL = linkURL + qsAppend;
+
+										if (pdict.Product.variationGroup) {
+											variationGroup = pdict.Product;
+										} else if (pdict.CurrentHttpParameterMap.vgid) {
+											variationGroup = dw.catalog.ProductMgr.getProduct(pdict.CurrentHttpParameterMap.vgid);
+										}
+										if (variationGroup) {
+											linkURL += '&vgid=' + variationGroup.ID;
+											// PVM.getVariationValue returns `null` for attribute that
+											// is not assigned to the variation group
+											if (PVM.getVariationValue(variationGroup, VA) == null) {
+												if (swatchClass === 'available') {
+													swatchClass = 'variation-group-value';
+												} else if (swatchClass === 'selected') {
+													swatchClass += ' variation-group-value';
+												}
+
+											}
+										}
+									</isscript>
+									<li class="${swatchClass}">
+										<isif condition="${selectable}">
+											<a class="swatchanchor" href="${linkURL}" title="${displayValue}" data-lgimg='<isif condition="${!empty(lgImage)}">{"url":"${lgImage.getURL()}", "title":"${lgImage.title}", "alt":"${lgImage.alt}", "hires":"${hiresURL}"}</isif>'>
+												<isif condition="${vaId == 'color' && !empty(swImage)}">
+													<img src="${swImage.getURL()}" title="${displayValue}">
+												<iselse/>
+													<isprint value="${displayValue}"/>
+												</isif>
+											</a>
+										<iselse/>
+											<a class="swatchanchor" title="${Resource.msgf('product.variationnotavailable','product', null, vaId.toUpperCase(), displayValue)}">
+												<isprint value="${displayValue}"/>
+											</a>
+										</isif>
+									</li>
+								</isif>
+							</isloop>
+							<isif condition="${selectedSwatch}">
+								<li class="selected-value"><isprint value="${selectedSwatch}"/></li>
+							</isif>
+						</ul>
+
+						<iscomment>Size Chart link</iscomment>
+						<isif condition="${vaId != 'color' && !sizeChartShown}">
+							<isscript>
+								// get category from products primary category
+								var category = pdict.Product.primaryCategory,
+									sizeChartID;
+
+								// get category from product master if not set at variant
+								if (!category && pdict.Product.variant) {
+									category = pdict.Product.masterProduct.primaryCategory;
+								}
+
+								while (category && !sizeChartID) {
+									if ('sizeChartID' in category.custom && !empty(category.custom.sizeChartID)) {
+										sizeChartID = category.custom.sizeChartID;
+									} else {
+										category = category.parent;
+									}
+								}
+							</isscript>
+							<isif condition="${!empty(sizeChartID)}">
+								<div class="size-chart-link">
+									<a href="${URLUtils.url('Page-Show','cid', sizeChartID)}" target="_blank" title="${Resource.msg('product.variations.sizechart', 'product', null)}">${Resource.msg('product.variations.sizechart', 'product', null)}</a>
+								</div>
+								<isscript>
+									sizeChartShown = true;
+								</isscript>
+							</isif>
+						</isif>
+					</div>
+				</li>
+			<iselse/>
+				<iscomment>Drop down list</iscomment>
+				<li class="attribute variant-dropdown">
+					<span class="label va-${vaId}">
+						 ${Resource.msg('global.select', 'locale', null)} <isprint value="${VA.displayName}"/>
+					</span>
+					<div class="value">
+						<select class="variation-select" id="va-${vaId}" name="${'dwvar_' + pdict.Product.variationModel.master.ID + '_' + vaId}">
+							<option value="" class="emptytext">${Resource.msg('global.select','locale',null)} <isprint value="${VA.displayName}"/></option>
+							<isloop items="${VAVALS}" var="VV">
+								<iscomment>filter out unorderable variation attribute values</iscomment>
+								<isif condition="${cleanPVM.hasOrderableVariants(VA, VV)}">
+									<isset name="lgImage" value="${PVM.getImage('large', VA, VV)}" scope="page"/>
+									<isscript>
+										var selected = PVM.isSelectedAttributeValue(VA, VV) ? 'selected="selected"' : '',
+											linkURL = selected ? PVM.urlUnselectVariationValue('Product-Variation', VA) : PVM.urlSelectVariationValue('Product-Variation', VA, VV),
+											isAvailable = selectedVariants.length > 0 ? pUtil.isVariantAvailable(VA.ID + '-' + VV.value, selectedVariants) : true,
+											displayValue = (VV.displayValue||VV.value);
+
+										if (selected.length > 0) {
+											selectedVariants.push(VA.ID + '-' + VV.value);
+										}
+									</isscript>
+									<isif condition="${isAvailable}">
+										<option value="${PVM.urlSelectVariationValue('Product-Variation', VA, VV)}&source=${pdict.CurrentHttpParameterMap.source.stringValue||'detail'}<isif condition="${empty(pdict.CurrentHttpParameterMap.uuid)}">&uuid=${pdict.CurrentHttpParameterMap.uuid.stringValue}</isif>" data-lgimg='<isif condition="${!empty(lgImage)}">{"url":"${lgImage.getURL()}", "title":"${lgImage.title}", "alt":"${lgImage.alt}", "hires":"${hiresURL}"}</isif>' <isprint value="${selected}" encoding="off"/>>
+												<isprint value="${(VV.displayValue||VV.value)}"/>
+										</option>
+									</isif>
+								</isif>
+							</isloop>
+						</select>
+					</div>
+				</li>
+			</isif>
+		</isloop>
+		</ul>
+	</div>
+</isif>

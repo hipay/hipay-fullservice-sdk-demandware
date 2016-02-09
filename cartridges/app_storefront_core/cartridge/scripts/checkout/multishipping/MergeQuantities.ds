@@ -1,0 +1,146 @@
+/**
+*	This script creates new ProductLineItems and Shipments from the
+*	FormList of the address selections with help of a data structure
+*	(address and product relations through HashMaps).
+*
+*   @input CBasket : dw.order.Basket The current basket object.
+*	@input QuantityLineItems : dw.web.FormList Quantity Line Items from address selection.
+*
+*/
+importPackage( dw.system );
+importPackage( dw.order );
+importPackage( dw.util );
+importPackage( dw.web );
+importPackage( dw.catalog );
+
+importScript("checkout/Utils.ds");
+
+function execute( args : PipelineDictionary ) : Number
+{
+	// Init global variables
+	var basket : Basket = args.CBasket;
+	var qliList : FormList = args.QuantityLineItems;
+	var addressRelations : HashMap = new HashMap();
+	var defaultShippingSet : Boolean = false;
+	
+	/**
+	*	Build new data structure through HashMaps from address-products-relations (stored in FormList)
+	*	to build the new ProductLineItems in dependency to their addresses and quantities
+	*
+	*	address relation:	+===============+=================+		
+	*						|	Key			|	Value		  |
+	*						+===============+=================+
+	*						|	address1	|	products1	--|------->	product relation 1:	+===============+===============+
+	*						+---------------+-----------------+  							|	Key			|	Value		|
+	*						|	address2	|	products2	--|--->	product relation 2		+===============+===============+
+	*						+---------------+-----------------+								|	productID1	|	quantity1	|
+	*						|	...			|	...			  |								+---------------+---------------+
+	*																						|	productID2	|	quantity2	|
+	*																						+---------------+---------------+
+	*																						|	...			|	...			|
+	*/
+	for each (var qli : FormListItem in qliList){
+		var selectedAddress : String = qli.addressList.selectedOptionObject;
+		var productID : String = qli.object.productID;
+		
+		var productOptionID : String = qli.object.optionID;
+		productID = productID+'.'+productOptionID;
+		
+		if (selectedAddress == null){
+			return PIPELET_ERROR;
+		}
+		
+		if (addressRelations.containsKey(selectedAddress)){
+			var productRelations : HashMap = addressRelations.get(selectedAddress);
+			if (productRelations.containsKey(productID)){
+				var quantity = productRelations.get(productID);
+				productRelations.put(productID, quantity + 1);
+			} else {
+				productRelations.put(productID, 1);
+			}
+		} else {
+			var productRelations : HashMap = new HashMap();
+			productRelations.put(productID, 1);
+			addressRelations.put(selectedAddress, productRelations);
+		}
+	}
+	
+	//Remove all ProductLineItems and Shipments to create new ones
+	for each (var pli : ProductLineItem in basket.getProductLineItems()){
+		if(empty(pli.custom.fromStoreId)){
+			basket.removeProductLineItem(pli);
+		}
+	}
+	
+	for each (var shipment : Shipment in basket.getShipments()){
+		//if the shipment is for a gift certificate or the default shipment, it will not be removed from the cart
+		if (!shipment.isDefault() && !(shipment.giftCertificateLineItems.length > 0) && shipment.custom.shipmentType != 'instore'){
+			basket.removeShipment(shipment);
+		}
+	}
+	
+	// Build new ProductLineItems and Shipments with the new created data structure
+	var addresses : Set = addressRelations.keySet();
+	
+	for each (var address : Object in addresses){
+		var shipment : Shipment = null;
+		var orderAddress : OrderAddress = null;
+		if (!defaultShippingSet){
+			shipment = basket.getDefaultShipment();
+			defaultShippingSet = true;
+		} else {
+			shipment = basket.createShipment(address.UUID);
+		}
+		orderAddress = shipment.createShippingAddress();
+		var shippingAddress : Object = new ShippingAddress();
+		shippingAddress.UUID = UUIDUtils.createUUID();
+		shippingAddress.copyFrom(address);
+		shippingAddress.copyTo(orderAddress);
+		
+		var productRelations : HashMap = addressRelations.get(address);
+		var products : Set = productRelations.keySet();
+
+    	var product_ID = '';
+    	var optionID = '';
+
+		for each (var product : String in products){
+      		var splitarray = product.split('.');
+      		product_ID = splitarray[0];
+      		optionID = splitarray[1];
+    
+
+      		var pli : ProductLineItem = basket.createProductLineItem(product_ID, shipment);
+			pli.setQuantityValue(productRelations.get(product));
+
+
+      		//re-assign the option product based on the optionID
+      		if(optionID != 'na'){
+        		var productOptionModel : dw.catalog.ProductOptionModel = pli.product.getOptionModel();
+        		var productOptions : dw.catalog.ProductOption =  productOptionModel.getOptions();
+        		var productOptionsiter = productOptions.iterator();
+        		var pliOptionArrayList : dw.util.ArrayList = new dw.util.ArrayList(productOptions);
+        		var productOption = pliOptionArrayList[0];
+        
+            	var options : Iterator = productOptionModel.getOptionValues(productOption).iterator();
+          		while(options.hasNext()){
+        
+          			var optionValue = options.next();  
+          
+          			// if the option id equals the selection option id, set the selected option    
+          			if (optionValue.getID() == optionID)
+          			{
+            
+            			var pliOptionProdcuts : ArrayList = new ArrayList(pli.optionProductLineItems);
+            
+            			for each(pliOptionProdcutsObject in pliOptionProdcuts)
+            			{
+              				pliOptionProdcutsObject.updateOptionValue(optionValue);
+            			}
+          			}
+        		}
+      		}
+		}
+	}
+	
+	return PIPELET_NEXT;
+}

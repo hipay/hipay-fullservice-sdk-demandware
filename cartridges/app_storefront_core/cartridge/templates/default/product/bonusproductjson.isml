@@ -1,0 +1,3 @@
+<iscontent type="application/json" charset="UTF-8" compact="true"/>
+<isscript>importScript("product/ProductUtils.ds")</isscript>
+<isprint value="${ProductUtils.getBonusProductJson(pdict.Product, pdict.BonusDiscountLineItem)}" encoding="off"/>

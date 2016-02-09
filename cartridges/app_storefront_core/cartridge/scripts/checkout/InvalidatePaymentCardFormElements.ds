@@ -1,0 +1,54 @@
+/**
+ * Invalidates the payment card form element in case specified status is ERROR.
+ * If status is undefined or form is invalid the pipelet returns PIPELET_ERROR. 
+ *
+ *  @input Status : dw.system.Status The status object.
+ *  @input CreditCardForm : dw.web.FormGroup The credit card form.
+ */
+importPackage( dw.system );
+importPackage( dw.order );
+importPackage( dw.util );
+importPackage( dw.value );
+importPackage( dw.web );
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+	var status : Status = pdict.Status;
+	var creditCardForm : FormGroup = pdict.CreditCardForm;
+
+	// verify that we have a status object and a valid credit card form
+	if( status == null || !creditCardForm.valid )
+	{
+		return PIPELET_ERROR;
+	}
+
+	// we are fine, if status is OK
+	if( status.status == dw.system.Status.OK )
+	{
+		return PIPELET_NEXT;
+	}
+
+	// invalidate the payment card form elements
+	var items : Iterator = status.items.iterator();
+	while( items.hasNext() )
+	{
+		var item : StatusItem = items.next();
+		
+		switch( item.code )
+		{
+			case PaymentStatusCodes.CREDITCARD_INVALID_CARD_NUMBER:
+				creditCardForm.number.invalidateFormElement();
+				continue;
+
+			case PaymentStatusCodes.CREDITCARD_INVALID_EXPIRATION_DATE:
+				creditCardForm.month.invalidateFormElement();
+				creditCardForm.year.invalidateFormElement();
+				continue;
+
+			case PaymentStatusCodes.CREDITCARD_INVALID_SECURITY_CODE:
+				creditCardForm.cvn.invalidateFormElement();
+		}
+	}
+
+	return PIPELET_NEXT;
+}

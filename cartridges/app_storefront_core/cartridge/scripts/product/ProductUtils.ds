@@ -1,0 +1,569 @@
+importPackage( dw.system );
+importPackage( dw.catalog );
+importPackage( dw.campaign );
+importPackage( dw.util );
+importPackage( dw.value );
+importPackage( dw.web );
+
+/**
+ * Sanitize a string by removing the whitespaces
+ *
+ * @param inS String to sanitize
+ *
+ **/
+function sanitize(inS : String) {
+	return inS.replace(/\W/g,'');
+}
+
+/**
+ * unsanitizeOR a string by replaced %7c with '|' pipes
+ *
+ * @param anURL URL String to sanitize
+ *
+ **/
+function unsanitizeOR( anURL ) {
+	return anURL.toString().replace('%7c','|','g');	
+}
+
+/**
+ * cleanupID cleans a product id
+ *
+ * @param a a String to cleanup
+ *
+ **/
+function cleanupID(s) {
+	return (s === null) ? s : s.replace(new RegExp( "[^a-z0-9_\-]", "gi" ), "_" ).toLowerCase();
+}
+
+function ProductUtils(pdict : PipelineDictionary) {
+	var _product = Product = pdict.Product || null;
+	var _httpMap = dw.web.HttpParameterMap = pdict.CurrentHttpParameterMap;
+	var _variationModel = ProductVariationModel = empty(pdict.CurrentVariationModel) ? (_product==null?null:_product.variationModel) : pdict.CurrentVariationModel;
+	var _variantHierarchy = null;
+	 
+	var getSimpleProduct = function(item : Product) {		
+		var pm = item.isVariant() ? item.masterProduct : item;
+		var p = {
+			source: _httpMap.source.stringValue,
+			start: _httpMap.start.intValue,
+			cgid: _httpMap.cgid.stringValue,
+			srule: _httpMap.srule.stringValue,
+			name: item.name,
+			ID: item.ID,
+			productSet: item.productSet,
+			bundle: item.bundle,
+			bundled: item.bundled,
+			productSetProduct: item.productSetProduct,
+			master: item.isMaster(),
+			isOption: item.optionProduct,
+			variant: item.isVariant(),
+			masterID: pm.ID
+		};
+		var dct = pdict;
+		try {		
+			p.variations = getVariationAttributes(item);			
+			p.pricing = ProductUtils.getPricing(item);
+			p.images = {
+				"large": getImages(item, "large"),
+				"small": getImages(item, "small"),
+			}			
+			p.availability = ProductUtils.getAvailability(item, _httpMap.Quantity.stringValue);					
+			p.variants = ProductUtils.getVariants(item, _variationModel, _httpMap.Quantity.stringValue);								
+		}
+		catch (error) {
+			p.error = error;
+		}
+		return p;
+	};	
+	
+	var getVariantHierarchy = function() {
+		if (_product==null) { return null; }
+		var vh = {};
+		if (!_variantHierarchy) {
+			_variantHierarchy = ProductUtils.getVariantHierarchy(_product, _variationModel, _httpMap.Quantity.stringValue);
+		}
+		vh = _variantHierarchy;
+		return vh;
+	}
+	
+	var getVariantAvailability = function(current : String, selected : Array) {
+		var arr = [], att = null;
+				
+		var vh = getVariantHierarchy();
+		if (selected.length==0) {
+			for (att in vh.attributes) {
+				if (att.selected) {	break; }
+			}
+			arr.push(att.id+"-"+att.value);
+		}
+		else {
+			arr = selected;
+		}
+		if (current) {
+			arr.push(current);
+		}
+		var atts = vh.attributes;
+		var attribute = {};
+		for (var i=0,len=arr.length;i<len;i++){
+			attribute = atts[arr[i]];
+			if (!attribute) {
+				if (current) { arr.pop(); } 
+				 return false;
+			}
+			if (!attribute.attributes) { break; }
+			atts = attribute.attributes;
+		}
+		if (current) { arr.pop(); }		
+		return getAttributeAvailability(attribute);		
+	}	
+	
+	var getAttributeAvailability = function(attribute) {
+		var available = false;
+		if (attribute.attributes) {
+			for (a in attribute.attributes) {
+				var att = attribute.attributes[a];				
+				var available = getAttributeAvailability(att);
+				if (available) { break;}
+			}
+		}
+		else {
+			available = attribute.availability.availableForSale;			
+		}
+		return available;
+		
+	}	
+	
+	var getVariationAttributes = function(item) {
+		
+		var variations = { attributes: [] };
+		
+		if (!item.isVariant() && !item.isMaster()) {
+			return variations;
+		}		
+			
+		// get product variations	
+		var pvm :  ProductVariationModel = pdict.CurrentVariationModel ? pdict.CurrentVariationModel: item.variationModel;
+		var masterPvm :  ProductVariationModel = item.isVariant() ? item.masterProduct.variationModel : item.variationModel;
+		var attIterator = pvm.productVariationAttributes.iterator();
+		
+		while (attIterator.hasNext()) {
+			var v_att = attIterator.next();
+			var pva = 	{
+				id: v_att.getAttributeID(),
+				name: v_att.getDisplayName(),
+				vals: []
+			};
+			
+			var attValIterator = pvm.getAllValues(v_att).iterator();					
+			while (attValIterator.hasNext()) {
+				var v_attVal = attValIterator.next();
+				if (!masterPvm.hasOrderableVariants(v_att, v_attVal)) { continue; }
+				var pvaVal = {
+					id: v_attVal.ID,
+					val: v_attVal.displayValue ? v_attVal.displayValue: v_attVal.value
+				};
+				
+				if (pva.id == 'color') {
+					// get images for variation
+					pvaVal.images = {
+						"swatch": {},
+						"large": getImages(v_attVal,"large"),
+						"small": getImages(v_attVal,"small")
+					};
+					// get swatch image
+					var swatch = v_attVal.getImage('swatch');
+					if (!empty(swatch)) {
+						// TODO: See if this can be done via json serializer
+						pvaVal.images.swatch = {"url":swatch.getURL(),"alt":swatch.alt,"title":swatch.title};						
+					}										
+				}
+				// add the product variation attribute value
+				pva.vals.push(pvaVal); 
+				
+			} /* END pvm.getAllValues(v_att) */
+			
+			// add the product variation attribute
+			variations.attributes.push(pva);	
+		} /* END pvm.productVariationAttributes */
+		return variations;
+	};
+	
+	var getImages = function(o, viewtype) {
+		var imgs = o.getImages(viewtype);
+		var imgArray = [];
+		for (var i=0,len=imgs.length;i<len;i++) {
+			imgArray.push({"url":imgs[i].getURL().toString(),"alt":imgs[i].alt,"title":imgs[i].title});	
+		}
+		return imgArray;
+	}
+	
+	var appendObjectProperties = function(source, destination) {
+		for (var p in source) { destination[p] = source[p];	}	
+	};
+	
+	return {
+		getSimpleProduct : getSimpleProduct,
+		getImages : getImages,
+		getPricing : ProductUtils.getPricing,
+		getVariationAttributes : getVariationAttributes,
+		isVariantAvailable : getVariantAvailability
+	};	
+}
+
+ProductUtils.getAvailability = function(item : Product, quantity : Object) {
+	var qty = isNaN(quantity) ? 1 : (new Number(quantity)).toFixed();
+	/* product availability */
+	var avm : ProductAvailabilityModel = item.availabilityModel;
+	
+	var availability = {
+		status:avm.availabilityStatus,
+		statusQuantity:qty,
+		inStock:avm.inStock,
+		ats:empty(avm.inventoryRecord) ? 0 : avm.inventoryRecord.ATS.value.toFixed(),
+		inStockDate:empty(avm.inventoryRecord) || empty(avm.inventoryRecord.inStockDate) ? "" : avm.inventoryRecord.inStockDate.toDateString(),
+		availableForSale:avm.availability>0,		 		
+		levels : {}
+	};
+	
+	var avmLevels = ProductAvailabilityLevels = avm.getAvailabilityLevels((qty < 1) ? 1 : qty);
+	availability.isAvailable = avmLevels.notAvailable.value==0;
+	availability.inStockMsg = Resource.msgf('global.quantityinstock','locale',"", avmLevels.inStock.value.toFixed());
+	availability.preOrderMsg = Resource.msgf('global.quantitypreorder','locale',"", avmLevels.preorder.value.toFixed());
+	availability.backOrderMsg = Resource.msgf('global.quantitybackorder','locale',"", avmLevels.backorder.value.toFixed());
+	if (avm && avm.inventoryRecord && !empty(avm.inventoryRecord.inStockDate)) {
+		availability.inStockDateMsg = Resource.msgf('global.inStockDate','locale',"", avm.inventoryRecord.inStockDate.toDateString());
+	}
+	
+	availability.levels[dw.catalog.ProductAvailabilityModel.AVAILABILITY_STATUS_IN_STOCK] = avmLevels.inStock.value;
+	availability.levels[dw.catalog.ProductAvailabilityModel.AVAILABILITY_STATUS_PREORDER] = avmLevels.preorder.value;
+	availability.levels[dw.catalog.ProductAvailabilityModel.AVAILABILITY_STATUS_BACKORDER] = avmLevels.backorder.value;
+	availability.levels[dw.catalog.ProductAvailabilityModel.AVAILABILITY_STATUS_NOT_AVAILABLE] = avmLevels.notAvailable.value;
+	
+	return availability;	
+}
+
+ProductUtils.getProductJson = function(item : Product, args : PipelineDictionary) : String {
+	var pu = new ProductUtils(args);
+	var sp = pu.getSimpleProduct(item);
+	var json = JSON.stringify(sp); 
+	return json;
+}
+
+ProductUtils.getPricing = function(item : Product) : String {
+	/* product pricing 
+	*
+	* There is currently no way to check if the list pricebook is actually
+	* assigned to the site.  Therefore, we do a sanity check:  If the
+	* product has no price according to standard price lookup rules,
+	* then we know the list price book is not assigned to the site.
+	* (The converse is not true so this check is not perfect.)
+	* 
+	* Todo:  Improve this logic.
+	* 
+	* The check after the '||' above is to only consider standard prices for cases where the site and
+	* the session currencies are the same. This is because currently the "listPriceDefault" property
+	* can not be set per currency.
+	*/
+	
+	var priceModel = item.getPriceModel();
+	var standardPrice = null;
+
+	if ((!priceModel.getPrice().available) || (!dw.system.Site.getCurrent().getDefaultCurrency().equals(session.getCurrency().getCurrencyCode()))){
+		standardPrice = dw.value.Money.NOT_AVAILABLE;
+	} else if (('listPriceDefault' in dw.system.Site.current.preferences.custom) && !empty(dw.system.Site.current.preferences.custom.listPriceDefault)) {
+		standardPrice = priceModel.getPriceBookPrice(dw.system.Site.current.preferences.custom.listPriceDefault);
+	} else {
+		standardPrice = priceModel.getPriceBookPrice('list-prices');
+	}
+	
+	var salesPrice = priceModel.getPrice();	
+	var showStdPrice = standardPrice.available && salesPrice.available && standardPrice.compareTo(salesPrice) == 1;
+	var promoPrice = dw.value.Money.NOT_AVAILABLE;
+	var isPromoPrice = false;
+
+	var promos = PromotionMgr.activeCustomerPromotions.getProductPromotions(item);
+	if (!(empty(promos))) {	
+		var promo = promos[0];	
+		var promoClass = promo.getPromotionClass();
+		if (promoClass && promoClass.equals(Promotion.PROMOTION_CLASS_PRODUCT)) {
+			if (item.optionProduct) {
+				promoPrice = (pdict.CurrentOptionModel) ? 
+							 promo.getPromotionalPrice(item, pdict.CurrentOptionModel) :
+							 promo.getPromotionalPrice(item, item.getOptionModel());
+			}
+			else {
+				promoPrice = promo.getPromotionalPrice(item);
+			}
+		}
+		
+		if (promoPrice.available && salesPrice.compareTo(promoPrice) != 0) {
+			showStdPrice = isPromoPrice = true;
+			standardPrice = salesPrice;
+			salesPrice = promoPrice;	
+		}
+	}
+
+	var pricing = {
+		showStandardPrice : showStdPrice,
+		isPromoPrice : isPromoPrice,
+		standard : standardPrice.value,
+		formattedStandard : dw.util.StringUtils.formatMoney(standardPrice),
+		sale : salesPrice.value,
+		formattedSale : dw.util.StringUtils.formatMoney(salesPrice),		
+		salePriceMoney : salesPrice,
+		standardPriceMoney : standardPrice,
+		quantities : []
+	};
+	
+	var priceTable = priceModel.getPriceTable();
+	for (var qty in priceTable.getQuantities()) {		
+		pricing.quantities.push({unit:empty(qty.unit) ? "" : qty.unit, value:empty(qty.value) ? 0 : qty.value.toFixed()});
+	}	
+	
+	return 	pricing;
+}
+
+ProductUtils.getSimpleBonusProduct = function(item : Product, lineItem : dw.order.ProductLineItem) : String {
+	var p = {
+		name : item.name,
+		ID: item.ID,
+		qty : lineItem.quantityValue,
+		lineItemCtnrUUID : lineItem.lineItemCtnr.UUID,
+		variations : {attributes: []},
+		options : {attributes: []}
+	};
+	
+	// if product is variant or master, get selected  attribute definitions
+	if (item.isVariant() || item.isMaster()) {						
+		var attDefs = item.variationModel.getProductVariationAttributes();
+		for (var i=0,len=attDefs.length;i<len;i++) {
+			var attDef = attDefs[i]; 
+			var selectedValue = item.variationModel.getSelectedValue(attDef);
+			// push variation attributes to simple object 
+			p.variations.attributes.push({
+				displayID: attDef.ID, 
+				displayName: attDef.displayName, 
+				selectedDisplayValue: selectedValue.displayValue, 
+				selectedValue : selectedValue.value});			
+		}
+	}
+	
+	// if lineItem or optionProductLineItems is empty, return simple object
+	if (empty(lineItem) || empty(lineItem.optionProductLineItems)) {
+		return p;
+	}
+	
+	
+	// otherwise get option product line items
+	var optionLineItems = lineItem.optionProductLineItems;
+	for (var i=0, len=optionLineItems.length;i<len;i++) {
+		var optionLineItem = optionLineItems[i];
+		var option = item.optionModel.getOption(optionLineItem.optionID);
+		// push option attributes to simple object
+		p.options.attributes.push({
+			displayID: optionLineItem.optionID, 
+			htmlName: empty(option) ? "" : option.htmlName, 
+			selectedDisplayValue: optionLineItem.lineItemText, 
+			selectedValue : optionLineItem.optionValueID
+		});		
+	}
+	
+	// return simple object
+	return p;
+}
+
+ProductUtils.getBonusProductJson = function(item : Product, lineItem : dw.order.ProductLineItem) : String {
+	var o = { data : ProductUtils.getSimpleBonusProduct(item, lineItem) };
+	return JSON.stringify(o);
+}
+
+ProductUtils.getSelectedColor = function(product : Product, pvm : ProductVariationModel) {
+	if (product==null) { return null; }
+	var vm : ProductVariationModel = pvm==null ? product.variationModel : pvm;
+	var cvm : ProductVariationModel = product.isVariant() ? product.masterProduct.variationModel : product.variationModel;
+						
+	var selectedColor = null;				
+	var colorVA = vm.getProductVariationAttribute("color");	
+	if (colorVA==null) { return null; }
+						
+	var selectedColor = vm.getSelectedValue(colorVA);						
+	
+	if (!empty(selectedColor)) {		
+		return selectedColor;
+	}
+	else {
+		var variant = product;
+		if(!product.isVariant()) {
+			if(!empty(vm.defaultVariant)) {
+		 		variant = vm.defaultVariant;								 		
+		  	} else if(vm.variants.length > 0) {
+		  		variant = vm.variants[0];								  		
+		  	}			
+		}		
+		
+	 	var cv = vm.getVariationValue(variant, colorVA);
+	 	if (!cvm.hasOrderableVariants(colorVA, cv)) {
+	 		var found = false;
+			for (var i=0,il=vm.variants.length;i<il;i++) {
+				cv = cvm.getVariationValue(vm.variants[i], colorVA);
+				if (cvm.hasOrderableVariants(colorVA, cv)) {
+					found = true;
+					break;				
+				}
+			}
+	 	} 
+	 	return cv;
+	}
+}
+
+ProductUtils.getVariantForColor = function(prod : dw.catalog.Product, colorId : String)  {
+	var newProduct = prod;
+	var variants = prod.getVariants();	
+	
+	if(variants == null || variants.length == 0) {
+		return newProduct;		
+	}
+		
+	for each(var p in variants) {
+		if(p.onlineFlag) {
+			newProduct = p;
+			if(empty(colorId) || p.custom.color == colorId) {
+				break;
+			}
+		}
+	}
+	return newProduct;
+}
+
+ProductUtils.getQueryString = function(map: dw.web.HttpParameterMap, fields : Array) {
+	var parms = [];	
+	for (var i=0,il=fields.length;i<il;i++) {
+		var key = fields[i];
+		if (empty(key) || !map.isParameterSubmitted(key)) { continue;	}
+		
+		var parm : dw.web.HttpParameter = map.get(key);		
+		if(empty(parm) || parm.stringValue.length==0) { continue;	}
+				
+		// only get here if we have a match
+		parms.push(sanitize(key)+"="+sanitize(parm.stringValue));
+	}
+	var qs = parms.length==0 ? "" : parms.join("&"); 
+	return 	qs;
+}
+
+ProductUtils.isCompareEnabled = function(catId) {	
+	var cat = CatalogMgr.getCategory(catId);	
+	while (cat != null) {
+		if ('enableCompare' in cat.custom && cat.custom.enableCompare) {
+			return true;
+			break;
+		}
+		cat = cat.parent;
+	}
+	return false;
+}
+ProductUtils.getVariants = function(item : Product, pvm : ProductVariationModel, quantity : Object) {
+	var variants = {};
+	if (!item.isVariant() && !item.isMaster()) {
+		return variants;
+	}	
+	
+	for (var i=0,len=pvm.variants.length;i<len;i++) {
+		
+		var v : Variant = pvm.variants[i];
+		var variant = {
+			id : v.ID,
+			attributes : {},			
+			availability: ProductUtils.getAvailability(v, quantity),
+			pricing: ProductUtils.getPricing(v)
+		};
+		// attributes
+		var attKey = [];
+		for (var a=0,alen=pvm.productVariationAttributes.length;a<alen;a++) {		
+			var att = pvm.productVariationAttributes[a];			
+			var variationValue = pvm.getVariationValue(v, att);
+			if (empty(variationValue)) { continue; }
+			attKey.push(att.ID+"-"+variationValue.value);
+			variant.attributes[att.ID] = empty(variationValue.displayValue) ? variationValue.value : variationValue.displayValue;		 
+		}
+		
+		variants[attKey.join("|")]=variant;		
+	}
+	
+	return variants;
+}
+
+ProductUtils.getVariantHierarchy = function(item : Product, pvm : ProductVariationModel, quantity : Object) {
+	var variants = {};
+	if (!item.isVariant() && !item.isMaster()) { return variants; }
+		
+	for (var i=0,len=pvm.variants.length;i<len;i++) {
+		var v = pvm.variants[i];		
+		var target = variants;		
+		// attributes		
+		for (var a=0,alen=pvm.productVariationAttributes.length;a<alen;a++) {					
+			var att = pvm.productVariationAttributes[a];
+			var variationValue = pvm.getVariationValue(v, att);
+			if (empty(variationValue)) { continue; }
+			var key = att.ID+"-"+variationValue.value;
+			if (!("attributes" in target)) {
+				target.attributes = {};
+			}
+			if (!(key in target.attributes)) {				
+				target.attributes[key] = {
+					id:att.ID,
+					value:variationValue.value,
+					display:empty(variationValue.displayValue) ? variationValue.value : variationValue.displayValue,
+					selected:pvm.isSelectedAttributeValue(att, variationValue)					
+				};				
+			}
+			target = target.attributes[key];		 
+		}
+		target.productId = v.ID;
+		target.availability = ProductUtils.getAvailability(v, quantity);
+		target.pricing = ProductUtils.getPricing(v);
+	}
+	
+	return variants;
+};
+
+ProductUtils.getSelectedAttributes = function(pvm : ProductVariationModel) {
+	var atts = {},		
+		attDefs = pvm.getProductVariationAttributes();	
+	
+	for (i=0; i<attDefs.length;i++) {
+		var attribute = attDefs[i]; 
+		var selectedValue = pvm.getSelectedValue(attribute);		
+		atts[attribute.ID] = {			
+			displayName:attribute.displayName,
+			value:selectedValue?selectedValue.value:"",
+			displayValue:selectedValue?selectedValue.displayValue:""
+		};
+	}
+	return atts;
+};
+
+ProductUtils.getDefaultVariant = function(pvm : ProductVariationModel) {
+	var variant = pvm.selectedVariant;
+	if (!empty(variant)) { return variant; }
+	
+	var attDefs = pvm.getProductVariationAttributes();
+	var map : dw.util.HashMap = new dw.util.HashMap();	
+	
+	for (var i=0,len=attDefs.length;i<len;i++) {
+		var attribute = attDefs[i]; 
+		var selectedValue = pvm.getSelectedValue(attribute);
+		if (!empty(selectedValue) && selectedValue.displayValue.length>0) {
+			map.put(attribute.ID,selectedValue.ID);
+		}
+	}
+	
+	var variants = 	pvm.getVariants(map);
+	for (var i=0,len=variants.length;i<len;i++) {
+		var p : Variant = variants[i];
+		if (p.onlineFlag && p.availabilityModel.availability>0) {
+			return p;
+		}
+	}
+	return null;
+};

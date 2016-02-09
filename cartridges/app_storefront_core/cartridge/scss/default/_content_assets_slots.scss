@@ -1,0 +1,121 @@
+.content-slot img {
+	height: auto;
+	max-width: 100%;
+}
+
+.slot-grid-header p {
+	margin: 0;
+	padding: 0;
+}
+
+.product-listing-1x4 {
+	background: none repeat scroll 0 0 $white;
+	overflow: hidden;
+	padding: .83em 0;
+	.search-result-items .grid-tile {
+		margin: 0 1% 0 2%;
+		width: 18%;
+	}
+}
+
+.account-nav-asset {
+	background: url("../images/interface/icon-double-line-header.png") repeat-x scroll left top transparent;
+	line-height: 1.5em;
+	margin: 3.33em .83em;
+	padding: .83em 0;
+	h2 {
+		font-style: italic;
+		font-weight: 400;
+		margin: 1.16em 0 1.66em;
+	}
+}
+
+.content-asset {
+	p {
+		line-height: 1.6em;
+		margin: 1em 0;
+	}
+	ul,
+	ol {
+		line-height: 1.6em;
+		margin: 1em 0;
+		padding: 0 1.5em;
+	}
+	address {
+		margin: 1em 0;
+	}
+	ul li {
+		list-style: square outside none !important;
+	}
+	ol li {
+		list-style: decimal outside none;
+	}
+	.account-options {
+		margin: 0;
+		padding: 0;
+		li {
+			border-bottom: 1px solid $gainsboro;
+			float: left;
+			height: 80px;
+			list-style: none outside none !important;
+			margin: 0 0 0 4%;
+			padding: 1.66em 0 0;
+			position: relative;
+			width: 46%;
+			a {
+				display: block;
+				font-size: 1.5em;
+				line-height: 2.5em;
+				padding: 0 0 0 4.58em;
+			}
+			img {
+				left: 0;
+				position: absolute;
+				top: .83em;
+			}
+			p {
+				margin: 0;
+				padding-left: 4.58em;
+			}
+		}
+	}
+}
+
+.browser-compatibility-alert {
+	background-color: $sangria;
+	color: $white;
+	font-size: 1.3em;
+	line-height: 2em;
+	padding: 0.8em;
+}
+
+.folder-slot{
+	border-style: solid;
+	border-color:  $islamic-green;
+	border-width: 1px;
+	background-color: white;	
+	padding: 0.5em 0.5em;
+	
+	h2{
+		color: 	$islamic-green;
+		margin: 0.5em 0em;
+	}
+}
+
+.menu-slot {
+	display: none;
+	border-top: 1px solid $tutu;
+	margin-top: 0.5em;
+	padding-top: 1.5em;
+	.social-links {
+		padding-left: 0;
+		li {
+			display: inline-block;
+			padding-left: 0;
+		}
+	}
+	@media screen and (min-width: 768px) {
+		width: 13.5rem;
+		display: block;
+	}
+}

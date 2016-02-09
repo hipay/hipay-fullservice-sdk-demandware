@@ -1,0 +1,27 @@
+<div class="product-variations">
+	<ul>
+	{{#each attributes}}
+		<li class="attribute">
+			<span class="label">Select {{name}}</span>
+			<div class="value">
+				<ul class="swatches {{slug}}">
+				{{#each values}}
+					<li class="{{class}}">
+						<a class="swatchanchor" href="#" title="{{title}}">
+						{{#ifeq type "img"}}
+							<img src="{{value}}" alt="{{title}}"/>
+						{{else}}
+							{{value}}
+						{{/ifeq}}
+						</a>
+					</li>
+				{{/each}}
+				{{#if selected}}
+					<li class="selected-value">{{selected}}</li>
+				{{/if}}
+				</ul>
+			</div>
+		</li>
+	{{/each}}
+	</ul>
+</div>

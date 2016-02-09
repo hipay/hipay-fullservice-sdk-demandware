@@ -1,0 +1,136 @@
+/**
+* This script assigns the addresses used for the gift registry event. There are two addresses: 
+* the address to use before the event occurs and the address to use after the event occurs. 
+* If necessary, new addresses are created. 
+*
+* This script is using form object definitions and form value definitions defined in 
+* in the giftregistry.xml form. To access objects defined in a form, you use a script 
+* expression. 
+*
+* @input ProductList : dw.customer.ProductList The product list representing the gift registry.
+* @input GiftRegistryForm : dw.web.FormGroup The form definition representing the gift registry.
+* @input Customer : dw.customer.Customer The current customer's addressbook.
+*
+*/
+importPackage( dw.system );
+importPackage( dw.customer );
+importPackage( dw.web );
+importPackage (dw.system);
+
+importScript( "account/Utils.ds" );
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+    var productList : ProductList = pdict.ProductList;
+	var giftRegistryForm : FormGroup = pdict.GiftRegistryForm;
+	var customer : dw.customer.Customer = pdict.Customer;
+	
+	var addressBook : dw.customer.AddressBook = customer.getProfile().getAddressBook();
+	
+	// check to see if the before event address was changed by the user
+	var addressBeforeChanged : Boolean = isAddressChanged(giftRegistryForm.eventaddress.addressBeforeEvent, addressBook.getAddress(giftRegistryForm.eventaddress.addressBeforeEvent.addressid.value));	
+	
+	// if the before event address was changed add it to the address book
+	if (addressBeforeChanged) {
+		addAddress(giftRegistryForm.eventaddress.addressBeforeEvent,addressBook);
+	}
+	
+	// set the before address event
+	if (giftRegistryForm.eventaddress.addressBeforeEvent.addressid.value != null) {
+		productList.setShippingAddress(addressBook.getAddress(giftRegistryForm.eventaddress.addressBeforeEvent.addressid.value));
+	}
+	
+	// check to see if the after event address was changed by the user
+	var addressAfterChanged : Boolean = isAddressChanged(giftRegistryForm.eventaddress.addressAfterEvent, addressBook.getAddress(giftRegistryForm.eventaddress.addressAfterEvent.addressid.value));	
+	
+	// if the after event address was changed add it to the address book
+	if (addressAfterChanged) {
+		addAddress(giftRegistryForm.eventaddress.addressAfterEvent,addressBook);
+	}
+	
+	// set the after address event
+	if (giftRegistryForm.eventaddress.addressAfterEvent.addressid.value != null) {
+		productList.setPostEventShippingAddress(addressBook.getAddress(giftRegistryForm.eventaddress.addressAfterEvent.addressid.value));	
+	}
+		
+    return PIPELET_NEXT;
+}
+
+/**
+* Add a new address to the address book.
+*/
+function addAddress(addressFields : FormGroup, addressBook : AddressBook) {
+
+	// get a unique address ID
+	var addressID : String = determineUniqueAddressID(addressFields.city.value, addressBook);
+
+	// check on empty address ID
+	if(empty(addressID))
+	{
+		Logger.debug("Cannot add address to address book, with empty address ID.");
+		return PIPELET_ERROR;
+	}
+	
+	// create the new address and copy the form values
+	address = addressBook.createAddress( addressID );
+	address.setFirstName( addressFields.firstname.value );
+	address.setLastName( addressFields.lastname.value );
+	address.setAddress1( addressFields.address1.value );
+	address.setAddress2( addressFields.address2.value );
+	address.setCity( addressFields.city.value );
+	address.setPostalCode( addressFields.postal.value );
+	address.setStateCode( addressFields.states.state.value );
+	address.setCountryCode( addressFields.country.value );
+	address.setPhone( addressFields.phone.value );
+	
+	//set the form with the new id.
+	addressFields.addressid.value = addressID;
+}
+
+/**
+* Compare a form address with an address from the address book.
+* Return true if they are different. 
+*/
+function isAddressChanged(addressFields : FormGroup, address : CustomerAddress) {
+
+	if (address == null) return true;
+	
+	if ( addressFields.firstname.value != address.firstName ) {
+		return true;
+	}
+	
+	if ( addressFields.lastname.value != address.lastName ) {
+		return true;
+	}
+	
+	if ( addressFields.address1.value != address.address1 ) {
+		return true;
+	}
+	
+	if ( addressFields.address2.value != address.address2 ) {
+		return true;
+	}
+	
+	if ( addressFields.city.value != address.city ) {
+		return true;
+	}
+	
+	if ( addressFields.postal.value != address.postalCode ) {
+		return true;
+	}
+	
+	if ( addressFields.states.state.value != address.stateCode ) {
+		return true;
+	}
+	
+	if ( addressFields.country.value != address.countryCode) {
+		return true;
+	}
+	
+	if ( addressFields.phone.value != address.phone ) {
+		return true;
+	}
+
+	return false;	
+}
+

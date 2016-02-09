@@ -1,0 +1,107 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isdecorate template="search/pt_productsearchresult_nohits">
+
+	<iscache type="relative" minute="30"/>
+	<isinclude template="util/modules"/>
+	
+	<iscomment>create reporting event</iscomment>
+	<isinclude template="util/reporting/ReportSearch.isml"/>
+	
+	<div class="no-hits-banner">
+		<isslot id="noresult-banner" description="Banner for searches with no hits" context="global"/>
+	</div>
+
+	<h1>${Resource.msg('search.nohits.header','search',null)}</h1>
+
+	<div class="section-header">
+		
+		<p>
+			${Resource.msg('search.nohits.message','search',null)} 
+			<span class="no-hits-search-term">
+				<isprint value="${pdict.ProductSearchResult.searchPhrase}"/>
+			</span>
+		</p>
+		
+		<iscomment>render a link to execute the search with an alternative suggested search phrase</iscomment>
+		<isif condition="${!empty(pdict.ProductSearchResult.getSuggestedSearchPhrase())}">
+			<p>
+				<iscomment>this isif is to keep the search suggestions consistent</iscomment>
+				<isif condition="${!dw.system.Site.getCurrent().getCustomPreferenceValue('enhancedSearchSuggestions')}">
+					${Resource.msg('search.nohits.didyoumean','search',null)}
+					<a class="no-hits-search-term-suggest" title="${pdict.ProductSearchResult.suggestedSearchPhrase}" href="${URLUtils.url('Search-Show', 'q', pdict.ProductSearchResult.suggestedSearchPhrase)}">
+						<isprint value="${pdict.ProductSearchResult.suggestedSearchPhrase}"/>
+					</a>
+					?
+				<iselse/>
+					<isscript>
+    					importPackage( dw.suggest );
+					    // instantiate and configure the SuggestModel
+					    var suggestModel = new dw.suggest.SuggestModel();
+					    // set search phrase
+					    suggestModel.setSearchPhrase(pdict.CurrentHttpParameterMap.q.value);
+					</isscript>
+					<isif condition="${suggestModel != null}">          
+					    <!-- get some suggested content -->
+					    <isset name="productSuggestions" value="${suggestModel.getProductSuggestions()}" scope="page"/>
+					    <isset name="productSuggestionsAvailable" value="${productSuggestions != null && productSuggestions.hasSuggestions()}" scope="page"/>
+		                <isset name="suggestedPhrases" value="${productSuggestions.getSuggestedPhrases()}" scope="page"/>
+		                <isset name="suggestedProductTerms" value="${productSuggestions.getSuggestedTerms()}" scope="page"/>                   
+		                <isif condition="${suggestedPhrases.hasNext()}">
+							${Resource.msg('search.nohits.didyoumean','search',null)}
+							<a href="${URLUtils.url('Search-Show', 'q', suggestedPhrases.next().getPhrase())}">
+								<isloop items="${suggestedProductTerms}" alias="suggestedTerms" status="loopstate">
+									<isif condition="${!suggestedTerms.isEmpty()}">
+										<isset name="firstTerm" value="${suggestedTerms.getFirstTerm()}" scope="page"/>
+										<isif condition="${firstTerm.isExactMatch()}">
+											<span class="search-suggestion-normal-link" ><isprint value="${firstTerm.getValue()}" /></span>
+										<iselseif condition="${firstTerm.isCorrected()}">
+											<span class="first-term-bold search-suggestion-normal-link"><isprint value="${firstTerm.getValue()}" /></span>
+										<iselseif condition="${firstTerm.isCompleted() && !loopstate.last}">
+											<span class="first-term-italic"><isprint value="${firstTerm.getValue()}" /></span>
+										<iselseif condition="${firstTerm.isCompleted() && loopstate.last}">	
+											<span class="whole-phrase"><span class="search-suggest-guess"><isprint value="${suggestedTerms.getOriginalTerm()}" /></span><isprint value="${firstTerm.getValue().substring(suggestedTerms.getOriginalTerm().length)}" /></span>
+										</isif>
+									</isif>
+								</isloop>
+							</a>?
+	                  	</isif>	
+					</isif>
+				</isif>
+			</p>
+		</isif>
+	
+	</div>
+	
+	<iscomment>render a link to content search results if any content was found</iscomment>
+	<isif condition="${!empty(pdict.ContentSearchResult) && pdict.ContentSearchResult.count > 0}">
+		<p class="no-hits-content-results">
+			${Resource.msg('search.nohits.found','search',null)} 
+			<a href="${pdict.ContentSearchResult.url('Search-ShowContent')}">
+				${Resource.msgf('search.nohits.contenthits','search',null,pdict.ContentSearchResult.count)}
+			</a>
+		</p>
+	</isif>
+	
+	<div class="no-hits-help">
+	 	<iscontentasset aid="noresults-help"/>
+	</div>
+	
+	<div class="no-hits-search">
+	 	<form action="${URLUtils.url('Search-Show')}" method="get">
+			<fieldset>
+				<div class="form-row label-above">
+					<label for="q">${Resource.msg('search.nohits.searchlabel','search',null)}</label>
+					<input type="text" class="input-text" name="q" value="" />
+					<button type="submit" value="${Resource.msg('global.go','locale',null)}" name="simplesearch">
+						${Resource.msg('global.go','locale',null)}
+					</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+
+	<div class="no-hits-footer">		
+		<iscontentasset aid="noresults-bottom"/>
+	</div>
+
+</isdecorate>

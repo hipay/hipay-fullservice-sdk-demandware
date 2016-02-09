@@ -1,0 +1,113 @@
+{
+	"logo": "http://dev08-sitegenesis-dw.demandware.net/on/demandware.static/Sites-SiteGenesis-Site/-/default/v1412876674461/images/logo.png",
+	"nav": [{
+		"name": "New Arrivals",
+		"children_type": "vertical",
+		"children": [{
+			"name": "Womens"
+		}, {
+			"name": "Mens"
+		}, {
+			"name": "Electronics"
+		}],
+		"banner": {
+			"title": "New Arrivals",
+			"img": "http://dev08-sitegenesis-dw.demandware.net/on/demandware.static/Sites-SiteGenesis-Site/Sites-storefront-catalog-en/default/v1412876674461/images/MenuBanner-New%20Arrivals.jpg"
+		}
+	}, {
+		"name": "Womens",
+		"children_type": "horizontal",
+		"children": [{
+			"name": "Clothing",
+			"children": [{
+				"name": "Outfits"
+			}, {
+				"name": "Tops"
+			}, {
+				"name": "Dresses"
+			}, {
+				"name": "Bottoms"
+			}, {
+				"name": "Jackets & Coats"
+			}, {
+				"name": "Feeling Red"
+			}]
+		}, {
+			"name": "Jewelry",
+			"children": [{
+				"name": "Earrings"
+			}, {
+				"name": "Bracelets"
+			}, {
+				"name": "Necklaces"
+			}]
+		}, {
+			"name": "Accessories"
+		}],
+		"banner": {
+			"title": "Womans Catalog",
+			"img": "http://dev08-sitegenesis-dw.demandware.net/on/demandware.static/Sites-SiteGenesis-Site/Sites-storefront-catalog-en/default/v1412876674461/images/WomensMenuBottomBanner.jpg"
+		}
+	}, {
+		"name": "Mens",
+		"children_type": "vertical",
+		"children": [{
+			"name": "Clothing",
+			"children": [{
+				"name": "Suits"
+			}, {
+				"name": "Jackets & Coats"
+			}, {
+				"name": "Dress Shirts"
+			}]
+		}, {
+			"name": "Accessories",
+			"children": [{
+				"name": "Ties"
+			}, {
+				"name": "Gloves"
+			}, {
+				"name": "Luggage"
+			}]
+		}],
+		"banner": {
+			"title": "Mens Items",
+			"img": "http://dev08-sitegenesis-dw.demandware.net/on/demandware.static/Sites-SiteGenesis-Site/Sites-storefront-catalog-en/default/v1412876674461/images/MenuBanner-Mens.jpg"
+		}
+	}, {
+		"name": "Electronics",
+		"children_type": "vertical",
+		"children": [{
+			"name": "Televisions"
+		}, {
+			"name": "Digital Cameras"
+		}, {
+			"name": "iPod & MP3 Players"
+		}, {
+			"name": "GPS Navigation"
+		}, {
+			"name": "Gaming"
+		}],
+		"banner": {
+			"title": "Electronics products",
+			"img": "http://dev08-sitegenesis-dw.demandware.net/on/demandware.static/Sites-SiteGenesis-Site/Sites-storefront-catalog-en/default/v1412876674461/images/MenuBanner-Electronics.jpg"
+		}
+	}, {
+		"name": "Gift Certificates"
+	}, {
+		"name": "Top Sellers"
+	}],
+	"banner": {
+		"content": "<strong>FREE 2-Day SHIPPING</strong> FOR ORDERS OVER $300"
+	},
+	"currency": {
+		"title": "Currency",
+		"name": "currencyMnemonic",
+		"options": [{
+			"value": "USD",
+			"default": true
+		}, {
+			"value": "EUR"
+		}]
+	}
+}

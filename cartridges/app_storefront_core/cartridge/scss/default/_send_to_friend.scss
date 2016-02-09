@@ -1,0 +1,57 @@
+.send-to-friend-product {
+	border-bottom: 1px solid $gainsboro;
+	border-top: 1px solid $gainsboro;
+	margin-bottom: 20px;
+	margin-top: 20px;
+	margin-right: 22%;
+	overflow: hidden;
+	padding: 20px 0;
+	.product-image {
+		float: left;
+		width: 36%;
+		img {
+			max-width: 80%;
+		}
+	}
+	.product-description {
+		float: left;
+		width: 63%;
+		h2 {
+			margin-right: 0;
+		}
+		.value {
+			font-weight: bold;
+		}
+		h2 {
+			font-size: 1.2em;
+			font-style: italic;
+		}
+		dt {
+			clear: both;
+			float: left;
+			margin: 10px 0 0 0;
+			width: 100px;
+		}
+		dd {
+			float: left;
+			margin: 10px 0 0 0;
+			width: 200px;
+		}
+	}
+}
+
+#send-to-friend-main {
+	.send-to-friend-sender-label {
+		padding-top: 0;
+	}
+	.send-to-friend-sender {
+		margin-left: 2%;
+		padding: 0.7em 0.5em;
+		text-indent: 0;
+		width: 49.5966%;
+	}
+}
+
+#send-to-friend-dialog .send-to-friend-login-message {
+	padding: 2em 0em 2em;
+}

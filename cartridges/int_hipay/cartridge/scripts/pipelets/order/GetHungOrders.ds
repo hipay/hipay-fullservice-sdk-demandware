@@ -1,0 +1,43 @@
+var Site = require('dw/system/Site');
+var Calendar = require('dw/util/Calendar');
+var SeekableIterator = require('dw/util/SeekableIterator');
+var Order = require('dw/order/Order');
+var OrderMgr = require('dw/order/OrderMgr');
+
+var HiPayLogger = require("int_hipay/cartridge/scripts/lib/hipay/HiPayLogger");
+/**
+ *   Finds hung orders and adds them into an array.
+ *	Difference from the standard DW implementation is that it waits for a period longer than the user session specified in a Site Preference.
+ *   @output OrderNumbers : Array
+ *
+ */
+function execute(args: PipelineDictionary): Number {
+
+	var log = new HiPayLogger("GetHungOrders.ds");
+
+	var minutesBack = Site.getCurrent().getCustomPreferenceValue("hipayHungOrderTimeout");
+
+	var startDate: Calendar = new Calendar();
+	startDate.setTimeZone(Site.current.getTimezone());
+	startDate.add(Calendar.MINUTE, -minutesBack);
+
+	var ordersToFail = new Array();
+	var orderIterator: SeekableIterator = null;
+	try {
+		orderIterator = OrderMgr.queryOrders("status = {0} AND creationDate < {1}", "creationDate", Order.ORDER_STATUS_CREATED, startDate.getTime());
+		while (orderIterator.hasNext()) {
+			var order: Order = orderIterator.next();
+			ordersToFail.push(order.getOrderNo());
+		}
+	} catch (e) {
+		var error = "Error while fetching hung orders ::: " + e.message;
+		log.error(error);
+		throw new Error(error);
+	} finally {
+		orderIterator.close();
+	}
+
+	args.OrderNumbers = ordersToFail;
+
+	return PIPELET_NEXT;
+}

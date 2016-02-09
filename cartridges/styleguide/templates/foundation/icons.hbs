@@ -1,0 +1,11 @@
+<section id="icons" class="section">
+	<h2>Icons</h2>
+	<p>We use <a href="http://fontawesome.io/">fontawesome</a> as our scalable vector icons, so any of the <a href="http://fontawesome.io/icons/">479 icons</a> can be used easily. Below are a few icons currently used in the application.</p>
+	{{#each model.icons}}
+		<div class="fragment">
+			<div class="sample"><i class="fa {{icon}}"></i></div>
+			<div class="code"><p>{{icon}}</p></div>
+		</div>
+	{{/each}}
+</section>
+

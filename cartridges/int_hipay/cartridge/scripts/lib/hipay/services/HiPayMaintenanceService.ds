@@ -1,0 +1,29 @@
+var HTTPService = require('dw/svc/HTTPService');
+var ServiceRegistry = require('dw/svc/ServiceRegistry');
+
+/**
+* HiPayMaintenanceService.ds object initiates HiPay maintenance request.
+*
+* To include this script use:
+* var HiPayMaintenanceService = require("int_hipay/cartridge/scripts/lib/hipay/HiPayMaintenanceService");
+*/
+function HiPayMaintenanceService() {}
+
+HiPayMaintenanceService.OPERATION_CAPTURE = "capture";
+/**
+* Initiates HiPay hosted payment request.
+*/
+HiPayMaintenanceService.prototype.initiateCapture = function( transactionReference, operation, amount ) {
+	var service : HTTPService = ServiceRegistry.get("hipay.rest.maintenance");
+	
+	service.URL += transactionReference;
+	var content = "operation=" + operation;
+	if(!empty(amount)) {
+		content+= "&amount=" + amount;
+	}
+	
+	var response = service.call(content);
+	return response;
+}
+
+module.exports = HiPayMaintenanceService;

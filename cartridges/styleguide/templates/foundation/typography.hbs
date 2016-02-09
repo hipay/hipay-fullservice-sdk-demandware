@@ -1,0 +1,19 @@
+<section id="typography" class="section">
+	<h2>Typography</h2>
+	<h3 class="subheader">Fonts</h3>
+	<div class="wrapper">
+		{{#each model.fonts}}
+			<div class="font" style="font-family: {{stack}}">
+				{{name}}: {{stack}}
+			</div>
+		{{/each}}
+	</div>
+	<h3 class="subheader">Headings</h3>
+	<div class="wrapper">
+		{{#each model.headings}}
+			<{{this}}>This is a heading element {{this}}<{{this}}>
+		{{/each}}
+		<p>This is a paragraph. Ce est un paragraphe. Das ist ein Absatz. Este es un párrafo. これは段落です. 这是一个段落. Đây là một đoạn văn. Este é um ponto. Этопункт. यह एक पैरा है. นี้เป็น วรรค. Tämä onkohta. Ini adalah perenggan yang. 이 단락입니다. Ito ay isang talata. Bu paragraf. Dit is een paragraaf. Þetta er málsgrein. Αυτό είναι ένα σημείο. Questo è un paragrafo.</p>
+		<a href="#typography">This is a link</a>
+	</div>
+</section>

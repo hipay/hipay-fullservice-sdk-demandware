@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="OrderPaymentInstrument">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="hipayProductName">
+                <display-name xml:lang="x-default">HiPay Product Name</display-name>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayPaymentProductList">
+                <display-name xml:lang="x-default">HiPay Payment Product List</display-name>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayPaymentCategoryList">
+                <display-name xml:lang="x-default">HiPay Payment Category List</display-name>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayTransactionType">
+                <display-name xml:lang="x-default">Payment type</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>0</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayTransactionState">
+                <display-name xml:lang="x-default">Payment state</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>0</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayTransactionStatus">
+                <display-name xml:lang="x-default">Payment status</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>0</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayTransactionDeclineReason">
+                <display-name xml:lang="x-default">Payment decline reason</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>0</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayCreditCardType">
+                <display-name xml:lang="x-default">Credit Card Type</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayCreditCardExpirationMonth">
+                <display-name xml:lang="x-default">Credit Card Expiration Month</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayCreditCardExpirationYear">
+                <display-name xml:lang="x-default">Credit Card Expiration Year</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayCreditCardNumber">
+                <display-name xml:lang="x-default">Credit Card Number</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayCreditCardToken">
+                <display-name xml:lang="x-default">Credit Card Token</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayCreditCardCountry">
+                <display-name xml:lang="x-default">Credit Card Country</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayCreditCardIssuer">
+                <display-name xml:lang="x-default">Credit Card Issuer</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayIdealBankID">
+                <display-name xml:lang="x-default">HiPay Ideal Bank ID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayTransactionCapturedAmount">
+                <display-name xml:lang="x-default">HiPay Captured Amount</display-name>
+                <type>double</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayTransactionCaptureRequestAmount">
+                <display-name xml:lang="x-default">HiPay Capture Request Amount</display-name>
+                <type>double</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="HiPay">
+                <display-name xml:lang="x-default">HiPay</display-name>
+                <attribute attribute-id="hipayProductName"/>
+                <attribute attribute-id="hipayPaymentProductList"/>
+                <attribute attribute-id="hipayPaymentCategoryList"/>
+                <attribute attribute-id="hipayTransactionType"/>
+                <attribute attribute-id="hipayTransactionState"/>
+                <attribute attribute-id="hipayTransactionStatus"/>
+                <attribute attribute-id="hipayTransactionDeclineReason"/>
+                <attribute attribute-id="hipayTransactionCapturedAmount"/>
+                <attribute attribute-id="hipayTransactionCaptureRequestAmount"/>
+                <!-- credit cards -->    
+                <attribute attribute-id="hipayCreditCardType"/>
+                <attribute attribute-id="hipayCreditCardExpirationMonth"/>
+                <attribute attribute-id="hipayCreditCardExpirationYear"/>
+                <attribute attribute-id="hipayCreditCardNumber"/>
+                <attribute attribute-id="hipayCreditCardToken"/>
+                <attribute attribute-id="hipayCreditCardCountry"/>
+                <attribute attribute-id="hipayCreditCardIssuer"/>
+                <!-- Ideal Service -->
+                <attribute attribute-id="hipayIdealBankID"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>
+

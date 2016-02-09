@@ -1,0 +1,28 @@
+{
+	"esnext": true,
+	"disallowKeywordsOnNewLine": ["else"],
+	"disallowMixedSpacesAndTabs": true,
+	"disallowNewlineBeforeBlockStatements": true,
+	"disallowSpaceAfterObjectKeys": true,
+	"disallowSpacesInsideArrayBrackets": "all",
+	"disallowSpacesInsideObjectBrackets": "all",
+	"disallowSpacesInsideParentheses": true,
+	"disallowTrailingWhitespace": true,
+	"disallowTrailingComma": true,
+	"excludeFiles": ["**/static/**", "**/scripts/**", "node_modules/**", "storefront_refapp/**", "docs/**", "**/lib/**", "**/dist/**"],
+	"requireBlocksOnNewline": 1,
+	"requireCommaBeforeLineBreak": true,
+	"requireSpaceAfterBinaryOperators": true,
+	"requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "return", "try", "catch"],
+	"requireSpaceBeforeBinaryOperators": true,
+	"requireSpaceBeforeBlockStatements": true,
+	"requireSpacesInAnonymousFunctionExpression": {
+		"beforeOpeningRoundBrace": true,
+		"beforeOpeningCurlyBrace": true
+	},
+	"requireSpacesInConditionalExpression": true,
+	"requireSpacesInNamedFunctionExpression": {
+		"beforeOpeningCurlyBrace": true
+	},
+	"requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties"
+}

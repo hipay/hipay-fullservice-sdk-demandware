@@ -1,0 +1,173 @@
+#homepage-slider {
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	.jcarousel-control {
+		position: absolute;
+		right: 10px;
+		bottom: 20px;
+		a {
+			background: none repeat scroll 0 0 $gainsboro;
+			border: 1px solid $very-light-gray;
+			display: block;
+			float: left;
+			height: 15px;
+			margin: 0 3px;
+			text-indent: -999em;
+			width: 6px;
+			&.active {
+				background-color: $dim-gray;
+			}
+		}
+	}
+}
+
+#homepage-slides {
+	margin: 0;
+	position: relative;
+	width: 20000em;
+	.slide {
+		float: left;
+		img {
+			height: auto;
+			max-width: 100%;
+		}
+		h2 {
+			@extend .visually-hidden;
+		}
+		span {
+			@extend .visually-hidden;
+		}
+	}
+}
+
+#vertical-carousel {
+	position: relative;
+	overflow: hidden;
+	height: 18.5rem;
+	ul {
+		height: 10000em;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		position: relative;
+		li {
+			float: left;
+			width: 100%;
+			height: 18.5rem;
+		}
+	}
+}
+
+.home-bottom-left,
+.home-bottom-center,
+.home-bottom-right {
+	clear: none;
+	float: left;
+	width: 33%;
+}
+
+.home-bottom-right {
+	.jcarousel-nav {
+		color: $citrus;
+		cursor: pointer;
+		font-size: 0.9em;
+		font-weight: 700;
+		position: absolute;
+		right: 0;
+		text-transform: uppercase;
+		&.inactive {
+			display: none;
+		}
+	}
+	.jcarousel-prev {
+		bottom: 20px;
+	}
+	.jcarousel-next {
+		bottom: 0;
+	}
+	h2 {
+		background: url("../images/homepage/hdr-this-weeks-deals.png") no-repeat scroll center center transparent;
+		border-bottom: 2px solid #01a4e5;
+		height: 54px;
+		padding: 30px 0;
+		text-indent: -999em;
+	}
+	.vertical-carousel {
+		li {
+			.capture-product-id {
+				display: none;
+			}
+			.product-price .product-standard-price {
+				text-decoration: line-through;
+			}
+		}
+	}
+	.product-tile {
+		border: 0 none;
+		margin: auto;
+		min-height: 255px;
+		width: 90%;
+		img {
+			max-width: 90%;
+		}
+	}
+}
+
+#home-promo-shop-shoes {
+	background-attachment: scroll;
+	background-clip: border-box;
+	background-color: transparent;
+	background-image: url("../images/homepage/home-promo-shoes.png");
+	background-origin: padding-box;
+	background-position: left top;
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+	height: 413px;
+	margin: auto;
+	max-width: 320px;
+	position: relative;
+	width: 100%;
+	h2 {
+		position: absolute;
+		text-indent: -999em;
+	}
+	ul {
+		padding: 30% 0 0;
+		text-align: center;
+	}
+	li {
+		border-right: 1px solid $citrus;
+		display: inline;
+		list-style: none outside none;
+		margin: 0 5px 0 0;
+		padding: 0 5px 0 0;
+		text-transform: uppercase;
+		&:last-child {
+			border: 0 none;
+		}
+		a {
+			color: $citrus;
+		}
+	}
+	span {
+		font-style: italic;
+		margin: 0 10px 0 0;
+	}
+}
+
+#home-promo-free-shipping {
+	background-attachment: scroll;
+	background-clip: border-box;
+	background-color: transparent;
+	background-image: url("../images/homepage/home-promo-free-shipping.png");
+	background-origin: padding-box;
+	background-position: center top;
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+	height: 413px;
+	margin: auto;
+	max-width: 319px;
+	text-indent: -999em;
+	width: 100%;
+}

@@ -1,0 +1,878 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pricebooks xmlns="http://www.demandware.com/xml/impex/pricebook/2006-10-31">
+    <pricebook>
+        <header pricebook-id="usd-sale-prices">
+            <currency>USD</currency>
+            <display-name xml:lang="x-default">Sale Prices</display-name>
+            <online-flag>true</online-flag>
+            <parent>usd-list-prices</parent>
+        </header>
+
+        <price-tables>
+
+            <price-table product-id="microsoft-xbox360-bundle">
+                <amount quantity="1">299.99</amount>
+            </price-table>
+
+            <price-table product-id="microsoft-xbox360-console">
+                <amount quantity="1">199.99</amount>
+            </price-table>
+
+            <price-table product-id="easports-fight-night-round-3-xbox360">
+                <amount quantity="1">59.99</amount>
+            </price-table>
+
+            <price-table product-id="rockstar-games-grand-theft-auto-iv-xbox360">
+                <amount quantity="1">59.99</amount>
+            </price-table>
+
+            <price-table product-id="sierra-the-bourne-conspiracy-xbox360">
+                <amount quantity="1">59.99</amount>
+            </price-table>
+
+            <price-table product-id="samsung-ln55a950">
+                <amount quantity="1">2624.99</amount>
+            </price-table>
+
+            <price-table product-id="701642808244">
+                <amount quantity="1">38.99</amount>
+            </price-table>
+
+            <price-table product-id="701643489442">
+                <amount quantity="1">89.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431057">
+                <amount quantity="1">99.00</amount>
+            </price-table>
+
+            <price-table product-id="701642808268">
+                <amount quantity="1">38.99</amount>
+            </price-table>
+
+            <price-table product-id="701642808251">
+                <amount quantity="1">38.99</amount>
+            </price-table>
+
+            <price-table product-id="701642808275">
+                <amount quantity="1">38.99</amount>
+            </price-table>
+
+            <price-table product-id="740357431040">
+                <amount quantity="1">99.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431064">
+                <amount quantity="1">99.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431071">
+                <amount quantity="1">99.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431088">
+                <amount quantity="1">99.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431095">
+                <amount quantity="1">99.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431101">
+                <amount quantity="1">99.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431118">
+                <amount quantity="1">99.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431125">
+                <amount quantity="1">99.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548258">
+                <amount quantity="1">299.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548265">
+                <amount quantity="1">299.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548227">
+                <amount quantity="1">299.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548197">
+                <amount quantity="1">299.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548234">
+                <amount quantity="1">299.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548203">
+                <amount quantity="1">299.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548241">
+                <amount quantity="1">299.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548432">
+                <amount quantity="1">299.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548487">
+                <amount quantity="1">299.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548456">
+                <amount quantity="1">299.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548319">
+                <amount quantity="1">299.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548357">
+                <amount quantity="1">299.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548371">
+                <amount quantity="1">299.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548296">
+                <amount quantity="1">299.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548272">
+                <amount quantity="1">299.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548180">
+                <amount quantity="1">299.99</amount>
+            </price-table>
+
+        </price-tables>
+    </pricebook>
+
+    <pricebook>
+        <header pricebook-id="jpy-list-prices">
+            <currency>USD</currency>
+            <display-name xml:lang="x-default">List Prices</display-name>
+            <online-flag>true</online-flag>
+        </header>
+
+        <price-tables>
+            <price-table product-id="701642808244">
+                <amount quantity="1">5700</amount>
+            </price-table>
+
+            <price-table product-id="701643489442">
+                <amount quantity="1">6400</amount>
+            </price-table>
+
+            <price-table product-id="740357431057">
+                <amount quantity="1">7100</amount>
+            </price-table>
+
+            <price-table product-id="701642808268">
+                <amount quantity="1">5700</amount>
+            </price-table>
+
+            <price-table product-id="701642808251">
+                <amount quantity="1">5700</amount>
+            </price-table>
+
+            <price-table product-id="701642808275">
+                <amount quantity="1">5700</amount>
+            </price-table>
+
+            <price-table product-id="740357431040">
+                <amount quantity="1">7100</amount>
+            </price-table>
+
+            <price-table product-id="740357431064">
+                <amount quantity="1">7100</amount>
+            </price-table>
+
+            <price-table product-id="740357431071">
+                <amount quantity="1">7100</amount>
+            </price-table>
+
+            <price-table product-id="740357431088">
+                <amount quantity="1">7100</amount>
+            </price-table>
+
+            <price-table product-id="740357431095">
+                <amount quantity="1">7100</amount>
+            </price-table>
+
+            <price-table product-id="740357431101">
+                <amount quantity="1">7100</amount>
+            </price-table>
+
+            <price-table product-id="740357431118">
+                <amount quantity="1">7100</amount>
+            </price-table>
+
+            <price-table product-id="740357431125">
+                <amount quantity="1">7100</amount>
+            </price-table>
+
+            <price-table product-id="750518548258">
+                <amount quantity="1">36000</amount>
+            </price-table>
+
+            <price-table product-id="750518548265">
+                <amount quantity="1">36000</amount>
+            </price-table>
+
+            <price-table product-id="750518548227">
+                <amount quantity="1">36000</amount>
+            </price-table>
+
+            <price-table product-id="750518548197">
+                <amount quantity="1">36000</amount>
+            </price-table>
+
+            <price-table product-id="750518548234">
+                <amount quantity="1">36000</amount>
+            </price-table>
+
+            <price-table product-id="750518548203">
+                <amount quantity="1">36000</amount>
+            </price-table>
+
+            <price-table product-id="750518548241">
+                <amount quantity="1">36000</amount>
+            </price-table>
+
+            <price-table product-id="750518548432">
+                <amount quantity="1">36000</amount>
+            </price-table>
+
+            <price-table product-id="750518548487">
+                <amount quantity="1">36000</amount>
+            </price-table>
+
+            <price-table product-id="750518548456">
+                <amount quantity="1">36000</amount>
+            </price-table>
+
+            <price-table product-id="750518548319">
+                <amount quantity="1">36000</amount>
+            </price-table>
+
+            <price-table product-id="750518548357">
+                <amount quantity="1">36000</amount>
+            </price-table>
+
+            <price-table product-id="750518548371">
+                <amount quantity="1">36000</amount>
+            </price-table>
+
+            <price-table product-id="750518548296">
+                <amount quantity="1">36000</amount>
+            </price-table>
+
+            <price-table product-id="750518548272">
+                <amount quantity="1">36000</amount>
+            </price-table>
+
+            <price-table product-id="750518548180">
+                <amount quantity="1">36000</amount>
+            </price-table>
+
+        </price-tables>
+
+    </pricebook>
+
+    <pricebook>
+        <header pricebook-id="jpy-sale-prices">
+            <currency>USD</currency>
+            <display-name xml:lang="x-default">Sale Prices</display-name>
+            <online-flag>true</online-flag>
+            <parent>usd-list-prices</parent>
+        </header>
+
+        <price-tables>
+
+            <price-table product-id="microsoft-xbox360-bundle">
+                <amount quantity="1">21501</amount>
+            </price-table>
+
+            <price-table product-id="microsoft-xbox360-console">
+                <amount quantity="1">14301</amount>
+            </price-table>
+
+            <price-table product-id="easports-fight-night-round-3-xbox360">
+                <amount quantity="1">4300</amount>
+            </price-table>
+
+            <price-table product-id="rockstar-games-grand-theft-auto-iv-xbox360">
+                <amount quantity="1">4300</amount>
+            </price-table>
+
+            <price-table product-id="sierra-the-bourne-conspiracy-xbox360">
+                <amount quantity="1">4300</amount>
+            </price-table>
+
+            <price-table product-id="samsung-ln55a950">
+                <amount quantity="1">188901</amount>
+            </price-table>
+
+            <price-table product-id="701642808244">
+                <amount quantity="1">5700</amount>
+            </price-table>
+
+            <price-table product-id="740357431057">
+                <amount quantity="1">7100</amount>
+            </price-table>
+
+            <price-table product-id="701642808268">
+                <amount quantity="1">2800</amount>
+            </price-table>
+
+            <price-table product-id="701642808251">
+                <amount quantity="1">2800</amount>
+            </price-table>
+
+            <price-table product-id="701642808275">
+                <amount quantity="1">2800</amount>
+            </price-table>
+
+            <price-table product-id="740357431040">
+                <amount quantity="1">7100</amount>
+            </price-table>
+
+            <price-table product-id="740357431064">
+                <amount quantity="1">7100</amount>
+            </price-table>
+
+            <price-table product-id="740357431071">
+                <amount quantity="1">7100</amount>
+            </price-table>
+
+            <price-table product-id="740357431088">
+                <amount quantity="1">7100</amount>
+            </price-table>
+
+            <price-table product-id="740357431095">
+                <amount quantity="1">7100</amount>
+            </price-table>
+
+            <price-table product-id="740357431101">
+                <amount quantity="1">7100</amount>
+            </price-table>
+
+            <price-table product-id="740357431118">
+                <amount quantity="1">7100</amount>
+            </price-table>
+
+            <price-table product-id="740357431125">
+                <amount quantity="1">7100</amount>
+            </price-table>
+
+            <price-table product-id="750518548258">
+                <amount quantity="1">21501</amount>
+            </price-table>
+
+            <price-table product-id="750518548265">
+                <amount quantity="1">21501</amount>
+            </price-table>
+
+            <price-table product-id="750518548227">
+                <amount quantity="1">21501</amount>
+            </price-table>
+
+            <price-table product-id="750518548197">
+                <amount quantity="1">21501</amount>
+            </price-table>
+
+            <price-table product-id="750518548234">
+                <amount quantity="1">21501</amount>
+            </price-table>
+
+            <price-table product-id="750518548203">
+                <amount quantity="1">21501</amount>
+            </price-table>
+
+            <price-table product-id="750518548241">
+                <amount quantity="1">21501</amount>
+            </price-table>
+
+            <price-table product-id="750518548432">
+                <amount quantity="1">21501</amount>
+            </price-table>
+
+            <price-table product-id="750518548487">
+                <amount quantity="1">21501</amount>
+            </price-table>
+
+            <price-table product-id="750518548456">
+                <amount quantity="1">21501</amount>
+            </price-table>
+
+            <price-table product-id="750518548319">
+                <amount quantity="1">21501</amount>
+            </price-table>
+
+            <price-table product-id="750518548357">
+                <amount quantity="1">21501</amount>
+            </price-table>
+
+            <price-table product-id="750518548371">
+                <amount quantity="1">21501</amount>
+            </price-table>
+
+            <price-table product-id="750518548296">
+                <amount quantity="1">21501</amount>
+            </price-table>
+
+            <price-table product-id="750518548272">
+                <amount quantity="1">21501</amount>
+            </price-table>
+
+            <price-table product-id="750518548180">
+                <amount quantity="1">21501</amount>
+            </price-table>
+
+        </price-tables>
+    </pricebook>
+
+    <pricebook>
+        <header pricebook-id="eur-list-prices">
+            <currency>USD</currency>
+            <display-name xml:lang="x-default">List Prices</display-name>
+            <online-flag>true</online-flag>
+        </header>
+
+        <price-tables>
+            <price-table product-id="701642808244">
+                <amount quantity="1">57.00</amount>
+            </price-table>
+
+            <price-table product-id="701643489442">
+                <amount quantity="1">64.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431057">
+                <amount quantity="1">71.00</amount>
+            </price-table>
+
+            <price-table product-id="701642808268">
+                <amount quantity="1">57.00</amount>
+            </price-table>
+
+            <price-table product-id="701642808251">
+                <amount quantity="1">57.00</amount>
+            </price-table>
+
+            <price-table product-id="701642808275">
+                <amount quantity="1">57.00</amount>
+            </price-table>
+
+            <price-table product-id="701643489442">
+                <amount quantity="1">64.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431040">
+                <amount quantity="1">71.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431064">
+                <amount quantity="1">71.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431071">
+                <amount quantity="1">71.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431088">
+                <amount quantity="1">71.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431095">
+                <amount quantity="1">71.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431101">
+                <amount quantity="1">71.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431118">
+                <amount quantity="1">71.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431125">
+                <amount quantity="1">71.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548258">
+                <amount quantity="1">360.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548265">
+                <amount quantity="1">360.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548227">
+                <amount quantity="1">360.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548197">
+                <amount quantity="1">360.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548234">
+                <amount quantity="1">360.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548203">
+                <amount quantity="1">360.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548241">
+                <amount quantity="1">360.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548432">
+                <amount quantity="1">360.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548487">
+                <amount quantity="1">360.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548456">
+                <amount quantity="1">360.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548319">
+                <amount quantity="1">360.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548357">
+                <amount quantity="1">360.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548371">
+                <amount quantity="1">360.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548296">
+                <amount quantity="1">360.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548272">
+                <amount quantity="1">360.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548180">
+                <amount quantity="1">360.00</amount>
+            </price-table>
+
+        </price-tables>
+
+    </pricebook>
+
+    <pricebook>
+        <header pricebook-id="eur-sale-prices">
+            <currency>USD</currency>
+            <display-name xml:lang="x-default">Sale Prices</display-name>
+            <online-flag>true</online-flag>
+            <parent>usd-list-prices</parent>
+        </header>
+
+        <price-tables>
+
+            <price-table product-id="microsoft-xbox360-bundle">
+                <amount quantity="1">215.99</amount>
+            </price-table>
+
+            <price-table product-id="microsoft-xbox360-console">
+                <amount quantity="1">143.99</amount>
+            </price-table>
+
+            <price-table product-id="easports-fight-night-round-3-xbox360">
+                <amount quantity="1">43.19</amount>
+            </price-table>
+
+            <price-table product-id="rockstar-games-grand-theft-auto-iv-xbox360">
+                <amount quantity="1">43.19</amount>
+            </price-table>
+
+            <price-table product-id="sierra-the-bourne-conspiracy-xbox360">
+                <amount quantity="1">43.19</amount>
+            </price-table>
+
+            <price-table product-id="samsung-ln55a950">
+                <amount quantity="1">1889.99</amount>
+            </price-table>
+
+            <price-table product-id="701642808244">
+                <amount quantity="1">28.07</amount>
+            </price-table>
+
+            <price-table product-id="701643489442">
+                <amount quantity="1">64.08</amount>
+            </price-table>
+
+            <price-table product-id="740357431057">
+                <amount quantity="1">71.28</amount>
+            </price-table>
+
+            <price-table product-id="701642808268">
+                <amount quantity="1">28.07</amount>
+            </price-table>
+
+            <price-table product-id="701642808251">
+                <amount quantity="1">28.07</amount>
+            </price-table>
+
+            <price-table product-id="701642808275">
+                <amount quantity="1">28.07</amount>
+            </price-table>
+
+            <price-table product-id="701643489442">
+                <amount quantity="1">64.08</amount>
+            </price-table>
+
+            <price-table product-id="740357431040">
+                <amount quantity="1">71.28</amount>
+            </price-table>
+
+            <price-table product-id="740357431064">
+                <amount quantity="1">71.28</amount>
+            </price-table>
+
+            <price-table product-id="740357431071">
+                <amount quantity="1">71.28</amount>
+            </price-table>
+
+            <price-table product-id="740357431088">
+                <amount quantity="1">71.28</amount>
+            </price-table>
+
+            <price-table product-id="740357431095">
+                <amount quantity="1">71.28</amount>
+            </price-table>
+
+            <price-table product-id="740357431101">
+                <amount quantity="1">71.28</amount>
+            </price-table>
+
+            <price-table product-id="740357431118">
+                <amount quantity="1">71.28</amount>
+            </price-table>
+
+            <price-table product-id="740357431125">
+                <amount quantity="1">71.28</amount>
+            </price-table>
+
+            <price-table product-id="750518548258">
+                <amount quantity="1">215.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548265">
+                <amount quantity="1">215.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548227">
+                <amount quantity="1">215.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548197">
+                <amount quantity="1">215.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548234">
+                <amount quantity="1">215.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548203">
+                <amount quantity="1">215.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548241">
+                <amount quantity="1">215.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548432">
+                <amount quantity="1">215.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548487">
+                <amount quantity="1">215.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548456">
+                <amount quantity="1">215.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548319">
+                <amount quantity="1">215.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548357">
+                <amount quantity="1">215.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548371">
+                <amount quantity="1">215.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548296">
+                <amount quantity="1">215.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548272">
+                <amount quantity="1">215.99</amount>
+            </price-table>
+
+            <price-table product-id="750518548180">
+                <amount quantity="1">215.99</amount>
+            </price-table>
+
+        </price-tables>
+    </pricebook>
+
+    <pricebook>
+        <header pricebook-id="usd-list-prices">
+            <currency>USD</currency>
+            <display-name xml:lang="x-default">List Prices</display-name>
+            <online-flag>true</online-flag>
+        </header>
+
+        <price-tables>
+            <price-table product-id="701642808244">
+                <amount quantity="1">79.00</amount>
+            </price-table>
+
+            <price-table product-id="701643489442">
+                <amount quantity="1">89.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431057">
+                <amount quantity="1">99.00</amount>
+            </price-table>
+
+            <price-table product-id="701642808268">
+                <amount quantity="1">79.00</amount>
+            </price-table>
+
+            <price-table product-id="701642808251">
+                <amount quantity="1">79.00</amount>
+            </price-table>
+
+            <price-table product-id="701642808275">
+                <amount quantity="1">79.00</amount>
+            </price-table>
+
+            <price-table product-id="701643489442">
+                <amount quantity="1">89.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431040">
+                <amount quantity="1">99.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431064">
+                <amount quantity="1">99.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431071">
+                <amount quantity="1">99.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431088">
+                <amount quantity="1">99.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431095">
+                <amount quantity="1">99.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431101">
+                <amount quantity="1">99.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431118">
+                <amount quantity="1">99.00</amount>
+            </price-table>
+
+            <price-table product-id="740357431125">
+                <amount quantity="1">99.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548258">
+                <amount quantity="1">500.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548265">
+                <amount quantity="1">500.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548227">
+                <amount quantity="1">500.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548197">
+                <amount quantity="1">500.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548234">
+                <amount quantity="1">500.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548203">
+                <amount quantity="1">500.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548241">
+                <amount quantity="1">500.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548432">
+                <amount quantity="1">500.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548487">
+                <amount quantity="1">500.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548456">
+                <amount quantity="1">500.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548319">
+                <amount quantity="1">500.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548357">
+                <amount quantity="1">500.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548371">
+                <amount quantity="1">500.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548296">
+                <amount quantity="1">500.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548272">
+                <amount quantity="1">500.00</amount>
+            </price-table>
+
+            <price-table product-id="750518548180">
+                <amount quantity="1">500.00</amount>
+            </price-table>
+
+        </price-tables>
+
+    </pricebook>
+
+</pricebooks>

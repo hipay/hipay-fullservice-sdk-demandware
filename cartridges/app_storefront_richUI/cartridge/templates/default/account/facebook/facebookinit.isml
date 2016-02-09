@@ -1,0 +1,42 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<script src="https://connect.facebook.net/en_US/all.js"></script>
+<script>
+	FB.init({
+		   	appId  : '${dw.system.Site.getCurrent().getCustomPreferenceValue('facebookAppID')}',
+		   	status : true, // check login status
+		   	cookie : true, // enable cookies to allow the server to access the session
+		   	xfbml  : true  // parse XFBML
+	 	});
+
+		jQuery(document).ready(function() {	
+
+
+	    	// hide the facebook registration div
+	    	jQuery('.facebook-registration').hide();
+    
+	 		// bind the registration selection
+	    	bindRegistrationChangeHandler();
+
+	    	// check for any registration errors
+	    	<isif condition="${pdict.RegistrationStatus != null && pdict.RegistrationStatus.code=='CustomerAlreadyExistError'}">
+    			jQuery('.registration-selection').hide();
+	    		jQuery('.facebook-registration').hide();
+				jQuery('${'#'}RegistrationForm').hide();
+	    	</isif>
+		});
+		
+		function bindRegistrationChangeHandler() {
+			// bind payment method change handler
+			jQuery("input[name=registration]").click(function() {
+				registrationType = jQuery(this).val();
+
+				if (registrationType == "new-customer-registration") {
+					jQuery('.facebook-registration').hide();
+					jQuery('${'#'}RegistrationForm').show();
+				} else {
+					jQuery('.facebook-registration').show();
+					jQuery('${'#'}RegistrationForm').hide();
+				}
+			});
+		}
+	</script>

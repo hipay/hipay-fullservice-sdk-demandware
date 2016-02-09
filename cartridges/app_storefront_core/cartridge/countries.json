@@ -1,0 +1,42 @@
+[{
+	"countryCode": "US",
+	"name": {
+		"en_US": "United States"
+	},
+	"continent": "northamerica",
+	"locales": ["en_US"],
+	"currencyCode": "USD",
+	"taxation": "net",
+	"priceBooks": [
+		"usd-list-prices",
+		"usd-sale-prices"
+	],
+	"dynamicForms": {
+		"addressDetails": {
+			"country": {
+				"type": "select"
+			},
+			"states": {
+				"isFormGroup": true,
+				"childField": "state",
+				"type": "select"
+			},
+			"postalUS": {
+				"skip": true
+			},
+			"postalCA": {
+				"skip": true
+			},
+			"postalDE": {
+				"skip": true
+			},
+			"phone": {
+				"helpcid": "help-telephone",
+				"helplabel": {
+					"property": "singleshipping.phonerequired",
+					"file": "checkout"
+				}
+			}
+		}
+	}
+}]

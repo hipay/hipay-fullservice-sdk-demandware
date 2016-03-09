@@ -1,32 +1,38 @@
-# Copyright © 2015 HIPAY
+# HiPay Fullservice cartridge for Demandware
 
-### NOTICE OF LICENSE
-This source file is subject to the Academic Free License (AFL 3.0)
-that is bundled with this package in the file LICENSE.txt.
-It is also available through the world-wide-web at this URL:
-http://opensource.org/licenses/afl-3.0.php
-If you did not receive a copy of the license and are unable to
-obtain it through the world-wide-web, please send an email
-to support.tpp@hipay.com so we can send you a copy immediately.
+[![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/hipay/hipay-wallet-cashout-mirakl-integration/master/LICENSE.md)
 
-### DISCLAIMER
-Do not edit or add to this file if you wish to upgrade HiPay to newer
-versions in the future. If you wish to customize HiPay for your
-needs please refer to http://www.hipayfullservice.com/ for more information.
-@author    Support HiPay <support.tpp@hipay.com>
-@copyright © 2015 HIPAY
-@license   http://opensource.org/licenses/afl-3.0.php
-Copyright © 2015 HIPAY
+The **HiPay Fullservice cartridge for Demandware** is a library that allows you to **accept payments in your Demandware online shop** by leveraging the HiPay Fullservice e-payment platform.
 
-### About
-- Payment via HiPay TPP for DemandWare.
-- Version 1.0.0
-- Contact HiPay fullservice @ https://www.hipay.com/nos-bureaux/
+![Demandware LINK Marketplace](demandware_link.jpeg)
 
-### System Requirements
-- HiPay TPP API key
-- DemandWare Version >= 16.1
+## Getting started
 
-### Installation
+Read the **[project documentation][doc-home]** for comprehensive information about the requirements, general workflow and installation procedure.
 
--- TODO
+## Resources
+- [Full project documentation][doc-home] — To have a comprehensive understanding of the workflow and get the installation procedure
+- [HiPay Support Center][hipay-help] — To get technical help from HiPay
+- [Issues][project-issues] — To report issues, submit pull requests and get involved (see [Apache 2.0 License][project-license])
+- [Change log][project-changelog] — To check the changes of the latest versions
+- [Contributing guidelines][project-contributing] — To contribute to our source code
+
+## Features
+
+- The cartridge allows your customers to check out with a **wide variety of payment methods**: international credit and debit cards (**Visa**, **MasterCard**, **American Express**, **Maestro**, etc.), real-time banking, eWallets, etc.
+- **Multiple integration options**: redirection to the HiPay Fullservice hosted payment page, iFrame integration or the Direct payment API for a complete custom integration.
+- Allows merchants to **configure specific rules for the use of 3-D Secure**. These rules can be edited or deleted at any time.
+- Automatic cancellation: **pending orders are automatically cancelled if not completed** within 30 minutes.
+
+## License
+
+The **HiPay Fullservice cartridge for Demandware** is available under the **Apache 2.0 License**. Check out the [license file][project-license] for more information.
+
+[doc-home]: HiPay%20Integration%20-%20Demandware%20LINK.pdf
+
+[hipay-help]: http://help.hipay.com
+
+[project-issues]: https://github.com/hipay/hipay-fullservice-sdk-demandware/issues
+[project-license]: LICENSE.md
+[project-changelog]: CHANGELOG.md
+[project-contributing]: CONTRIBUTING.md

@@ -33,6 +33,6 @@ The **HiPay Fullservice cartridge for Demandware** is available under the **Apac
 [hipay-help]: http://help.hipay.com
 
 [project-issues]: https://github.com/hipay/hipay-fullservice-sdk-demandware/issues
-[project-license]: https://github.com/hipay/hipay-fullservice-sdk-demandware/blob/master/LICENSE.md
-[project-changelog]: https://github.com/hipay/hipay-fullservice-sdk-demandware/blob/master/CHANGELOG.md
+[project-license]: LICENSE.md
+[project-changelog]: CHANGELOG.md
 [project-contributing]: CONTRIBUTING.md

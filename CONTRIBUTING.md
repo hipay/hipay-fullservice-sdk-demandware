@@ -24,7 +24,7 @@ The HiPay Fullservice cartridge for Demandware is released under an [Apache
 2.0][project-license] license. Any code you submit will be
 released under that license.
 
-[project-license]: https://github.com/hipay/hipay-fullservice-sdk-demandware/blob/master/LICENSE.md
+[project-license]: LICENSE.md
 
 [pull-requests]: https://github.com/hipay/hipay-fullservice-sdk-demandware/pulls
 [issues]: https://github.com/hipay/hipay-fullservice-sdk-demandware/issues

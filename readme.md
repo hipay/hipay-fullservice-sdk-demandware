@@ -28,7 +28,7 @@ Read the **[project documentation][doc-home]** for comprehensive information abo
 
 The **HiPay Fullservice cartridge for Demandware** is available under the **Apache 2.0 License**. Check out the [license file][project-license] for more information.
 
-[doc-home]: HiPay%20Integration%20-%20Demandware%20LINK%20version.pdf
+[doc-home]: HiPay%20Integration%20-%20Demandware%20LINK.pdf
 
 [hipay-help]: http://help.hipay.com
 

@@ -19,10 +19,10 @@ Read the **[project documentation][doc-home]** for comprehensive information abo
 
 ## Features
 
-- The cartridge allows your customers to check out with a **wide variety of payment methods**: international credit and debit cards (**Visa**, **MasterCard**, **American Express**, **Maestro**, etc.), real-time banking, eWallets, etc.
-- **Multiple integration options**: redirection to the HiPay Fullservice hosted payment page, iFrame integration or the Direct payment API for a complete custom integration.
-- Allows merchants to **configure specific rules for the use of 3-D Secure**. These rules can be edited or deleted at any time.
-- Automatic cancellation: **pending orders are automatically cancelled if not completed** within 30 minutes.
+- Allows your customers to check out with a **wide variety of payment methods**: international credit and debit cards (**Visa**, **MasterCard**, **American Express**, **Maestro**, etc.), real-time banking, e-wallets, etc.
+- Offers **Multiple integration options**: redirection to the HiPay Fullservice hosted payment page, iFrame integration or the Direct payment API for a complete custom integration.
+- Enables merchants to **configure specific rules for the use of 3-D Secure**. These rules can be edited or deleted at any time.
+- Ensures Automatic cancellation: **pending orders are automatically cancelled if not completed** within 30 minutes.
 
 ## License
 

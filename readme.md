@@ -2,7 +2,7 @@
 
 [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/hipay/hipay-wallet-cashout-mirakl-integration/master/LICENSE.md)
 
-The **HiPay Fullservice cartridge for Demandware** is a library that allows you to **accept payments in your Demandware online shop** by leveraging the HiPay Fullservice e-payment platform.
+The **HiPay Fullservice cartridge for Demandware** is a library that allows you to **accept payments in your Demandware online shop** by leveraging the HiPay Fullservice payment platform.
 
 ![Demandware LINK Marketplace](demandware_link.jpeg)
 

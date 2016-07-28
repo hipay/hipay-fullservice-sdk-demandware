@@ -1,5 +1,6 @@
 var HTTPService = require('dw/svc/HTTPService');
 var ServiceRegistry = require('dw/svc/ServiceRegistry');
+var Site = require('dw/system/Site');
 
 /**
 * Initiates HiPay order request.
@@ -7,7 +8,14 @@ var ServiceRegistry = require('dw/svc/ServiceRegistry');
 function HiPayOrderService() {}
 
 HiPayOrderService.prototype.loadOrderPayment = function(params) {
-	var service : HTTPService = ServiceRegistry.get("hipay.rest.order");
+	//get current ID of the site.
+	var siteId : String = Site.getCurrent().getID();
+	//try create service for current site
+	var service : HTTPService = ServiceRegistry.get("hipay.rest.order"+"."+siteId);
+	//get default service if service for current site  was not configured in BM
+	if (service==null) {
+		service = ServiceRegistry.get("hipay.rest.order");
+	}
 
 	var content = "";
 	for (var param in params) { 

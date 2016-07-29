@@ -1,5 +1,6 @@
 var HTTPService = require('dw/svc/HTTPService');
 var ServiceRegistry = require('dw/svc/ServiceRegistry');
+var Site = require('dw/system/Site');
 
 /**
 * HiPayMaintenanceService.ds object initiates HiPay maintenance request.
@@ -14,8 +15,15 @@ HiPayMaintenanceService.OPERATION_CAPTURE = "capture";
 * Initiates HiPay hosted payment request.
 */
 HiPayMaintenanceService.prototype.initiateCapture = function( transactionReference, operation, amount ) {
-	var service : HTTPService = ServiceRegistry.get("hipay.rest.maintenance");
-	
+	//get current ID of the site.
+	var siteId : String = Site.getCurrent().getID();
+	//try create service for current site
+	var service : HTTPService = ServiceRegistry.get("hipay.rest.maintenance"+"."+siteId);
+	//get default service if service for current site  was not configured in BM
+	if (service==null) {
+		service = ServiceRegistry.get("hipay.rest.maintenance");
+	}
+
 	service.URL += transactionReference;
 	var content = "operation=" + operation;
 	if(!empty(amount)) {

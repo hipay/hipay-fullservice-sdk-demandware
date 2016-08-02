@@ -1,3 +1,6 @@
+# Version 1.1.1
+- Uses default config for a site if no specific one is found
+
 # Version 1.1.0
 - Adds support for multi sites configuration
 

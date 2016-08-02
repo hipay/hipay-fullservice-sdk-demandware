@@ -1,4 +1,4 @@
-# Contributing to the HiPay Fullservice cartridge for Demandware
+# Contributing to the HiPay Fullservice cartridge for DemandWare
 
 Contributions to the HiPay Fullservice cartridge for Demandware should be made via GitHub [pull
 requests][pull-requests] and discussed using

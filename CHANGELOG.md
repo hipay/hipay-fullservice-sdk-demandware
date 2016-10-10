@@ -1,3 +1,6 @@
+# Version 1.1.2
+- Updates links to documentation.
+
 # Version 1.1.1
 - Uses default config for a site if no specific one is found
 

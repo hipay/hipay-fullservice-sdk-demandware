@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<payment-processors xmlns="http://www.demandware.com/xml/impex/paymentprocessor/2007-03-31">
+
+    <payment-processor processor-id="HIPAY">
+        <description>HiPay Payment</description>
+        <preferences>
+            <all-instances />
+            <development />
+            <staging />
+            <production />
+        </preferences>
+    </payment-processor>
+
+    <payment-processor processor-id="HIPAY_HOSTED">
+        <description>HiPay Payment Hosted Pages</description>
+        <preferences>
+            <all-instances />
+            <development />
+            <staging />
+            <production />
+        </preferences>
+    </payment-processor>
+
+</payment-processors>

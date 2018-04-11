@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<url-rules xmlns="http://www.demandware.com/xml/impex/urlrules/2012-12-01">
+    <pipeline-aliases xml:lang="x-default">
+        <pipeline-alias pipeline="HiPayOrder-Pending">hipayorder/pending</pipeline-alias>
+        <pipeline-alias pipeline="HiPayOrder-Accept">hipayorder/accept</pipeline-alias>
+        <pipeline-alias pipeline="HiPayOrder-Cancel">hipayorder/cancel</pipeline-alias>
+        <pipeline-alias pipeline="HiPayOrder-Error">hipayorder/error</pipeline-alias>
+        <pipeline-alias pipeline="HiPayOrder-Decline">hipayorder/decline</pipeline-alias>
+    </pipeline-aliases>
+</url-rules>
+

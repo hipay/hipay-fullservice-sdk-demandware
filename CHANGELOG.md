@@ -1,3 +1,6 @@
+# Version 2.0.0
+- Migration to the Javascript controller.
+
 # Version 1.1.2
 - Updates links to documentation.
 

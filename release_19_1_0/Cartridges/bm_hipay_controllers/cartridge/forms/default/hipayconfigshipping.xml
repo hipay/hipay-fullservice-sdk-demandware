@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+    <list formid="shippingconfigs">
+        <field formid="shippingmethodid" label="" type="string" mandatory="false" binding="shippingmethodid"/>
+        <field formid="preparationTime" label="" type="integer" mandatory="false" binding="preparationTime"/>
+        <field formid="deliveryTime" label="" type="integer" mandatory="false" binding="deliveryTime"/>
+        
+        <field formid="deliveryMode" label="" type="string" mandatory="false" binding="deliveryMode">
+            <options>
+                <option optionid="0" label="mode.select" value="0"/>
+                <option optionid="1" label="mode.1" value="STORE"/>
+                <option optionid="2" label="mode.2" value="CARRIER"/>
+                <option optionid="3" label="mode.3" value="RELAYPOINT"/>
+                <option optionid="4" label="mode.4" value="ELECTRONIC"/>
+                <option optionid="5" label="mode.5" value="TRAVEL"/>
+            </options>
+        </field>
+        
+        <field formid="deliveryMethod" label="" type="string" mandatory="false" binding="deliveryMethod">
+            <options>
+                <option optionid="0"  label="method.select" value="0"/>
+                <option optionid="1" label="method.1" value="STANDARD"/>
+                <option optionid="2" label="method.2" value="EXPRESS"/>
+                <option optionid="3" label="method.3" value="PRIORITY24H"/>
+                <option optionid="4" label="method.4" value="PRIORITY2H"/>
+                <option optionid="5" label="method.5" value="PRIORITY1H"/>
+                <option optionid="6" label="method.6" value="INSTANT"/>            
+            </options>
+        </field>
+    </list>
+    
+    <action formid="submit" valid-form="true"/>
+</form>

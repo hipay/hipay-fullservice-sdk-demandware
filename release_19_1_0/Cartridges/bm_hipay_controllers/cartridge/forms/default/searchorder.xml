@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+    <field formid="orderID" type="string" label="Order ID" mandatory="true"/>
+    <field formid="captureOrderID" type="string" label="Order ID" mandatory="false"/>
+    <field formid="captureAmount" type="string" label="Capture amount" mandatory="false" />
+    <!-- functional buttons -->
+    <action formid="search" valid-form="false"/>
+    <action formid="capture" valid-form="false"/>
+</form>

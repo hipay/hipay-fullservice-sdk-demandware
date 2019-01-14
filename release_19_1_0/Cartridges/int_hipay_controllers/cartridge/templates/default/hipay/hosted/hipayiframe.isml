@@ -1,0 +1,11 @@
+<!--- TEMPLATENAME: hipayiframe.isml --->
+<isdecorate template="hipay/hosted/pt_hipay">
+    <isif condition="${!empty(pdict.HiPayRedirectURL)}">
+        <isscript>
+            var HiPayConfig  = require('int_hipay_controllers/cartridge/scripts/lib/hipay/HiPayConfig').HiPayConfig;
+            var iframeHeight = HiPayConfig.hipayIframeHeight;
+            var iframeWidth  = HiPayConfig.hipayIframeWidth;
+        </isscript>
+        <iframe name="hipay" width="${iframeWidth}" height="${iframeHeight}" src="${pdict.HiPayRedirectURL}" style="border: none;"></iframe>
+    </isif>
+</isdecorate>

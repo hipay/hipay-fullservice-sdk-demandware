@@ -1,0 +1,20 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+
+<iscomment>define reusable input field and label rendering</iscomment>
+<ismodule template="util/inputfield.isml"
+    name="inputfield"
+    attribute="formfield"
+    attribute="type"
+    attribute="maxlength"
+    attribute="size"
+    attribute="label"
+    attribute="value"
+    attribute="dynamicname"
+    attribute="attribute1"
+    attribute="value1"
+    attribute="attribute2"
+    attribute="value2"
+    attribute="attribute3"
+    attribute="value3"
+    attribute="requiredtext"
+/>

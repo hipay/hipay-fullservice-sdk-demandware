@@ -1,0 +1,197 @@
+<isdecorate template="application/MenuFrame">
+<iscontent type="text/html" charset="UTF-8">
+<isinclude template="inc/Modules">
+
+<!-- Page Navigator -->
+<ISBreadcrumb name1="${pdict.MAIN_MENU_NAME}" url1="${pdict.TOP_URL.toString()}" name2="Order capture">
+<!-- EO Page Navigator -->
+<h1 class="overview_title">${Resource.msg('hipay_bm.capture.order.title','hipay_bm',null)}</h1>
+<h2 class="table_title_description">
+	${Resource.msg('hipay_bm.capture.order.titledescription','hipay_bm',null)}
+</h2>
+
+<isif condition="${!empty(pdict.OperationStatus) && !empty(pdict.OperationStatus.msg)}">
+	<div class="${pdict.OperationStatus.valid ? 'success' : 'error'}">${pdict.OperationStatus.msg}</div>
+</isif>
+
+<table width="450px" class="n w e s">
+	<tr style="vertical-align: top;">
+		<th class="table_title aldi left">${Resource.msg('hipay_bm.search.order','hipay_bm',null)}</th>
+	</tr>
+	<tr>
+		<td class="infobox" style="vertical-align: top;">
+			<form action="${URLUtils.continueURL()}" method="post" name="${pdict.CurrentForms.searchorder.dynamicHtmlName}" id="hipay-search">
+				<table>
+					<tr>
+						<isinputfield formfield="${pdict.CurrentForms.searchorder.orderID}" type="input" attribute1="style" value1="width:300px;"/>
+						<td class="left">
+							<input id="search" class="button" type="submit" value="Load" name="${pdict.CurrentForms.searchorder.search.htmlName}" />
+						</td>
+					</tr>
+				</table>
+			</form>
+		</td>
+	</tr>
+</table>
+<isscript>
+	var orderTotal = 0;
+	if(pdict.Order.totalGrossPrice.available) {
+		orderTotal = pdict.Order.totalGrossPrice.decimalValue;
+	} else {
+		orderTotal = pdict.Order.getAdjustedMerchandizeTotalPrice(true).add(LineItemCtnr.giftCertificateTotalPrice).decimalValue;
+	}
+	var HiPayHelper = require("int_hipay/cartridge/scripts/lib/hipay/HiPayHelper");
+	var helper = new HiPayHelper();
+	var paymentInstr: OrderPaymentInstrument = helper.getOrderPaymentInstrument(pdict.Order);
+	
+	var capturedAmount = 0;
+	if("hipayTransactionCapturedAmount" in paymentInstr.custom) {
+		capturedAmount = paymentInstr.custom.hipayTransactionCapturedAmount;
+	}
+	
+	var captureRequestAmount = 0;
+	if("hipayTransactionCaptureRequestAmount" in paymentInstr.custom) {
+		captureRequestAmount = paymentInstr.custom.hipayTransactionCaptureRequestAmount;
+	}
+	
+	var maxCaptureRequest = Number(orderTotal - captureRequestAmount).toFixed(2);
+	pdict.CurrentForms.searchorder.captureAmount.value = maxCaptureRequest;
+	
+	var hipayTransactionState = "";
+	if("hipayTransactionState" in paymentInstr.custom) {
+		hipayTransactionState = paymentInstr.custom.hipayTransactionState;
+	}
+	
+	
+</isscript>
+<br/>
+<isif condition="${!empty(pdict.Order)}">
+	<table width="550px" border="0" cellspacing="0" cellpadding="4">
+
+            <tr>
+                <td class="table_detail" colspan="4">&nbsp;</td>
+            </tr>
+
+            <tr>
+            	<td colspan="2" class="table_title aldi left" colspan="5" >${Resource.msg('hipay_bm.capture.order','hipay_bm',null)}</td>
+                <td colspan="2" class="infobox_item"><h2><isprint value="${pdict.Order.orderNo}"></h2></td>
+            </tr>
+
+            <tr>
+                <td class="table_detail w e n" colspan="4">&nbsp;</td>
+            </tr>
+
+            <tr>
+                <td colspan="2" width="500" class="table_detail bold w">
+                    <table>
+                        <tr>
+                            <td class="infobox_item" nowrap="nowrap">${Resource.msg('hipay_bm.capture.order.status','hipay_bm',null)}:</td>
+                            <td class="infobox_item" nowrap="nowrap"><isprint value="${pdict.Order.getStatus()}"></td>
+                        </tr>
+                        <tr>
+                            <td class="infobox_item" nowrap="nowrap">${Resource.msg('hipay_bm.capture.order.paymentstatus','hipay_bm',null)}:</td>
+                            <td class="infobox_item" nowrap="nowrap"><isprint value="${pdict.Order.getPaymentStatus()}"></td>
+                        </tr>
+                        <tr>
+                            <td class="infobox_item" nowrap="nowrap">${Resource.msg('hipay_bm.capture.order.hipaystate','hipay_bm',null)}:</td>
+                            <td class="infobox_item" nowrap="nowrap"><isprint value="${hipayTransactionState}"></td>
+                        </tr>
+                        <tr>
+                            <td class="infobox_item" nowrap="nowrap">${Resource.msg('hipay_bm.capture.order.capturedamount','hipay_bm',null)}:</td>
+                            <td class="infobox_item" nowrap="nowrap"><isprint value="${capturedAmount}"></td>
+                        </tr>
+                        <tr>
+                            <td class="infobox_item" nowrap="nowrap">${Resource.msg('hipay_bm.capture.order.requestedamount','hipay_bm',null)}:</td>
+                            <td class="infobox_item" nowrap="nowrap"><isprint value="${captureRequestAmount}"></td>
+                        </tr>
+                        <tr>
+                            <td class="infobox_item" nowrap="nowrap">${Resource.msg('hipay_bm.capture.order.total','hipay_bm',null)}:</td>
+                            <td class="infobox_item" nowrap="nowrap"><isprint value="${orderTotal}"></td>
+                        </tr>
+                    </table>
+                </td>
+                <td colspan="2" class="table_detail bold e">
+                    <table>
+                        <tr>
+                            <td class="infobox_item" nowrap="nowrap">${Resource.msg('hipay_bm.capture.order.no','hipay_bm',null)}:</td>
+                            <td class="infobox_item" nowrap="nowrap"><isprint value="${pdict.Order.orderNo}"></td>
+                        </tr>
+                        <tr>
+                            <td class="infobox_item" nowrap="nowrap">${Resource.msg('hipay_bm.capture.order.date','hipay_bm',null)}:</td>
+                            <td class="infobox_item" nowrap="nowrap"><isprint value="${pdict.Order.creationDate}"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td class="table_detail w e" colspan="3">&nbsp;</td>
+            </tr>
+            <isif condition="${maxCaptureRequest > 0}">
+	            <tr>
+	            	<td colspan="3" class="table_detail bold w e">
+	           			<form action="${URLUtils.continueURL()}" method="post" name="${pdict.CurrentForms.searchorder.dynamicHtmlName}" id="hipay-capture">
+	                   	<table>
+	                       <tr>
+	                       	  <isinputfield type="input" formfield="${pdict.CurrentForms.searchorder.captureAmount}" value="${maxCaptureRequest}"/>
+	                          <td colspan="5" class="table_detail bold">
+	                          	<input type="submit" name="${pdict.CurrentForms.searchorder.capture.htmlName}" value="Capture" class="button"/>
+	                          </td>
+	                       </tr>
+	                   </table>
+	                   </form>
+	                </td>
+	           	</tr>
+	            <tr>
+	                <td class="table_detail w e" colspan="3">&nbsp;</td>
+	            </tr>
+			</isif>
+            <tr>
+                <td class="table_detail w e n" colspan="3">&nbsp;</td>
+            </tr>
+
+            <tr valign="top">
+                <td class="table_detail bold w" nowrap="nowrap">${Resource.msg('hipay_bm.capture.order.billto','hipay_bm',null)}:&nbsp;</td>
+                <td class="table_detail" width="100%">
+                    <table>
+                        <tr>
+                            <td class="infobox_item" nowrap="nowrap"><isprint value="${pdict.Order.billingAddress.firstName}"> <isprint value="${pdict.Order.billingAddress.lastName}"></td>
+                        </tr>
+                        <tr>
+                            <td class="infobox_item" nowrap="nowrap"><isprint value="${pdict.Order.billingAddress.address1}"> <isprint value="${pdict.Order.billingAddress.address2}"></td>
+                        </tr>
+                        <tr>
+                            <td class="infobox_item" nowrap="nowrap"><isprint value="${pdict.Order.billingAddress.city}"> <isprint value="${pdict.Order.billingAddress.stateCode}"> <isprint value="${pdict.Order.billingAddress.postalCode}"></td>
+                        </tr>
+                        <tr>
+                            <td class="infobox_item" nowrap="nowrap"><isprint value="${pdict.Order.billingAddress.countryCode}"></td>
+                        </tr>
+                        <tr>
+                            <td class="infobox_item" nowrap="nowrap">${Resource.msg('hipay_bm.capture.order.billto.phone','hipay_bm',null)}: <isif condition="${! empty(pdict.Order.billingAddress.phone)}"><isprint value="${pdict.Order.billingAddress.phone}"><iselse>n/a</isif></td>
+                        </tr>
+                        <tr>
+                            <td class="infobox_item" nowrap="nowrap">${Resource.msg('hipay_bm.capture.order.billto.email','hipay_bm',null)}: <isif condition="${! empty(pdict.Order.customerEmail)}"><isprint value="${pdict.Order.customerEmail}"><iselse><isprint value="${pdict.Order.buyerEmail}"></isif></td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="table_detail e" colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+                <td class="table_detail s w e" colspan="4">&nbsp;</td>
+            </tr>
+
+            <tr>
+                <td class="table_detail w e" colspan="3">
+                    <div class="printorder" style="padding-left: 0px;">
+                        <isset name="Container" value="${pdict.Order}" scope="REQUEST">
+                        <isinclude template="order/orderdetails">
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="table_detail s w e" colspan="4">&nbsp;</td>
+            </tr>
+           </table>
+	
+</isif>
+</isdecorate>

@@ -1,0 +1,29 @@
+var PaymentCard = require('dw/order/PaymentCard');
+var PaymentMgr = require('dw/order/PaymentMgr');
+var PaymentInstrument = require('dw/order/PaymentInstrument');
+/**
+* Checks witch HIPAY Payment method is present and sets additional payment names.
+*	
+*   @input PaymentInstrument : dw.order.PaymentInstrument
+*
+*/
+function execute( args : PipelineDictionary ) : Number
+{
+	var pi : PaymentInstrument = args.PaymentInstrument;
+	
+	if ( pi.paymentMethod.equals("HIPAY_CREDIT_CARD") ) {
+    	var ccType = args.CurrentForms.billing.paymentMethods.creditCard.type.value;
+    	var card : PaymentCard = PaymentMgr.getPaymentCard(ccType);
+    	pi.custom.hipayProductName = card.custom.hipayProductName;
+	} else {
+    	var paymentMethod = PaymentMgr.getPaymentMethod(pi.paymentMethod);
+		pi.custom.hipayProductName = paymentMethod.custom.hipayProductName;
+		pi.custom.hipayPaymentProductList = paymentMethod.custom.hipayPaymentProductList;
+		pi.custom.hipayPaymentCategoryList = paymentMethod.custom.hipayPaymentCategoryList;
+		if ( pi.paymentMethod.equals("HIPAY_IDEAL") ) {
+			pi.custom.hipayIdealBankID = args.CurrentForms.billing.paymentMethods.hipaymethods.issuer_bank_id.value;
+		}
+	}
+	
+   return PIPELET_NEXT;
+}

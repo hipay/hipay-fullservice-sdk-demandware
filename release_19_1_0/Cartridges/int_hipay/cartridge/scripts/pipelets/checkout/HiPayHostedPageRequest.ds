@@ -1,0 +1,81 @@
+var Site = require('dw/system/Site');
+var URLUtils = require('dw/web/URLUtils');
+var Order = require('dw/order/Order');
+
+var HiPayHostedService = require("int_hipay/cartridge/scripts/lib/hipay/services/HiPayHostedService");
+var HiPayLogger = require("int_hipay/cartridge/scripts/lib/hipay/HiPayLogger");
+var HiPayHelper = require("int_hipay/cartridge/scripts/lib/hipay/HiPayHelper");
+var HiPayConfig = require('int_hipay/cartridge/scripts/lib/hipay/HiPayConfig.ds').HiPayConfig;
+
+/**
+ * Initiates HiPay hosted page call as builds all the request parameters and
+ * handles the returned URL.
+ *
+ *   @input PaymentInstrument : dw.order.PaymentInstrument
+ *   @input Order : dw.order.Order
+ *
+ *   @output HiPayRedirectURL : String Returned hosted/iframe URL
+ *   @output HiPayIFrameEnabled : Boolean If iFrame enabled
+ */
+function execute(args: PipelineDictionary): Number {
+
+		var log = new HiPayLogger("HiPayHostedPageRequest.ds");
+		var hiPayHostedService = new HiPayHostedService();
+		var helper = new HiPayHelper();
+
+		var order: Order = args.Order;
+		var pi : PaymentInstrument = args.PaymentInstrument;
+		var httpHeaders = request.httpHeaders.get('accept');
+	
+	try {
+		var params = {};
+		params.operation = HiPayConfig.hipayPaymentAction;
+		params.eci = 7;
+		params.css = URLUtils.https("HiPayResource-Style").toString();
+		params.template = HiPayConfig.getTemplateType();
+		params.merchant_display_name = Site.current.getName();
+		params.display_selector = HiPayConfig.hipayDisplayCardSelector ? 1 : 0;
+		params.multi_use = 1;
+		params.cdata1 = order.getOrderToken();
+
+		if(!empty(pi.custom.hipayPaymentProductList)){		
+			params.payment_product_list = pi.custom.hipayPaymentProductList;
+		}
+		
+		if(!empty(pi.custom.hipayPaymentCategoryList)){		
+			params.payment_product_category_list = pi.custom.hipayPaymentCategoryList;
+		}
+
+		//fill in the common params
+		helper.fillHeaderData(HiPayConfig, order, params);
+
+		//add order details
+		helper.fillOrderData(order, params);
+
+		log.info("HiPay Hosted Page Request ::: \n" + JSON.stringify(params, undefined, 2));
+
+		var hipayResponse = hiPayHostedService.loadHostedPayment(params, "hipay.rest.hpayment");
+		var hipayRedirectURL = null;
+		var msg = null;
+
+		if (hipayResponse.ok === true) {
+			
+			msg = JSON.parse(hipayResponse.object.text);
+			hipayRedirectURL = msg.forwardUrl;
+			log.info("HiPay Hosted Page Response ::: \n" + JSON.stringify(msg, undefined, 2));
+
+		} else {
+			log.error(hipayResponse.msg);
+			return PIPELET_ERROR;
+		}
+
+		args.HiPayRedirectURL = hipayRedirectURL;
+		args.HiPayIFrameEnabled = HiPayConfig.isIframeEnabled();
+
+	} catch (e) {
+		log.error(e);
+		return PIPELET_ERROR;
+	}
+
+	return PIPELET_NEXT;
+}

@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?demandware-pipeline version="2.0"?>
+
+<pipeline type="process">
+  <branch basename="_ANONYMOUS_BRANCH_1">
+    <segment>
+      <node>
+        <text-node>
+          <description>Verifies HiPay requests</description>
+        </text-node>
+        <node-display x="1" y="0"/>
+      </node>
+    </segment>
+  </branch>
+  <branch basename="VerifyHash">
+    <segment>
+      <node>
+        <start-node call-mode="private" name="VerifyHash" secure="false"/>
+        <node-display x="1" y="1"/>
+      </node>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="source" x="0" y="1"/>
+        </transition-display>
+      </simple-transition>
+      <node>
+        <pipelet-node pipelet-name="Script" pipelet-set-identifier="bc_api">
+          <config-property key="Transactional" value="false"/>
+          <config-property key="OnError" value="PIPELET_ERROR"/>
+          <config-property key="ScriptFile" value="pipelets/order/HiPayVerifyRequest.ds"/>
+          <key-binding alias="ScriptLog" key="ScriptLog"/>
+        </pipelet-node>
+        <node-display x="0" y="1"/>
+        <branch basename="b2" source-connector="error">
+          <transition target-connector="in">
+            <transition-display>
+              <bend-point relative-to="source" x="2" y="0"/>
+              <bend-point relative-to="target" x="0" y="-1"/>
+            </transition-display>
+          </transition>
+          <segment>
+            <node>
+              <end-node name="error"/>
+              <node-display x="1" y="1"/>
+            </node>
+          </segment>
+        </branch>
+      </node>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="source" x="0" y="1"/>
+        </transition-display>
+      </simple-transition>
+      <node>
+        <end-node name="success"/>
+        <node-display x="0" y="1"/>
+      </node>
+    </segment>
+  </branch>
+  <branch basename="_ANONYMOUS_BRANCH_3">
+    <segment>
+      <node>
+        <text-node>
+          <description>Place an Order after being paid with HiPay</description>
+        </text-node>
+        <node-display x="6" y="0"/>
+      </node>
+    </segment>
+  </branch>
+  <branch basename="ProceedWithOrder">
+    <segment>
+      <node>
+        <start-node call-mode="private" name="ProceedWithOrder" secure="false"/>
+        <node-display x="6" y="1"/>
+      </node>
+      <simple-transition/>
+      <node>
+        <call-node start-name-ref="COPlaceOrder-SubmitImpl"/>
+        <node-display x="0" y="1"/>
+        <branch basename="b2" source-connector="error">
+          <transition target-connector="in">
+            <transition-display>
+              <bend-point relative-to="target" x="0" y="-1"/>
+            </transition-display>
+          </transition>
+          <segment>
+            <node>
+              <jump-node start-name-ref="COSummary-Start"/>
+              <node-display x="1" y="2"/>
+            </node>
+          </segment>
+        </branch>
+        <branch basename="b3" source-connector="order_created">
+          <transition target-connector="in">
+            <transition-display>
+              <bend-point relative-to="target" x="0" y="-1"/>
+            </transition-display>
+          </transition>
+          <segment>
+            <node>
+              <jump-node start-name-ref="COSummary-ShowConfirmation"/>
+              <node-display x="-1" y="2"/>
+            </node>
+          </segment>
+        </branch>
+      </node>
+    </segment>
+  </branch>
+  <branch basename="FailOrder">
+    <segment>
+      <node>
+        <start-node call-mode="private" name="FailOrder" secure="false"/>
+        <node-display x="11" y="1"/>
+      </node>
+      <simple-transition/>
+      <node>
+        <decision-node condition-key="Order != null" condition-operator="expr"/>
+        <node-display x="0" y="1"/>
+        <branch basename="b2" source-connector="yes">
+          <transition target-connector="in"/>
+          <segment>
+            <node>
+              <pipelet-node pipelet-name="FailOrder" pipelet-set-identifier="bc_api">
+                <key-binding alias="Order" key="Order"/>
+              </pipelet-node>
+              <node-display x="0" y="1"/>
+              <branch basename="b2" source-connector="error">
+                <transition target-connector="in2" target-path="../+1"/>
+              </branch>
+            </node>
+            <simple-transition>
+              <transition-display>
+                <bend-point relative-to="source" x="0" y="1"/>
+              </transition-display>
+            </simple-transition>
+            <node>
+              <pipelet-node pipelet-name="Assign" pipelet-set-identifier="bc_api">
+                <config-property key="Transactional" value="false"/>
+                <key-binding alias="HiPayRedirectURL" key="To_0"/>
+                <key-binding alias="null" key="From_1"/>
+                <key-binding alias="null" key="To_1"/>
+                <key-binding alias="null" key="From_2"/>
+                <key-binding alias="null" key="To_2"/>
+                <key-binding alias="null" key="From_3"/>
+                <key-binding alias="null" key="To_3"/>
+                <key-binding alias="null" key="From_4"/>
+                <key-binding alias="null" key="To_4"/>
+                <key-binding alias="null" key="From_5"/>
+                <key-binding alias="null" key="To_5"/>
+                <key-binding alias="null" key="From_6"/>
+                <key-binding alias="null" key="To_6"/>
+                <key-binding alias="null" key="From_7"/>
+                <key-binding alias="null" key="To_7"/>
+                <key-binding alias="null" key="From_8"/>
+                <key-binding alias="null" key="To_8"/>
+                <key-binding alias="null" key="From_9"/>
+                <key-binding alias="null" key="To_9"/>
+                <key-binding alias="dw.web.URLUtils.https('COSummary-Start', 'status', HiPayState)" key="From_0"/>
+              </pipelet-node>
+              <node-display x="0" y="1"/>
+            </node>
+            <transition target-connector="in1" target-path="../+2"/>
+          </segment>
+        </branch>
+      </node>
+      <transition target-connector="in1" target-path="./+1">
+        <transition-display>
+          <bend-point relative-to="source" x="2" y="0"/>
+        </transition-display>
+      </transition>
+    </segment>
+    <segment>
+      <node>
+        <join-node/>
+        <node-display x="1" y="1"/>
+      </node>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="source" x="0" y="1"/>
+        </transition-display>
+      </simple-transition>
+      <node>
+        <pipelet-node pipelet-name="Assign" pipelet-set-identifier="bc_api">
+          <config-property key="Transactional" value="false"/>
+          <key-binding alias="HiPayRedirectURL" key="To_0"/>
+          <key-binding alias="null" key="From_1"/>
+          <key-binding alias="null" key="To_1"/>
+          <key-binding alias="null" key="From_2"/>
+          <key-binding alias="null" key="To_2"/>
+          <key-binding alias="null" key="From_3"/>
+          <key-binding alias="null" key="To_3"/>
+          <key-binding alias="null" key="From_4"/>
+          <key-binding alias="null" key="To_4"/>
+          <key-binding alias="null" key="From_5"/>
+          <key-binding alias="null" key="To_5"/>
+          <key-binding alias="null" key="From_6"/>
+          <key-binding alias="null" key="To_6"/>
+          <key-binding alias="null" key="From_7"/>
+          <key-binding alias="null" key="To_7"/>
+          <key-binding alias="null" key="From_8"/>
+          <key-binding alias="null" key="To_8"/>
+          <key-binding alias="null" key="From_9"/>
+          <key-binding alias="null" key="To_9"/>
+          <key-binding alias="dw.web.URLUtils.https('COSummary-Start')" key="From_0"/>
+        </pipelet-node>
+        <node-display x="0" y="1"/>
+      </node>
+      <transition target-connector="in3" target-path="./+1"/>
+    </segment>
+    <segment>
+      <node>
+        <join-node/>
+        <node-display x="-1" y="1"/>
+      </node>
+      <simple-transition/>
+      <node>
+        <interaction-node transaction-required="false">
+          <template buffered="true" dynamic="false" name="hipay/hosted/hipayredirect"/>
+        </interaction-node>
+        <node-display x="0" y="1"/>
+      </node>
+    </segment>
+  </branch>
+  <branch basename="_ANONYMOUS_BRANCH_6">
+    <segment>
+      <node>
+        <text-node>
+          <description>This Job pipeline fails all Orders that are in CREATED state. Such orders are considered hung in the system during the two step checkout.</description>
+        </text-node>
+        <node-display width="2" x="17" y="1"/>
+      </node>
+    </segment>
+  </branch>
+  <branch basename="ClearHungOrders">
+    <segment>
+      <node>
+        <start-node call-mode="private" name="ClearHungOrders" secure="false"/>
+        <node-display x="17" y="2"/>
+      </node>
+      <simple-transition/>
+      <node>
+        <pipelet-node pipelet-name="Script" pipelet-set-identifier="bc_api">
+          <config-property key="Transactional" value="false"/>
+          <config-property key="OnError" value="PIPELET_ERROR"/>
+          <config-property key="ScriptFile" value="pipelets/order/GetHungOrders.ds"/>
+          <key-binding alias="null" key="ScriptLog"/>
+          <key-binding alias="OrderNumbers" key="OrderNumbers"/>
+        </pipelet-node>
+        <node-display x="0" y="1"/>
+        <branch basename="b2" source-connector="error">
+          <transition target-connector="in1" target-path="./+2">
+            <transition-display>
+              <bend-point relative-to="target" x="0" y="-2"/>
+            </transition-display>
+          </transition>
+        </branch>
+      </node>
+      <transition target-connector="in" target-path="./+1"/>
+    </segment>
+    <segment>
+      <node>
+        <loop-node element-key="OrderNo" iterator-key="OrderNumbers"/>
+        <node-display x="0" y="1"/>
+        <branch basename="b2" source-connector="do">
+          <transition target-connector="in"/>
+          <segment>
+            <node>
+              <pipelet-node pipelet-name="GetOrder" pipelet-set-identifier="bc_api">
+                <key-binding alias="OrderNo" key="OrderNo"/>
+                <key-binding alias="Order" key="Order"/>
+              </pipelet-node>
+              <node-display x="0" y="1"/>
+              <branch basename="b2" source-connector="error">
+                <transition target-connector="in1" target-path="./b3.1">
+                  <transition-display>
+                    <bend-point relative-to="source" x="2" y="0"/>
+                  </transition-display>
+                </transition>
+              </branch>
+            </node>
+            <simple-transition/>
+            <node>
+              <pipelet-node pipelet-name="FailOrder" pipelet-set-identifier="bc_api">
+                <key-binding alias="Order" key="Order"/>
+              </pipelet-node>
+              <node-display x="0" y="1"/>
+              <branch basename="b3" source-connector="error">
+                <transition target-connector="in2"/>
+                <segment>
+                  <node>
+                    <join-node/>
+                    <node-display x="1" y="0"/>
+                  </node>
+                  <transition target-connector="in1" target-path="../+1"/>
+                </segment>
+              </branch>
+            </node>
+            <transition target-connector="in1" target-path="./+1"/>
+          </segment>
+          <segment>
+            <node>
+              <join-node/>
+              <node-display x="0" y="1"/>
+            </node>
+            <transition target-connector="loop" target-path="..">
+              <transition-display>
+                <bend-point relative-to="source" x="-2" y="0"/>
+                <bend-point relative-to="target" x="-2" y="0"/>
+              </transition-display>
+            </transition>
+          </segment>
+        </branch>
+      </node>
+      <transition target-connector="in1" target-path="./+1"/>
+    </segment>
+    <segment>
+      <node>
+        <join-node/>
+        <node-display x="2" y="0"/>
+      </node>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="source" x="0" y="3"/>
+          <bend-point relative-to="target" x="0" y="-1"/>
+        </transition-display>
+      </simple-transition>
+      <node>
+        <end-node/>
+        <node-display x="-2" y="4"/>
+      </node>
+    </segment>
+  </branch>
+</pipeline>

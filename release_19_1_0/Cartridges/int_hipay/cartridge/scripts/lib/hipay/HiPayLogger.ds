@@ -1,0 +1,42 @@
+var Logger = require('dw/system/Logger');
+
+/**
+ * HiPayLogger class manages HiPay error and debug logging.
+ *
+ * To include this script use:
+ * var HiPayLogger = require("int_hipay/cartridge/scripts/lib/hipay/HiPayLogger");
+ */
+function HiPayLogger(scriptFileName: String) {
+	this.scriptFileName = scriptFileName;
+	this.log = Logger.getLogger("HIPAY");
+}
+
+/**
+ * Logs error messages for a given script.
+ */
+HiPayLogger.prototype.error = function(errorMessage: String) {
+	if (Logger.isErrorEnabled()) {
+		Logger.error(this.scriptFileName + ' ' + errorMessage);
+	}
+}
+
+/**
+ * Logs debug messages for a given script.
+ */
+HiPayLogger.prototype.debug = function(debugMessage: String) {
+
+	if (this.log.isDebugEnabled()) {
+		this.log.debug(this.scriptFileName + ' ' + debugMessage);
+	}
+}
+
+/**
+ * Logs info messages for a given script.
+ */
+HiPayLogger.prototype.info = function(infoMessage: String) {
+	if (this.log.isInfoEnabled()) {
+		this.log.info(this.scriptFileName + ' ' + infoMessage);
+	}
+}
+
+module.exports = HiPayLogger;

@@ -1,0 +1,62 @@
+/**
+* Make a call to HiPay to generate a token for the Credit Card payment using the information provided
+*
+*	@input HiPayCardBrand : String
+*	@input HiPayCardNumber : String
+*	@input HiPayCardExpiryMonth : Number
+*	@input HiPayCardExpiryYear : Number
+*	@input HiPayCardHolder : String
+*	@input HiPayCardCVC : String
+*	@input HiPayMultiUseToken : Boolean
+*
+*	@output HiPayToken : String
+*
+*/
+
+var HiPayTokenService = require("int_hipay/cartridge/scripts/lib/hipay/services/HiPayTokenService");
+var HiPayConfig = require('int_hipay/cartridge/scripts/lib/hipay/HiPayConfig.ds').HiPayConfig;
+var HiPayLogger = require("int_hipay/cartridge/scripts/lib/hipay/HiPayLogger");
+
+function execute( args : PipelineDictionary ) : Number
+{
+    var log = new HiPayLogger("HiPayGenerateToken.ds");
+    var hiPayTokenService = new HiPayTokenService();
+    
+    //Load parameters
+    var params = {};
+    
+    params.card_brand = args.HiPayCardBrand;
+    params.card_number = args.HiPayCardNumber;
+    var month = args.HiPayCardExpiryMonth;
+    params.card_expiry_month = month < 10? "0" + month : month;
+    params.card_expiry_year = args.HiPayCardExpiryYear;
+    params.card_holder = args.HiPayCardHolder;
+    params.cvc = args.HiPayCardCVC;
+    var multiUse = args.HiPayMultiUseToken;
+    params.multi_use = multiUse ? 1 : 0;
+    
+    var hipayResponse = hiPayTokenService.generateToken(params);
+    var token = null;
+
+    var msg = null;
+    if (hipayResponse.ok === true) {
+
+        try {
+            msg = JSON.parse(hipayResponse.object.text);
+        } catch (e) {
+            log.error("Response text cannot be parsed as JSON ::: \n" + JSON.stringify(hipayResponse.object.text, undefined, 2));
+            return PIPELET_ERROR;
+        }
+
+        token = msg.token;
+    } else {
+        log.error(hipayResponse.msg);
+        return PIPELET_ERROR;
+    }
+
+    log.info(JSON.stringify(msg, undefined, 2));
+
+    args.HiPayToken = token;
+
+   return PIPELET_NEXT;
+}

@@ -1,0 +1,7 @@
+<iscontent type="text/css" charset="UTF-8" compact="true">
+<isscript>
+var hipayCSSContent = dw.system.Site.getCurrent().getCustomPreferenceValue('hipayCSSContent');
+</isscript>
+<isif condition="${!empty(hipayCSSContent)}">
+	<isprint value="${hipayCSSContent}" encoding="off" />
+</isif>

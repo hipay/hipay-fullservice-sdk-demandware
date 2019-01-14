@@ -1,0 +1,18 @@
+input[type="text"],
+input[type="number"],
+input[type="date"] textarea {
+  border: 1px solid #aaa;
+  box-sizing: border-box;
+  height: 2rem;
+  padding: 0.7em 0.5em;
+  text-indent: 0;
+  width: 100%; }
+  
+td {
+    vertical-align:middle;
+    height:60px;
+}
+
+label {
+	display: inline;
+}

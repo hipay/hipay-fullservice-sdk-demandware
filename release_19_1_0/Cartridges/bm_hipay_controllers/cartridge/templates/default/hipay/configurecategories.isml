@@ -1,0 +1,36 @@
+<isdecorate template="application/MenuFrame">
+    <iscontent type="text/html" charset="UTF-8">
+    <isinclude template="inc/Modules">
+    <isinclude template="util/modules"/>
+    <link rel="stylesheet" href="${dw.web.URLUtils.staticURL('/css/hipaybmpages.css')}" />
+
+    <!-- Page Navigator -->
+    <isbreadcrumb name1="${pdict.MAIN_MENU_NAME}" url1="${pdict.TOP_URL.toString()}" name2="${dw.web.Resource.msg('hipay_bm.config.category.title', 'hipay_bm', null)}">
+    <!-- EO Page Navigator -->
+    <h1 class="overview_title"><isprint value="${dw.web.Resource.msg('hipay_bm.config.category.title', 'hipay_bm', null)}"></h1>
+
+    <h2 class="table_title_description">
+        <p>${dw.web.Resource.msg('hipay_bm.categories.mapping.description_1', 'hipay_bm', null)}</p>
+        <p>${dw.web.Resource.msg('hipay_bm.categories.mapping.description_2', 'hipay_bm', null)}</p>
+    </h2>
+
+    <form action="${dw.web.URLUtils.https('HiPayConfigurationCategories-HandleForm')}" method="post" name="" id="${pdict.CurrentForms.hipayconfigcategories.htmlName}">
+
+        <table border="0" cellspacing="0" cellpadding="10" class="n w e s">
+            <tr>
+                <td><isprint value="${dw.web.Resource.msg('hipay_bm.config.category.sfccname', 'hipay_bm', null)}"></td>
+                <td><isprint value="${dw.web.Resource.msg('hipay_bm.config.category.hipayname', 'hipay_bm', null)}"></td>
+            </tr>
+
+            <isloop items="${pdict.CurrentForms.hipayconfigcategories.categoryconfigs}" var="categoryconfigs">
+                <tr>
+                    <td class="n"><isprint value="${categoryconfigs.categoryName.value}"> : (<isprint value="${categoryconfigs.categoryid.value}">)</td>
+                    <td class="n"><isinputfield formfield="${categoryconfigs.hipayCategory}" type="select"/></td>
+                </tr>
+            </isloop>
+        </table>
+
+        <button name="${pdict.CurrentForms.hipayconfigcategories.submit.htmlName}" class="button" type="submit" value="${pdict.CurrentForms.hipayconfigcategories.submit.htmlName}"><isprint value="${dw.web.Resource.msg('hipay_bm.config.submit', 'hipay_bm', null)}"></button>
+    </form>
+
+</isdecorate>

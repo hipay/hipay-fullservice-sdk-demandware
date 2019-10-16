@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences xmlns="http://www.demandware.com/xml/impex/preferences/2007-03-31">
+    <custom-preferences>
+        <development>
+            <preference preference-id="hipayCSSContent">.iframe-body { width: 100%; margin: 100px auto; }
+.iframe-body .form-horizontal .form-group label { border: 0; display: inline-block; margin-bottom: .5rem; font-size: 16px; font-weight: 400; line-height: 1.5; color: #212529; text-align: left; width: 80%; text-transform: capitalize;}
+.iframe-body .container-fluid { margin: 10px auto; display: flex; justify-content: center; width: 80%;}
+.iframe-body .form-horizontal .form-group.error label {border: 0 !important; }
+.iframe-body #paymentMeanForm {display: -ms-flexbox; display: flex; -ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -10px;}
+.iframe-body #paymentMeanForm .form-group {flex: 0 0 33%; max-width: 33%;}
+.iframe-body #paymentMeanForm .form-group .input-control {display: block; width: 90%; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; color: #495057; background-color: #fff; background-clip: padding-box; margin-left: 10px; transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;}
+.iframe-body .form-actions {width: 200px; margin: 50px auto;}
+
+@media screen and (max-width: 768px) {
+    .iframe-body .container-fluid { display: block; width: 70%;}
+    .iframe-body #paymentMeanForm {display: block;}
+    .iframe-body #paymentMeanForm .form-group {max-width: 100%;}
+    .iframe-body #paymentMeanForm .form-group .input-control {width: 100%;}
+    .iframe-body .form-horizontal .form-group label { margin-left: 10px; }
+    .iframe-body #paymentMeanForm .form-group .input-control {width: 100%;   
+ padding-left: 15px; padding-right: 15px;}
+}
+
+@media screen and (max-width: 601px) {
+    .iframe-body .container-fluid { width: 100%; }
+}</preference>
+        </development>
+    </custom-preferences>
+</preferences>
+

@@ -1,0 +1,9 @@
+<isif condition="${hipayEnabled}">
+    <isinclude template="checkout/billing/paymentOptions/hiPayContent" />
+<iselse/>
+    <isloop items="${pdict.order.billing.payment.applicablePaymentMethods}" var="paymentOption">
+        <isif condition="${paymentOption.ID === 'CREDIT_CARD'}">
+            <isinclude template="checkout/billing/paymentOptions/creditCardContent" />
+        </isif>
+    </isloop>
+</isif>

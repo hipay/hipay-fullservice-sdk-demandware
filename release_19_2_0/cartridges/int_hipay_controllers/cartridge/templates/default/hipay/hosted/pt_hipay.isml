@@ -1,0 +1,24 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<!doctype html>
+<!--[if lt IE 7]> <html class="ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+    <isinclude template="util/modules"/>
+    <isinclude template="components/header/htmlhead"/>
+</head>
+<body>
+    <div id="wrapper" class="pt_checkout">
+        <isinclude template="components/header/header"/>
+        <div id="main" role="main" class="primary-focus clearfix">
+            <div id="primary" class="primary-content">
+                <isreplace/>
+            </div>
+            <div id="secondary" class="nav summary">
+            </div>
+        </div>
+        <isinclude template="components/footer/footer"/>
+    </div>
+</body>
+</html>

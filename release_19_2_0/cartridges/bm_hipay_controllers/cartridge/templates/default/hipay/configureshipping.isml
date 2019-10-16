@@ -1,0 +1,42 @@
+<isdecorate template="application/MenuFrame">
+    <iscontent type="text/html" charset="UTF-8">
+    <isinclude template="inc/Modules">
+    <isinclude template="util/modules"/>
+    <link rel="stylesheet" href="${dw.web.URLUtils.staticURL('/css/hipaybmpages.css')}" />
+
+    <!-- Page Navigator -->
+    <isbreadcrumb name1="${pdict.MAIN_MENU_NAME}" url1="${pdict.TOP_URL.toString()}" name2="${dw.web.Resource.msg('hipay_bm.config.shipment.title', 'hipay_bm', null)}">
+    <!-- EO Page Navigator -->
+    <h1 class="overview_title"><isprint value="${dw.web.Resource.msg('hipay_bm.config.shipment.title', 'hipay_bm', null)}"></h1>
+
+    <h2 class="table_title_description">
+        <p>${dw.web.Resource.msg('hipay_bm.shipping.mapping.description_1', 'hipay_bm', null)}</p>
+        <p>${dw.web.Resource.msg('hipay_bm.shipping.mapping.description_2', 'hipay_bm', null)}</p>
+    </h2>
+
+    <form action="${dw.web.URLUtils.https('HiPayConfigurationShipping-HandleForm')}" method="post" name="" id="${pdict.CurrentForms.hipayconfigshipping.htmlName}">
+
+        <table border="0" cellspacing="0" cellpadding="10" class="n w e s">
+            <tr>
+                <td><isprint value="${dw.web.Resource.msg('hipay_bm.config.shipment.method', 'hipay_bm', null)}"></td>
+                <td><isprint value="${dw.web.Resource.msg('hipay_bm.config.shipment.preparationtime', 'hipay_bm', null)}"></td>
+                <td><isprint value="${dw.web.Resource.msg('hipay_bm.config.shipment.deliverytime', 'hipay_bm', null)}"></td>
+                <td><isprint value="${dw.web.Resource.msg('hipay_bm.config.shipment.deliverymode', 'hipay_bm', null)}"></td>
+                <td><isprint value="${dw.web.Resource.msg('hipay_bm.config.shipment.deliverymethod', 'hipay_bm', null)}"></td>
+            </tr>
+
+            <isloop items="${pdict.CurrentForms.hipayconfigshipping.shippingconfigs}" var="shippingconfigs">
+                <tr>
+                    <td class="n"><isprint value="${shippingconfigs.shippingmethodid.value}"></td>
+                    <td class="n"><isinputfield formfield="${shippingconfigs.preparationTime}" type="input"/></td>
+                    <td class="n"><isinputfield formfield="${shippingconfigs.deliveryTime}" type="input"/></td>
+                    <td class="n"><isinputfield formfield="${shippingconfigs.deliveryMode}" type="select"/></td>
+                    <td class="n"><isinputfield formfield="${shippingconfigs.deliveryMethod}" type="select"/></td>
+                </tr>
+            </isloop>
+        </table>
+
+        <button name="${pdict.CurrentForms.hipayconfigshipping.submit.htmlName}" class="button" type="submit" value="${pdict.CurrentForms.hipayconfigshipping.submit.htmlName}"><isprint value="${dw.web.Resource.msg('hipay_bm.config.submit', 'hipay_bm', null)}"></button>
+    </form>
+
+</isdecorate>

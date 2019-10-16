@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+    <list formid="categoryconfigs">
+        <field formid="categoryid" label="" type="string" mandatory="false" binding="categoryid"/>
+        <field formid="categoryName" label="" type="string" mandatory="false" binding="categoryName"/>
+        
+        <field formid="hipayCategory" label="" type="string" mandatory="false" binding="hipayCategory">
+            <options>
+                <option optionid="0" label="category.select" value="0"/>
+                <option optionid="1" label="category.1" value="1"/>
+                <option optionid="2" label="category.2" value="2"/>
+                <option optionid="3" label="category.3" value="3"/>
+                <option optionid="4" label="category.4" value="4"/>
+                <option optionid="5" label="category.5" value="5"/>
+                <option optionid="6" label="category.6" value="6"/>
+                <option optionid="7" label="category.7" value="7"/>
+                <option optionid="8" label="category.8" value="8"/>
+                <option optionid="9" label="category.9" value="9"/>
+                <option optionid="10" label="category.10" value="10"/>
+                <option optionid="11" label="category.11" value="11"/>
+                <option optionid="12" label="category.12" value="12"/>
+                <option optionid="13" label="category.13" value="13"/>
+                <option optionid="14" label="category.14" value="14"/>
+                <option optionid="15" label="category.15" value="15"/>
+                <option optionid="16" label="category.16" value="16"/>
+                <option optionid="17" label="category.17" value="17"/>
+                <option optionid="18" label="category.18" value="18"/>
+                <option optionid="19" label="category.19" value="19"/>
+                <option optionid="20" label="category.20" value="20"/>
+                <option optionid="21" label="category.21" value="21"/>
+                <option optionid="22" label="category.22" value="22"/>
+                <option optionid="23" label="category.23" value="23"/>
+                <option optionid="24" label="category.24" value="24"/>
+            </options>
+        </field>
+    </list>
+    <action formid="submit" valid-form="true"/>
+</form>

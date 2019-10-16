@@ -1,0 +1,37 @@
+<isloop items="${pdict.order.billing.payment.applicablePaymentMethods}" var="paymentOption">
+    <iscomment>Ignore GIFT_CERTIFICATE method, GCs are handled separately before other payment methods.</iscomment>
+    <isif condition="${paymentOption.ID.equals(dw.order.PaymentInstrument.METHOD_GIFT_CERTIFICATE)}">
+        <iscontinue/>
+    </isif>
+    <!--- HIPAY INTEGRATION ------ skip all non-HiPay methods if HiPay is enabled--->
+    <isif condition="${(paymentOption.ID.indexOf('HIPAY') == -1)}">
+        <iscontinue/>
+    </isif>
+    <isif condition="${(paymentOption.ID.indexOf('HIPAY') > -1)}">
+        <iscomment>Skip HIPAY_ payment methods if is in HOSTED operation mode.</iscomment>
+        <isif condition="${isHiPayHostedMode && paymentOption.ID.indexOf('HIPAY_HOSTED') == -1}">
+            <iscontinue/>
+        </isif>
+        <iscomment>Skip hosted page payment method if is in API operation mode.</iscomment>
+        <isif condition="${!isHiPayHostedMode && paymentOption.ID.indexOf('HIPAY_HOSTED') > - 1}">
+            <iscontinue/>
+        </isif>
+        <iscomment>Skip Oney pay if product and shipping is not configured for it.</iscomment>
+        <isif condition="${renderOney === false && paymentOption.ID.indexOf('ONEY_FACILITY_PAY') > - 1}">
+            <iscontinue/>
+        </isif>
+
+        <isscript>
+            var paymentMethod = dw.order.PaymentMgr.getPaymentMethod(paymentOption.ID);
+            var hipayProductName = paymentMethod.custom.hipayProductName; if(!empty(hipayProductName)) { hipayProductName = hipayProductName.toLowerCase(); }
+        </isscript>
+
+
+        <li class="nav-item" data-method-id="${paymentOption.ID}">
+            <a class="nav-link" data-toggle="tab" href="${'#'+paymentOption.ID+'-content'}" role="tab">
+                <i class="payment-product-sprite-${hipayProductName}"></i>
+            </a>
+        </li>
+    </isif>
+</isloop>
+

@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="OrderPaymentInstrument">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="hipayCreditCardCountry">
+                <display-name xml:lang="x-default">Credit Card Country</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayCreditCardExpirationMonth">
+                <display-name xml:lang="x-default">Credit Card Expiration Month</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayCreditCardExpirationYear">
+                <display-name xml:lang="x-default">Credit Card Expiration Year</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayCreditCardIssuer">
+                <display-name xml:lang="x-default">Credit Card Issuer</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayCreditCardNumber">
+                <display-name xml:lang="x-default">Credit Card Number</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayCreditCardToken">
+                <display-name xml:lang="x-default">Credit Card Token</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayCreditCardType">
+                <display-name xml:lang="x-default">Credit Card Type</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayIdealBankID">
+                <display-name xml:lang="x-default">HiPay Ideal Bank ID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayBic">
+                <display-name xml:lang="x-default">HiPay BIC</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayPaymentCategoryList">
+                <display-name xml:lang="x-default">HiPay Payment Category List</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayPaymentProductList">
+                <display-name xml:lang="x-default">HiPay Payment Product List</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayProductName">
+                <display-name xml:lang="x-default">HiPay Product Name</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayTransactionCaptureRequestAmount">
+                <display-name xml:lang="x-default">HiPay Capture Request Amount</display-name>
+                <type>double</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayTransactionCapturedAmount">
+                <display-name xml:lang="x-default">HiPay Captured Amount</display-name>
+                <type>double</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayTransactionDeclineReason">
+                <display-name xml:lang="x-default">Payment decline reason</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>0</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayTransactionState">
+                <display-name xml:lang="x-default">Payment state</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>0</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayTransactionStatus">
+                <display-name xml:lang="x-default">Payment status</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>0</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayTransactionType">
+                <display-name xml:lang="x-default">Payment type</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>0</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayOneClickDisabled">
+                <display-name xml:lang="x-default">One-Click Disabled</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="HiPay">
+                <display-name xml:lang="x-default">HiPay</display-name>
+                <attribute attribute-id="hipayProductName"/>
+                <attribute attribute-id="hipayPaymentProductList"/>
+                <attribute attribute-id="hipayPaymentCategoryList"/>
+                <attribute attribute-id="hipayTransactionType"/>
+                <attribute attribute-id="hipayTransactionState"/>
+                <attribute attribute-id="hipayTransactionStatus"/>
+                <attribute attribute-id="hipayTransactionDeclineReason"/>
+                <attribute attribute-id="hipayTransactionCapturedAmount"/>
+                <attribute attribute-id="hipayTransactionCaptureRequestAmount"/>
+                <attribute attribute-id="hipayCreditCardType"/>
+                <attribute attribute-id="hipayCreditCardExpirationMonth"/>
+                <attribute attribute-id="hipayCreditCardExpirationYear"/>
+                <attribute attribute-id="hipayCreditCardNumber"/>
+                <attribute attribute-id="hipayCreditCardToken"/>
+                <attribute attribute-id="hipayCreditCardCountry"/>
+                <attribute attribute-id="hipayCreditCardIssuer"/>
+                <attribute attribute-id="hipayIdealBankID"/>
+                <attribute attribute-id="hipayBic"/>
+                <attribute attribute-id="hipayOneClickDisabled"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="PaymentCard">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="hipayProductName">
+                <display-name xml:lang="x-default">HiPay Product Name</display-name>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayOneClickDisabled">
+                <display-name xml:lang="x-default">One-Click Disabled</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayCVVIgnored">
+                <display-name xml:lang="x-default">CVV Ignored</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="HiPay">
+                <display-name xml:lang="x-default">HiPay custom attributes</display-name>
+                <attribute attribute-id="hipayProductName"/>
+                <attribute attribute-id="hipayOneClickDisabled"/>
+                <attribute attribute-id="hipayCVVIgnored"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="PaymentMethod">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="hipayOnlyCompleteCapture">
+                <display-name xml:lang="x-default">Only Complete Capture</display-name>
+                <description xml:lang="x-default">Not allowed to do partial capture.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayPaymentCategoryList">
+                <display-name xml:lang="x-default">HiPay Payment Category List</display-name>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayPaymentProductList">
+                <display-name xml:lang="x-default">HiPay Payment Product List</display-name>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayProductName">
+                <display-name xml:lang="x-default">HiPay Product Name</display-name>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="HiPay">
+                <display-name xml:lang="x-default">HiPay custom attributes</display-name>
+                <attribute attribute-id="hipayProductName"/>
+                <attribute attribute-id="hipayPaymentProductList"/>
+                <attribute attribute-id="hipayPaymentCategoryList"/>
+                <attribute attribute-id="hipayOnlyCompleteCapture"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="hipayApiPassphrase">
+                <display-name xml:lang="x-default">HiPay API Signature Passphrase</display-name>
+                <description xml:lang="x-default">API Signature passphrase configured in HiPay's back office. Used to verify the requests made to DW.</description>
+                <type>password</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <field-length>0</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayCSSContent">
+                <display-name xml:lang="x-default">HiPay CSS content</display-name>
+                <description xml:lang="x-default">CSS applied to either Hosted or iFrame page, not enclosed in style tags</description>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayDisplayCardSelector">
+                <display-name xml:lang="x-default">Display card selector</display-name>
+                <description xml:lang="x-default">Enables/disables the payment method selector on iFrame and Hosted page</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayEnable3dSecure">
+                <display-name xml:lang="x-default">3-D Secure</display-name>
+                <description xml:lang="x-default">Allows the activation of 3-D Secure if available on the card being used</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition>
+                        <display xml:lang="x-default">Bypass 3-D Secure 3-D authentication</display>
+                        <value>0</value>
+                    </value-definition>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">3-D Secure authentication if available</display>
+                        <value>1</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">3-D Secure authentication mandatory</display>
+                        <value>2</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayEnable3dSecureThresholdRule">
+                <display-name xml:lang="x-default">3-D Secure Threshold Rule</display-name>
+                <description xml:lang="x-default">If the order total is higher than the specified sum, then 3-D Secure will be forced. If 0 is specified, the rule is disabled.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>0</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayEnableOneClick">
+                <display-name xml:lang="x-default">Enable One-Click payments</display-name>
+                <description xml:lang="x-default">Enable/disable One-Click payments</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayEnableTestMode">
+                <display-name xml:lang="x-default">Enable Tokenization Test Mode</display-name>
+                <description xml:lang="x-default">Test Mode: If enabled, the module will use the HiPay TPP test platform</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayEnabled">
+                <display-name xml:lang="x-default">Hipay Enabled</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayHungOrderTimeout">
+                <display-name xml:lang="x-default">Hung Order Cleanup Time</display-name>
+                <description xml:lang="x-default">Number of minutes after which all orders hung in status "CREATED" and left unprocessed for payment are cleared.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>30</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayIframeHeight">
+                <display-name xml:lang="x-default">iFrame Height</display-name>
+                <description xml:lang="x-default">If iFrame operating mode is chosen, you can select your iFrame height to fit with your CSS</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>750</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayIframeWidth">
+                <display-name xml:lang="x-default">iFrame Width</display-name>
+                <description xml:lang="x-default">If iFrame operating mode is chosen, you can select your iFrame width to fit with your CSS</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>950</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayOperationMode">
+                <display-name xml:lang="x-default">HiPay Operation Mode</display-name>
+                <description xml:lang="x-default">Defines which operation payment mode to be used</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">Hosted page</display>
+                        <value>hosted</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">IFrame</display>
+                        <value>iframe</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">API</display>
+                        <value>api</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipayPaymentAction">
+                <display-name xml:lang="x-default">Payment Action</display-name>
+                <description xml:lang="x-default">Please refer to HiPayTPP-GatewayAPI documentation, chapter 3.1 Request a New Order (Order Parameters – operation)</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">Authorization + Capture</display>
+                        <value>Sale</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Authorization Only</display>
+                        <value>Authorization</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="hipaySiteShippingMethodsList">
+                <display-name xml:lang="x-default">List of shipping methods</display-name>
+                <description xml:lang="x-default">Comma-separated list of all shipping methods that will be in use for Oney payment method</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="HiPay">
+                <display-name xml:lang="x-default">HiPay Settings</display-name>
+                <attribute attribute-id="hipayEnabled"/>
+                <attribute attribute-id="hipayEnableOneClick"/>
+                <attribute attribute-id="hipayOperationMode"/>
+                <attribute attribute-id="hipayEnableTestMode"/>
+                <attribute attribute-id="hipayEnable3dSecure"/>
+                <attribute attribute-id="hipayEnable3dSecureThresholdRule"/>
+                <attribute attribute-id="hipayApiPassphrase"/>
+                <attribute attribute-id="hipayPaymentAction"/>
+                <attribute attribute-id="hipayIframeHeight"/>
+                <attribute attribute-id="hipayIframeWidth"/>
+                <attribute attribute-id="hipayCSSContent"/>
+                <attribute attribute-id="hipayDisplayCardSelector"/>
+                <attribute attribute-id="hipayHungOrderTimeout"/>
+                <attribute attribute-id="hipaySiteShippingMethodsList"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+</metadata>

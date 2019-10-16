@@ -1,0 +1,156 @@
+var HttpParameterMap = require('dw/web/HttpParameterMap');
+var Order = require('dw/order/Order');
+var OrderMgr = require('dw/order/OrderMgr');
+var OrderPaymentInstrument = require('dw/order/OrderPaymentInstrument');
+var PaymentTransaction = require('dw/order/PaymentTransaction');
+
+var HiPayLogger = require("int_hipay/cartridge/scripts/lib/hipay/HiPayLogger");
+var HiPayHelper = require("int_hipay/cartridge/scripts/lib/hipay/HiPayHelper");
+
+/**
+ * 	 Extracts parameters from the call made from the HiPay hosted page
+ *
+ *   @input HttpParams : dw.web.HttpParameterMap
+ *   @output HiPayPaymentStatus : String
+ *   @output Order : dw.order.Order
+ *
+ */
+function execute(args: PipelineDictionary): Number {
+
+	var log = new HiPayLogger("HiPayProcessOrderCall.ds");
+	var helper = new HiPayHelper();
+
+	var params: HttpParameterMap = args.HttpParams;
+
+	var orderid = null;
+
+	var order: Order = null;
+
+	log.info("HiPay Order Call \n" + params);
+
+	if (params.isParameterSubmitted("orderid")) {
+
+		var orderid = params.orderid.stringValue; //=00000601
+
+		if (empty(orderid)) {
+			log.error("The call from HiPay does not have a valid OrderNo!");
+			return PIPELET_ERROR;
+		} else {
+			order = OrderMgr.getOrder(orderid);
+			if (empty(order)) {
+				log.error("The call from HiPay bares an OrderNo which is not valid! :: " + orderid);
+				return PIPELET_ERROR;
+			}
+
+			if (order.getStatus() != Order.ORDER_STATUS_CREATED) {
+				log.error("The HiPay order has already been processed! Probably a second call is made with the same parameters :: " + orderid);
+				return PIPELET_ERROR;
+			}
+
+			var orderToken = order.getOrderToken();
+			var cdata1 = params.cdata1.stringValue;
+
+			if (orderToken !== cdata1) {
+				log.error("The HiPay order token does not match the one sent in the hosted page request! :: " + orderid);
+				return PIPELET_ERROR;
+			}
+
+			//set the order if an error occurs further
+			args.Order = order;
+		}
+	} else {
+		log.error("The call from HiPay does not have the orderid parameter!");
+		return PIPELET_ERROR;
+	}
+
+	try {
+
+		var cid = params.cid.stringValue; //=bcsay8LSrmfuN9X7gEMiQeDd5x
+		var state = params.state.stringValue; //=completed, declined
+
+		//set output
+		args.HiPayPaymentStatus = state; // completed, declined, pending
+
+		var test = params.test.intValue; //=1
+		var approval = params.approval.stringValue; //=0000000000
+		var authorized = params.authorized.stringValue; //=2015-06-02T20%3A23%3A40%2B0000
+		var ip = params.ip.stringValue; //=84.238.197.207
+		var country = params.country.stringValue; //=BG
+		var lang = params.lang.stringValue; //=en+++
+		var email = params.email.stringValue; //=kiril%40forkpoint.com
+
+		var score = params.score.intValue; //=0
+		var fraud = params.fraud.stringValue; //=accepted
+		var review = params.review;
+		var avscheck = params.avscheck;
+		var cvccheck = params.cvccheck;
+		var eci3ds = params.eci3ds;
+		var veres = params.veres;
+		var pares = params.pares;
+
+		var paymentInstr: OrderPaymentInstrument = helper.getOrderPaymentInstrument(order);
+
+		var paymentTransaction: PaymentTransaction = paymentInstr.getPaymentTransaction();
+
+		//set the reference from hipay
+		var reference = params.reference.stringValue; //=200628176332
+		paymentTransaction.setTransactionID(reference);
+
+		//set transaction type
+		var pp = params.pp.stringValue; //=ideal,visa
+		paymentInstr.custom.hipayTransactionType = pp;
+
+		//update the payment status
+		helper.updatePaymentStatus(order, paymentInstr, params);
+
+		//payment state
+		paymentInstr.custom.hipayTransactionState = state;
+
+		if (state == "declined") {
+			var reason = params.reason; // 4000001
+			paymentInstr.custom.hipayTransactionDeclineReason = reason;
+
+		}
+
+		// process cards only
+		if (params.isParameterSubmitted("cardtoken")) { //we assume the payment is done with a credit card
+			
+			//Fill payment info if not masked
+			if (!paymentInstr.permanentlyMasked) {
+				
+				var cardcountry = params.cardcountry; //US
+				paymentInstr.custom.hipayCreditCardCountry = cardcountry;
+
+				var cardbrand = params.cardbrand.stringValue; //VISA
+				paymentInstr.setCreditCardType(cardbrand);
+				paymentInstr.custom.hipayCreditCardType = cardbrand;
+
+				var cardexpiry = params.cardexpiry.stringValue; // 202202
+				if (cardexpiry.length == 6) {
+					var year = cardexpiry.substr(0, 4);
+					var month = cardexpiry.substr(4, cardexpiry.length);
+
+					paymentInstr.setCreditCardExpirationMonth(Number(month));
+					paymentInstr.custom.hipayCreditCardExpirationMonth = month;
+
+					paymentInstr.setCreditCardExpirationYear(Number(year));
+					paymentInstr.custom.hipayCreditCardExpirationYear = year;
+				}
+
+				var cardpan = params.cardpan.stringValue; //XXXXXXXXXXXX3333
+				paymentInstr.setCreditCardNumber(cardpan);
+				paymentInstr.custom.hipayCreditCardNumber = cardpan;
+
+				var cardtoken = params.cardtoken.stringValue; //347da03e9167a457279e99e540ee85559c666809	
+				paymentInstr.setCreditCardToken(cardtoken);
+				paymentInstr.custom.hipayCreditCardToken = cardtoken;
+			}
+		}
+
+	} catch (e) {
+		log.error(e);
+		return PIPELET_ERROR;
+	}
+
+	return PIPELET_NEXT;
+}

@@ -1,0 +1,130 @@
+var Order = require('dw/order/Order');
+var PaymentTransaction = require('dw/order/PaymentTransaction');
+var PaymentInstrument = require('dw/order/PaymentInstrument');
+
+var HiPayOrderService = require("int_hipay/cartridge/scripts/lib/hipay/services/HiPayOrderService");
+var HiPayLogger = require("int_hipay/cartridge/scripts/lib/hipay/HiPayLogger");
+var HiPayHelper = require("int_hipay/cartridge/scripts/lib/hipay/HiPayHelper");
+var HiPayConfig = require('int_hipay/cartridge/scripts/lib/hipay/HiPayConfig.ds').HiPayConfig;
+var status = require('int_hipay/cartridge/scripts/lib/hipay/HiPayStatus.ds').HiPayStatus;
+
+/* 
+ *	Calls the /rest/v1/order Fullservice API endpoint and creates an Order
+ *	Used in case of Credit Card and all other HiPay payment types
+ *
+ *   @input PaymentInstrument : dw.order.PaymentInstrument
+ *   @input Order : dw.order.Order
+ *   @input DeviceFingerprint : String
+ *
+ *   @output HiPayRedirectURL : String
+ *	 @output HiPayPaymentStatus : String
+ */
+
+function execute(args: PipelineDictionary): Number {
+	var log = new HiPayLogger("HiPayOrderRequest.ds");
+	var hiPayOrderService = new HiPayOrderService();
+	var helper = new HiPayHelper();
+
+	var order : Order = args.Order;
+	var pi : PaymentInstrument = args.PaymentInstrument;
+	var fingeprint = args.DeviceFingerprint;
+
+	//use decline if the processing fails, and set the appropriate status afterwards
+	args.HiPayPaymentStatus = status.DECLINED.code;
+
+	try {
+		var params = {};
+		params.operation = HiPayConfig.hipayPaymentAction;
+
+		if (pi.paymentMethod.equals("HIPAY_CREDIT_CARD")) {
+			//credit card payment only
+			params.cardtoken = pi.creditCardToken;
+		}
+
+		if (pi.paymentMethod.equals("HIPAY_IDEAL")) {
+			params.issuer_bank_id = pi.custom.hipayIdealBankID;
+		}
+
+		params.payment_product = pi.custom.hipayProductName;
+		params.eci = 7;
+		params.device_fingerprint = fingeprint;
+		params.cdata1 = order.getOrderToken();
+
+		//fill in the common params
+		helper.fillHeaderData(HiPayConfig, order, params);
+
+		//add order details
+		helper.fillOrderData(order, params);
+
+		log.info("HiPay Order Request  ::: \n" + JSON.stringify(params, undefined, 2));
+
+		var hipayResponse = hiPayOrderService.loadOrderPayment(params);
+		var hipayRedirectURL = null;
+		var responseMsg = null;
+
+		if (hipayResponse.ok === true) {
+
+			responseMsg = JSON.parse(hipayResponse.object.text);
+
+			log.info("HiPay Order Response ::: \n" + JSON.stringify(responseMsg, undefined, 2));
+
+			var paymentTransaction: PaymentTransaction = pi.getPaymentTransaction();
+
+			//set the reference from hipay
+			paymentTransaction.setTransactionID(responseMsg.transactionReference);
+
+			//set transaction type
+			pi.custom.hipayTransactionType = responseMsg.paymentProduct; //=ideal,visa;
+
+			//update the payment status
+			helper.updatePaymentStatus(order, pi, responseMsg);
+
+			//payment state
+			var paymentState = responseMsg.state
+			pi.custom.hipayTransactionState = paymentState;
+
+			// process cards only
+			if (!empty(responseMsg.paymentMethod)) {
+				pi.custom.hipayCreditCardToken = responseMsg.paymentMethod.token;
+				pi.custom.hipayCreditCardType = responseMsg.paymentMethod.brand;
+				pi.custom.hipayCreditCardNumber = responseMsg.paymentMethod.pan;
+				pi.custom.hipayCreditCardExpirationMonth = responseMsg.paymentMethod.cardExpiryMonth;
+				pi.custom.hipayCreditCardExpirationYear = responseMsg.paymentMethod.cardExpiryYear;
+				pi.custom.hipayCreditCardIssuer = responseMsg.paymentMethod.issuer;
+				pi.custom.hipayCreditCardCountry = responseMsg.paymentMethod.country;
+			}
+
+			//set the status
+			args.HiPayPaymentStatus = paymentState;
+
+			switch (paymentState) {
+				case status.COMPLETED.code:
+					return PIPELET_NEXT;
+				case status.PENDING.code:
+					return PIPELET_NEXT;
+				case status.FORWARDING.code:
+					args.HiPayRedirectURL = responseMsg.forwardUrl;
+					return PIPELET_NEXT;
+				case status.DECLINED.code:
+					pi.custom.hipayTransactionDeclineReason = responseMsg.reason.code + " : " + responseMsg.reason.message;
+					return PIPELET_ERROR;
+				case status.ERROR.code:
+					return PIPELET_ERROR;
+				default:
+					log.error("Unknown response HiPay payment status, this should not happen ::: " + hipayResponse.responseMsg);
+					return PIPELET_ERROR;
+			}
+
+		} else {
+			log.debug("HiPay Order Response : Error ::: \n" + JSON.stringify(hipayResponse, undefined, 2));
+			log.error(hipayResponse);
+			return PIPELET_ERROR;
+		}
+
+	} catch (e) {
+		log.error(e);
+		return PIPELET_ERROR;
+	}
+
+	return PIPELET_ERROR;
+}

@@ -1,0 +1,25 @@
+var HiPayConfig = require('int_hipay/cartridge/scripts/lib/hipay/HiPayConfig.ds').HiPayConfig;
+var HiPayLogger = require("int_hipay/cartridge/scripts/lib/hipay/HiPayLogger");
+var HiPaySignitureMgr = require('int_hipay/cartridge/scripts/lib/hipay/HiPaySignitureMgr.ds').HiPaySignitureMgr;
+
+/**
+* This piplet executes HiPay sinature verification using HiPaySignitureMgr.
+*
+*/
+function execute( args : PipelineDictionary ) : Number
+{
+	var log = new HiPayLogger("HiPayVerifyRequest.ds");
+
+	try {
+		var isRequestValid = HiPaySignitureMgr.checkIsValidResponse(request.getHttpParameters(), HiPayConfig.hipayApiPassphrase);
+		
+		if(!isRequestValid) {
+			return PIPELET_ERROR;
+		}
+	} catch(e){
+		log.error(e);
+		return PIPELET_ERROR;
+	}
+	
+	return PIPELET_NEXT;
+}

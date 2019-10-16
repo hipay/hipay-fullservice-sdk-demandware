@@ -1,0 +1,4 @@
+<!--- TEMPLATENAME: hipayredirect.isml --->
+<isif condition="${!empty(pdict.HiPayRedirectURL)}">
+	<isredirect location="${pdict.HiPayRedirectURL}">
+</isif>    

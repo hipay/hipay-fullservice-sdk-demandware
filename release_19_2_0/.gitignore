@@ -1,3 +1,12 @@
-.idea
-.vscode
+node_modules/
+coverage/
+npm-debug.log
+.idea/
 dw.json
+sitegenesisdata/
+mobilefirstdata/
+storefrontdata/
+.DS_Store
+test/appium/webdriver/config.json
+.vscode
+.history

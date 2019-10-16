@@ -1,0 +1,14 @@
+<isset name="hipayEnabled" value="${dw.system.Site.getCurrent().getCustomPreferenceValue('hipayEnabled')}" scope="page"/>
+<isset name="hipayEnableOneClick" value="${dw.system.Site.getCurrent().getCustomPreferenceValue('hipayEnableOneClick')}" scope="page"/>
+
+<link rel="stylesheet" href="${URLUtils.staticURL('/css/hipay.css')}" />
+
+<isif condition="${hipayEnabled}">
+    <isinclude template="checkout/billing/paymentOptions/hiPayTab" />
+<iselse/>
+    <isloop items="${pdict.order.billing.payment.applicablePaymentMethods}" var="paymentOption">
+        <isif condition="${paymentOption.ID === 'CREDIT_CARD'}">
+            <isinclude template="checkout/billing/paymentOptions/creditCardTab" />
+        </isif>
+    </isloop>
+</isif>

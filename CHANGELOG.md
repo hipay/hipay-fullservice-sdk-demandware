@@ -1,3 +1,6 @@
+# Version 2.1.0
+- Update with latest module version
+
 # Version 2.0.0
 - Migration to the Javascript controller.
 

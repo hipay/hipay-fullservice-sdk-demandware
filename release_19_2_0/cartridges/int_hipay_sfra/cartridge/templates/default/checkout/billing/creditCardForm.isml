@@ -35,14 +35,16 @@
             <select class="form-control expirationMonth custom-select" id="expirationMonth"
             <isprint value=${creditFields.expirationMonth.attributes} encoding="off"/> autocomplete="cc-exp-month">
                 <isloop items=${creditFields.expirationMonth.options} var="month">
-                    <option id="${month.id}" value="${month.htmlValue}"
-                        <isif condition="${pdict.order.billing.payment.selectedPaymentInstruments
+                    <option id="${month.id}" label="${month.label}" value="${month.htmlValue}"
+                        <isif condition="${
+                            pdict.order.billing.payment.selectedPaymentInstruments
                             && pdict.order.billing.payment.selectedPaymentInstruments.length > 0
-                            && month.id == pdict.order.billing.payment.selectedPaymentInstruments[0].expirationMonth}">
+                            && month.id == pdict.order.billing.payment.selectedPaymentInstruments[0].expirationMonth
+                            }"
+                        >
                             selected
-                        </isif> >
-                        ${month.label}
-                    </option>
+                        </isif> 
+                    />
                 </isloop>
             </select>
             <div class="invalid-feedback"></div>
@@ -62,7 +64,8 @@
                             && pdict.order.billing.payment.selectedPaymentInstruments.length > 0
                             && year == pdict.order.billing.payment.selectedPaymentInstruments[0].expirationYear}">
                                 selected
-                        </isif> >
+                        </isif> 
+                    >
                     <isprint value="${year}" formatter="####" /></option>
                 </isloop>
             </select>

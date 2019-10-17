@@ -12,19 +12,22 @@ function createToken() {
     var siteId = Site.getCurrent().getID();
     var service = LocalServiceRegistry.createService('hipay.rest.createtoken.' + siteId, {
         createRequest: function (svc, args) {
-            svc.addHeader('Content-Type', 'application/x-www-form-urlencoded');
+            svc.setRequestMethod('POST');
+
+            // Set headers
+            svc.addHeader('Content-Type', 'application/json');
             svc.addHeader('Cache-Control', 'no-cache');
             svc.addHeader('Accept', 'application/json');
 
             var serviceConfig = svc.getConfiguration();
+
+            // Get HiPay credentials
             var credentials = serviceConfig.getCredential();
             var credString = credentials.getUser() + ':' + credentials.getPassword();
             var base64Credentials = Encoding.toBase64(new Bytes(credString));
-
             svc.addHeader('Authentication', 'Basic ' + base64Credentials);
-            svc.setRequestMethod('POST');
-
-            return args;
+            
+            return JSON.stringify(args);
         },
         parseResponse: function (svc, response) {
             return response;

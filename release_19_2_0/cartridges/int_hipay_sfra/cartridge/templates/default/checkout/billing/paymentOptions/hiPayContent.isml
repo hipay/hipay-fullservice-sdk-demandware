@@ -1,4 +1,4 @@
-<input type="hidden" class="form-control paymentMethod" name="${pdict.forms.billingForm.paymentMethod.htmlName}" value="HIPAY_CREDIT_CARD">
+<input type="hidden" class="form-control paymentMethod" name="${pdict.forms.billingForm.paymentMethod.htmlName}" value="HIPAY_CREDIT_CARD" />
 <isloop items="${pdict.order.billing.payment.applicablePaymentMethods}" var="paymentOption">
     <div class="${'tab-pane ' + paymentOption.ID + '-content'}" id="${paymentOption.ID + '-content'}" role="tabpanel">
 

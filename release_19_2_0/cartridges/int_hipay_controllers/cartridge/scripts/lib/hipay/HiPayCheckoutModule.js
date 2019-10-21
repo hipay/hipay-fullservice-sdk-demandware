@@ -296,7 +296,7 @@ HiPayCheckoutModule.hiPayOrderRequest = function (paymentInstrument, order, devi
         }
 
         params.payment_product = pi.custom.hipayProductName;
-        params.eci = recurring ? 9 : 7;
+        params.eci = recurring ? "9" : "7";
         params.device_fingerprint = fingeprint;
         params.cdata1 = order.getOrderToken();
         helper.fillHeaderData(HiPayConfig, order, params, pi); // fill in the common params
@@ -418,7 +418,7 @@ HiPayCheckoutModule.hiPayHostedPageRequest = function (order, paymentInstrument)
         try {
             var params = {};
             params.operation = HiPayConfig.hipayPaymentAction;
-            params.eci = 7;
+            params.eci = "7";
             params.css = URLUtils.https('HiPayResource-Style').toString();
             params.template = HiPayConfig.getTemplateType();
             params.merchant_display_name = Site.current.getName();

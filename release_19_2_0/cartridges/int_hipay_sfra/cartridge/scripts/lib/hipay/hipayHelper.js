@@ -341,6 +341,8 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
 
         params.basket = JSON.stringify(basketObject); // eslint-disable-line
     }
+
+    params.device_channel = "2";
 };
 
 /* Creates a formatted text message from the request parameters */

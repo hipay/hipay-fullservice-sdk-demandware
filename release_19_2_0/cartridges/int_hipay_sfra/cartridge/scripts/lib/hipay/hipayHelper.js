@@ -53,6 +53,10 @@ HiPayHelper.prototype.fillHeaderData = function (HiPayConfig, order, params) {
         }
     }
 
+    if(language === 'default'){
+        language = "en_GB";
+    }
+
     // always send the redirect urls
     params.language = language;  // eslint-disable-line
     params.accept_url = HiPayConfig.acceptURL;  // eslint-disable-line
@@ -104,7 +108,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
     }
 
     params.currency = order.getCurrencyCode(); // eslint-disable-line
-    params.orderid = order.orderNo; // eslint-disable-line
+    params.orderid = order.orderNo + '_' + Date.now(); // eslint-disable-line
     params.description = order.orderNo; // eslint-disable-line
     params.cid = order.customer.ID; // eslint-disable-line
     params.amount = totalAmount.value; // eslint-disable-line

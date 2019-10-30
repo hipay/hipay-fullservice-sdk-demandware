@@ -37,7 +37,8 @@ HiPayNotificationModule.hiPayProcessNotificationCall = function (httpParams) {
     var order = null;
 
     if (params.isParameterSubmitted('order[id]')) {
-        orderid = params['order[id]'].stringValue; //= 00000601
+      var orderidTimeStamp = params['order[id]'].stringValue; //= 00000601_123456789
+      orderid = orderidTimeStamp.split("_")[0]; //= 00000601
 
         if (empty(orderid)) {
             log.error('The notification call from HiPay does not have a valid OrderNo!');

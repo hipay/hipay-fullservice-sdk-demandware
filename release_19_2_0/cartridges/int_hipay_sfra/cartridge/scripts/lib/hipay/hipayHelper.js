@@ -349,7 +349,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
     // Device channel always 2, BROWSER
     params.device_channel = "2";
     // Add DSP2 browser info
-    params.browserInfo = JSON.parse(session.forms.billing.browserInfo.value);
+    params.browser_info = JSON.parse(session.forms.billing.browserInfo.value);
     // params.browserInfo['acceptHeader'] = request.httpHeaders.get('accept') + request.httpHeaders.get('accept-encoding');
 };
 

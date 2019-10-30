@@ -1,5 +1,5 @@
 <!-- hidden field to store blackbox -->
-<input type="hidden" name="${pdict.CurrentForms.billing.deviceFingerprint.htmlName}" id="ioBB">
+<input type="hidden" name="${pdict.CurrentForms.billing.deviceFingerprint.htmlName}" id="ioBB" />
 <!-- Include HiPay JavaScript fingerprint library -->
 <script language="javascript" src="https://secure-gateway.hipay-tpp.com/gateway/toolbox/fingerprint">
 </script>

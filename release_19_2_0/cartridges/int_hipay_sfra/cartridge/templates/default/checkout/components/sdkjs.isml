@@ -6,46 +6,4 @@
     assets.addJs('/js/hipayCheckout.js');
 </isscript>
 
-<input type="hidden" name="browserInfo" id="browserInfo">
-
-<iscomment> 
-<script>
-
-function loadScript( url, callback ) {
-  var script = window.document.createElement( "script" )
-  script.type = "text/javascript";
-  if(script.readyState) {  // only required for IE <9
-    script.onreadystatechange = function() {
-      if ( script.readyState === "loaded" || script.readyState === "complete" ) {
-        script.onreadystatechange = null;
-        callback();
-      }
-    };
-  } else {  //Others
-    script.onload = function() {
-      callback();
-    };
-  }
-
-  script.src = url;
-  window.document.getElementsByTagName( "head" )[0].appendChild( script );
-}
-
-
-// call the function...
-loadScript("https://libs.hipay.com/js/sdkjs.js", function() {
-  alert('script ready!'); 
-  console.log(HiPay);
-
-  var hipay = HiPay({
-      username: 'test',
-      password: 'test'
-  });
-
-  var bi = hipay.getBrowserInfo();
-
-  console.log(bi);
-
-  document.getElementById('test').value = hipay;
-});    
-</script> </iscomment>
+<input type="hidden" name="${pdict.CurrentForms.billing.browserInfo.htmlName}"" id="browserInfo">

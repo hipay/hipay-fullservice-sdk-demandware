@@ -346,7 +346,11 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
         params.basket = JSON.stringify(basketObject); // eslint-disable-line
     }
 
+    // Device channel always 2, BROWSER
     params.device_channel = "2";
+    // Add DSP2 browser info
+    params.browserInfo = JSON.parse(session.forms.billing.browserInfo.value);
+    // params.browserInfo['acceptHeader'] = request.httpHeaders.get('accept') + request.httpHeaders.get('accept-encoding');
 };
 
 /* Creates a formatted text message from the request parameters */

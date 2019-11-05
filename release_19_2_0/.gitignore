@@ -10,3 +10,5 @@ storefrontdata/
 test/appium/webdriver/config.json
 .vscode
 .history
+*.code-workspace
+*.iml

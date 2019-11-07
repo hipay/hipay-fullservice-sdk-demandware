@@ -358,15 +358,22 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
     params.browser_info['ipaddr'] = params.ipaddr;
 
     // Add DSP2 account info
-    if (!customer.isAnonymous() && !empty(customer.profile)) { 
+    if (!customer.isAnonymous() && !empty(customer.profile)) {
+        // If customer exists
+        params.account_info = {
+            customer: {}
+        };
+
+        /* Customer info */
+
+        // Add opening_account_date
+        params.account_info.customer.opening_account_date = parseInt(customer.profile.getCreationDate().toISOString().slice(0,10).replace(/-/g,""), 10);
+        // Add account_change
+        params.account_info.customer.account_change = parseInt(customer.profile.getLastModified().toISOString().slice(0,10).replace(/-/g,""), 10);
+        // Add password_change
         var datePasswordLastChange = customer.profile.custom.datePasswordLastChange;        
         if (!empty(datePasswordLastChange)) {
-            var datePasswordLastChangeInt = parseInt(datePasswordLastChange, 10);
-            params.account_info = {
-                customer: {
-                    password_change: datePasswordLastChangeInt,
-                }               
-            }
+            params.account_info.customer.password_change = parseInt(datePasswordLastChange, 10);
         }        
     }
 };

@@ -58,6 +58,7 @@ function order() {
             var credentials = serviceConfig.getCredential();
             var credString = credentials.getUser() + ':' + credentials.getPassword();
             var base64Credentials = Encoding.toBase64(new Bytes(credString));
+
             svc.addHeader('Authentication', 'Basic ' + base64Credentials);
 
             return JSON.stringify(args);

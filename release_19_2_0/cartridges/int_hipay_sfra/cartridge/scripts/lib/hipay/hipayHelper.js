@@ -356,6 +356,19 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
     params.browser_info['http_accept'] = params.http_accept;
     // Add Ip address
     params.browser_info['ipaddr'] = params.ipaddr;
+
+    // Add DSP2 account info
+    if (!customer.isAnonymous() && !empty(customer.profile)) { 
+        var datePasswordLastChange = customer.profile.custom.datePasswordLastChange;        
+        if (!empty(datePasswordLastChange)) {
+            var datePasswordLastChangeInt = parseInt(datePasswordLastChange, 10);
+            params.account_info = {
+                customer: {
+                    password_change: datePasswordLastChangeInt,
+                }               
+            }
+        }        
+    }
 };
 
 /* Creates a formatted text message from the request parameters */

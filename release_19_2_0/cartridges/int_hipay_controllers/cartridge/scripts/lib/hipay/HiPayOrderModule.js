@@ -24,8 +24,10 @@ function hiPayProcessOrderCall() {
     log.info('HiPay Order Call ' + params);
 
     if (params.isParameterSubmitted('orderid')) {
-        var orderidTimeStamp = params.orderid.stringValue;
-        orderid = orderidTimeStamp.split("_")[0];
+        var orderidTimeStamp = params.orderid.stringValue;        
+        var orderidTab = orderidTimeStamp.split("_");
+        orderidTab.pop();
+        orderid = orderidTab.join("_");
 
         if (empty(orderid)) {
             log.error('The call from HiPay does not have a valid OrderNo!');

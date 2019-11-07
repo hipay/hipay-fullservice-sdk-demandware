@@ -345,6 +345,37 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
 
         params.basket = JSON.stringify(basketObject); // eslint-disable-line
     }
+
+    // ### DPS2 params ### //
+
+    // Device channel always 2, BROWSER
+    params.device_channel = "2";
+    // Add DSP2 browser info
+    params.browser_info = JSON.parse(session.forms.billing.browserInfo.value);
+    // Add http_accept
+    params.browser_info['http_accept'] = params.http_accept;
+    // Add Ip address
+    params.browser_info['ipaddr'] = params.ipaddr;
+
+    // Add DSP2 account info
+    if (!customer.isAnonymous() && !empty(customer.profile)) {
+        // If customer exists
+        params.account_info = {
+            customer: {}
+        };
+
+        /* Customer info */
+
+        // Add opening_account_date
+        params.account_info.customer.opening_account_date = parseInt(customer.profile.getCreationDate().toISOString().slice(0,10).replace(/-/g,""), 10);
+        // Add account_change
+        params.account_info.customer.account_change = parseInt(customer.profile.getLastModified().toISOString().slice(0,10).replace(/-/g,""), 10);
+        // Add password_change
+        var datePasswordLastChange = customer.profile.custom.datePasswordLastChange;        
+        if (!empty(datePasswordLastChange)) {
+            params.account_info.customer.password_change = parseInt(datePasswordLastChange, 10);
+        }        
+    }
 };
 
 /* Creates a formatted text message from the request parameters */

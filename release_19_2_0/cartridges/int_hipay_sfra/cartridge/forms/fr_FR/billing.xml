@@ -8,6 +8,8 @@
 
     <field formid="paymentMethod" type="string" mandatory="true" />
 
+    <field formid="browserInfo" type="string"/>
+
     <field formid="deviceFingerprint" type="string"/>
 
     <include formid="creditCardFields" name="creditCard"/>

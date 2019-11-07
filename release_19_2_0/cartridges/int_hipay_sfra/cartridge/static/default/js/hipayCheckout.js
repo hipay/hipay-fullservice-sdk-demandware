@@ -4,6 +4,5 @@ const hipay = HiPay({
 });
 
 let browserInfo = hipay.getBrowserInfo();
-console.log(browserInfo);
 
 $('#browserInfo').val(JSON.stringify(browserInfo));

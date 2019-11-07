@@ -1,0 +1,9 @@
+<script language="javascript" src="https://libs.hipay.com/js/sdkjs.js">
+</script>
+
+<isscript>
+    var assets = require('*/cartridge/scripts/assets.js');
+    assets.addJs('/js/hipayCheckout.js');
+</isscript>
+
+<input type="hidden" name="${pdict.CurrentForms.billing.browserInfo.htmlName}"" id="browserInfo">

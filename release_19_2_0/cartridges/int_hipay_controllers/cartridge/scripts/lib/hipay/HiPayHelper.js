@@ -359,6 +359,17 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
 
         params.basket = JSON.stringify(basketObject); // eslint-disable-line
     }
+
+    // ### DPS2 params ### //
+
+    // Device channel always 2, BROWSER
+    params.device_channel = "2";
+    // Add DSP2 browser info
+    params.browser_info = JSON.parse(session.forms.billing.paymentMethods.browserInfo.value);
+    // Add http_accept
+    params.browser_info['http_accept'] = params.http_accept;
+    // Add Ip address
+    params.browser_info['ipaddr'] = params.ipaddr;    
 };
 
 /* Creates a formatted text message from the request parameters */

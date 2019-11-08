@@ -7,6 +7,7 @@ var StringUtils = require('dw/util/StringUtils');
 var Decimal = require('dw/util/Decimal');
 var TaxMgr = require('dw/order/TaxMgr');
 var Logger = require('dw/system/Logger');
+var Transaction = require('dw/system/Transaction');
 var statuses = require('~/cartridge/config/hipayStatus').HiPayStatus;
 
 /**
@@ -365,15 +366,21 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
         };
 
         /* Customer info */
-
+        var creationDate = customer.profile.getCreationDate().toISOString().slice(0,10).replace(/-/g,"");
+        
         // Add opening_account_date
-        params.account_info.customer.opening_account_date = parseInt(customer.profile.getCreationDate().toISOString().slice(0,10).replace(/-/g,""), 10);
+        params.account_info.customer.opening_account_date = parseInt(creationDate, 10);
         // Add account_change
         params.account_info.customer.account_change = parseInt(customer.profile.getLastModified().toISOString().slice(0,10).replace(/-/g,""), 10);
         // Add password_change
         var datePasswordLastChange = customer.profile.custom.datePasswordLastChange;        
         if (!empty(datePasswordLastChange)) {
             params.account_info.customer.password_change = parseInt(datePasswordLastChange, 10);
+        } else {
+            params.account_info.customer.password_change = parseInt(creationDate, 10);
+            Transaction.wrap(function () {
+                customer.profile.custom.datePasswordLastChange = creationDate;
+            });            
         }        
     }
 };

@@ -9,6 +9,7 @@ var TaxMgr = require('dw/order/TaxMgr');
 var Logger = require('dw/system/Logger');
 var PaymentMgr = require('dw/order/PaymentMgr');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
+var Transaction = require('dw/system/Transaction');
 var statuses = require('*/cartridge/scripts/lib/hipay/HiPayStatus').HiPayStatus;
 // var packageJson = require('~/package');
 
@@ -374,6 +375,32 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
     params.browser_info['http_accept'] = params.http_accept;
     // Add Ip address
     params.browser_info['ipaddr'] = params.ipaddr;    
+
+    // Add DSP2 account info
+    if (!customer.isAnonymous() && !empty(customer.profile)) {
+        // If customer exists
+        params.account_info = {
+            customer: {}
+        };
+
+        /* Customer info */        
+        var creationDate = customer.profile.getCreationDate().toISOString().slice(0,10).replace(/-/g,"");
+        
+        // Add opening_account_date
+        params.account_info.customer.opening_account_date = parseInt(creationDate, 10);
+        // Add account_change
+        params.account_info.customer.account_change = parseInt(customer.profile.getLastModified().toISOString().slice(0,10).replace(/-/g,""), 10);
+        // Add password_change
+        var datePasswordLastChange = customer.profile.custom.datePasswordLastChange;        
+        if (!empty(datePasswordLastChange)) {
+            params.account_info.customer.password_change = parseInt(datePasswordLastChange, 10);
+        } else {            
+            params.account_info.customer.password_change = parseInt(creationDate, 10);
+            Transaction.wrap(function () {
+                customer.profile.custom.datePasswordLastChange = creationDate;
+            });            
+        }        
+    }
 };
 
 /* Creates a formatted text message from the request parameters */

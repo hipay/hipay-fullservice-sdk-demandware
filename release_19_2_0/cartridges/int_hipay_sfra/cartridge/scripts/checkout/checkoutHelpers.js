@@ -705,6 +705,26 @@ function setGift(shipment, isGift, giftMessage) {
     return result;
 }
 
+/**
+ * write To Custom Object
+ * @returns 'STATUS_ERROR' or 'STATUS_OK'
+ */
+function writeToCustomObject(params) {
+    try {
+        Transaction.wrap(function () {
+            var instance = CustomObjectMgr.createCustomObject(params.objName, params.data);            
+            instance.custom.data = JSON.stringify(params.data);
+        });
+        Logger.info('writeToCustomObject : Record added for custom object');
+    } catch (e) {
+        Logger.error('writeToCustomObject : Fail to add the custom object');
+        Logger.error('writeToCustomObject ERROR :' + e);
+        return 'STATUS_ERROR';
+    }
+    return 'STATUS_OK';
+}
+
+
 module.exports = {
     getFirstNonDefaultShipmentWithProductLineItems: getFirstNonDefaultShipmentWithProductLineItems,
     ensureNoEmptyShipments: ensureNoEmptyShipments,
@@ -730,5 +750,6 @@ module.exports = {
     getRenderedPaymentInstruments: getRenderedPaymentInstruments,
     sendConfirmationEmail: sendConfirmationEmail,
     ensureValidShipments: ensureValidShipments,
-    setGift: setGift
+    setGift: setGift,
+    writeToCustomObject: writeToCustomObject
 };

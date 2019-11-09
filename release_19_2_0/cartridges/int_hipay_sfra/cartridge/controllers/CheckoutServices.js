@@ -224,6 +224,7 @@ server.replace(
 
                 var processor = PaymentMgr.getPaymentMethod(paymentMethodID).getPaymentProcessor();
 
+                let cardIsExist = false;
                 if (billingData.storedPaymentUUID
                     && req.currentCustomer.raw.authenticated
                     && req.currentCustomer.raw.registered
@@ -250,9 +251,21 @@ server.replace(
                         .raw.creditCardToken;
                     billingData.paymentInformation.cardOwner = paymentInstrument
                     .raw.creditCardHolder;
-                }
 
+                    // The Card exists in the list of PaymentInstruments 
+                    cardIsExist = true;
+                }
+                
                 if (HookMgr.hasHook('app.payment.processor.' + processor.ID.toLowerCase())) {
+
+                    // Check if the Card exists in the list of PaymentInstruments 
+                    var paymentInstrument = array.find(currentBasket.paymentInstruments, function (item) {
+                        return currentBasket.paymentInstrument.creditCardToken === item.creditCardToken;
+                    });
+                    if (paymentInstrument) {
+                        cardIsExist = true;
+                    }
+
                     result = HookMgr.callHook('app.payment.processor.' + processor.ID.toLowerCase(),
                         'Handle',
                         currentBasket,
@@ -262,7 +275,7 @@ server.replace(
                 } else {
                     result = HookMgr.callHook('app.payment.processor.default', 'Handle');
                 }
-
+ 
                 // need to invalidate credit card fields
                 if (result.error) {
                     delete billingData.paymentInformation;
@@ -292,6 +305,9 @@ server.replace(
                         customer
                     );
 
+                    // The Card exists in the list of PaymentInstruments 
+                    cardIsExist = true;
+
                     req.currentCustomer.wallet.paymentInstruments.push({
                         creditCardHolder: saveCardResult.creditCardHolder,
                         maskedCreditCardNumber: saveCardResult.maskedCreditCardNumber,
@@ -305,7 +321,7 @@ server.replace(
                         )
                             ? saveCardResult.creditCardNumber
                             : null,
-                        raw: saveCardResult
+                        raw: saveCardResult                        
                     });
                 }
 
@@ -349,6 +365,9 @@ server.replace(
                 );
 
                 delete billingData.paymentInformation;
+
+                // Flag if the Card exists in the list of PaymentInstruments 
+                req.session.raw.custom['isExist'] = cardIsExist;
 
                 res.json({
                     renderedPaymentInstruments: renderedStoredPaymentInstrument,
@@ -484,6 +503,15 @@ server.replace('PlaceOrder', server.middleware.https, function (req, res, next) 
 
     // Handles payment authorization
     var handlePaymentResult = COHelpers.handlePayments(order, order.orderNo, !empty(req.querystring.uuid) ? req.querystring.uuid : null);
+    
+    // If Card not exist in the list of PaymentInstruments : Incrementing the attempts to save the card  
+    var varCustomer = currentBasket.customer;
+    var cardIsExist = req.session.raw.custom['isExist'];
+    if ( varCustomer.isAuthenticated() && varCustomer.isRegistered() && !cardIsExist) {
+        var varCustomerNo = currentBasket.customerNo;
+        // TODO: Create Custom Object
+
+    }
 
     if (handlePaymentResult.error) {
         res.json({

@@ -80,6 +80,8 @@ HiPayHelper.prototype.fillHeaderData = function (HiPayConfig, order, params) {
 
 /* Fills HiPay request data based on DW Order information */
 HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
+    var OrderMgr = require('dw/order/OrderMgr');
+
     var totalAmount = null;
     var items = null;
     var categoryList = [];
@@ -367,6 +369,27 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
 
         /* Customer info */
         var creationDate = customer.profile.getCreationDate().toISOString().slice(0,10).replace(/-/g,"");
+        
+        /* Previous auth info*/
+
+        // Get last processed order
+        var lastProcessedOrder = OrderMgr.searchOrders("customerNo={0} AND status>={1} AND status<={2}", 
+            "creationDate desc", customer.profile.customerNo, 3, 8).first();
+        
+        if(!empty(lastProcessedOrder) && !empty(lastProcessedOrder.paymentTransaction)){
+            // Get transaction ID of order
+            var transaction_reference = lastProcessedOrder.paymentTransaction.transactionID;
+        
+            if(!empty(transaction_reference)){
+                // If longer than 16 digits, truncate
+                if(transaction_reference.length > 16){
+                    transaction_reference = transaction_reference.substring(0,16);
+                }
+                params.previous_auth_info = {
+                    transaction_reference: transaction_reference
+                }
+            }
+        }
         
         // Add opening_account_date
         params.account_info.customer.opening_account_date = parseInt(creationDate, 10);

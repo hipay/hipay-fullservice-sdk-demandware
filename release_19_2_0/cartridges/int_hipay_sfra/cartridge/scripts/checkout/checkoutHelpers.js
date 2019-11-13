@@ -11,6 +11,7 @@ var Status = require('dw/system/Status');
 var Resource = require('dw/web/Resource');
 var Site = require('dw/system/Site');
 var Transaction = require('dw/system/Transaction');
+var CustomObjectMgr = require('dw/object/CustomObjectMgr');
 
 var AddressModel = require('*/cartridge/models/address');
 var formErrors = require('*/cartridge/scripts/formErrors');
@@ -18,6 +19,9 @@ var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
 var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
 var collections = require('*/cartridge/scripts/util/collections');
 var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
+
+// Import Constants
+var Constants = require('bm_hipay_controllers/cartridge/scripts/util/Constants');
 
 // static functions needed for Checkout Controller logic
 
@@ -707,21 +711,24 @@ function setGift(shipment, isGift, giftMessage) {
 
 /**
  * write To Custom Object
- * @returns 'STATUS_ERROR' or 'STATUS_OK'
+ * @returns STATUS_ERROR or STATUS_OK
  */
 function writeToCustomObject(params) {
+    var Logger = require('dw/system/Logger');
+    var UUIDUtils = require('dw/util/UUIDUtils');
+
+    let objectUUID = UUIDUtils.createUUID();
     try {
         Transaction.wrap(function () {
-            var instance = CustomObjectMgr.createCustomObject(params.objName, params.data);            
-            instance.custom.data = JSON.stringify(params.data);
+            var instance = CustomObjectMgr.createCustomObject(params.objName, objectUUID);            
+            instance.custom.customerNo = params.data.customerNo;
+            instance.custom.attemptDate = params.data.attemptDate;
         });
-        Logger.info('writeToCustomObject : Record added for custom object');
     } catch (e) {
-        Logger.error('writeToCustomObject : Fail to add the custom object');
         Logger.error('writeToCustomObject ERROR :' + e);
-        return 'STATUS_ERROR';
+        return Constants.STATUS_ERROR;
     }
-    return 'STATUS_OK';
+    return Constants.STATUS_OK;    
 }
 
 

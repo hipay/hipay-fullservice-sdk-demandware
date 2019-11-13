@@ -5,6 +5,9 @@ var server = require('server');
 
 var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
 
+// Import Constants
+var Constants = require('bm_hipay_controllers/cartridge/scripts/util/Constants');
+
 server.extend(page);
 
 /**
@@ -125,7 +128,7 @@ server.replace(
 
             viewData.phone = { value: paymentForm.creditCardFields.phone.value };
 
-            viewData.saveCard = paymentForm.creditCardFields.saveCard.checked;
+            viewData.saveCard = paymentForm.creditCardFields.saveCard.checked;            
 
             res.setViewData(viewData);
 
@@ -145,6 +148,13 @@ server.replace(
                 var currentBasket = BasketMgr.getCurrentBasket();
                 var billingData = res.getViewData();
 
+                // Init flag saveCardChecked (depending on the storedPaymentUUID)
+                if (billingData.storedPaymentUUID) {
+                    req.session.raw.custom['saveCardChecked'] = false;
+                } else {
+                    req.session.raw.custom['saveCardChecked'] = billingData.saveCard;
+                }
+               
                 if (!currentBasket) {
                     delete billingData.paymentInformation;
 
@@ -224,7 +234,6 @@ server.replace(
 
                 var processor = PaymentMgr.getPaymentMethod(paymentMethodID).getPaymentProcessor();
 
-                let cardIsExist = false;
                 if (billingData.storedPaymentUUID
                     && req.currentCustomer.raw.authenticated
                     && req.currentCustomer.raw.registered
@@ -251,20 +260,9 @@ server.replace(
                         .raw.creditCardToken;
                     billingData.paymentInformation.cardOwner = paymentInstrument
                     .raw.creditCardHolder;
-
-                    // The Card exists in the list of PaymentInstruments 
-                    cardIsExist = true;
                 }
                 
                 if (HookMgr.hasHook('app.payment.processor.' + processor.ID.toLowerCase())) {
-
-                    // Check if the Card exists in the list of PaymentInstruments 
-                    var paymentInstrument = array.find(currentBasket.paymentInstruments, function (item) {
-                        return currentBasket.paymentInstrument.creditCardToken === item.creditCardToken;
-                    });
-                    if (paymentInstrument) {
-                        cardIsExist = true;
-                    }
 
                     result = HookMgr.callHook('app.payment.processor.' + processor.ID.toLowerCase(),
                         'Handle',
@@ -304,9 +302,6 @@ server.replace(
                         currentBasket,
                         customer
                     );
-
-                    // The Card exists in the list of PaymentInstruments 
-                    cardIsExist = true;
 
                     req.currentCustomer.wallet.paymentInstruments.push({
                         creditCardHolder: saveCardResult.creditCardHolder,
@@ -366,9 +361,6 @@ server.replace(
 
                 delete billingData.paymentInformation;
 
-                // Flag if the Card exists in the list of PaymentInstruments 
-                req.session.raw.custom['isExist'] = cardIsExist;
-
                 res.json({
                     renderedPaymentInstruments: renderedStoredPaymentInstrument,
                     customer: accountModel,
@@ -392,8 +384,11 @@ server.replace('PlaceOrder', server.middleware.https, function (req, res, next) 
     var URLUtils = require('dw/web/URLUtils');
     var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
     var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
+    var Logger = require('dw/system/Logger');
+    var array = require('*/cartridge/scripts/util/array');
 
-    var currentBasket = BasketMgr.getCurrentBasket();
+    var currentBasket = BasketMgr.getCurrentBasket(); 
+    var saveCardChecked = req.session.raw.custom['saveCardChecked'];  
 
     if (!currentBasket) {
         res.json({
@@ -501,17 +496,36 @@ server.replace('PlaceOrder', server.middleware.https, function (req, res, next) 
         return next();
     }
 
+    // Check if the Card exists in the list of PaymentInstruments
+    var incrementAttempt = false;
+    var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
+    var paymentInstrument = array.find(paymentInstruments, function (item) {
+        return currentBasket.paymentInstrument.UUID === item.UUID;
+    });
+    if (saveCardChecked && !paymentInstrument) {
+        incrementAttempt = true;
+    }    
+    // If Card not exist in the list of PaymentInstruments : Incrementing the attempts (Create Custom Object for attempts)  
+    var varCustomer = currentBasket.customer;  
+    var writeToCustomObject = varCustomer.isAuthenticated() && varCustomer.isRegistered() && incrementAttempt;
+    if (writeToCustomObject) {   
+        var params = {
+            objName: Constants.OBJ_SAVE_ONE_CLICK,
+            data: { 
+                customerNo: currentBasket.customerNo,
+                attemptDate: new Date()
+                }
+        };
+        var result = COHelpers.writeToCustomObject(params); 
+        if (result === Constants.STATUS_ERROR) {
+            Logger.error('writeToCustomObject : Fail to add the custom object : ' + params.objName);
+        } else {
+            Logger.info('writeToCustomObject : Record added for custom object : ' + params.objName);
+        }
+    }
+
     // Handles payment authorization
     var handlePaymentResult = COHelpers.handlePayments(order, order.orderNo, !empty(req.querystring.uuid) ? req.querystring.uuid : null);
-    
-    // If Card not exist in the list of PaymentInstruments : Incrementing the attempts to save the card  
-    var varCustomer = currentBasket.customer;
-    var cardIsExist = req.session.raw.custom['isExist'];
-    if ( varCustomer.isAuthenticated() && varCustomer.isRegistered() && !cardIsExist) {
-        var varCustomerNo = currentBasket.customerNo;
-        // TODO: Create Custom Object
-
-    }
 
     if (handlePaymentResult.error) {
         res.json({

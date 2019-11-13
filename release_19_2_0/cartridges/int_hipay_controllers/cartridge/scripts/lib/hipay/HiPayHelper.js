@@ -390,7 +390,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
         /* Previous auth info*/
 
         // Get last processed order
-        var lastProcessedOrder = OrderMgr.searchOrders("customerNo={0} AND status>={1} AND status<={2}",
+        var lastProcessedOrder = OrderMgr.searchOrders("customerNo = {0} AND status >= {1} AND status <= {2}",
             "creationDate desc", customer.profile.customerNo, 3, 8).first();
 
         if(!empty(lastProcessedOrder) && !empty(lastProcessedOrder.paymentTransaction)){

@@ -62,9 +62,11 @@ function hiPayProcessOrderCall() {
         Transaction.wrap(function () {
             response.hiPayPaymentStatus = state; // completed, declined, pending
             paymentInstr = helper.getOrderPaymentInstrument(order);
-            paymentTransaction = paymentInstr.getPaymentTransaction();
             reference = params.reference.stringValue; // set the reference from hipay = 200628176332
-            paymentTransaction.setTransactionID(reference);
+            if(!empty(reference)){
+                paymentTransaction = paymentInstr.getPaymentTransaction();
+                paymentTransaction.setTransactionID(reference);
+            }
             pp = params.pp.stringValue; // set transaction type = ideal,visa
             paymentInstr.custom.hipayTransactionType = pp;
             helper.updatePaymentStatus(order, paymentInstr, params); // update the payment status

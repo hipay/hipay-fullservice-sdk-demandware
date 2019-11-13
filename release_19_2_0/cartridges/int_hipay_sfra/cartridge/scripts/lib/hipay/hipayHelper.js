@@ -2,6 +2,7 @@ var ArrayList = require('dw/util/ArrayList');
 var Order = require('dw/order/Order');
 var HttpParameterMap = require('dw/web/HttpParameterMap');
 var CustomObjectMgr = require('dw/object/CustomObjectMgr');
+var OrderMgr = require('dw/order/OrderMgr');
 var Calendar = require('dw/util/Calendar');
 var StringUtils = require('dw/util/StringUtils');
 var Decimal = require('dw/util/Decimal');
@@ -80,8 +81,6 @@ HiPayHelper.prototype.fillHeaderData = function (HiPayConfig, order, params) {
 
 /* Fills HiPay request data based on DW Order information */
 HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
-    var OrderMgr = require('dw/order/OrderMgr');
-
     var totalAmount = null;
     var items = null;
     var categoryList = [];
@@ -385,6 +384,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                 if(transaction_reference.length > 16){
                     transaction_reference = transaction_reference.substring(0,16);
                 }
+                // Fill transaction reference
                 params.previous_auth_info = {
                     transaction_reference: transaction_reference
                 }

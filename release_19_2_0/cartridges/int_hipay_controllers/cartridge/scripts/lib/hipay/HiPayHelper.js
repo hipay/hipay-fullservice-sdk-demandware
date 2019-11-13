@@ -393,13 +393,13 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
         var lastProcessedOrder = OrderMgr.searchOrders("customerNo = {0} AND status >= {1} AND status <= {2}",
             "creationDate desc", customer.profile.customerNo, 3, 8).first();
 
-        if(!empty(lastProcessedOrder) && !empty(lastProcessedOrder.paymentTransaction)){
+        if (!empty(lastProcessedOrder) && !empty(lastProcessedOrder.paymentTransaction)){
             // Get transaction ID of order
             var transaction_reference = lastProcessedOrder.paymentTransaction.transactionID;
 
-            if(!empty(transaction_reference)){
+            if (!empty(transaction_reference)){
                 // If longer than 16 digits, truncate
-                if(transaction_reference.length > 16){
+                if (transaction_reference.length > 16){
                     transaction_reference = transaction_reference.substring(0,16);
                 }
                 // Fill transaction reference

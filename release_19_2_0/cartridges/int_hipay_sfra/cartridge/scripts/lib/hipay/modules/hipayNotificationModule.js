@@ -22,10 +22,9 @@ HiPayNotificationModule.hiPayProcessNotificationCall = function (httpParams) {
     var HiPaySignitureMgr = require('*/cartridge/scripts/lib/hipay/hipaySignitureMgr').HiPaySignitureMgr;
     var log = new HiPayLogger('HiPayProcessNotificationCall');
     var helper = new HiPayHelper();
-    // var shaSignature = request.getHttpHeaders().get('x-allopass-signature');
-    // var isRequestValid = HiPaySignitureMgr.checkIsValidNotification(request.getHttpParameters(), HiPayConfig.hipayApiPassphrase, shaSignature);
+    var shaSignature = request.getHttpHeaders().get('x-allopass-signature');
+    var isRequestValid = HiPaySignitureMgr.checkIsValidNotification(request.getHttpParameters(), HiPayConfig.hipayApiPassphrase, shaSignature);
 
-    var isRequestValid = true;
     if (!isRequestValid) {
         log.error('The notification call from HiPay has an invalid signature! :: ' + params);
 

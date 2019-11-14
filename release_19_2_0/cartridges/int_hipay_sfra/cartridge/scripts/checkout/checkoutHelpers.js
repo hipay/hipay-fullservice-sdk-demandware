@@ -717,7 +717,7 @@ function writeToCustomObject(params) {
     var Logger = require('dw/system/Logger');
     var UUIDUtils = require('dw/util/UUIDUtils');
 
-    let objectUUID = UUIDUtils.createUUID();
+    var objectUUID = UUIDUtils.createUUID();
     try {
         Transaction.wrap(function () {
             var instance = CustomObjectMgr.createCustomObject(params.objName, objectUUID);            

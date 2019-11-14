@@ -40,7 +40,7 @@ function hiPayProcessOrderCall() {
                 response.error = true;
             }
 
-            if (order.getStatus() !== Order.ORDER_STATUS_CREATED) {
+            if (order.getStatus().value !== Order.ORDER_STATUS_CREATED) {
                 log.error('The HiPay order has already been processed! Probably a second call is made with the same parameters :: ' + orderid);
                 response.error = true;
             }

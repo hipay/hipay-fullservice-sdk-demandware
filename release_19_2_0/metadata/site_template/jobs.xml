@@ -49,7 +49,7 @@
                 <parameters>
                     <parameter name="ExecuteScriptModule.Module">bm_hipay_controllers/cartridge/controllers/jobs/stepCleanSaveOneclick</parameter>
                     <parameter name="ExecuteScriptModule.FunctionName">StepCleanSaveOneclick</parameter>
-                    <parameter name="ExecuteScriptModule.Transactional">false</parameter>
+                    <parameter name="ExecuteScriptModule.Transactional">true</parameter>
                 </parameters>
                 <rules>
                     <on-exit status="ERROR">

@@ -386,6 +386,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             customer: {},
             purchase: {}
         };
+        var customerNo = customer.profile.customerNo;
 
         /* Customer info */        
         var creationDate = customer.profile.getCreationDate().toISOString().slice(0,10).replace(/-/g,"");
@@ -394,7 +395,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
 
         // Get last processed order
         var lastProcessedOrder = OrderMgr.searchOrders("customerNo = {0} AND status >= {1} AND status <= {2}",
-            "creationDate desc", customer.profile.customerNo, 3, 8).first();
+            "creationDate desc", customerNo, 3, 8).first();
 
         if (!empty(lastProcessedOrder) && !empty(lastProcessedOrder.paymentTransaction)){
             // Get transaction ID of order
@@ -426,15 +427,59 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                 customer.profile.custom.datePasswordLastChange = creationDate;
             });            
         }
+
+        var dateNow = new Date();
+        var lastDay = new Date(dateNow.valueOf()); 
+        lastDay.setDate(lastDay.getDate() - 1);   
+        var lastYear= new Date(dateNow.valueOf())
+        lastYear.setFullYear(lastYear.getFullYear() - 1);
+
         // Add purchase.card_stored_24h (List of attempts by customerNo)
-        var lastDay = new Date();
-        lastDay.setDate(lastDay.getDate() - 1)
-        var listAttempts = CustomObjectMgr.queryCustomObjects(Constants.OBJ_SAVE_ONE_CLICK, "custom.customerNo = {0} AND custom.attemptDate >= {1}","custom.attemptDate desc", customer.profile.customerNo, lastDay);
+        var listAttempts = CustomObjectMgr.queryCustomObjects(Constants.OBJ_SAVE_ONE_CLICK, "custom.customerNo = {0} AND custom.attemptDate >= {1}",
+        "custom.attemptDate desc", customerNo, lastDay);
         if ('count' in listAttempts) {
             params.account_info.purchase.card_stored_24h = listAttempts.count; 
         } else {
             params.account_info.purchase.card_stored_24h = 0;
-        }          
+        }  
+        
+        // Get last processed orders from the last 24 hours
+        var ordersLastDay = OrderMgr.searchOrders("customerNo = {0} AND creationDate >= {1}",
+        "creationDate desc", customerNo, lastDay);
+
+        var ordersNumberLastDay = 0;
+        if (ordersLastDay && ordersLastDay.getCount() > 0){
+            while (ordersLastDay.hasNext()) {
+                var currentOrder = ordersLastDay.next();                  
+                if (currentOrder && !empty(currentOrder.paymentTransaction) && !empty(currentOrder.paymentTransaction.transactionID)) {
+                    if (!empty(currentOrder.paymentTransaction.paymentInstrument) && !empty(currentOrder.paymentTransaction.paymentInstrument.paymentMethod)) {
+                        if (currentOrder.paymentTransaction.paymentInstrument.paymentMethod === 'HIPAY_CREDIT_CARD') {
+                            ordersNumberLastDay++;
+                        }
+                    }                    
+                }              
+            }           
+        }
+        params.account_info.purchase.payment_attempts_24h = ordersNumberLastDay;  
+
+        // Get last processed orders from the last year
+        var ordersLastYear = OrderMgr.searchOrders("customerNo = {0} AND creationDate >= {1}",
+        "creationDate desc", customerNo, lastYear);
+
+        var ordersNumberLastYear = 0;
+        if (ordersLastYear && ordersLastYear.getCount() > 0){
+            while (ordersLastYear.hasNext()) {
+                var currentOrder = ordersLastYear.next();                  
+                if (currentOrder && !empty(currentOrder.paymentTransaction) && !empty(currentOrder.paymentTransaction.transactionID)) {
+                    if (!empty(currentOrder.paymentTransaction.paymentInstrument) && !empty(currentOrder.paymentTransaction.paymentInstrument.paymentMethod)) {
+                        if (currentOrder.paymentTransaction.paymentInstrument.paymentMethod === 'HIPAY_CREDIT_CARD') {
+                            ordersNumberLastYear++;
+                        } 
+                    }                    
+                }              
+            }           
+        } 
+        params.account_info.purchase.payment_attempts_1y = ordersNumberLastYear; 
     }
 };
 

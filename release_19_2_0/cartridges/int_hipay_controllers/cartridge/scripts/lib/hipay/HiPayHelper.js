@@ -438,6 +438,8 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
         lastDay.setDate(lastDay.getDate() - 1);
         var lastYear= new Date(dateNow.valueOf());
         lastYear.setFullYear(lastYear.getFullYear() - 1);
+        var lastSixMonth = new Date(dateNow.valueOf());
+        lastSixMonth.setMonth(lastDay.getMonth() - 6);
 
         // Add card_stored_24h (List of attempts by customerNo)
         var listAttempts = CustomObjectMgr.queryCustomObjects(Constants.OBJ_SAVE_ONE_CLICK,
@@ -485,12 +487,23 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                     && !empty(currentOrder.paymentTransaction.paymentInstrument.paymentMethod)
                     && currentOrder.paymentTransaction.paymentInstrument.paymentMethod === 'HIPAY_CREDIT_CARD'
                 ){
-                    ordersNumberLastDay++;
+                    ordersNumberLastYear++;
                 }
             }
         }
         // payment_attempts_24h (List of payment attempts during last year)
         params.account_info.purchase.payment_attempts_1y = ordersNumberLastYear;
+
+
+        // Add count (Number of orders during 6 previous months)
+        var ordersLastSixMonth = OrderMgr.searchOrders("customerNo = {0} AND creationDate >= {1}",
+            "creationDate desc", customerNo, lastSixMonth);
+        if (ordersLastSixMonth && ordersLastSixMonth.getCount() > 0){
+            params.account_info.purchase.count = ordersLastSixMonth.getCount();
+        }
+        else{
+            params.account_info.purchase.count = 0;
+        }
     }
 };
 

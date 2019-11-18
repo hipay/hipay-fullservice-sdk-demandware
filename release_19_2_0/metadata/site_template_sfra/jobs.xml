@@ -39,4 +39,45 @@
         </triggers>
     </job>
 
+	<job job-id="HipayClear" priority="0">
+        <description>Job to clean custom objects and others</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArchGlobal"/>
+            <step step-id="StepCleanSaveOneclick" type="ExecuteScriptModule" enforce-restart="false">
+                <description>Step-job to clean custom objects SaveOneclick with more than 24 hours</description>
+                <parameters>
+                    <parameter name="ExecuteScriptModule.Module">bm_hipay_controllers/cartridge/controllers/jobs/stepCleanSaveOneclick</parameter>
+                    <parameter name="ExecuteScriptModule.FunctionName">StepCleanSaveOneclick</parameter>
+                    <parameter name="ExecuteScriptModule.Transactional">true</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <continue/>
+                    </on-exit>
+                </rules>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="true">
+                <recurrence>
+                    <date-from>2019-11-11Z</date-from>
+                    <date-to>2019-11-14Z</date-to>
+                    <start-time>05:00:00.000Z</start-time>
+                    <interval>1d</interval>
+                    <day-of-week>
+                        <weekday>Thursday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Monday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Sunday</weekday>
+                        <weekday>Saturday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+
 </jobs>

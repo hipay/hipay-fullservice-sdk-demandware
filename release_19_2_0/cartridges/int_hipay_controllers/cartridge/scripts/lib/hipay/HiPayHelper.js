@@ -12,6 +12,8 @@ var PaymentMgr = require('dw/order/PaymentMgr');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
 var Transaction = require('dw/system/Transaction');
 var statuses = require('*/cartridge/scripts/lib/hipay/HiPayStatus').HiPayStatus;
+// Import Constants
+var Constants = require('bm_hipay_controllers/cartridge/scripts/util/Constants');
 // var packageJson = require('~/package');
 
 /**
@@ -381,7 +383,8 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
     if (!customer.isAnonymous() && !empty(customer.profile)) {
         // If customer exists
         params.account_info = {
-            customer: {}
+            customer: {},
+            purchase: {}
         };
 
         /* Customer info */        
@@ -422,7 +425,16 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             Transaction.wrap(function () {
                 customer.profile.custom.datePasswordLastChange = creationDate;
             });            
-        }        
+        }
+        // Add purchase.card_stored_24h (List of attempts by customerNo)
+        var lastDay = new Date();
+        lastDay.setDate(lastDay.getDate() - 1)
+        var listAttempts = CustomObjectMgr.queryCustomObjects(Constants.OBJ_SAVE_ONE_CLICK, "custom.customerNo = {0} AND custom.attemptDate >= {1}","custom.attemptDate desc", customer.profile.customerNo, lastDay);
+        if ('count' in listAttempts) {
+            params.account_info.purchase.card_stored_24h = listAttempts.count; 
+        } else {
+            params.account_info.purchase.card_stored_24h = 0;
+        }          
     }
 };
 

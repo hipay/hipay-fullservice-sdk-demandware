@@ -439,7 +439,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
         var lastYear= new Date(dateNow.valueOf());
         lastYear.setFullYear(lastYear.getFullYear() - 1);
         var lastSixMonth = new Date(dateNow.valueOf());
-        lastSixMonth.setMonth(lastDay.getMonth() - 6);
+        lastSixMonth.setMonth(lastSixMonth.getMonth() - 6);
 
         // Add card_stored_24h (List of attempts by customerNo)
         var listAttempts = CustomObjectMgr.queryCustomObjects(Constants.OBJ_SAVE_ONE_CLICK,

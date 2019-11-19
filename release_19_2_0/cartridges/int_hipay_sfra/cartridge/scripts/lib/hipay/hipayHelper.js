@@ -364,11 +364,6 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
 
     // Add DSP2 account info
     if (!customer.isAnonymous() && !empty(customer.profile)) {
-        // If customer exists
-        params.account_info = {
-            customer: {},
-            purchase: {}
-        };
         var customerNo = customer.profile.customerNo;
 
         /* Previous auth info*/
@@ -393,7 +388,30 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             }
         }
 
-        /* Customer info */
+        /* Account info */
+
+        params.account_info = {
+            customer: {},
+            purchase: {}
+        };
+
+        /* Account info - payment */
+
+        // Identify one-clichk payment if eci = 9
+        if(!empty(params.eci) && params.eci === "9"){
+            // Get creation date of payment instrument
+            var oneClickCreationDate;
+            if(!empty(pi.creationDate)){
+                oneClickCreationDate = pi.getCreationDate().toISOString().slice(0,10).replace(/-/g,"");
+            }
+            if(!empty(oneClickCreationDate)){
+                params.account_info.payment = {
+                    enrollment_date: parseInt(oneClickCreationDate, 10)
+                }
+            }
+        }
+
+        /* Account info - Customer */
 
         var creationDate = customer.profile.getCreationDate().toISOString().slice(0,10).replace(/-/g,"");
 
@@ -413,7 +431,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             });            
         }  
 
-        /* Purchase info */
+        /* Account info - Purchase */
 
         var dateNow = new Date();
         var lastDay = new Date(dateNow.valueOf()); 

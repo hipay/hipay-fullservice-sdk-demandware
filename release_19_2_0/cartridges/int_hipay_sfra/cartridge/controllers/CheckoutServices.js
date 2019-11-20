@@ -496,31 +496,33 @@ server.replace('PlaceOrder', server.middleware.https, function (req, res, next) 
         return next();
     }
 
-    // Check if the Card exists in the list of PaymentInstruments
-    var incrementAttempt = false;
-    var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
-    var paymentInstrument = array.find(paymentInstruments, function (item) {
-        return currentBasket.paymentInstrument.UUID === item.UUID;
-    });
-    if (saveCardChecked && !paymentInstrument) {
-        incrementAttempt = true;
-    }    
-    // If Card not exist in the list of PaymentInstruments : Incrementing the attempts (Create Custom Object for attempts)  
-    var varCustomer = currentBasket.customer;  
-    var writeToCustomObject = varCustomer.isAuthenticated() && varCustomer.isRegistered() && incrementAttempt;
-    if (writeToCustomObject) {   
-        var params = {
-            objName: Constants.OBJ_SAVE_ONE_CLICK,
-            data: { 
-                customerNo: currentBasket.customerNo,
-                attemptDate: new Date()
-                }
-        };
-        var result = COHelpers.writeToCustomObject(params); 
-        if (result === Constants.STATUS_ERROR) {
-            Logger.error('writeToCustomObject : Fail to add the custom object : ' + params.objName);
-        } else {
-            Logger.info('writeToCustomObject : Record added for custom object : ' + params.objName);
+    // Check if the Card exists in the list of PaymentInstruments Only for Customer Authenticated   
+    if (req.currentCustomer && !empty(req.currentCustomer.wallet)) {
+        var incrementAttempt = false;
+        var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
+        var paymentInstrument = array.find(paymentInstruments, function (item) {
+            return currentBasket.paymentInstrument.UUID === item.UUID;
+        });
+        if (saveCardChecked && !paymentInstrument) {
+            incrementAttempt = true;
+        }    
+        // If Card not exist in the list of PaymentInstruments : Incrementing the attempts (Create Custom Object for attempts)  
+        var varCustomer = currentBasket.customer;  
+        var writeToCustomObject = varCustomer.isAuthenticated() && varCustomer.isRegistered() && incrementAttempt;
+        if (writeToCustomObject) {   
+            var params = {
+                objName: Constants.OBJ_SAVE_ONE_CLICK,
+                data: { 
+                    customerNo: currentBasket.customerNo,
+                    attemptDate: new Date()
+                    }
+            };
+            var result = COHelpers.writeToCustomObject(params); 
+            if (result === Constants.STATUS_ERROR) {
+                Logger.error('writeToCustomObject : Fail to add the custom object : ' + params.objName);
+            } else {
+                Logger.info('writeToCustomObject : Record added for custom object : ' + params.objName);
+            }
         }
     }
 

@@ -364,12 +364,6 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
 
     // Add DSP2 account info
     if (!customer.isAnonymous() && !empty(customer.profile)) {
-        // If customer exists
-        params.account_info = {
-            customer: {},
-            purchase: {}
-        };
-        params.merchant_risk_statement = {};
         var customerNo = customer.profile.customerNo;
 
         /* Previous auth info*/
@@ -394,7 +388,28 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             }
         }
 
-        /* Customer info */
+        /* Account info */
+
+        params.account_info = {
+            customer: {},
+            purchase: {}
+        };
+
+        /* Account info - payment */
+
+        // Identify one-click payment if eci = 9
+        if(!empty(params.eci) && params.eci === "9" && !empty(pi.creationDate)) {
+            // Get creation date of payment instrument
+            var oneClickCreationDate = pi.getCreationDate().toISOString().slice(0,10).replace(/-/g,"");
+
+            if(!empty(oneClickCreationDate)) {
+                params.account_info.payment = {
+                    enrollment_date: parseInt(oneClickCreationDate, 10)
+                }
+            }
+        }
+
+        /* Account info - Customer */
 
         var creationDate = customer.profile.getCreationDate().toISOString().slice(0,10).replace(/-/g,"");
 
@@ -414,7 +429,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             });            
         }  
 
-        /* Purchase info */
+        /* Account info - Purchase */
 
         var dateNow = new Date();
         var lastDay = new Date(dateNow.valueOf()); 
@@ -487,12 +502,14 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             params.account_info.purchase.count = 0;
         }
 
-        /* Merchant risk statement */        
-        
+        /* Merchant risk statement */
+
+        params.merchant_risk_statement = {};
+
         var atLeastOneDematerializedProduct = false;
         var atLeastOnePreOrderProduct = false;
         var latestDatePreOrderProduct = null;
-        var productLineItem; 
+        var productLineItem;
 
         for (var i = 0; i < items.length; i++) {
             productLineItem = items[i];
@@ -500,14 +517,14 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             if (!empty(productLineItem.product)) {
                 if (!empty(productLineItem.product.custom.productDematerialized)) {
                     // At least one dematerialized product
-                    if(productLineItem.product.custom.productDematerialized && !atLeastOneDematerializedProduct) {                        
-                        atLeastOneDematerializedProduct = true; 
+                    if(productLineItem.product.custom.productDematerialized && !atLeastOneDematerializedProduct) {
+                        atLeastOneDematerializedProduct = true;
                     }
                 } else {
-                    if (!empty(productLineItem.product.availabilityModel) 
+                    if (!empty(productLineItem.product.availabilityModel)
                     && !empty(productLineItem.product.availabilityModel.availabilityStatus)
                     && productLineItem.product.availabilityModel.availabilityStatus === 'PREORDER'
-                    ) { 
+                    ) {
                         // At least one pre-order product
                         atLeastOnePreOrderProduct = true;
                         if (!empty(productLineItem.product.availabilityModel.inventoryRecord)
@@ -515,14 +532,14 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                             if (latestDatePreOrderProduct) {
                                 if(productLineItem.product.availabilityModel.inventoryRecord.inStockDate > latestDatePreOrderProduct) {
                                     latestDatePreOrderProduct = productLineItem.product.availabilityModel.inventoryRecord.inStockDate;
-                                } 
+                                }
                             } else {
                                 latestDatePreOrderProduct = productLineItem.product.availabilityModel.inventoryRecord.inStockDate;
-                            }                                
+                            }
                         }
                     }
                 }
-            } 
+            }
         }
 
         // At least one dematerialized product (email_delivery_address and delivery_time_frame)
@@ -535,7 +552,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             params.merchant_risk_statement.purchase_indicator = 2;
             if (latestDatePreOrderProduct) {
                 params.merchant_risk_statement.pre_order_date = parseInt(latestDatePreOrderProduct.toISOString().slice(0,10).replace(/-/g,""), 10);
-            }           
+            }
         } else {
             params.merchant_risk_statement.purchase_indicator = 1;
         }

@@ -529,11 +529,9 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                             // break while condition
                             addressFound = true;
 
-                            // Get order creation date
-                            var creationDate = currentOrderAddress.getCreationDate().toISOString().slice(0,10).replace(/-/g,"");
-
                             // Add shipping_used_date (Date of first order with the same shipping address)
-                            params.account_info.shipping.shipping_used_date = parseInt(creationDate, 10);
+                            params.account_info.shipping.shipping_used_date =
+                                parseInt(currentOrderAddress.getCreationDate().toISOString().slice(0,10).replace(/-/g,""), 10);
                         }
                     }
                 }

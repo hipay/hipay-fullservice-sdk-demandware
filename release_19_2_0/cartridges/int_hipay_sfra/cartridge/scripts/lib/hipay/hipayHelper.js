@@ -398,12 +398,10 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
         /* Account info - payment */
 
         // Identify one-click payment if eci = 9
-        if(!empty(params.eci) && params.eci === "9") {
+        if(!empty(params.eci) && params.eci === "9" && !empty(pi.creationDate)) {
             // Get creation date of payment instrument
-            var oneClickCreationDate;
-            if(!empty(pi.creationDate)) {
-                oneClickCreationDate = pi.getCreationDate().toISOString().slice(0,10).replace(/-/g,"");
-            }
+            var oneClickCreationDate = pi.getCreationDate().toISOString().slice(0,10).replace(/-/g,"");
+
             if(!empty(oneClickCreationDate)) {
                 params.account_info.payment = {
                     enrollment_date: parseInt(oneClickCreationDate, 10)

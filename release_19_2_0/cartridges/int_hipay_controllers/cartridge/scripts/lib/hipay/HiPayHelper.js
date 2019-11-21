@@ -569,20 +569,23 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             productLineItem = items[i];
 
             if (!empty(productLineItem.product)) {
+                // If product is dematerialized
                 if (!empty(productLineItem.product.custom.productDematerialized)) {
                     // At least one dematerialized product
                     if(productLineItem.product.custom.productDematerialized && !atLeastOneDematerializedProduct) {
                         atLeastOneDematerializedProduct = true;
                     }
                 } else {
+                    // If product is PRE ORDER
                     if (!empty(productLineItem.product.availabilityModel)
-                    && !empty(productLineItem.product.availabilityModel.availabilityStatus)
-                    && productLineItem.product.availabilityModel.availabilityStatus === 'PREORDER'
+                        && !empty(productLineItem.product.availabilityModel.availabilityStatus)
+                        && productLineItem.product.availabilityModel.availabilityStatus === 'PREORDER'
                     ) {
                         // At least one pre-order product
                         atLeastOnePreOrderProduct = true;
                         if (!empty(productLineItem.product.availabilityModel.inventoryRecord)
-                        && !empty(productLineItem.product.availabilityModel.inventoryRecord.inStockDate)) {
+                            && !empty(productLineItem.product.availabilityModel.inventoryRecord.inStockDate)
+                        ) {
                             if (latestDatePreOrderProduct) {
                                 if(productLineItem.product.availabilityModel.inventoryRecord.inStockDate > latestDatePreOrderProduct) {
                                     latestDatePreOrderProduct = productLineItem.product.availabilityModel.inventoryRecord.inStockDate;
@@ -605,7 +608,8 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
         if (atLeastOnePreOrderProduct) {
             params.merchant_risk_statement.purchase_indicator = 2;
             if (latestDatePreOrderProduct) {
-                params.merchant_risk_statement.pre_order_date = parseInt(latestDatePreOrderProduct.toISOString().slice(0,10).replace(/-/g,""), 10);
+                params.merchant_risk_statement.pre_order_date =
+                    parseInt(latestDatePreOrderProduct.toISOString().slice(0,10).replace(/-/g,""), 10);
             }
         } else {
             params.merchant_risk_statement.purchase_indicator = 1;

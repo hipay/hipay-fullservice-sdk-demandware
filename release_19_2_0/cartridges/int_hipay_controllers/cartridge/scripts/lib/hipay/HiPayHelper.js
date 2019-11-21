@@ -12,6 +12,8 @@ var PaymentMgr = require('dw/order/PaymentMgr');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
 var Transaction = require('dw/system/Transaction');
 var statuses = require('*/cartridge/scripts/lib/hipay/HiPayStatus').HiPayStatus;
+var hipayUtils = require('*/cartridge/scripts/lib/hipay/hipayUtils');
+
 // Import Constants
 var Constants = require('bm_hipay_controllers/cartridge/scripts/util/Constants');
 // var packageJson = require('~/package');
@@ -369,72 +371,258 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
     }
 
     // ### DPS2 params ### //
+    if(pi.paymentMethod === 'HIPAY_CREDIT_CARD'){
 
-    // Device channel always 2, BROWSER
-    params.device_channel = "2";
-    // Add DSP2 browser info
-    params.browser_info = JSON.parse(session.forms.billing.paymentMethods.browserInfo.value);
-    // Add http_accept
-    params.browser_info['http_accept'] = params.http_accept;
-    // Add Ip address
-    params.browser_info['ipaddr'] = params.ipaddr;    
+        // Device channel always 2, BROWSER
+        params.device_channel = "2";
+        // Add DSP2 browser info
+        params.browser_info = JSON.parse(session.forms.billing.paymentMethods.browserInfo.value);
+        // Add http_accept
+        params.browser_info['http_accept'] = params.http_accept;
+        // Add Ip address
+        params.browser_info['ipaddr'] = params.ipaddr;
 
-    // Add DSP2 account info
-    if (!customer.isAnonymous() && !empty(customer.profile)) {
-        // If customer exists
-        params.account_info = {
-            customer: {},
-            purchase: {}
-        };
+        // Add DSP2 account info
+        if (!customer.isAnonymous() && !empty(customer.profile)) {
+            var customerNo = customer.profile.customerNo;
 
-        /* Customer info */        
-        var creationDate = customer.profile.getCreationDate().toISOString().slice(0,10).replace(/-/g,"");
+            /* Previous auth info*/
 
-        /* Previous auth info*/
+            // Get last processed order
+            var lastProcessedOrder = OrderMgr.searchOrders("customerNo = {0} AND status >= {1} AND status <= {2}",
+                "creationDate desc", customerNo, 3, 8).first();
 
-        // Get last processed order
-        var lastProcessedOrder = OrderMgr.searchOrders("customerNo = {0} AND status >= {1} AND status <= {2}",
-            "creationDate desc", customer.profile.customerNo, 3, 8).first();
+            if (!empty(lastProcessedOrder) && !empty(lastProcessedOrder.paymentTransaction)) {
+                // Get transaction ID of order
+                var transaction_reference = lastProcessedOrder.paymentTransaction.transactionID;
 
-        if (!empty(lastProcessedOrder) && !empty(lastProcessedOrder.paymentTransaction)){
-            // Get transaction ID of order
-            var transaction_reference = lastProcessedOrder.paymentTransaction.transactionID;
-
-            if (!empty(transaction_reference)){
-                // If longer than 16 digits, truncate
-                if (transaction_reference.length > 16){
-                    transaction_reference = transaction_reference.substring(0,16);
+                if (!empty(transaction_reference)) {
+                    // If longer than 16 digits, truncate
+                    if (transaction_reference.length > 16) {
+                        transaction_reference = transaction_reference.substring(0, 16);
+                    }
+                    // Fill transaction reference
+                    params.previous_auth_info = {
+                        transaction_reference: transaction_reference
+                    }
                 }
-                // Fill transaction reference
-                params.previous_auth_info = {
-                    transaction_reference: transaction_reference
+            }
+
+            /* Account info */
+            params.account_info = {
+                customer: {},
+                purchase: {},
+                shipping: {}
+            };
+
+            /* Account info - payment */
+
+            // Identify one-click payment if eci = 9
+            if (!empty(params.eci) && params.eci === "9" && !empty(pi.creationDate)) {
+                // Get creation date of payment instrument
+                var oneClickCreationDate = pi.getCreationDate().toISOString().slice(0, 10).replace(/-/g, "");
+
+                if (!empty(oneClickCreationDate)) {
+                    params.account_info.payment = {
+                        enrollment_date: parseInt(oneClickCreationDate, 10)
+                    }
+                }
+            }
+
+            /* Account info - Customer */
+
+            var creationDate = customer.profile.getCreationDate().toISOString().slice(0, 10).replace(/-/g, "");
+
+            // Add opening_account_date
+            params.account_info.customer.opening_account_date = parseInt(creationDate, 10);
+            // Add account_change
+            params.account_info.customer.account_change =
+                parseInt(customer.profile.getLastModified().toISOString().slice(0, 10).replace(/-/g, ""), 10);
+            // Add password_change
+            var datePasswordLastChange = customer.profile.custom.datePasswordLastChange;
+            if (!empty(datePasswordLastChange)) {
+                params.account_info.customer.password_change = parseInt(datePasswordLastChange, 10);
+            } else {
+                params.account_info.customer.password_change = parseInt(creationDate, 10);
+                Transaction.wrap(function () {
+                    customer.profile.custom.datePasswordLastChange = creationDate;
+                });
+            }
+
+            /* Account info - Purchase */
+
+            var dateNow = new Date();
+            var lastDay = new Date(dateNow.valueOf());
+            lastDay.setDate(lastDay.getDate() - 1);
+            var lastYear = new Date(dateNow.valueOf());
+            lastYear.setFullYear(lastYear.getFullYear() - 1);
+            var lastSixMonth = new Date(dateNow.valueOf());
+            lastSixMonth.setMonth(lastSixMonth.getMonth() - 6);
+
+            // Add card_stored_24h (List of attempts by customerNo)
+            var listAttempts = CustomObjectMgr.queryCustomObjects(Constants.OBJ_SAVE_ONE_CLICK,
+                "custom.customerNo = {0} AND custom.attemptDate >= {1}", "custom.attemptDate desc", customerNo, lastDay);
+            if ('count' in listAttempts) {
+                params.account_info.purchase.card_stored_24h = listAttempts.count;
+            } else {
+                params.account_info.purchase.card_stored_24h = 0;
+            }
+
+            // Get last processed orders from the last 24 hours
+            var ordersLastDay = OrderMgr.searchOrders("customerNo = {0} AND creationDate >= {1}",
+                "creationDate desc", customerNo, lastDay);
+
+            var ordersNumberLastDay = 0;
+            if (ordersLastDay && ordersLastDay.getCount() > 0) {
+                while (ordersLastDay.hasNext()) {
+                    var currentOrder = ordersLastDay.next();
+                    if (currentOrder
+                        && !empty(currentOrder.paymentTransaction)
+                        && !empty(currentOrder.paymentTransaction.transactionID)
+                        && !empty(currentOrder.paymentTransaction.paymentInstrument)
+                        && !empty(currentOrder.paymentTransaction.paymentInstrument.paymentMethod)
+                        && currentOrder.paymentTransaction.paymentInstrument.paymentMethod === 'HIPAY_CREDIT_CARD'
+                    ) {
+                        ordersNumberLastDay++;
+                    }
+                }
+            }
+            // payment_attempts_24h (List of payment attempts during last 24 hours)
+            params.account_info.purchase.payment_attempts_24h = ordersNumberLastDay;
+
+            // Get last processed orders from the last year
+            var ordersLastYear = OrderMgr.searchOrders("customerNo = {0} AND creationDate >= {1}",
+                "creationDate desc", customerNo, lastYear);
+
+            var ordersNumberLastYear = 0;
+            if (ordersLastYear && ordersLastYear.getCount() > 0) {
+                while (ordersLastYear.hasNext()) {
+                    var currentOrder = ordersLastYear.next();
+                    if (currentOrder
+                        && !empty(currentOrder.paymentTransaction)
+                        && !empty(currentOrder.paymentTransaction.transactionID)
+                        && !empty(currentOrder.paymentTransaction.paymentInstrument)
+                        && !empty(currentOrder.paymentTransaction.paymentInstrument.paymentMethod)
+                        && currentOrder.paymentTransaction.paymentInstrument.paymentMethod === 'HIPAY_CREDIT_CARD'
+                    ) {
+                        ordersNumberLastYear++;
+                    }
+                }
+            }
+            // payment_attempts_24h (List of payment attempts during last year)
+            params.account_info.purchase.payment_attempts_1y = ordersNumberLastYear;
+
+
+            // Add count (Number of orders during 6 previous months)
+            var ordersLastSixMonth = OrderMgr.searchOrders("customerNo = {0} AND creationDate >= {1}",
+                "creationDate desc", customerNo, lastSixMonth);
+            if (ordersLastSixMonth && ordersLastSixMonth.getCount() > 0) {
+                params.account_info.purchase.count = ordersLastSixMonth.getCount();
+            }
+            else {
+                params.account_info.purchase.count = 0;
+            }
+
+            /* Account info - Shipping */
+
+            // Get all orders of customer
+            var ordersAll = OrderMgr.searchOrders("customerNo = {0}", "creationDate asc", customerNo);
+
+            // Loop over all orders to check if shipping address used before
+            if (ordersAll && ordersAll.getCount() > 0) {
+                var addressFound = false;
+                while (!addressFound && ordersAll.hasNext()) {
+                    var currentOrder = ordersAll.next();
+
+                    if (!empty(currentOrder.defaultShipment) && !empty(currentOrder.defaultShipment.shippingAddress)) {
+                        var currentOrderAddress = currentOrder.defaultShipment.shippingAddress;
+
+                        if (
+                            hipayUtils.compareStrings(shippingAddress.address1, currentOrderAddress.address1)
+                            && hipayUtils.compareStrings(shippingAddress.address2, currentOrderAddress.address2)
+                            && hipayUtils.compareStrings(shippingAddress.postalCode, currentOrderAddress.postalCode)
+                            && hipayUtils.compareStrings(shippingAddress.city, currentOrderAddress.city)
+                            && hipayUtils.compareStrings(shippingAddress.countryCode.value, currentOrderAddress.countryCode.value)
+                        ) {
+                            // break while condition
+                            addressFound = true;
+
+                            // Add shipping_used_date (Date of first order with the same shipping address)
+                            params.account_info.shipping.shipping_used_date =
+                                parseInt(currentOrderAddress.getCreationDate().toISOString().slice(0, 10).replace(/-/g, ""), 10);
+                        }
+                    }
+                }
+            }
+
+            // Add name_indicator (1 if name of customer = name of shipping address, else 2)
+            params.account_info.shipping.name_indicator =
+                hipayUtils.compareNames(
+                    shippingAddress.firstName,
+                    shippingAddress.lastName,
+                    customer.profile.firstName,
+                    customer.profile.lastName
+                ) ? 1 : 2;
+        }
+
+        /* Merchant risk statement */
+
+        params.merchant_risk_statement = {};
+
+        var atLeastOneDematerializedProduct = false;
+        var atLeastOnePreOrderProduct = false;
+        var latestDatePreOrderProduct = null;
+        var productLineItem;
+
+        for (var i = 0; i < items.length; i++) {
+            productLineItem = items[i];
+
+            if (!empty(productLineItem.product)) {
+                // If product is dematerialized
+                if (!empty(productLineItem.product.custom.productDematerialized)) {
+                    // At least one dematerialized product
+                    if(productLineItem.product.custom.productDematerialized && !atLeastOneDematerializedProduct) {
+                        atLeastOneDematerializedProduct = true;
+                    }
+                } else {
+                    // If product is PRE ORDER
+                    if (!empty(productLineItem.product.availabilityModel)
+                        && !empty(productLineItem.product.availabilityModel.availabilityStatus)
+                        && productLineItem.product.availabilityModel.availabilityStatus === 'PREORDER'
+                    ) {
+                        // At least one pre-order product
+                        atLeastOnePreOrderProduct = true;
+                        if (!empty(productLineItem.product.availabilityModel.inventoryRecord)
+                            && !empty(productLineItem.product.availabilityModel.inventoryRecord.inStockDate)
+                        ) {
+                            if (latestDatePreOrderProduct) {
+                                if(productLineItem.product.availabilityModel.inventoryRecord.inStockDate > latestDatePreOrderProduct) {
+                                    latestDatePreOrderProduct = productLineItem.product.availabilityModel.inventoryRecord.inStockDate;
+                                }
+                            } else {
+                                latestDatePreOrderProduct = productLineItem.product.availabilityModel.inventoryRecord.inStockDate;
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        // Add opening_account_date
-        params.account_info.customer.opening_account_date = parseInt(creationDate, 10);
-        // Add account_change
-        params.account_info.customer.account_change = parseInt(customer.profile.getLastModified().toISOString().slice(0,10).replace(/-/g,""), 10);
-        // Add password_change
-        var datePasswordLastChange = customer.profile.custom.datePasswordLastChange;        
-        if (!empty(datePasswordLastChange)) {
-            params.account_info.customer.password_change = parseInt(datePasswordLastChange, 10);
-        } else {            
-            params.account_info.customer.password_change = parseInt(creationDate, 10);
-            Transaction.wrap(function () {
-                customer.profile.custom.datePasswordLastChange = creationDate;
-            });            
+        // At least one dematerialized product (email_delivery_address and delivery_time_frame)
+        if (atLeastOneDematerializedProduct) {
+            params.merchant_risk_statement.email_delivery_address = order.customerEmail;
+            params.merchant_risk_statement.delivery_time_frame = 1;
         }
-        // Add purchase.card_stored_24h (List of attempts by customerNo)
-        var lastDay = new Date();
-        lastDay.setDate(lastDay.getDate() - 1)
-        var listAttempts = CustomObjectMgr.queryCustomObjects(Constants.OBJ_SAVE_ONE_CLICK, "custom.customerNo = {0} AND custom.attemptDate >= {1}","custom.attemptDate desc", customer.profile.customerNo, lastDay);
-        if ('count' in listAttempts) {
-            params.account_info.purchase.card_stored_24h = listAttempts.count; 
+        // At least one pre-order product (purchase_indicator and pre_order_date)
+        if (atLeastOnePreOrderProduct) {
+            params.merchant_risk_statement.purchase_indicator = 2;
+            if (latestDatePreOrderProduct) {
+                params.merchant_risk_statement.pre_order_date =
+                    parseInt(latestDatePreOrderProduct.toISOString().slice(0,10).replace(/-/g,""), 10);
+            }
         } else {
-            params.account_info.purchase.card_stored_24h = 0;
-        }          
+            params.merchant_risk_statement.purchase_indicator = 1;
+        }
     }
 };
 

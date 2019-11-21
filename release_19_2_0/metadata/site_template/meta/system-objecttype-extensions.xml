@@ -412,104 +412,9 @@
             </attribute-group>
         </group-definitions>
     </type-extension>
-        
-	<type-extension type-id="Profile">
-        <system-attribute-definitions>
-            <attribute-definition attribute-id="UUID">
-                <min-length>0</min-length>
-                <field-length>28</field-length>
-            </attribute-definition>
-            <attribute-definition attribute-id="birthday"/>
-            <attribute-definition attribute-id="companyName">
-                <min-length>0</min-length>
-                <field-length>10</field-length>
-            </attribute-definition>
-            <attribute-definition attribute-id="creationDate"/>
-            <attribute-definition attribute-id="customerNo">
-                <min-length>0</min-length>
-            </attribute-definition>
-            <attribute-definition attribute-id="email">
-                <field-length>75</field-length>
-            </attribute-definition>
-            <attribute-definition attribute-id="fax">
-                <min-length>0</min-length>
-                <field-length>32</field-length>
-            </attribute-definition>
-            <attribute-definition attribute-id="firstName">
-                <min-length>0</min-length>
-                <field-length>25</field-length>
-            </attribute-definition>
-            <attribute-definition attribute-id="gender">
-                <value-definitions>
-                    <value-definition>
-                        <display xml:lang="x-default">Male</display>
-                        <value>1</value>
-                    </value-definition>
-                    <value-definition>
-                        <display xml:lang="x-default">Female</display>
-                        <value>2</value>
-                    </value-definition>
-                </value-definitions>
-            </attribute-definition>
-            <attribute-definition attribute-id="jobTitle">
-                <min-length>0</min-length>
-            </attribute-definition>
-            <attribute-definition attribute-id="lastLoginTime"/>
-            <attribute-definition attribute-id="lastModified"/>
-            <attribute-definition attribute-id="lastName">
-                <min-length>0</min-length>
-                <field-length>25</field-length>
-            </attribute-definition>
-            <attribute-definition attribute-id="lastVisitTime"/>
-            <attribute-definition attribute-id="nextBirthday"/>
-            <attribute-definition attribute-id="phoneBusiness">
-                <min-length>0</min-length>
-                <field-length>32</field-length>
-            </attribute-definition>
-            <attribute-definition attribute-id="phoneHome">
-                <min-length>0</min-length>
-                <field-length>32</field-length>
-            </attribute-definition>
-            <attribute-definition attribute-id="phoneMobile">
-                <min-length>0</min-length>
-                <field-length>32</field-length>
-            </attribute-definition>
-            <attribute-definition attribute-id="preferredLocale">
-                <min-length>0</min-length>
-            </attribute-definition>
-            <attribute-definition attribute-id="salutation">
-                <min-length>0</min-length>
-                <field-length>5</field-length>
-            </attribute-definition>
-            <attribute-definition attribute-id="secondName">
-                <min-length>0</min-length>
-                <field-length>25</field-length>
-            </attribute-definition>
-            <attribute-definition attribute-id="suffix">
-                <min-length>0</min-length>
-                <field-length>5</field-length>
-            </attribute-definition>
-            <attribute-definition attribute-id="taxID">
-                <min-length>0</min-length>
-            </attribute-definition>
-            <attribute-definition attribute-id="taxIDType">
-                <value-definitions>
-                    <value-definition default="true">
-                        <display xml:lang="x-default">Arbitrary</display>
-                        <value>Arbitrary</value>
-                    </value-definition>
-                    <value-definition>
-                        <display xml:lang="x-default">CPF</display>
-                        <value>CPF</value>
-                    </value-definition>
-                </value-definitions>
-            </attribute-definition>
-            <attribute-definition attribute-id="title">
-                <min-length>0</min-length>
-                <field-length>10</field-length>
-            </attribute-definition>
-        </system-attribute-definitions>
-        <custom-attribute-definitions>
+     
+    <type-extension type-id="Profile">
+		<custom-attribute-definitions>
             <attribute-definition attribute-id="datePasswordLastChange">
                 <display-name xml:lang="x-default">date password last change</display-name>
                 <type>string</type>
@@ -517,37 +422,33 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-            <attribute-definition attribute-id="familyStatus">
-                <display-name xml:lang="x-default">Family Status</display-name>
-                <type>enum-of-string</type>
+		</custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="Standard">
+                <attribute attribute-id="datePasswordLastChange"/>
+            </attribute-group>            
+        </group-definitions>
+    </type-extension>
+	
+    <type-extension type-id="Product">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="productDematerialized">
+                <display-name xml:lang="x-default">Product Dematerialized</display-name>
+                <type>boolean</type>
+                <site-specific-flag>false</site-specific-flag>
                 <mandatory-flag>false</mandatory-flag>
+                <visible-flag>true</visible-flag>
                 <externally-managed-flag>false</externally-managed-flag>
+                <order-required-flag>false</order-required-flag>
+                <externally-defined-flag>false</externally-defined-flag>
             </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
-            <attribute-group group-id="Standard">
-                <display-name xml:lang="x-default">Profile Attributes</display-name>
-                <attribute attribute-id="salutation" system="true"/>
-                <attribute attribute-id="title" system="true"/>
-                <attribute attribute-id="companyName" system="true"/>
-                <attribute attribute-id="jobTitle" system="true"/>
-                <attribute attribute-id="firstName" system="true"/>
-                <attribute attribute-id="lastName" system="true"/>
-                <attribute attribute-id="suffix" system="true"/>
-                <attribute attribute-id="gender" system="true"/>
-                <attribute attribute-id="birthday" system="true"/>
-                <attribute attribute-id="email" system="true"/>
-                <attribute attribute-id="nextBirthday" system="true"/>
-                <attribute attribute-id="secondName" system="true"/>
-                <attribute attribute-id="datePasswordLastChange"/>
-            </attribute-group>
-            <attribute-group group-id="Phone">
-                <display-name xml:lang="x-default">Phone Numbers</display-name>
-                <attribute attribute-id="phoneHome" system="true"/>
-                <attribute attribute-id="phoneBusiness" system="true"/>
-                <attribute attribute-id="phoneMobile" system="true"/>
-                <attribute attribute-id="fax" system="true"/>
+            <attribute-group group-id="dematerializationAttributes">
+                <display-name xml:lang="x-default">Dematerialization Attributes</display-name>
+                <attribute attribute-id="productDematerialized"/>
             </attribute-group>
         </group-definitions>
-    </type-extension>   
+    </type-extension>	
+
 </metadata>

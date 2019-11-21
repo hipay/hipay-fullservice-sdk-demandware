@@ -364,6 +364,94 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
         // Add Ip address
         params.browser_info['ipaddr'] = params.ipaddr;
 
+        /* Merchant risk statement */
+
+        params.merchant_risk_statement = {};
+
+        var allDematerializedProducts = true;
+        var atLeastOneDematerializedProduct = false;
+        var atLeastOnePreOrderProduct = false;
+        var latestDatePreOrderProduct = null;
+        var productLineItem;
+
+        // Check all items of basket
+        for (var i = 0; i < items.length; i++) {
+            productLineItem = items[i];
+
+            if (!empty(productLineItem.product)) {
+                // If product is dematerialized
+                if (!empty(productLineItem.product.custom.productDematerialized)
+                    && productLineItem.product.custom.productDematerialized
+                ) {
+                    atLeastOneDematerializedProduct = true;
+                } else {
+                    allDematerializedProducts = false;
+                }
+
+                // If product is PRE ORDER
+                if (!empty(productLineItem.product.availabilityModel)
+                    && !empty(productLineItem.product.availabilityModel.availabilityStatus)
+                    && productLineItem.product.availabilityModel.availabilityStatus === 'PREORDER'
+                ) {
+                    // At least one pre-order product
+                    atLeastOnePreOrderProduct = true;
+
+                    if (!empty(productLineItem.product.availabilityModel.inventoryRecord)
+                        && !empty(productLineItem.product.availabilityModel.inventoryRecord.inStockDate)
+                    ) {
+                        if (latestDatePreOrderProduct) {
+                            if(productLineItem.product.availabilityModel.inventoryRecord.inStockDate > latestDatePreOrderProduct) {
+                                latestDatePreOrderProduct = productLineItem.product.availabilityModel.inventoryRecord.inStockDate;
+                            }
+                        } else {
+                            latestDatePreOrderProduct = productLineItem.product.availabilityModel.inventoryRecord.inStockDate;
+                        }
+                    }
+                }
+            }
+        }
+
+        // At least one dematerialized product (email_delivery_address and delivery_time_frame)
+        if (atLeastOneDematerializedProduct) {
+            params.merchant_risk_statement.email_delivery_address = order.customerEmail;
+            params.merchant_risk_statement.delivery_time_frame = 1;
+        }
+        // At least one pre-order product (purchase_indicator and pre_order_date)
+        if (atLeastOnePreOrderProduct) {
+            params.merchant_risk_statement.purchase_indicator = 2;
+            if (latestDatePreOrderProduct) {
+                params.merchant_risk_statement.pre_order_date =
+                    parseInt(latestDatePreOrderProduct.toISOString().slice(0,10).replace(/-/g,""), 10);
+            }
+        } else {
+            params.merchant_risk_statement.purchase_indicator = 1;
+        }
+
+        // shipping_indicator
+        // If all products dematerialized, shipping_indicator = 5
+        if(allDematerializedProducts) {
+            params.merchant_risk_statement.shipping_indicator = 5;
+        } else {
+            // Compare shipping and billing addresses
+            // If equals, shipping_indicator = 1
+            if(
+                !empty(billingAddress)
+                && hipayUtils.compareStrings(shippingAddress.address1, billingAddress.address1)
+                && hipayUtils.compareStrings(shippingAddress.address2, billingAddress.address2)
+                && hipayUtils.compareStrings(shippingAddress.postalCode, billingAddress.postalCode)
+                && hipayUtils.compareStrings(shippingAddress.city, billingAddress.city)
+                && hipayUtils.compareStrings(shippingAddress.countryCode.value, billingAddress.countryCode.value)
+            ) {
+                params.merchant_risk_statement.shipping_indicator = 1;
+            } else {
+                // Else, check if shipping address known for auth user (shipping_indicator = 2)
+                // We check it later with other params
+                // Else, shipping_indicator = 3
+                params.merchant_risk_statement.shipping_indicator = 3;
+            }
+        }
+
+
         // Add DSP2 account info
         if (!customer.isAnonymous() && !empty(customer.profile)) {
             var customerNo = customer.profile.customerNo;
@@ -528,7 +616,11 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                         ) {
                             // break while condition
                             addressFound = true;
-
+                        
+                            // Set shipping_indicator to 2
+                            if(params.merchant_risk_statement.shipping_indicator === 3){
+                                params.merchant_risk_statement.shipping_indicator = 2;
+                            }
                             // Add shipping_used_date (Date of first order with the same shipping address)
                             params.account_info.shipping.shipping_used_date =
                                 parseInt(currentOrderAddress.getCreationDate().toISOString().slice(0,10).replace(/-/g,""), 10);
@@ -545,66 +637,6 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                     customer.profile.firstName,
                     customer.profile.lastName
                 ) ? 1 : 2;
-        }
-
-        /* Merchant risk statement */
-
-        params.merchant_risk_statement = {};
-
-        var atLeastOneDematerializedProduct = false;
-        var atLeastOnePreOrderProduct = false;
-        var latestDatePreOrderProduct = null;
-        var productLineItem;
-
-        for (var i = 0; i < items.length; i++) {
-            productLineItem = items[i];
-
-            if (!empty(productLineItem.product)) {
-                // If product is dematerialized
-                if (!empty(productLineItem.product.custom.productDematerialized)) {
-                    // At least one dematerialized product
-                    if(productLineItem.product.custom.productDematerialized && !atLeastOneDematerializedProduct) {
-                        atLeastOneDematerializedProduct = true;
-                    }
-                } else {
-                    // If product is PRE ORDER
-                    if (!empty(productLineItem.product.availabilityModel)
-                        && !empty(productLineItem.product.availabilityModel.availabilityStatus)
-                        && productLineItem.product.availabilityModel.availabilityStatus === 'PREORDER'
-                    ) {
-                        // At least one pre-order product
-                        atLeastOnePreOrderProduct = true;
-
-                        if (!empty(productLineItem.product.availabilityModel.inventoryRecord)
-                            && !empty(productLineItem.product.availabilityModel.inventoryRecord.inStockDate)
-                        ) {
-                            if (latestDatePreOrderProduct) {
-                                if(productLineItem.product.availabilityModel.inventoryRecord.inStockDate > latestDatePreOrderProduct) {
-                                    latestDatePreOrderProduct = productLineItem.product.availabilityModel.inventoryRecord.inStockDate;
-                                }
-                            } else {
-                                latestDatePreOrderProduct = productLineItem.product.availabilityModel.inventoryRecord.inStockDate;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        // At least one dematerialized product (email_delivery_address and delivery_time_frame)
-        if (atLeastOneDematerializedProduct) {
-            params.merchant_risk_statement.email_delivery_address = order.customerEmail;
-            params.merchant_risk_statement.delivery_time_frame = 1;
-        }
-        // At least one pre-order product (purchase_indicator and pre_order_date)
-        if (atLeastOnePreOrderProduct) {
-            params.merchant_risk_statement.purchase_indicator = 2;
-            if (latestDatePreOrderProduct) {
-                params.merchant_risk_statement.pre_order_date =
-                    parseInt(latestDatePreOrderProduct.toISOString().slice(0,10).replace(/-/g,""), 10);
-            }
-        } else {
-            params.merchant_risk_statement.purchase_indicator = 1;
         }
     }
 };

@@ -536,6 +536,15 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                     }
                 }
             }
+
+            // Add name_indicator (1 if name of customer = name of shipping address, else 2)
+            params.account_info.shipping.name_indicator =
+                hipayUtils.compareNames(
+                    shippingAddress.firstName,
+                    shippingAddress.lastName,
+                    customer.profile.firstName,
+                    customer.profile.lastName
+                ) ? 1 : 2;
         }
 
         /* Merchant risk statement */

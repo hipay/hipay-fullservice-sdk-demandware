@@ -537,6 +537,66 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                 }
             }
         }
+
+        /* Merchant risk statement */
+
+        params.merchant_risk_statement = {};
+
+        var atLeastOneDematerializedProduct = false;
+        var atLeastOnePreOrderProduct = false;
+        var latestDatePreOrderProduct = null;
+        var productLineItem;
+
+        for (var i = 0; i < items.length; i++) {
+            productLineItem = items[i];
+
+            if (!empty(productLineItem.product)) {
+                // If product is dematerialized
+                if (!empty(productLineItem.product.custom.productDematerialized)) {
+                    // At least one dematerialized product
+                    if(productLineItem.product.custom.productDematerialized && !atLeastOneDematerializedProduct) {
+                        atLeastOneDematerializedProduct = true;
+                    }
+                } else {
+                    // If product is PRE ORDER
+                    if (!empty(productLineItem.product.availabilityModel)
+                        && !empty(productLineItem.product.availabilityModel.availabilityStatus)
+                        && productLineItem.product.availabilityModel.availabilityStatus === 'PREORDER'
+                    ) {
+                        // At least one pre-order product
+                        atLeastOnePreOrderProduct = true;
+
+                        if (!empty(productLineItem.product.availabilityModel.inventoryRecord)
+                            && !empty(productLineItem.product.availabilityModel.inventoryRecord.inStockDate)
+                        ) {
+                            if (latestDatePreOrderProduct) {
+                                if(productLineItem.product.availabilityModel.inventoryRecord.inStockDate > latestDatePreOrderProduct) {
+                                    latestDatePreOrderProduct = productLineItem.product.availabilityModel.inventoryRecord.inStockDate;
+                                }
+                            } else {
+                                latestDatePreOrderProduct = productLineItem.product.availabilityModel.inventoryRecord.inStockDate;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // At least one dematerialized product (email_delivery_address and delivery_time_frame)
+        if (atLeastOneDematerializedProduct) {
+            params.merchant_risk_statement.email_delivery_address = order.customerEmail;
+            params.merchant_risk_statement.delivery_time_frame = 1;
+        }
+        // At least one pre-order product (purchase_indicator and pre_order_date)
+        if (atLeastOnePreOrderProduct) {
+            params.merchant_risk_statement.purchase_indicator = 2;
+            if (latestDatePreOrderProduct) {
+                params.merchant_risk_statement.pre_order_date =
+                    parseInt(latestDatePreOrderProduct.toISOString().slice(0,10).replace(/-/g,""), 10);
+            }
+        } else {
+            params.merchant_risk_statement.purchase_indicator = 1;
+        }
     }
 };
 

@@ -391,12 +391,20 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
         var atLeastOnePreOrderProduct = false;
         var latestDatePreOrderProduct = null;
         var productLineItem;
+        var basketProductIDS = [];
+        var basketProductQuantities = [];
 
         // Check all items of basket
         for (var i = 0; i < items.length; i++) {
             productLineItem = items[i];
 
             if (!empty(productLineItem.product)) {
+                // Construct simple basket for auth users
+                if (!customer.isAnonymous() && !empty(customer.profile)) {
+                    basketProductIDS.push(productLineItem.productID);
+                    basketProductQuantities.push(productLineItem.quantity.value);
+                }
+
                 // If product is dematerialized
                 if (!empty(productLineItem.product.custom.productDematerialized)
                     && productLineItem.product.custom.productDematerialized
@@ -413,6 +421,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                 ) {
                     // At least one pre-order product
                     atLeastOnePreOrderProduct = true;
+
                     if (!empty(productLineItem.product.availabilityModel.inventoryRecord)
                         && !empty(productLineItem.product.availabilityModel.inventoryRecord.inStockDate)
                     ) {
@@ -444,6 +453,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             params.merchant_risk_statement.purchase_indicator = 1;
         }
 
+        // shipping_indicator
         // If all products dematerialized, shipping_indicator = 5
         if(allDematerializedProducts) {
             params.merchant_risk_statement.shipping_indicator = 5;
@@ -494,6 +504,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             }
 
             /* Account info */
+
             params.account_info = {
                 customer: {},
                 purchase: {},
@@ -503,11 +514,11 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             /* Account info - payment */
 
             // Identify one-click payment if eci = 9
-            if (!empty(params.eci) && params.eci === "9" && !empty(pi.creationDate)) {
+            if(!empty(params.eci) && params.eci === "9" && !empty(pi.creationDate)) {
                 // Get creation date of payment instrument
-                var oneClickCreationDate = pi.getCreationDate().toISOString().slice(0, 10).replace(/-/g, "");
+                var oneClickCreationDate = pi.getCreationDate().toISOString().slice(0,10).replace(/-/g,"");
 
-                if (!empty(oneClickCreationDate)) {
+                if(!empty(oneClickCreationDate)) {
                     params.account_info.payment = {
                         enrollment_date: parseInt(oneClickCreationDate, 10)
                     }
@@ -597,7 +608,6 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             // payment_attempts_24h (List of payment attempts during last year)
             params.account_info.purchase.payment_attempts_1y = ordersNumberLastYear;
 
-
             // Add count (Number of orders during 6 previous months)
             var ordersLastSixMonth = OrderMgr.searchOrders("customerNo = {0} AND creationDate >= {1}",
                 "creationDate desc", customerNo, lastSixMonth);
@@ -613,16 +623,18 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             // Get all orders of customer
             var ordersAll = OrderMgr.searchOrders("customerNo = {0}", "creationDate asc", customerNo);
 
+            var addressFound = false;
+            var reOrderFound = false;
+
             // Loop over all orders to check if shipping address used before
             if (ordersAll && ordersAll.getCount() > 0) {
-                var addressFound = false;
-                while (!addressFound && ordersAll.hasNext()) {
+                while ((!reOrderFound || !addressFound) && ordersAll.hasNext()) {
                     var currentOrder = ordersAll.next();
 
-                    if (!empty(currentOrder.defaultShipment) && !empty(currentOrder.defaultShipment.shippingAddress)) {
+                    if(!empty(currentOrder.defaultShipment) && !empty(currentOrder.defaultShipment.shippingAddress)) {
                         var currentOrderAddress = currentOrder.defaultShipment.shippingAddress;
 
-                        if (
+                        if(
                             hipayUtils.compareStrings(shippingAddress.address1, currentOrderAddress.address1)
                             && hipayUtils.compareStrings(shippingAddress.address2, currentOrderAddress.address2)
                             && hipayUtils.compareStrings(shippingAddress.postalCode, currentOrderAddress.postalCode)
@@ -641,8 +653,45 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                                 parseInt(currentOrderAddress.getCreationDate().toISOString().slice(0, 10).replace(/-/g, ""), 10);
                         }
                     }
+
+                    // Check if reorder
+                    var currentOrderProducts = currentOrder.getProductLineItems();
+                    var reOrderBasket = true;
+
+                    // If baskets not same length, it is not reorder
+                    if(basketProductIDS.length !== currentOrderProducts.length) {
+                        reOrderBasket = false;
+                    } else {
+                        // Loop over current order basket to check each product
+                        for (var i = 0; i < currentOrderProducts.length; i++) {
+                            var productLineItem = currentOrderProducts[i];
+
+                            if (!empty(productLineItem.product)) {
+                                // Check if ID exists in order basket
+                                var indexId = basketProductIDS.indexOf(productLineItem.productID);
+                                if(indexId >= 0){
+                                    // If ID exists, check if same quantity
+                                    if(basketProductQuantities[indexId] !== productLineItem.quantity.value) {
+                                        reOrderBasket = false;
+                                        break;
+                                    }
+                                }
+                                else {
+                                    reOrderBasket = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    if(reOrderBasket){
+                        reOrderFound = true;
+                    }
                 }
             }
+
+            // Add reorder_indicator (1 if order first time, 2 if reordered
+            params.merchant_risk_statement.reorder_indicator = reOrderFound ? 2 : 1;
 
             // Add name_indicator (1 if name of customer = name of shipping address, else 2)
             params.account_info.shipping.name_indicator =

@@ -136,6 +136,8 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
     customer = order.customer;
     billingAddress = order.billingAddress;
 
+    var isAuthenticated = !customer.isAnonymous() && !empty(customer.profile);
+
     if (!empty(customer.profile)) {
         switch (customer.profile.gender.value) {
             case 1:
@@ -371,7 +373,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
     }
 
     // ### DPS2 params ### //
-    if (pi.paymentMethod === 'HIPAY_CREDIT_CARD'){
+    if (pi.paymentMethod === 'HIPAY_CREDIT_CARD' || pi.paymentMethod === 'HIPAY_HOSTED_CREDIT_CARD') {
 
         // Device channel always 2, BROWSER
         params.device_channel = "2";
@@ -400,7 +402,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
 
             if (!empty(productLineItem.product)) {
                 // Construct simple basket for auth users
-                if (!customer.isAnonymous() && !empty(customer.profile)) {
+                if (isAuthenticated) {
                     basketProductIDS.push(productLineItem.productID);
                     basketProductQuantities.push(productLineItem.quantity.value);
                 }
@@ -478,7 +480,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
         }
 
         // Add DSP2 account info
-        if (!customer.isAnonymous() && !empty(customer.profile)) {
+        if (isAuthenticated) {
             var customerNo = customer.profile.customerNo;
 
             /* Previous auth info*/

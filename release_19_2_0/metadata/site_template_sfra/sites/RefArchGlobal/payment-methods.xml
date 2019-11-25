@@ -7,7 +7,7 @@
         <processor-id>HIPAY_HOSTED</processor-id>
         <custom-attributes>
             <custom-attribute attribute-id="hipayPaymentCategoryList">credit-card,debit-card</custom-attribute>
-            <custom-attribute attribute-id="hipayPaymentProductList">bcmc,cb,maestro,mastercard,visa,american-express</custom-attribute>
+            <custom-attribute attribute-id="hipayPaymentProductList">cb,visa,mastercard,american-express,maestro,bcmc</custom-attribute>
             <custom-attribute attribute-id="hipayProductName">hosted</custom-attribute>
         </custom-attributes>
     </payment-method>

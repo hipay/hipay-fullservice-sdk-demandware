@@ -66,7 +66,7 @@ HiPayHelper.prototype.fillHeaderData = function (HiPayConfig, order, params, pi)
         }
     }
 
-    if(language === 'default'){
+    if (language === 'default'){
       language = "en_GB";
     }
 
@@ -371,7 +371,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
     }
 
     // ### DPS2 params ### //
-    if(pi.paymentMethod === 'HIPAY_CREDIT_CARD'){
+    if (pi.paymentMethod === 'HIPAY_CREDIT_CARD'){
 
         // Device channel always 2, BROWSER
         params.device_channel = "2";
@@ -426,7 +426,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                         && !empty(productLineItem.product.availabilityModel.inventoryRecord.inStockDate)
                     ) {
                         if (latestDatePreOrderProduct) {
-                            if(productLineItem.product.availabilityModel.inventoryRecord.inStockDate > latestDatePreOrderProduct) {
+                            if (productLineItem.product.availabilityModel.inventoryRecord.inStockDate > latestDatePreOrderProduct) {
                                 latestDatePreOrderProduct = productLineItem.product.availabilityModel.inventoryRecord.inStockDate;
                             }
                         } else {
@@ -455,12 +455,12 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
 
         // shipping_indicator
         // If all products dematerialized, shipping_indicator = 5
-        if(allDematerializedProducts) {
+        if (allDematerializedProducts) {
             params.merchant_risk_statement.shipping_indicator = 5;
         } else {
             // Compare shipping and billing addresses
             // If equals, shipping_indicator = 1
-            if(
+            if (
                 !empty(billingAddress)
                 && hipayUtils.compareStrings(shippingAddress.address1, billingAddress.address1)
                 && hipayUtils.compareStrings(shippingAddress.address2, billingAddress.address2)
@@ -514,11 +514,11 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             /* Account info - payment */
 
             // Identify one-click payment if eci = 9
-            if(!empty(params.eci) && params.eci === "9" && !empty(pi.creationDate)) {
+            if (!empty(params.eci) && params.eci === "9" && !empty(pi.creationDate)) {
                 // Get creation date of payment instrument
                 var oneClickCreationDate = pi.getCreationDate().toISOString().slice(0,10).replace(/-/g,"");
 
-                if(!empty(oneClickCreationDate)) {
+                if (!empty(oneClickCreationDate)) {
                     params.account_info.payment = {
                         enrollment_date: parseInt(oneClickCreationDate, 10)
                     }
@@ -631,10 +631,10 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                 while ((!reOrderFound || !addressFound) && ordersAll.hasNext()) {
                     var currentOrder = ordersAll.next();
 
-                    if(!empty(currentOrder.defaultShipment) && !empty(currentOrder.defaultShipment.shippingAddress)) {
+                    if (!empty(currentOrder.defaultShipment) && !empty(currentOrder.defaultShipment.shippingAddress)) {
                         var currentOrderAddress = currentOrder.defaultShipment.shippingAddress;
 
-                        if(
+                        if (
                             hipayUtils.compareStrings(shippingAddress.address1, currentOrderAddress.address1)
                             && hipayUtils.compareStrings(shippingAddress.address2, currentOrderAddress.address2)
                             && hipayUtils.compareStrings(shippingAddress.postalCode, currentOrderAddress.postalCode)
@@ -645,7 +645,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                             addressFound = true;
 
                             // Set shipping_indicator to 2
-                            if(params.merchant_risk_statement.shipping_indicator === 3){
+                            if (params.merchant_risk_statement.shipping_indicator === 3){
                                 params.merchant_risk_statement.shipping_indicator = 2;
                             }
                             // Add shipping_used_date (Date of first order with the same shipping address)
@@ -659,7 +659,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                     var reOrderBasket = true;
 
                     // If baskets not same length, it is not reorder
-                    if(basketProductIDS.length !== currentOrderProducts.length) {
+                    if (basketProductIDS.length !== currentOrderProducts.length) {
                         reOrderBasket = false;
                     } else {
                         // Loop over current order basket to check each product
@@ -669,9 +669,9 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                             if (!empty(productLineItem.product)) {
                                 // Check if ID exists in order basket
                                 var indexId = basketProductIDS.indexOf(productLineItem.productID);
-                                if(indexId >= 0){
+                                if (indexId >= 0){
                                     // If ID exists, check if same quantity
-                                    if(basketProductQuantities[indexId] !== productLineItem.quantity.value) {
+                                    if (basketProductQuantities[indexId] !== productLineItem.quantity.value) {
                                         reOrderBasket = false;
                                         break;
                                     }
@@ -684,7 +684,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                         }
                     }
 
-                    if(reOrderBasket){
+                    if (reOrderBasket){
                         reOrderFound = true;
                     }
                 }

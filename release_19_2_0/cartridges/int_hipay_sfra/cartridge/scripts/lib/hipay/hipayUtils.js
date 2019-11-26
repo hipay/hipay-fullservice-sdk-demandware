@@ -58,6 +58,8 @@ function removeFromOrderId(str) {
 }
 
 module.exports = {
+    removeAccents: removeAccents,
+    normalizeString: normalizeString,
     compareStrings: compareStrings,
     compareNames: compareNames,
     removeFromOrderId: removeFromOrderId

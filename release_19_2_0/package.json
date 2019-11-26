@@ -8,7 +8,8 @@
     "upload": "sgmf-scripts --upload -- ",
     "uploadCartridge": "sgmf-scripts --uploadCartridge int_hipay_sfra",
     "compile:js": "sgmf-scripts --compile js",
-    "compile:scss": "sgmf-scripts --compile css"
+    "compile:scss": "sgmf-scripts --compile css",
+    "test": "sgmf-scripts --test './test/unit/**/*.test.js'"
   },
   "repository": {},
   "license": "ISC",

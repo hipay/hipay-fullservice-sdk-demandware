@@ -14,6 +14,7 @@ function hiPayProcessOrderCall() {
     var Transaction = require('dw/system/Transaction');
     var HiPayLogger = require('*/cartridge/scripts/lib/hipay/hipayLogger');
     var HiPayHelper = require('*/cartridge/scripts/lib/hipay/hipayHelper');
+    var hipayUtils = require('*/cartridge/scripts/lib/hipay/hipayUtils');
     var log = new HiPayLogger('HiPayProcessOrderCall');
     var helper = new HiPayHelper();
     var params = request.httpParameterMap;
@@ -24,10 +25,7 @@ function hiPayProcessOrderCall() {
     log.info('HiPay Order Call :: ' + params);
     
     if (params.isParameterSubmitted('orderid')) {
-        var orderidTimeStamp = params.orderid.stringValue;
-        var orderidTab = orderidTimeStamp.split("_");
-        orderidTab.pop();
-        orderid = orderidTab.join("_");
+        orderid = hipayUtils.removeFromOrderId(params.orderid.stringValue);
 
         if (empty(orderid)) {
             log.error('The call from HiPay does not have a valid OrderNo!');

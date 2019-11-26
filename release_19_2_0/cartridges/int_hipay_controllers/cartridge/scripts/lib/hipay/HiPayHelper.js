@@ -12,7 +12,7 @@ var PaymentMgr = require('dw/order/PaymentMgr');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
 var Transaction = require('dw/system/Transaction');
 var statuses = require('*/cartridge/scripts/lib/hipay/HiPayStatus').HiPayStatus;
-var hipayUtils = require('*/cartridge/scripts/lib/hipay/hipayUtils');
+var hipayUtils = require('*/cartridge/scripts/lib/hipay/HipayUtils');
 
 // Import Constants
 var Constants = require('bm_hipay_controllers/cartridge/scripts/util/Constants');

@@ -561,7 +561,10 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                         && !empty(currentOrder.paymentTransaction.transactionID)
                         && !empty(currentOrder.paymentTransaction.paymentInstrument)
                         && !empty(currentOrder.paymentTransaction.paymentInstrument.paymentMethod)
-                        && currentOrder.paymentTransaction.paymentInstrument.paymentMethod === 'HIPAY_CREDIT_CARD'
+                        && (
+                            currentOrder.paymentTransaction.paymentInstrument.paymentMethod === 'HIPAY_CREDIT_CARD'
+                            || currentOrder.paymentTransaction.paymentInstrument.paymentMethod === 'HIPAY_HOSTED_CREDIT_CARD'
+                        )
                     ) {
                         ordersNumberLastDay++;
                     }
@@ -583,7 +586,10 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                         && !empty(currentOrder.paymentTransaction.transactionID)
                         && !empty(currentOrder.paymentTransaction.paymentInstrument)
                         && !empty(currentOrder.paymentTransaction.paymentInstrument.paymentMethod)
-                        && currentOrder.paymentTransaction.paymentInstrument.paymentMethod === 'HIPAY_CREDIT_CARD'
+                        && (
+                            currentOrder.paymentTransaction.paymentInstrument.paymentMethod === 'HIPAY_CREDIT_CARD'
+                            || currentOrder.paymentTransaction.paymentInstrument.paymentMethod === 'HIPAY_HOSTED_CREDIT_CARD'
+                        )
                     ) {
                         ordersNumberLastYear++;
                     }

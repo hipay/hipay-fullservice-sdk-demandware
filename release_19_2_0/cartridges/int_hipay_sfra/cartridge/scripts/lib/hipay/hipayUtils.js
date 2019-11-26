@@ -44,7 +44,21 @@ function compareNames(firstname1, lastname1, firstname2, lastname2) {
     return (name1 === name2) || (name1 === inversedName2);
 }
 
+/**
+ * Use this method to remove time stamp form orderId.
+ *
+ * @param string str: orderId with time
+ * @returns only orderId 
+ */
+function removeFromOrderId(str) {
+    var orderidTab = str.split("_");
+    orderidTab.pop();
+
+    return orderidTab.join("_");
+}
+
 module.exports = {
     compareStrings: compareStrings,
-    compareNames: compareNames
+    compareNames: compareNames,
+    removeFromOrderId: removeFromOrderId
 };

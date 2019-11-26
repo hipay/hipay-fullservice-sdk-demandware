@@ -45,6 +45,8 @@ function compareNames(firstname1, lastname1, firstname2, lastname2) {
 }
 
 module.exports = {
+    removeAccents: removeAccents,
+    normalizeString: normalizeString,
     compareStrings: compareStrings,
     compareNames: compareNames
 };

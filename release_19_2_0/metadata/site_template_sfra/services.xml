@@ -19,7 +19,7 @@
     </service-credential>
 
     <service-credential service-credential-id="hipay.token.cred">
-        <url>https://stage-secure2-vault.hipay-tpp.com/rest/v2/token/create</url>
+        <url>https://stage-secure2-vault.hipay-tpp.com/rest/v2/token</url>
         <user-id/>
         <password/>
     </service-credential>

@@ -1,10 +1,10 @@
-# HiPay Fullservice cartridge for Demandware
+# HiPay Fullservice cartridge for Salesforce Commerce Cloud / Demandware
+
+![Salesforce Commerce Cloud (logo)](hipay_integration_salesforce_cc.png)
 
 [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/hipay/hipay-wallet-cashout-mirakl-integration/master/LICENSE.md)
 
-The **HiPay Fullservice cartridge for Demandware** is a library that allows you to **accept payments in your Demandware online shop** by leveraging the HiPay Fullservice payment platform.
-
-![Demandware LINK Marketplace](demandware_link.jpeg)
+The **HiPay Fullservice cartridge for Salesforce Commerce Cloud B2C** (formerly known as Demandware) is a library that allows you to **accept payments in your Salesforce Commerce Cloud online shop** by leveraging the HiPay Fullservice payment platform.
 
 ## Getting started
 
@@ -26,7 +26,7 @@ Read the **[project documentation][doc-home]** for comprehensive information abo
 
 ## License
 
-The **HiPay Fullservice cartridge for Demandware** is available under the **Apache 2.0 License**. Check out the [license file][project-license] for more information.
+The **HiPay Fullservice cartridge for Salesforce Commerce Cloud** is available under the **Apache 2.0 License**. Check out the [license file][project-license] for more information.
 
 [doc-home]: https://developer.hipay.com/doc/hipay-fullservice-sdk-demandware/
 

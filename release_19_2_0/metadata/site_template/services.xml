@@ -34,7 +34,7 @@
         <cb-millis>10000</cb-millis>
     </service-profile>
 
-    <service service-id="hipay.rest.createtoken">
+    <service service-id="hipay.rest.createtoken.SiteGenesis">
         <service-type>HTTP</service-type>
         <enabled>true</enabled>
         <log-prefix>HIPAY-REST-CreateToken</log-prefix>
@@ -44,7 +44,7 @@
         <credential-id>hipay.token.cred</credential-id>
     </service>
 
-    <service service-id="hipay.rest.hpayment">
+    <service service-id="hipay.rest.hpayment.SiteGenesis">
         <service-type>HTTP</service-type>
         <enabled>true</enabled>
         <log-prefix>HIPAY-REST-HostedPayment</log-prefix>
@@ -54,7 +54,7 @@
         <credential-id>hipay.hosted.cred</credential-id>
     </service>
 
-    <service service-id="hipay.rest.maintenance">
+    <service service-id="hipay.rest.maintenance.SiteGenesis">
         <service-type>HTTP</service-type>
         <enabled>true</enabled>
         <log-prefix>HIPAY-REST-Payment</log-prefix>
@@ -64,7 +64,7 @@
         <credential-id>hipay.maintenance.cred</credential-id>
     </service>
 
-    <service service-id="hipay.rest.order">
+    <service service-id="hipay.rest.order.SiteGenesis">
         <service-type>HTTP</service-type>
         <enabled>true</enabled>
         <log-prefix>HIPAY-REST-Order</log-prefix>

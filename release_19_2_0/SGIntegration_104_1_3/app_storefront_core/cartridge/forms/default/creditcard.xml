@@ -7,10 +7,12 @@
         <options optionid-binding="cardType" value-binding="cardType" label-binding="name"/>
     </field>
 
-	<!-- field for credit card number -->
-    <field formid="number" label="creditcard.number" type="string" mandatory="true" masked="4" max-length="16"
+    <!-- HiPay custom code – start -->
+    <!-- field for credit card number -->
+    <field formid="number" label="creditcard.number" type="string" mandatory="true" masked="4" max-length="17"
 	    description="creditcard.numberexample" binding="creditCardNumber"
 	    missing-error="creditcard.numbermissingerror" value-error="creditcard.numbervalueerror"/>
+		<!-- HiPay custom code – end -->
 	    
 	<group formid="expiration"> 
 		<!-- field for credit card expiration month -->
@@ -50,13 +52,24 @@
 	    </field>
 	</group>
 
+	<!-- HiPay custom code - start -->
 	<!-- field for credit card owner -->
-    <field formid="owner" label="creditcard.ownerlabel" type="string" mandatory="true" max-length="40" binding="creditCardHolder"
-     	missing-error="creditcard.ownermissingerror"/>
+  <field formid="owner" label="creditcard.ownerlabel" type="string" mandatory="false" max-length="40" binding="creditCardHolder"
+    missing-error="creditcard.ownermissingerror"/>
+
+	<!-- field for credit card owner first name --> 
+	<field formid="ownerfirst" label="creditcard.ownerlabel.first" type="string" mandatory="false" max-length="40" missing-error="creditcard.ownermissingerror"/> 
+	
+	<!-- field for credit card owner last name--> 
+	<field formid="ownerlast" label="creditcard.ownerlabel.last" type="string" mandatory="false" max-length="40" missing-error="creditcard.ownermissingerror"/>
 
 	<!-- field for credit card security code -->
-    <field formid="cvn" label="creditcard.cvnlabel" type="string" mandatory="true" masked="0"
-     	missing-error="creditcard.cvnmissingerror" value-error="creditcard.cvnrangeerror"/>
+	<field formid="cvn" label="creditcard.cvnlabel" type="string" mandatory="true" min-length="0" masked="0"
+		missing-error="creditcard.cvnmissingerror" value-error="creditcard.cvnrangeerror"/>
+
+	<!-- field for UUID of selected card --> 
+	<field formid="uuid" label="" type="string" mandatory="false" masked="0" missing-error="" value-error=""/> 
+	<!-- HiPay custom code - end -->
  
 	<!-- optional flags -->
 	<field formid="saveCard" label="creditcard.savecard" type="boolean" mandatory="false" default-value="true" />

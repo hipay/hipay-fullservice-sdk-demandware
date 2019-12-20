@@ -150,11 +150,13 @@
 									var isInWishList = false;
 									if (pdict.WishList) {
 										var wishListItems =	pdict.WishList.items;
-										var wishListItemsSize = wishListItems.size();
-										for each( var wishListItem in wishListItems ) {
-											if (lineItem.productID	== wishListItem.product.ID) {
-												isInWishList = true;
-												break;
+										if (wishListItems) { 
+											var wishListItemsSize = wishListItems.size();
+											for each( var wishListItem in wishListItems ) {
+												if (lineItem.productID	== wishListItem.product.ID) {
+													isInWishList = true;
+													break;
+												}
 											}
 										}
 									}

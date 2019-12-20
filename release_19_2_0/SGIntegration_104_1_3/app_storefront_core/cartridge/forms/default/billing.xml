@@ -34,14 +34,22 @@
 	<!-- form for handling payment method selection -->	
 	<group formid="paymentMethods">
 		
-		<!-- 
-			the selected payment method, e.g. "CREDIT_CARD" or "PayPal", this field is
-			used to transport the payment method selection; validations then can be 
-			made on the proper form group which defines the actual payment method attributes
-		-->	
-		<field formid="selectedPaymentMethodID" type="string" default-value="CREDIT_CARD">
-			<options optionid-binding="ID" value-binding="ID" label-binding="name"/>
-		</field>
+    <!-- HiPay custom code - start --> 
+    <!--  
+    the selected payment method, e.g. "CREDIT_CARD" or "PayPal", this field is 
+    used to transport the payment method selection; validations then can be  
+    made on the proper form group which defines the actual payment method attributes 
+    -->  
+    <field formid="selectedPaymentMethodID" type="string" default-value="HIPAY_CREDIT_CARD"> 
+        <options optionid-binding="ID" value-binding="ID" label-binding="name"/> 
+    </field> 
+ 
+    <!-- HiPay fingerprint -->  
+    <field formid="deviceFingerprint" type="string" /> 
+ 
+    <!-- HiPay browserInfo --> 
+    <field formid="browserInfo" type="string" /> 
+    <!-- HiPay custom code – end -->
 	
 		<!-- list of available credit cards to select from -->
 		<list formid="creditCardList">
@@ -57,6 +65,11 @@
 		
 		<!-- fields for BML selection -->
 		<include formid="bml" name="bml"/>
+
+		<!-- HiPay custom code - start --> 
+		<!-- fields for HiPay custom payment methods selection --> 
+		<include formid="hipaymethods" name="hipaymethods"/>
+		<!-- HiPay custom code – end -->
 	
 	</group>
 	<field formid="couponCode" label="billingcoupon.couponenter" type="string" mandatory="false" missing-error="billingcoupon.couponinvalid" value-error="billingcoupon.couponinvalid" />

@@ -86,20 +86,27 @@ module.exports = function (pdict) {
 
 	rowClass = pdict.rowclass ? pdict.rowclass : '';
 
+	/* HiPay custom code – start */ 
 	/*
 	 if it is a phone, country field then add these as css class names as well
 	 so that client side validation can work
 	 please note this is kind of hack (to hard code ids) to avoid mass changes in the templates wherever phone/country is used
 	*/
-	if (pdict.formfield.formId === 'phone' || pdict.formfield.formId === 'country') {
+	if (pdict.formfield.formId === 'phone' || pdict.formfield.formId === 'country' || pdict.formfield.formId === 'cvn') {
 		fieldClass += pdict.formfield.formId;
 	}
+	/* HiPay custom code – end */ 
 
 	// required
 	// pdict.required override pdict.formfield.mandatory
 	if (pdict.required !== undefined && pdict.required !== null) {
 		required = pdict.required;
 	}
+	/* HiPay custom code – start */
+	if (rowClass == 'cvn optional') { 
+		required = false;
+	} 
+	/* HiPay custom code – end */ 
 	if (required) {
 		fieldClass += ' required';
 		rowClass += ' required';
@@ -107,7 +114,11 @@ module.exports = function (pdict) {
 
 	// validation
 	if (!pdict.formfield.valid) {
-		rowClass += ' error';
+		/* HiPay custom code – start */ 
+		if (rowClass != 'cvn optional') { 
+			rowClass += ' error';
+		}
+		/* HiPay custom code – end */
 	}
 
 	// label
@@ -184,6 +195,11 @@ module.exports = function (pdict) {
 	// caption - error message or description
 	var hasError = !!pdict.formfield.error;
 	var message = '';
+	/* HiPay custom code – start */ 
+	if (hasError && rowClass == 'cvn optional') { 
+		hasError = false; 
+	} 
+	/* HiPay custom code – end */ 
 	if (hasError) {
 		message = Resource.msg(pdict.formfield.error, 'forms', null);
 	} else if (pdict.formfield.description) {

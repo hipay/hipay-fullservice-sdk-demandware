@@ -20,6 +20,9 @@ var StringUtils = require('dw/util/StringUtils');
 var Transaction = require('dw/system/Transaction');
 var URLUtils = require('dw/web/URLUtils');
 var Countries = require('app_storefront_core/cartridge/scripts/util/Countries');
+/* HiPay custom code - start */
+var sitePrefs = require('dw/system/Site').getCurrent().getPreferences().getCustom();
+/* HiPay custom code - end */
 
 /* Script Modules */
 var app = require('~/cartridge/scripts/app');
@@ -150,16 +153,25 @@ function initCreditCardList(cart) {
     applicableCreditCards = null;
 
     if (customer.authenticated) {
-        var profile = app.getModel('Profile').get();
-        if (profile) {
-            applicableCreditCards = profile.validateWalletPaymentInstruments(countryCode, paymentAmount.getValue()).ValidPaymentInstruments;
+        /* HiPay custom code - start */ 
+        if (!empty(sitePrefs.hipayEnabled) && sitePrefs.hipayEnabled && !empty(sitePrefs.hipayEnableOneClick) && sitePrefs.hipayEnableOneClick) { /* if hipay and one click payment enabled */
+    		applicableCreditCards = require('int_hipay_controllers/cartridge/scripts/lib/hipay/HiPayCheckoutModule').getApplicableCreditCards(countryCode, paymentAmount.getValue()).ValidPaymentInstruments;
+    	} else {
+            var profile = app.getModel('Profile').get();
+            if (profile) {
+                applicableCreditCards = profile.validateWalletPaymentInstruments(countryCode, paymentAmount.getValue()).ValidPaymentInstruments;
+            }
         }
+        /* HiPay custom code - end */ 
     }
 
+    /* HiPay custom code - start */  
     return {
         ApplicablePaymentMethods: applicablePaymentMethods,
-        ApplicableCreditCards: applicableCreditCards
+        ApplicableCreditCards: applicableCreditCards,
+        ApplicablePaymentCards: applicablePaymentCards
     };
+    /* HiPay custom code - end */  
 }
 
 /**
@@ -188,7 +200,9 @@ function publicStart() {
         app.getForm('billing.couponCode').clear();
         app.getForm('billing.giftCertCode').clear();
 
-        start(cart, {ApplicableCreditCards: creditCardList.ApplicableCreditCards});
+        /* HiPay custom code - start */ 
+        start(cart, {ApplicableCreditCards: creditCardList.ApplicableCreditCards, ApplicablePaymentCards: creditCardList.ApplicablePaymentCards});
+        /* HiPay custom code - end */ 
     } else {
         app.getController('Cart').Show();
     }
@@ -342,6 +356,11 @@ function updateCreditCardSelection() {
  * method is bml and the ssn cannot be validated.
  */
 function resetPaymentForms() {
+    /* HiPay custom code - start */ 
+    if (!empty(sitePrefs.hipayEnabled) && sitePrefs.hipayEnabled) {
+        return require('int_hipay_controllers/cartridge/scripts/lib/hipay/HiPayCheckoutModule').resetPaymentForms();
+    }
+    /* HiPay custom code - end */ 
 
     var cart = app.getModel('Cart').get();
 
@@ -378,6 +397,12 @@ function resetPaymentForms() {
  * @returns {boolean} Returns true if the billing address is valid or no payment is needed. Returns false if the billing form is invalid.
  */
 function validateBilling() {
+    /* HiPay custom code - start */ 
+    if (!empty(sitePrefs.hipayEnabled) && sitePrefs.hipayEnabled) {
+        return require('int_hipay_controllers/cartridge/scripts/lib/hipay/HiPayCheckoutModule').validateBilling();
+    }
+    /* HiPay custom code - end */ 
+    
     if (!app.getForm('billing').object.billingAddress.valid) {
         return false;
     }
@@ -775,6 +800,12 @@ function validatePayment(cart) {
  */
 function saveCreditCard() {
     var i, creditCards, newCreditCard;
+
+    /* HiPay custom code - start */
+    if (!empty(sitePrefs.hipayEnabled) && sitePrefs.hipayEnabled && !empty(sitePrefs.hipayEnableOneClick) && sitePrefs.hipayEnableOneClick) {
+        return require('int_hipay_controllers/cartridge/scripts/lib/hipay/HiPayCheckoutModule').validateBilling();
+    }
+    /* HiPay custom code - end */
 
     if (customer.authenticated && app.getForm('billing').object.paymentMethods.creditCard.saveCard.value) {
         creditCards = customer.getProfile().getWallet().getPaymentInstruments(PaymentInstrument.METHOD_CREDIT_CARD);

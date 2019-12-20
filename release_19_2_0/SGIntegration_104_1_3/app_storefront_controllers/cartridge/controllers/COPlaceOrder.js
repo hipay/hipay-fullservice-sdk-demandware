@@ -15,10 +15,17 @@ var OrderMgr = require('dw/order/OrderMgr');
 var PaymentMgr = require('dw/order/PaymentMgr');
 var Status = require('dw/system/Status');
 var Transaction = require('dw/system/Transaction');
+/* HiPay custom code - start */ 
+var sitePrefs = require('dw/system/Site').getCurrent().getPreferences().getCustom(); 
+var Logger = require('dw/system/Logger'); 
+/* HiPay custom code – end */ 
 
 /* Script Modules */
 var app = require('~/cartridge/scripts/app');
 var guard = require('~/cartridge/scripts/guard');
+/* HiPay custom code - start */ 
+var Helpers = require('~/cartridge/scripts/util/Helpers'); 
+/* HiPay custom code – end */
 
 var Cart = app.getModel('Cart');
 var Order = app.getModel('Order');
@@ -69,6 +76,14 @@ function handlePayments(order) {
                         error: true
                     };
                 }
+
+                /* HiPay custom code - start */ 
+                if (!empty(sitePrefs.hipayEnabled) && sitePrefs.hipayEnabled && authorizationResult.authorized) {
+                    return {
+                        authorized : true
+                    }
+                }
+                /* HiPay custom code - end */ 
             }
         }
     }
@@ -111,6 +126,27 @@ function start() {
     Transaction.wrap(function () {
         cart.calculate();
     });
+
+    /* HiPay custom code - start */
+    // If Card not exist in the list of PaymentInstruments : Incrementing the attempts (Create Custom Object for attempts)  
+    var incrementAttempt = session.custom['saveCardChecked'];
+    var varCustomer = cart.getCustomer();  
+    if (varCustomer.isAuthenticated() && varCustomer.isRegistered() && incrementAttempt) {   
+        var params = {
+            objName: 'SaveOneclick',
+            data: { 
+                customerNo: cart.getCustomerNo(),
+                attemptDate: new Date()
+                }
+        };
+        var result = Helpers.writeToCustomObject(params); 
+        if (result === 'ERROR') {
+            Logger.error('writeToCustomObject : Fail to add the custom object : ' + params.objName);
+        } else {
+            Logger.info('writeToCustomObject : Record added for custom object : ' + params.objName);
+        }
+    }
+    /* HiPay custom code - end */
 
     var COBilling = app.getController('COBilling');
 
@@ -171,11 +207,28 @@ function start() {
         });
     }
 
-    var orderPlacementStatus = Order.submit(order);
-    if (!orderPlacementStatus.error) {
-        clearForms();
+    /* HiPay custom code - start */
+    if (!empty(sitePrefs.hipayEnabled) && sitePrefs.hipayEnabled) {
+        if (handlePaymentsResult.authorized) {
+            var orderPlacementStatus = Order.submit(order);
+            if (!orderPlacementStatus.error) {
+                clearForms();
+            }
+            return orderPlacementStatus;
+        } else {
+            return {
+                Order: order,
+                order_created: false
+            };
+        }
+    } else {
+        var orderPlacementStatus = Order.submit(order);
+        if (!orderPlacementStatus.error) {
+            clearForms();
+        }
+        return orderPlacementStatus;
     }
-    return orderPlacementStatus;
+    /* HiPay custom code - end */
 }
 
 function clearForms() {

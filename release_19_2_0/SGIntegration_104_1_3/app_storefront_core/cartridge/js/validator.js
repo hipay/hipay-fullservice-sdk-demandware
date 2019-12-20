@@ -63,6 +63,34 @@ var validateOwner = function (value) {
     return isValid;
 };
 
+/* HiPay custom code – start */ 
+var validateCVC = function (value, el) {
+	var selectedCard = $(el).closest('form').find('select[id$="creditCard_type"]').find(":selected").text();
+
+    if (selectedCard == 'MasterCard' || selectedCard == 'Carte Bancaire' || selectedCard == 'Visa') {
+        if (value.length == 3) {
+            return true;
+        } else {
+            return false;
+        }
+    } else if (selectedCard == 'American Express') {
+        if (value.length == 4) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return true;
+    }
+};
+
+/**
+ * Add cvc validation method to jQuery validation plugin.
+ * Text fields must have 'cvn' css class to be validated as cvn
+ */
+$.validator.addMethod('cvn', validateCVC, Resources.VALIDATE_RANGELENGTH);
+/* HiPay custom code - end */ 
+
 /**
  * Add phone validation method to jQuery validation plugin.
  * Text fields must have 'phone' css class to be validated as phone

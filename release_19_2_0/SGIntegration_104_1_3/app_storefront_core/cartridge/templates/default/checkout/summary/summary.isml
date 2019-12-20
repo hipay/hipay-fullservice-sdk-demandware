@@ -16,9 +16,32 @@
 		<ischeckoutprogressindicator step="4" multishipping="true" rendershipping="${pdict.Basket.productLineItems.size() == 0 ? 'false' : 'true'}"/>
 	</isif>
 
-	<isif condition="${pdict.PlaceOrderError != null}">
-		<div class="error-form">${Resource.msg(pdict.PlaceOrderError.code,'checkout',null)}</div>
-	</isif>
+    <iscomment> HiPay custom code – start </iscomment> 
+    <isset name="hipayEnabled" value="${dw.system.Site.getCurrent().getCustomPreferenceValue('hipayEnabled')}" scope="page"/> 
+    <isif condition="${hipayEnabled}" > 
+        <isscript> 
+            var paymentStatus = null; 
+            if ( pdict.CurrentHttpParameterMap.status != null ) { 
+                paymentStatus = pdict.CurrentHttpParameterMap.status.stringValue; 
+            } 
+        </isscript> 
+        <isif condition="${pdict.PlaceOrderError != null || paymentStatus != null}"> 
+            <isif condition="${paymentStatus === 'cancel'}"> 
+                <div class="error-form">${dw.web.Resource.msg('hipay.paymant.cancel', 'hipay', null)}</div> 
+            <iselseif condition="${paymentStatus === 'decline'}">  
+                <div class="error-form">${dw.web.Resource.msg('hipay.payment.decline', 'hipay', null)}</div> 
+            <iselseif condition="${paymentStatus === 'error'}">  
+                <div class="error-form">${dw.web.Resource.msg('hipay.payment.error', 'hipay', null)}</div> 
+            <iselse> 
+                <div class="error-form">${dw.web.Resource.msg(pdict.PlaceOrderError.code,'checkout',null)}</div> 
+            </isif> 
+        </isif> 
+    <iselse/> 
+        <isif condition="${pdict.PlaceOrderError != null}"> 
+            <div class="error-form">${Resource.msg(pdict.PlaceOrderError.code,'checkout',null)}</div> 
+        </isif> 
+    </isif> 
+    <iscomment> HiPay custom code – end </iscomment> 
 
 		<table class="item-list" id="cart-table" cellspacing="0">
 

@@ -13,6 +13,9 @@ var PaymentStatusCodes = require('dw/order/PaymentStatusCodes');
 var Status = require('dw/system/Status');
 var Transaction = require('dw/system/Transaction');
 var URLUtils = require('dw/web/URLUtils');
+/* HiPay custom code - start */ 
+var sitePrefs = require('dw/system/Site').getCurrent().getPreferences().getCustom(); 
+/* HiPay custom code - end */ 
 
 /* Script Modules */
 var app = require('~/cartridge/scripts/app');
@@ -29,7 +32,13 @@ var guard = require('~/cartridge/scripts/guard');
  */
 function list() {
     var wallet = customer.getProfile().getWallet();
-    var paymentInstruments = wallet.getPaymentInstruments(dw.order.PaymentInstrument.METHOD_CREDIT_CARD);
+    /* HiPay custom code - start */
+    if (!empty(sitePrefs.hipayEnabled) && sitePrefs.hipayEnabled && !empty(sitePrefs.hipayEnableOneClick) && sitePrefs.hipayEnableOneClick) {
+        var paymentInstruments = wallet.getPaymentInstruments('HIPAY_CREDIT_CARD');
+    } else {
+        var paymentInstruments = wallet.getPaymentInstruments(dw.order.PaymentInstrument.METHOD_CREDIT_CARD);
+    }
+    /* HiPay custom code - end */ 
     var pageMeta = require('~/cartridge/scripts/meta');
     var paymentForm = app.getForm('paymentinstruments');
 

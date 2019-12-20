@@ -207,6 +207,8 @@ ResourceHelper.getUrls = function(pageContext) {
     };
     return urls;
 }
+
+/* HiPay custom code – start */
 /**
  * Get the client-side preferences of a given page
  * @returns {Object} An objects key key-value pairs holding the preferences
@@ -220,9 +222,13 @@ ResourceHelper.getPreferences = function(pageContext) {
         STORE_PICKUP: Site.getCurrent().getCustomPreferenceValue('enableStorePickUp'),
         COOKIE_HINT: (cookieHintAsset && cookieHintAsset.online) || false,
         CONSENT_TRACKING_HINT: (consentTrackingHintAsset && consentTrackingHintAsset.online) || false,
-        CHECK_TLS: Site.getCurrent().getCustomPreferenceValue('checkTLS')
+        CHECK_TLS: Site.getCurrent().getCustomPreferenceValue('checkTLS'),
+        HIPAY_ENABLED: Site.getCurrent().getCustomPreferenceValue('hipayEnabled'),
+        HIPAY_ENABLE_ONECLICK: Site.getCurrent().getCustomPreferenceValue('hipayEnableOneClick')
     };
 }
+/* HiPay custom code – end */
+
 /**
  * Get the client-side preferences of a given page
  * @returns {Object} An objects key key-value pairs holding the preferences

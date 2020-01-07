@@ -9,7 +9,7 @@
     "uploadCartridge": "sgmf-scripts --uploadCartridge int_hipay_sfra",
     "compile:js": "sgmf-scripts --compile js",
     "compile:scss": "sgmf-scripts --compile css",
-    "test": "sgmf-scripts --test './test/unit/**/*.test.js'"
+    "test": "sgmf-scripts --test './test/unit/int_hipay_sfra/**/*.js'"
   },
   "repository": {},
   "license": "ISC",

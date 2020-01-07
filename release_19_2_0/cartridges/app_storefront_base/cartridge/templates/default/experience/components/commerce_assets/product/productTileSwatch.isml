@@ -1,0 +1,35 @@
+<div class="color-swatches">
+    <ul class="swatches-ul">
+        <isif condition="${product.variationAttributes && product.variationAttributes.length > 0}">
+            <isloop items="${product.variationAttributes[0].values}" var="swatch" status="loopState">
+                <isif condition="${loopState.count < 6
+                                && swatch.images != null
+                                && swatch.images.swatch[0] != null
+                                && swatch.images.swatch[0].url != null}">
+                    <li class="swatch-li">
+                        <button class="swatch-button-li" 
+                                style="background-image: url(${swatch.images.swatch[0].url}); 
+                                background-position:0px;background-color:transparent;"
+                        >
+                            <span class="sr-only selected-assistive-text">
+                                ${swatch.images.swatch[0].alt}
+                            </span>
+                        </button>
+                    </li>
+                <iselse/>
+                    <li class="more-swatches-li">
+                        <span class="more-swatches"> 5+ </span>
+                    </li>
+
+                    <isbreak>
+                </isif>
+            </isloop>
+            
+            <isif condition="${product.variationAttributes[0].values.length > 3}">
+                <li class="more-swatches-li-sm">
+                    <span class="more-swatches-sm"> 3+ </span>
+                </li>
+            </isif>
+        </isif>
+    </ul>
+</div>

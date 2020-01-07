@@ -1,0 +1,21 @@
+<ul class="values content">
+    <isloop items="${refinement.values}" var="refinementValue">
+        <li class="col-sm-4 col-md-12">
+            <button data-href="${refinementValue.url}">
+                <isif condition="${refinementValue.selected}">
+                    <i class="fa fa-check-circle"></i>
+                <iselse>
+                    <i class="fa fa-circle-o"></i>
+                </isif>
+
+                <span aria-hidden="true">
+                    ${refinementValue.displayValue}
+                </span>
+                <span class="sr-only selected-assistive-text">
+                    ${refinementValue.selected ? Resource.msg('msg.assistive.selected.text', 'common', null) : ''}
+                    ${refinementValue.title}
+                </span>
+            </button>
+        </li>
+    </isloop>
+</ul>

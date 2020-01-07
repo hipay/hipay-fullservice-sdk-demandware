@@ -1,0 +1,67 @@
+<isscript>
+    var assets = require('*/cartridge/scripts/assets.js');
+    assets.addCss('/css/component.css');
+    assets.addCss('/css/experience/components/commerceAssets/productTile.css');
+    assets.addCss('/css/experience/components/commerceLayouts/carousel.css');
+    assets.addCss('/css/experience/components/einstein/einsteinCarousel.css');
+
+    assets.addJs('/js/einsteinCarousel.js');
+    assets.addJs('/js/carousel.js');
+</isscript>
+
+<isif condition="${pdict.textHeadline}">
+    <div class="row">
+        <div class="col-12">
+            <h3 class="text-center carousel-title">${pdict.textHeadline}</h3>
+        </div>
+    </div>
+</isif>
+
+<div class="experience-einstein-carousel experience-einstein-carouselCategory experience-einstein-carouselProduct">
+    <div id="${pdict.id}"
+        class="carousel einstein-carousel hide-indicators slide carousel-xs-${pdict.slidesToDisplay.xs}
+            carousel-sm-${pdict.slidesToDisplay.sm} carousel-md-${pdict.slidesToDisplay.md}
+            ${pdict.displayIndicators.xs} ${pdict.displayIndicators.sm} ${pdict.displayIndicators.md}
+            ${pdict.displayControls.xs} ${pdict.displayControls.sm} ${pdict.displayControls.md}
+            ${pdict.insufficientNumberOfSlides.xs} ${pdict.insufficientNumberOfSlides.sm} ${pdict.insufficientNumberOfSlides.md}"
+        data-keyboard="true"
+        data-interval="false"
+        data-number-of-slides="<isprint value="${pdict.limit-1}" formatter="#" />"
+        data-sm="${pdict.slidesToDisplay.sm}"
+		data-xs="${pdict.slidesToDisplay.xs}"
+		data-md="${pdict.slidesToDisplay.md}"
+		data-bssm="${pdict.slidesToDisplay.sizeSmall}"
+		data-bsxs="${pdict.slidesToDisplay.sizeExtraSmall}"
+		data-bsmd="${pdict.slidesToDisplay.sizeMedium}"
+		data-recommender="${pdict.recommender}"
+		data-template="commerce_assets/product/productTileWrapper"
+		data-swatches=${pdict.swatches}
+		data-displayratings=${pdict.displayRatings}
+		data-product-load-url="${pdict.productLoadUrl}"
+		data-primary-product-id="${pdict.primaryProductId}"
+		data-secondary-product-id="${pdict.secondaryProductId}"
+		data-alternative-group-type="${pdict.alternativeGroupType}"
+		data-alternative-group-id="${pdict.alternativeGroupId}"
+		data-limit="${pdict.limit}"
+		data-category-id="${pdict.categoryId}">
+
+        <div class="carousel-inner row"></div>
+
+        <ol class="pd-carousel-indicators"></ol>
+
+        <ol class="hidden-indicators-template">
+            <li class="active"></li>
+        </ol>
+
+        <a class="carousel-control-prev" href="${'#' + pdict.id}" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+
+        <a class="carousel-control-next" href="${'#' + pdict.id}" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+
+    </div>
+</div>

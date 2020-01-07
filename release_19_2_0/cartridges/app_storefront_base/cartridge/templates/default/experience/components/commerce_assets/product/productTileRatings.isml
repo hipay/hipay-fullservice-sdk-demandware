@@ -1,0 +1,20 @@
+<div class="row product-ratings">
+    <div class="ratings col-xs-12 col-sm-6">
+        <span class="sr-only">${Resource.msgf('label.product.ratings', 'common', null, product.rating)}</span>
+
+        <isloop items="${[1, 2, 3, 4, 5]}" var="star">
+            <i class="fa
+                <isif condition="${product.rating >= star}">
+                    fa-star
+                <iselseif condition="${(product.rating % 1 > 0) && (Math.ceil(product.rating) >= star)}">
+                    fa-star-half-o
+                <iselse>
+                    fa-star-o
+                </isif>
+                " aria-hidden="true">
+            </i>
+        </isloop>
+
+        <span class="rating-number"> ${product.rating} </span>
+    </div>
+</div>

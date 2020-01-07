@@ -1,0 +1,17 @@
+<isscript>
+    var assets = require('*/cartridge/scripts/assets.js');
+</isscript>
+<div class="container popular-categories">
+    <isscript>
+        var categoryRegion = pdict.regions.categories;
+        categoryRegion.setComponentClassName("col-md-2 col-4 popular-category");
+    </isscript>
+
+    <isif condition="${pdict.textHeadline}">
+        <div class="popular-cat-heading">
+            <h3>${pdict.textHeadline}</h3>
+        </div>
+    </isif>
+
+    <isprint value="${pdict.regions.categories.setClassName("row d-flex justify-content-center").render()}" encoding="off"/>
+</div>

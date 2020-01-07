@@ -1,0 +1,19 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+
+<div class="storepage" id="${pdict.page.ID}">
+
+    <isdecorate template="common/layout/pdStorePage">
+        <isscript>
+            var assets = require('*/cartridge/scripts/assets.js');
+            assets.addCss('/css/experience/storePage.css');
+        </isscript>
+
+        <div class="storepage">
+            <div class="container">
+                <div class="row">
+                    <isprint value="${pdict.regions.main.setClassName("col-12").render()}" encoding="off"/>
+                </div>
+            </div>
+        </div>
+    </isdecorate>
+</div>

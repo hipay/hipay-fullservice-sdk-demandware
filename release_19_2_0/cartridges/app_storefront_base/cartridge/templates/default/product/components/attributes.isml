@@ -1,0 +1,31 @@
+<isif condition="${product.attributes && product.attributes.length}">
+    <div class="col-sm-12 col-md-4 col-lg-3">
+        <button class="title btn text-left btn-block d-sm-none"
+                aria-expanded="false" aria-controls="collapsible-attributes-${loopState && loopState.count ? loopState.count : '1' }"
+        >
+            ${Resource.msg('label.attributes', 'product', null)}
+        </button>
+        <h2 class="title d-none d-sm-block">
+            ${Resource.msg('label.attributes', 'product', null)}
+        </h2>
+    </div>
+    <div class="col-sm-12 col-md-8 col-lg-9 value content" id="collapsible-attributes-${loopState && loopState.count ? loopState.count : '1' }">
+        <isloop items="${product.attributes}" var="attrGroup">
+            <isif condition="${attrGroup.ID !== 'mainAttributes'}">
+                <h3 class="attribute-name">
+                    ${attrGroup.name}
+                </h3>
+                <ul>
+                    <isloop items="${attrGroup.attributes}" var="attr">
+                        <li class="attribute-values">
+                            ${attr.label}:
+                            <isloop items="${attr.value}" var="value">
+                                ${value}
+                            </isloop>
+                        </li>
+                    </isloop>
+                </ul>
+            </isif>
+        </isloop>
+    </div>
+</isif>

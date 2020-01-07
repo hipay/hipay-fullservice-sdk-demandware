@@ -1,0 +1,54 @@
+<isscript>
+    var assets = require('*/cartridge/scripts/assets.js');
+    assets.addCss('/css/experience/components/commerceAssets/popularCategory.css');
+</isscript>
+
+<div class="image-cropper">
+    <a href="${pdict.category.url}">
+        <isif condition="${pdict.image}">
+            <style >
+                .image-wrapper-${pdict.category.compID} span {
+                    background-image: url('${pdict.image.src.mobile}');
+                    background-position-x: ${pdict.image.focalPointX};
+                    background-position-y: ${pdict.image.focalPointY};
+                }
+                @media (min-width: 768px) {
+                    .image-wrapper-${pdict.category.compID} span {
+                        background-image: url('${pdict.image.src.tablet}');
+                        background-position-x: ${pdict.image.focalPointX};
+                        background-position-y: ${pdict.image.focalPointY};
+                    }
+                }
+                @media (min-width: 992px) {
+                    .image-wrapper-${pdict.category.compID} span {
+                        background-image: url('${pdict.image.src.desktop}');
+                        background-position-x: ${pdict.image.focalPointX};
+                         background-position-y: ${pdict.image.focalPointY};
+                        }
+                    }
+            </style>
+            <div class="image-wrapper-${pdict.category.compID} image-wrapper">
+                <span class="background-image" role="img" aria-label="${pdict.category.name}"> </span>
+            </div>
+        <iselse>
+            <div class="image-wrapper"
+                <isif condition="${pdict.category.imageURL}">
+                    style="background-image: url(${pdict.category.imageURL});
+                    <isif condition="${pdict.category.imagesize}">
+                        background-size: ${pdict.category.imagesize};
+                    </isif>
+                    <isif condition="${pdict.category.offset}">
+                        background-position: ${pdict.category.offset};
+                    </isif>
+                    "
+                </isif>
+            >
+                <span class="background-image" role="img" aria-label="${pdict.category.name}"></span>
+            </div>
+
+        </isif>
+    </a>
+</div>
+<div class="popular-category-link">
+    <a href="${pdict.category.url}" class="popular-category-label-a popular-cat-link">${pdict.category.name}</a>
+</div>

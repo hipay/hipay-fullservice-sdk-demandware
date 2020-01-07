@@ -1,0 +1,11 @@
+<isscript>
+    var assets = require('*/cartridge/scripts/assets.js');
+</isscript>
+<div class="editorialRichText-component-container">
+    <div class="row">
+        <div class="col-12 align-self-center text-center text-lg-left">
+            <isprint value="${pdict.richText}" encoding="off"/>
+        </div>
+    </div>
+</div>
+

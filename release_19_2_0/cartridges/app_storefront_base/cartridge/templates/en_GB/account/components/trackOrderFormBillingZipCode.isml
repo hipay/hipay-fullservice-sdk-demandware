@@ -1,0 +1,16 @@
+<div class="form-group required">
+    <label class="form-control-label" for="trackorder-form-zip">
+        ${Resource.msg('label.input.trackorder.postalcode', 'login', null)}
+    </label>
+    <input
+        type="text"
+        required
+        class="form-control"
+        id="trackorder-form-zip"
+        aria-describedby="form-zipcode-error"
+        name="trackOrderPostal"
+        pattern="(^([A-PR-UWYZ0-9][A-HK-Y0-9][AEHMNPRTVXY0-9]?[ABEHMNPRVWXY0-9]? {1,2}[0-9][ABD-HJLN-UW-Z]{2}|GIR 0AA)$)">
+    <div class="invalid-feedback" id="form-zipcode-error"></div>
+</div>
+
+      

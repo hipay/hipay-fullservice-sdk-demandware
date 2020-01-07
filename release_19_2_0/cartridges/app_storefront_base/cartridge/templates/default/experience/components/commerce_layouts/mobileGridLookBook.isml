@@ -1,0 +1,35 @@
+<isscript>
+    var assets = require('*/cartridge/scripts/assets.js');
+    assets.addCss('/css/experience/components/commerceLayouts/layout.css');
+    assets.addCss('/css/experience/components/commerceLayouts/mobileGridLookBook.css');
+    assets.addJs('/js/mobileGridLookBook.js');
+</isscript>
+
+<div class="look-book-layout">
+    <div class="row look-book-set1">
+        <isprint value="${pdict.regions.column1.setClassName("col-12 col-lg-8 cell1").render()}" encoding="off"/>
+        <div class="col-12 col-lg-4">
+             <div class="row">
+                <isprint value="${pdict.regions.column2.setClassName("col-6 col-lg-12 cell2").render()}" encoding="off"/>
+                <isprint value="${pdict.regions.column3.setClassName("col-6 col-lg-12").render()}" encoding="off"/>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="show-more">
+        <button type="button" class="show-more-button">
+            <span class="show-more-text"> ${Resource.msg('button.name.show.more', 'mobileGridLookBook', null)} </span>
+        </button>
+    </div>
+
+    <div class="row look-book-set2 hide-set">
+        <isprint value="${pdict.regions.column4.setClassName("col-12 col-lg-4 cell4").render()}" encoding="off"/>
+
+        <div class="col-12 col-lg-8">
+            <div class="row">
+                <isprint value="${pdict.regions.column5.setClassName("col-6").render()}" encoding="off"/>
+                <isprint value="${pdict.regions.column6.setClassName("col-6").render()}" encoding="off"/>
+            </div>
+        </div>
+    </div>
+</div>

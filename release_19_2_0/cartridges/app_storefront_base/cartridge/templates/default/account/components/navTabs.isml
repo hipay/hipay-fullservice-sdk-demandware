@@ -1,0 +1,24 @@
+<ul class="nav nav-tabs nav-fill" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a
+            <isif condition="${pdict.navTabValue === 'login'}">
+                class="nav-link active"
+            <iselse>
+                class="nav-link"
+            </isif>
+            href="#login" data-toggle="tab" role="tab" aria-controls="login" aria-selected="true" tabindex="0" id="login-tab">
+            ${Resource.msg('link.header.login.module', 'login', null)}
+         </a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a
+            <isif condition="${pdict.navTabValue === 'register'}">
+                class="nav-link active"
+            <iselse>
+                class="nav-link"
+            </isif>
+            href="#register" data-toggle="tab" role="tab" aria-controls="register" aria-selected="false" tabindex="-1" id="register-tab">
+            ${Resource.msg('link.header.register.module', 'login', null)}
+         </a>
+    </li>
+</ul>

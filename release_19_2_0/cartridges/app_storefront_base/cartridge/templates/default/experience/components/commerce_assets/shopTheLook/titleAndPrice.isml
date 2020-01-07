@@ -1,0 +1,29 @@
+<figcaption class="shopthelook-heading-container">
+    <!---product title--->
+    <div class="row shopthelook-product-name">
+        <div class="col-12">
+            <p class="product-text-center">
+                <isprint value="${pdict.product.productName}" encoding="off"/>
+            </p>
+        </div>
+    </div>
+    <!---display number of item in a set or price of a regular product--->
+    <isset name="price" value="${pdict.product.price}" scope="page" />
+    <isif condition="${product.productType === 'set'}">
+        <div class="row shopthelook-set-count">
+            <div class="col-12 set-count-text-center">
+                <p>
+                    ${Resource.msgf('pd.shop.the.look.set.items', 'pageDesigner', null, pdict.itemsCount)}
+                </p>
+            </div>
+        </div>
+    <iselse>
+        <isif condition="${pdict.displayPrice}">
+            <div class="row shopthelook-product-price">
+                <div class="col-12 product-price-text-center">
+                    <isinclude template="product/components/pricing/main" />
+                </div>
+            </div>
+        </isif>
+    </isif>
+</figcaption>

@@ -1,0 +1,2 @@
+<a href="#maincontent" class="skip" aria-label="${Resource.msg('global.skiptomain', 'common', null)}">${Resource.msg('global.skiptomain', 'common', null)}</a>
+<a href="#footercontent" class="skip" aria-label="${Resource.msg('global.skiptofooter', 'common', null)}">${Resource.msg('global.skiptofooter', 'common', null)}</a>

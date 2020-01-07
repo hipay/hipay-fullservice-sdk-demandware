@@ -1,0 +1,68 @@
+{
+    "name": "2 Row x 3 Col (Mobile), 1 Row x 6 Col (Desktop)",
+    "description": "This is a layout component of 1 row by 6 column for desktop/tablet and 2 row by 3 column for mobile.",
+    "group": "commerce_layouts",
+    "attribute_definition_groups": [],
+    "region_definitions": [
+        {
+            "id":"column1",
+            "name":"Column 1",
+            "max_components":1,
+            "component_type_exclusions": [
+                { "type_id": "commerce_layouts.mobileGrid3r2c" },
+                { "type_id": "commerce_layouts.carousel" },
+                { "type_id": "commerce_layouts.mobileGridLookBook" }
+            ]
+        },
+        {
+            "id":"column2",
+            "name":"Column 2",
+            "max_components":1,
+            "component_type_exclusions": [
+                { "type_id": "commerce_layouts.mobileGrid3r2c" },
+                { "type_id": "commerce_layouts.carousel" },
+                { "type_id": "commerce_layouts.mobileGridLookBook" }
+            ]
+        },
+        {
+            "id":"column3",
+            "name":"Column 3",
+            "max_components":1,
+            "component_type_exclusions": [
+                { "type_id": "commerce_layouts.mobileGrid3r2c" },
+                { "type_id": "commerce_layouts.carousel" },
+                { "type_id": "commerce_layouts.mobileGridLookBook" }
+            ]
+        },
+        {
+            "id":"column4",
+            "name":"Column 4",
+            "max_components":1,
+            "component_type_exclusions": [
+                { "type_id": "commerce_layouts.mobileGrid3r2c" },
+                { "type_id": "commerce_layouts.carousel" },
+                { "type_id": "commerce_layouts.mobileGridLookBook" }
+            ]
+        },
+        {
+            "id":"column5",
+            "name":"Column 5",
+            "max_components":1,
+            "component_type_exclusions": [
+                { "type_id": "commerce_layouts.mobileGrid3r2c" },
+                { "type_id": "commerce_layouts.carousel" },
+                { "type_id": "commerce_layouts.mobileGridLookBook" }
+            ]
+        },
+        {
+            "id":"column6",
+            "name":"Column 6",
+            "max_components":1,
+            "component_type_exclusions": [
+                { "type_id": "commerce_layouts.mobileGrid3r2c" },
+                { "type_id": "commerce_layouts.carousel" },
+                { "type_id": "commerce_layouts.mobileGridLookBook" }
+            ]
+        }
+    ]
+}

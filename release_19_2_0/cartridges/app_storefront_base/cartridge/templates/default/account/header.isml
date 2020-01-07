@@ -1,0 +1,20 @@
+<isif condition="${pdict.name === null}">
+    <div class="user hidden-md-down">
+        <a href="${URLUtils.https('Login-Show')}" role="button" aria-label="${Resource.msg('label.header.loginbutton', 'account', null)}">
+            <i class="fa fa-sign-in" aria-hidden="true"></i>
+            <span class="user-message">${Resource.msg('link.header.login', 'account', null)}</span>
+        </a>
+    </div>
+<iselse/>
+    <div class="user hidden-md-down nav-item">
+        <a href="${'#'}" id="myaccount" aria-haspopup="true" aria-label="${Resource.msg('link.header.myaccount', 'account', null)}" role="button">
+        	<i class="fa fa-sign-in" aria-hidden="true"></i><span class="user-message btn dropdown-toggle">${pdict.name}</span>
+        </a>
+        <div class="popover popover-bottom">
+        	<ul class="nav" role="menu" aria-label="${Resource.msg('label.profile.myaccountlink', 'account', null)}" aria-hidden="true">
+            	<li class="nav-item" role="presentation"><a href="${URLUtils.https('Account-Show')}" role="menuitem" tabindex="-1">${Resource.msg('link.header.myaccount', 'account', null)}</a></li>
+            	<li class="nav-item" role="presentation"><a href="${URLUtils.url('Login-Logout')}" role="menuitem" tabindex="-1">${Resource.msg('link.header.logout', 'account', null)}</a></li>
+        	</ul>
+        </div>
+    </div>
+</isif>

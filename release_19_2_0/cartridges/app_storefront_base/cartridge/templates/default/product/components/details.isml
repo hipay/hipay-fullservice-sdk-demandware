@@ -1,0 +1,5 @@
+<isif condition="${product.longDescription}">
+    <div class="col-sm-12 col-md-8 col-lg-9 value content" id="collapsible-details-${loopState && loopState.count ? loopState.count : '1'}">
+        <isprint value="${product.longDescription}" encoding="off" />
+    </div>
+</isif>

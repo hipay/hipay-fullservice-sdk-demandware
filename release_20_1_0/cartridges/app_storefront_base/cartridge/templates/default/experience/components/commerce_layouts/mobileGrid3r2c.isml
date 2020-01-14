@@ -1,0 +1,15 @@
+<isscript>
+    var assets = require('*/cartridge/scripts/assets.js');
+    assets.addCss('/css/experience/components/commerceLayouts/layout.css');
+</isscript>
+
+<div class="mobile-3r-2c">
+    <div class="row mx-n2 grid-row">
+        <isprint value="${pdict.regions.column1.setClassName("region grid-col col-6 col-sm-4").render()}" encoding="off"/>
+        <isprint value="${pdict.regions.column2.setClassName("region grid-col col-6 col-sm-4").render()}" encoding="off"/>
+        <isprint value="${pdict.regions.column3.setClassName("region grid-col col-6 col-sm-4").render()}" encoding="off"/>
+        <isprint value="${pdict.regions.column4.setClassName("region grid-col col-6 col-sm-4").render()}" encoding="off"/>
+        <isprint value="${pdict.regions.column5.setClassName("region grid-col col-6 col-sm-4").render()}" encoding="off"/>
+        <isprint value="${pdict.regions.column6.setClassName("region grid-col col-6 col-sm-4").render()}" encoding="off"/>
+    </div>
+</div>

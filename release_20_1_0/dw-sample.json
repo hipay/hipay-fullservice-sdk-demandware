@@ -1,0 +1,7 @@
+{
+  "username": "",
+  "password": "",
+  "hostname": "",
+  "code-version": "",
+  "cartridge": ["bm_hipay_controllers", "int_hipay_controllers", "int_hipay_sfra"]
+}

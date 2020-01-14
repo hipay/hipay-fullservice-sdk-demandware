@@ -1,0 +1,104 @@
+{
+  "name": "Carousel",
+  "group": "commerce_layouts",
+  "attribute_definition_groups": [
+    {
+      "id": "heading",
+      "attribute_definitions": [
+        {
+          "id": "textHeadline",
+          "name": "carousel title",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "extraSmallConfiguration",
+      "name": "Phone configurations",
+      "description": "Configuration for how the carousel will display on phones. Please put like sized items in the carousel",
+      "attribute_definitions": [
+        {
+          "id": "xsCarouselIndicators",
+          "name": "Display carousel indicators on phones",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "id": "xsCarouselControls",
+          "name": "Display carousel controls on phones",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "id": "xsCarouselSlidesToDisplay",
+          "name": "Number of slides to display on phones",
+          "type": "enum",
+          "values": [1, 2, 3],
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "smallConfiguration",
+      "name": "Tablet configurations",
+      "description": "Configuration for how the carousel will display on tablets. Please put like sized items in the carousel",
+      "attribute_definitions": [
+        {
+          "id": "smCarouselIndicators",
+          "name": "Display carousel indicators on tablets",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "id": "smCarouselControls",
+          "name": "Display carousel controls on tablets",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "id": "smCarouselSlidesToDisplay",
+          "name": "Number of slides to display on tablets",
+          "type": "enum",
+          "values": [1, 2, 3, 4, 6],
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "mediumConfiguration",
+      "name": "Desktop configurations",
+      "description": "Configuration for how the carousel will display on desktop. Please put like sized items in the carousel",
+      "attribute_definitions": [
+        {
+          "id": "mdCarouselIndicators",
+          "name": "Display carousel indicators on desktop",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "id": "mdCarouselSlidesToDisplay",
+          "name": "Number of slides to display on desktop",
+          "type": "enum",
+          "values": [1, 2, 3, 4, 6],
+          "required": true
+        }
+      ]
+    }
+  ],
+  "region_definitions": [
+    {
+      "id":"slides",
+      "name":"Slides",
+      "component_type_exclusions": [
+        { "type_id": "commerce_layouts.carousel" },
+        { "type_id": "commerce_layouts.mobileGrid2r3c" },
+        { "type_id": "commerce_layouts.mobileGrid3r2c" },
+        { "type_id": "commerce_layouts.einsteinCarousel" },
+        { "type_id": "commerce_layouts.einsteinCarouselCategory" },
+        { "type_id": "commerce_layouts.einsteinCarouselProduct" },
+        { "type_id": "commerce_layouts.mobileGridLookBook" }
+      ]
+    }
+  ]
+}

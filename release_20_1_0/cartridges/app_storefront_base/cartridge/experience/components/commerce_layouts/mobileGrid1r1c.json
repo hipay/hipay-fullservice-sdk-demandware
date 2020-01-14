@@ -1,0 +1,13 @@
+{
+    "name": "1 Row x 1 Col (Mobile, Desktop)",
+    "description": "This is a layout component of 1 row by 1 column for mobile and desktop/tablet.",
+    "group": "commerce_layouts",
+    "attribute_definition_groups": [],
+    "region_definitions": [
+        {
+            "id":"column1",
+            "name":"Column 1",
+            "component_type_exclusions": []
+        }
+    ]
+}

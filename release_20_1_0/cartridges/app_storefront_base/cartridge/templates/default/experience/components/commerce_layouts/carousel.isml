@@ -1,0 +1,46 @@
+<isscript>
+    var assets = require('*/cartridge/scripts/assets.js');
+    assets.addCss('/css/experience/components/commerceLayouts/carousel.css');
+    assets.addJs('/js/carousel.js');
+</isscript>
+
+<isif condition="${pdict.title}">
+    <div class="row">
+        <div class="col-12">
+            <h3 class="text-center carousel-title">${pdict.title}</h3>
+        </div>
+    </div>
+</isif>
+
+<div id="${pdict.id}"
+     class="carousel slide carousel-xs-${pdict.slidesToDisplay.xs}
+        carousel-sm-${pdict.slidesToDisplay.sm} carousel-md-${pdict.slidesToDisplay.md}
+        ${pdict.displayIndicators.xs} ${pdict.displayIndicators.sm} ${pdict.displayIndicators.md}
+        ${pdict.displayControls.xs} ${pdict.displayControls.sm} ${pdict.displayControls.md}
+        ${pdict.insufficientNumberOfSlides.xs} ${pdict.insufficientNumberOfSlides.sm} ${pdict.insufficientNumberOfSlides.md}"
+     data-keyboard="true"
+     data-interval="false"
+     data-number-of-slides="${pdict.numberOfSlides}"
+     data-sm="${pdict.slidesToDisplay.sm}"
+     data-xs="${pdict.slidesToDisplay.xs}"
+     data-md="${pdict.slidesToDisplay.md}"
+>
+
+    <isprint value="${pdict.regions.slides.render()}" encoding="off"/>
+
+    <ol class="pd-carousel-indicators">
+        <isloop items=${pdict.regions.slides.region.visibleComponents} var="indicator" status="loopState">
+            <li class="${loopState.first ? 'active' : ''}" data-position="${loopState.index}"></li>
+        </isloop>
+    </ol>
+
+    <a class="carousel-control-prev" href="${'#' + pdict.id}" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+
+    <a class="carousel-control-next" href="${'#' + pdict.id}" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>

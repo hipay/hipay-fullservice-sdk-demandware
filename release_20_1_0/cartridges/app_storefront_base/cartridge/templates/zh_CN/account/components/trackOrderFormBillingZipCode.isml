@@ -1,0 +1,15 @@
+<div class="form-group required">
+    <label class="form-control-label" for="trackorder-form-zip">
+        ${Resource.msg('label.input.trackorder.postalcode', 'login', null)}
+    </label>
+    <input
+        type="text"
+        required
+        class="form-control"
+        id="trackorder-form-zip"
+        aria-describedby="form-zipcode-error"
+        name="trackOrderPostal">
+    <div class="invalid-feedback" id="form-zipcode-error"></div>
+</div>
+
+      

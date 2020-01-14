@@ -1,0 +1,389 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscomment> TEMPLATENAME: paymentmethods.isml </iscomment>
+<isinclude template="util/modules"/>
+<isif condition="${pdict.OrderTotal > 0}">
+	<iscomment> HiPay custom code – start </iscomment> 
+	<isset name="hipayEnabled" value="${dw.system.Site.getCurrent().getCustomPreferenceValue('hipayEnabled')}" scope="page"/>
+	<isset name="hipayEnableOneClick" value="${dw.system.Site.getCurrent().getCustomPreferenceValue('hipayEnableOneClick')}" scope="page"/>
+	<iscomment> HiPay custom code – end </iscomment> 
+	<fieldset>
+
+		<legend>
+			${Resource.msg('billing.paymentheader','checkout',null)}
+			<div class="dialog-required"> <span class="required-indicator">&#8226; <em>${Resource.msg('global.requiredfield','locale',null)}</em></span></div>
+		</legend>
+
+        <iscomment> HiPay custom code – start </iscomment> 
+        <isif condition="${hipayEnabled}" > 
+            <link rel="stylesheet" href="${URLUtils.staticURL('/css/hipay.css')}" /> 
+            <isinclude template="checkout/components/devicefingerprint"/> 
+            <isinclude template="checkout/components/sdkjs"/> 
+            <isscript> 
+                var HiPayHelper = require('int_hipay_controllers/cartridge/scripts/lib/hipay/HiPayHelper'), 
+                    helper      = new HiPayHelper(); 
+                var renderOney   = helper.validateOneyAvailability(pdict.Basket); 
+                var applicablePaymentCards = helper.getApplicablePaymentCards(pdict.Basket);  
+                var HiPayConfig = require('int_hipay_controllers/cartridge/scripts/lib/hipay/HiPayConfig').HiPayConfig, 
+                    isHiPayHostedMode = false; 
+                    if (HiPayConfig.hipayOperationMode == HiPayConfig.OPERATION.HOSTED || HiPayConfig.hipayOperationMode == HiPayConfig.OPERATION.IFRAME) { 
+                        isHiPayHostedMode = true; 
+                    } 
+           </isscript> 
+ 
+        <div class="payment-method-options form-indent"> 
+           <isloop items="${pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.options}" var="paymentMethodType"> 
+ 
+                <iscomment>Ignore GIFT_CERTIFICATE method, GCs are handled separately before other payment methods.</iscomment> 
+                <isif condition="${paymentMethodType.value.equals(dw.order.PaymentInstrument.METHOD_GIFT_CERTIFICATE)}"><iscontinue/></isif> 
+                <!--- HIPAY INTEGRATION ------ skip all non-HiPay methods if HiPay is enabled---> 
+                <isif condition="${(paymentMethodType.value.indexOf('HIPAY') == -1)}" ><iscontinue/></isif> 
+                <isif condition="${(paymentMethodType.value.indexOf('HIPAY') > -1)}"> 
+                    <iscomment>Skip HIPAY_ payment methods if is in HOSTED operation mode.</iscomment> 
+                    <isif condition="${isHiPayHostedMode && paymentMethodType.value.indexOf('HIPAY_HOSTED') == -1}"><iscontinue/></isif> 
+                    <iscomment>Skip hosted page payment method if is in API operation mode.</iscomment> 
+                    <isif condition="${!isHiPayHostedMode && paymentMethodType.value.indexOf('HIPAY_HOSTED') > - 1}"> <iscontinue/></isif> 
+                    <iscomment>Skip Oney pay if product and shipping is not configured for it.</iscomment> 
+                <isif condition="${renderOney === false && paymentMethodType.value.indexOf('ONEY_FACILITY_PAY') > - 1}"> <iscontinue/></isif> 
+                </isif> 
+                <div class="form-row label-inline"> 
+                    <isset name="radioID" value="${paymentMethodType.value}" scope="page"/> 
+                    <label for="is-${radioID}"> <isprint value="${Resource.msg(paymentMethodType.label,'forms',null)}"/>  
+                        <isscript>  
+                            var paymentMethod = dw.order.PaymentMgr.getPaymentMethod(paymentMethodType.value),  
+                                hipayProductName = paymentMethod.custom.hipayProductName;  
+ 
+                            if (!empty(hipayProductName)) {  
+                                hipayProductName = hipayProductName.toLowerCase();  
+                            } 
+                        </isscript>  
+                        <isif condition="${!empty(hipayProductName)}">  
+                            <i class="payment-product-sprite-${hipayProductName}"></i>  
+                        </isif> 
+            				</label> 
+                    <div class="field-wrapper"> 
+                        <input id="is-${radioID}" type="radio" class="input-radio" name="${pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.htmlName}" value="${paymentMethodType.htmlValue}" <isif condition="${paymentMethodType.value == pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.htmlValue}">checked="checked"</isif> /> 
+                    </div> 
+                </div> 
+            </isloop> 
+        </div> 
+        <div class="form-row form-row-button"> 
+            <button id="payment-select-go" name="${pdict.CurrentForms.billing.paymentSelect.htmlName}" type="submit" value="Go" class="simple-submit">Select</button> 
+        </div> 
+ 
+        <isif condition="${!empty(pdict.MissingPaymentProcessor)}"> 
+            <div class="billing-error">${Resource.msg('billing.missingprocessorerror','checkout',null)}</div> 
+        </isif> 
+    <iselse/> 
+    <iscomment> HiPay custom code – end </iscomment> 
+
+		<div class="payment-method-options form-indent">
+			<isloop items="${pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.options}" var="paymentMethodType">
+
+        <iscomment> HiPay custom code – start </iscomment> 
+        <!--- HIPAY INTEGRATION ------ skip all HiPay methods if HiPay is disabled --->  
+        <isif condition="${paymentMethodType.value.indexOf('HIPAY') > -1}" ><iscontinue/></isif> 
+				<iscomment> HiPay custom code – end </iscomment>
+
+				<iscomment>Ignore GIFT_CERTIFICATE method, GCs are handled separately before other payment methods.</iscomment>
+				<isif condition="${paymentMethodType.value.equals(dw.order.PaymentInstrument.METHOD_GIFT_CERTIFICATE)}"><iscontinue/></isif>
+
+				<div class="form-row label-inline">
+					<isset name="radioID" value="${paymentMethodType.value}" scope="page"/>
+					<div class="field-wrapper">
+						<input id="is-${radioID}" type="radio" class="input-radio" name="${pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.htmlName}" value="${paymentMethodType.htmlValue}" <isif condition="${paymentMethodType.value == pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.htmlValue}">checked="checked"</isif> />
+					</div>
+					<label for="is-${radioID}"><isprint value="${Resource.msg(paymentMethodType.label,'forms',null)}"/></label>
+				</div>
+
+			</isloop>
+		</div>
+
+		<div class="form-row form-row-button">
+			<button id="payment-select-go" name="${pdict.CurrentForms.billing.paymentSelect.htmlName}" type="submit" value="Go" class="simple-submit">Select</button>
+		</div>
+
+		<isif condition="${!empty(pdict.MissingPaymentProcessor)}">
+			<div class="billing-error">${Resource.msg('billing.missingprocessorerror','checkout',null)}</div>
+		</isif>
+		<iscomment> HiPay custom code – start </iscomment> 
+		</isif>
+
+		<isif condition="${!hipayEnabled}" > 
+		<iscomment> HiPay custom code – end </iscomment> 
+		<iscomment>
+			Credit card block
+			--------------------------------------------------------------
+		</iscomment>
+
+		<div class="payment-method <isif condition="${empty(pdict.selectedPaymentID) || pdict.selectedPaymentID=='CREDIT_CARD'}">payment-method-expanded</isif>" data-method="CREDIT_CARD">
+
+			<iscomment>display select box with stored credit cards if customer is authenticated</iscomment>
+			<isif condition="${pdict.CurrentCustomer.authenticated && !empty(pdict.ApplicableCreditCards)}">
+
+				<div class="form-row">
+					<label class="label">${Resource.msg('billing.selectcreditcard','checkout',null)}</label>
+					<div class="field-wrapper">
+						<select name="${pdict.CurrentForms.billing.paymentMethods.creditCardList.htmlName}" id="creditCardList" class="input-select">
+							<option value="" selected="selected">${Resource.msg('billing.creditcardlistselect','checkout',null)}</option>
+							<isloop items="${pdict.ApplicableCreditCards}" var="creditCardInstr">
+								<option value="${creditCardInstr.UUID}">(<isprint value="${creditCardInstr.creditCardType}"/>) <isprint value="${creditCardInstr.maskedCreditCardNumber}"/> - ${Resource.msg('billing.creditcardlistexp','checkout',null)} <isprint value="${creditCardInstr.creditCardExpirationMonth}" formatter="00" />.<isprint value="${creditCardInstr.creditCardExpirationYear}" formatter="0000" /></option>
+							</isloop>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-row form-row-button">
+					<button id="credit-card-select-go" name="${pdict.CurrentForms.billing.creditCardSelect.htmlName}" type="submit" value="Go" class="simple-submit">Select</button>
+				</div>
+
+				<iscomment>
+					<isloop items="${pdict.ApplicableCreditCards}" var="creditCardInstr">
+						<a href="${URLUtils.https('COBilling-UpdateCreditCardSelection', 'creditCardUUID', creditCardInstr.UUID)}">
+							(<isprint value="${creditCardInstr.creditCardType}"/>)
+							<isprint value="${creditCardInstr.maskedCreditCardNumber}"/>
+							- ${Resource.msg('billing.creditcardlistexp','checkout',null)}
+							<isprint value="${creditCardInstr.creditCardExpirationMonth}" formatter="00" />
+							.<isprint value="${creditCardInstr.creditCardExpirationYear}" formatter="0000" />
+						</a>
+					</isloop>
+				</iscomment>
+
+			</isif>
+
+			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.owner}" type="input"/>
+
+			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.type}" type="select"/>
+
+			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.number}" type="input" dynamicname="true"/>
+
+			<div class="form-row required">
+				<label>
+					<span class="required-indicator">${Resource.msg('billing.requiredindicator','checkout',null)}</span>
+					<span>${Resource.msg('billing.creditcardlistexpdate', 'checkout', null)}</span>
+				</label>
+				<isscript>
+					var currentCountry = require('~/cartridge/scripts/util/Countries').getCurrent(pdict);
+				</isscript>
+
+				<isdynamicform formobject="${pdict.CurrentForms.billing.paymentMethods.creditCard.expiration}" formdata="${currentCountry.dynamicForms.expirationInfo}"/>
+
+			</div>
+
+			<isscript>
+				var help = {
+					label: Resource.msg('billing.linkcvn', 'checkout', null),
+					cid: 'checkout-security-code'
+				};
+			</isscript>
+			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.cvn}" type="input" rowclass="cvn" dynamicname="true" help="${help}"/>
+
+			<isif condition="${pdict.CurrentCustomer.authenticated}">
+				<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.saveCard}" type="checkbox"/>
+			</isif>
+
+		</div>
+
+
+		<iscomment>
+			Bill me later
+			--------------------------------------------------------------
+		</iscomment>
+
+		<div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='BML'}">payment-method-expanded</isif>" data-method="BML">
+
+			<p class="form-caption">${Resource.msg('billing.bmlhelp','checkout',null)}</p>
+
+			<div class="form-label-text"><span class="required-indicator">&#8226;</span>Date of Birth:</div>
+			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.bml.year}" type="select" rowclass="year"/>
+			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.bml.month}" type="select" rowclass="month"/>
+			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.bml.day}" type="select" rowclass="day"/>
+
+			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.bml.ssn}" type="input"/>
+
+			<div class="bml-terms-and-conditions form-caption">
+				<iscontentasset aid="bml-tc"/>
+			</div>
+
+			<div class="form-row form-caption">
+				<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.bml.termsandconditions}" type="checkbox"/>
+			</div>
+
+		</div>
+
+
+		<iscomment>
+			Custom processor
+			--------------------------------------------------------------
+		</iscomment>
+
+		<div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PayPal'}">payment-method-expanded</isif>" data-method="Custom">
+			<!-- Your custom payment method implementation goes here. -->
+			${Resource.msg('billing.custompaymentmethod','checkout',null)}
+		</div>
+
+		<iscomment> HiPay custom code – start </iscomment> 
+		</isif>
+		
+		<isif condition="${hipayEnabled}" >
+        <!--- HIPAY INTEGRATION ------ BEGIN --->
+        <iscomment>
+           HIPAY Credit card
+           --------------------------------------------------------------
+        </iscomment>
+        <div class="payment-method <isif condition="${(empty(pdict.selectedPaymentID) || pdict.selectedPaymentID=='HIPAY_CREDIT_CARD') && isHiPayHostedMode == false }">payment-method-expanded</isif>" data-method="HIPAY_CREDIT_CARD">
+           <iscomment>display select box with stored credit cards if customer is authenticated</iscomment>
+           <isif condition="${pdict.CurrentCustomer.authenticated && !empty(pdict.ApplicableCreditCards) && hipayEnableOneClick}">
+              <div class="form-row">
+                 <label class="label">${Resource.msg('billing.selectcreditcard','checkout',null)}</label>
+                 <div class="field-wrapper">
+                     <select name="${pdict.CurrentForms.billing.paymentMethods.creditCardList.htmlName}" id="creditCardList" class="input-select">
+                        <option value="">${Resource.msg('billing.creditcardlistselect','checkout',null)}</option>
+                        <isloop items="${pdict.ApplicableCreditCards}" var="creditCardInstr">
+                           <option value="${creditCardInstr.UUID}">(<isprint value="${creditCardInstr.creditCardType}"/>) <isprint value="${creditCardInstr.maskedCreditCardNumber}"/> - ${Resource.msg('billing.creditcardlistexp','checkout',null)} <isprint value="${creditCardInstr.creditCardExpirationMonth}" formatter="00" />.<isprint value="${creditCardInstr.creditCardExpirationYear}" formatter="0000" /></option>
+                        </isloop>
+                     </select>
+                 </div>
+              </div>
+              <div class="form-row form-row-button">
+                 <button id="credit-card-select-go" name="${pdict.CurrentForms.billing.creditCardSelect.htmlName}" type="submit" value="Go" class="simple-submit">Select</button>
+              </div>
+              <iscomment>
+                 <isloop items="${pdict.ApplicableCreditCards}" var="creditCardInstr">
+                    <a href="${URLUtils.https('COBilling-UpdateCreditCardSelection', 'creditCardUUID', creditCardInstr.UUID)}">
+                       (<isprint value="${creditCardInstr.creditCardType}"/>)
+                       <isprint value="${creditCardInstr.maskedCreditCardNumber}"/>
+                       - ${Resource.msg('billing.creditcardlistexp','checkout',null)}
+                       <isprint value="${creditCardInstr.creditCardExpirationMonth}" formatter="00" />
+                       .<isprint value="${creditCardInstr.creditCardExpirationYear}" formatter="0000" />
+                    </a>
+                 </isloop>
+              </iscomment>
+           </isif>
+            <div class="ccfields-wrap">
+                <isset name="selectedCreditCardType" value="${ pdict.CurrentForms.billing.paymentMethods.creditCard.type.selectedOptionObject ? pdict.CurrentForms.billing.paymentMethods.creditCard.type.selectedOptionObject.cardType : null}" scope="page" />
+                <div class="owner-wrap">
+                    <div class="owner-split  ${selectedCreditCardType != 'Amex' ? 'hide' : ''}">
+                        <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.ownerfirst}" type="input" attribute1="autocomplete" value1="off" xhtmlclass="owner"/>
+                        <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.ownerlast}" type="input" attribute1="autocomplete" value1="off" xhtmlclass="owner"/>
+                    </div>
+                    <div class="owner-single  ${selectedCreditCardType == 'Amex' ? 'hide' : ''}">
+                        <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.owner}" type="input" attribute1="autocomplete" value1="off" xhtmlclass="owner"/>
+                    </div>
+                </div>
+                <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.type}" type="select"/>
+
+                <isif condition="${!empty(applicablePaymentCards)}">
+                    <isloop items="${applicablePaymentCards}" var="creditCardInstr">
+	                    <input type="hidden" data-hipay-cvv-disabled="${creditCardInstr.custom.hipayCVVIgnored}" data-hipay-oneclick-disabled="${creditCardInstr.custom.hipayOneClickDisabled}" data-hipay-cardtype="${creditCardInstr.cardType}" />
+	                </isloop>
+	            </isif>
+
+                <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.number}" type="input" attribute1="autocomplete" value1="off"/>
+                <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.uuid}" type="hidden" attribute1="autocomplete" value1="off"/>
+                <div class="form-label-text"><span class="required-indicator">${Resource.msg('billing.requiredindicator','checkout',null)}</span>${Resource.msg('billing.creditcardlistexpdate', 'checkout', null)}</div>
+                    <isif condition="${pdict.CurrentForms.billing.paymentMethods.creditCard.expiration.month.selectedOption === null || pdict.CurrentForms.billing.paymentMethods.creditCard.expiration.year.selectedOption === null}">
+                        <isscript>
+                        var currentYear = (new Date()).getYear(),
+                            currentMonth = (new Date()).getMonth(),
+                            year = pdict.CurrentForms.billing.paymentMethods.creditCard.expiration.year,
+                            month = pdict.CurrentForms.billing.paymentMethods.creditCard.expiration.month;
+                            currentMonth += 1;
+                            year.setHtmlValue(currentYear);
+                            month.setHtmlValue(currentMonth);
+                        </isscript>
+                    </isif>
+                    <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.expiration.month}" type="select" rowclass="month"/>
+                    <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.expiration.year}" type="select"  rowclass="year"/>
+                    
+                    <div class="cvn-wrap ${selectedCreditCardType === 'BancontactMisterCash' ? 'hide' : ''}">
+                        <isif condition="${selectedCreditCardType === 'Maestro'}">
+                        	<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.cvn}" type="input" rowclass="cvn optional" attribute1="autocomplete" value1="off" helpcid="checkout-security-code" helplabel="${Resource.msg('billing.linkcvn', 'checkout', null)}"/>
+                        <iselse/>
+                        	<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.cvn}" type="input" rowclass="cvn" attribute1="autocomplete" value1="off" helpcid="checkout-security-code" helplabel="${Resource.msg('billing.linkcvn', 'checkout', null)}"/>
+                        </isif>
+                    </div>
+                    
+                    <isif condition="${pdict.CurrentCustomer.authenticated && hipayEnableOneClick && selectedCreditCardType != 'Maestro'}">
+                        <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.saveCard}" type="checkbox" rowclass="label-inline form-indent save-card"/>
+                    </isif>
+                </div>
+            </div>
+
+            <iscomment>Belfius Direct Net</iscomment>
+            <div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='HIPAY_DEXIA_DIRECTNET'}">payment-method-expanded</isif>" data-method="HIPAY_DEXIA_DIRECTNET">
+               <!--- No form is applied --->
+            </div>
+
+            <iscomment>Giropay</iscomment>
+            <div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='HIPAY_GIROPAY'}">payment-method-expanded</isif>" data-method="HIPAY_GIROPAY">
+               <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.hipaymethods.giropay.bic}" type="input" />
+            </div>
+
+            <iscomment>Hosted Pages</iscomment>
+            <div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='HIPAY_HOSTED'}">payment-method-expanded</isif>" data-method="HIPAY_HOSTED">
+               <!--- No form is applied --->
+            </div>
+
+            <iscomment>iDEAL</iscomment>
+            <div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='HIPAY_IDEAL'}">payment-method-expanded</isif>" data-method="HIPAY_IDEAL">
+               <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.hipaymethods.issuer_bank_id}" type="select" />
+            </div>
+
+            <iscomment>ING HomePay</iscomment>
+            <div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='HIPAY_ING_HOMEPAY'}">payment-method-expanded</isif>" data-method="HIPAY_ING_HOMEPAY">
+               <!--- No form is applied --->
+            </div>
+
+            <iscomment>Klarna</iscomment>
+            <div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='HIPAY_KLARNA'}">payment-method-expanded</isif>" data-method="HIPAY_KLARNA">
+               <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.hipaymethods.klarna.birthdate}" type="date" />
+               <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.hipaymethods.klarna.houseNumber}" type="input" />
+               <isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.hipaymethods.klarna.gender}" type="select"/>
+            </div>
+
+            <iscomment>Przelewy24</iscomment>
+            <div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='HIPAY_PRZELEWY24'}">payment-method-expanded</isif>" data-method="HIPAY_PRZELEWY24">
+               <!--- No form is applied --->
+            </div>
+
+            <iscomment>QIWI Wallet</iscomment>
+            <div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='HIPAY_QIWI_WALLET'}">payment-method-expanded</isif>" data-method="HIPAY_QIWI_WALLET">
+               <!--- No form is applied --->
+            </div>
+
+            <iscomment>Sisal</iscomment>
+            <div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='HIPAY_SISAL'}">payment-method-expanded</isif>" data-method="HIPAY_SISAL">
+               <!--- No form is applied --->
+            </div>
+
+            <iscomment>Sofort Uberweisung</iscomment>
+            <div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='HIPAY_SOFORT_UBERWEISUNG'}">payment-method-expanded</isif>" data-method="HIPAY_SOFORT_UBERWEISUNG">
+               <!--- No form is applied --->
+            </div>
+
+            <iscomment>WebMoney Transfer</iscomment>
+            <div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='HIPAY_WEBMONEY_TRANSFER'}">payment-method-expanded</isif>" data-method="HIPAY_WEBMONEY_TRANSFER">
+               <!--- No form is applied --->
+            </div>
+
+            <iscomment>Yandex Money</iscomment>
+            <div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='HIPAY_YANDEX'}">payment-method-expanded</isif>" data-method="HIPAY_YANDEX">
+                <!--- No form is applied --->
+            </div>
+
+            <iscomment>PayPal</iscomment>
+            <div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='PayPal'}">payment-method-expanded</isif>" data-method="PayPal">
+               <!--- No form is applied --->
+            </div>
+            <!--- HIPAY INTEGRATION ------ END --->
+
+        </isif>
+        <iscomment> HiPay custom code – end </iscomment> 
+	</fieldset>
+<iselse/>
+	<div class="gift-cert-used form-indent">
+		<isif condition="${pdict.gcPITotal>0}">${Resource.msg('billing.giftcertnomethod','checkout',null)}<iselse/>${Resource.msg('billing.zerobalance','checkout',null)}</isif>
+		<input type="hidden" name="${pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.htmlName}" value="${dw.order.PaymentInstrument.METHOD_GIFT_CERTIFICATE}" />
+		<input type="hidden" id="noPaymentNeeded" name="noPaymentNeeded" value="true" />
+	</div>
+</isif>

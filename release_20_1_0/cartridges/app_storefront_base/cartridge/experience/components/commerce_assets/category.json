@@ -1,0 +1,224 @@
+{
+    "name": "Link Banner",
+    "description": "Link Banner",
+    "group": "commerce_assets",
+    "attribute_definition_groups": [
+        {
+            "id": "heading",
+            "name": "Heading Specification",
+            "description": "Specify the Heading to be Displayed",
+            "attribute_definitions": [
+                {
+                    "id": "textHeadline",
+                    "name": "Heading",
+                    "type": "markup",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "id": "backgroundConfiguration",
+            "name": "Background Configuration",
+            "description": "Select the image to be displayed in the background. Select to apply shade over the image by 40% black and changing text color to white.",
+            "attribute_definitions": [
+                {
+                    "id": "image",
+                    "name": "Image",
+                    "description": "Select an image to be displayed on the background",
+                    "type": "image",
+                    "required": false
+                },
+                {
+                    "id": "applyImageShade",
+                    "name": "Apply image Shade",
+                    "description": "Select to apply a shade of 40 percentage to the background image",
+                    "type": "boolean",
+                    "required": false
+                },
+                {
+                    "id": "changeTextColor",
+                    "name": "Change text color to white",
+                    "description": "Select to change the text color to white",
+                    "type": "boolean",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "id": "categorySpec",
+            "name": "Shop Category Specifications",
+            "description": "Specify at least four shop categories to be displayed",
+            "attribute_definitions": [
+                {
+                    "id": "category1",
+                    "name": "Category 01",
+                    "description": "Select Category to be displayed.",
+                    "type": "category",
+                    "required": true
+                },
+                {
+                    "id": "customCategoryName1",
+                    "name": "Custom Category Name 01",
+                    "description": "Overwrite the category name if needed.",
+                    "type": "string",
+                    "required": false
+                },
+                {
+                    "id": "category2",
+                    "name": "Category 02",
+                    "description": "Select Category to be displayed.",
+                    "type": "category",
+                    "required": true
+                },
+                {
+                    "id": "customCategoryName2",
+                    "name": "Custom Category Name 02",
+                    "description": "Overwrite the category name if needed.",
+                    "type": "string",
+                    "required": false
+                },
+                {
+                    "id": "category3",
+                    "name": "Category 03",
+                    "description": "Select Category to be displayed.",
+                    "type": "category",
+                    "required": true
+                },
+                {
+                    "id": "customCategoryName3",
+                    "name": "Custom Category Name 03",
+                    "description": "Overwrite the category name if needed.",
+                    "type": "string",
+                    "required": false
+                },
+                {
+                    "id": "category4",
+                    "name": "Category 04",
+                    "description": "Select Category to be displayed.",
+                    "type": "category",
+                    "required": true
+                },
+                {
+                    "id": "customCategoryName4",
+                    "name": "Custom Category Name 04",
+                    "description": "Overwrite the category name if needed.",
+                    "type": "string",
+                    "required": false
+                },
+                {
+                    "id": "category5",
+                    "name": "Category 05",
+                    "description": "Select Category to be displayed.",
+                    "type": "category",
+                    "required": false
+                },
+                {
+                    "id": "customCategoryName5",
+                    "name": "Custom Category Name 05",
+                    "description": "Overwrite the category name if needed.",
+                    "type": "string",
+                    "required": false
+                },
+                {
+                    "id": "category6",
+                    "name": "Category 06",
+                    "description": "Select Category to be displayed.",
+                    "type": "category",
+                    "required": false
+                },
+                {
+                    "id": "customCategoryName6",
+                    "name": "Custom Category Name 06",
+                    "description": "Overwrite the category name if needed.",
+                    "type": "string",
+                    "required": false
+                },
+                {
+                    "id": "category7",
+                    "name": "Category 07",
+                    "description": "Select Category to be displayed.",
+                    "type": "category",
+                    "required": false
+                },
+                {
+                    "id": "customCategoryName7",
+                    "name": "Custom Category Name 07",
+                    "description": "Overwrite the category name if needed.",
+                    "type": "string",
+                    "required": false
+                },
+                {
+                    "id": "category8",
+                    "name": "Category 08",
+                    "description": "Select Category to be displayed.",
+                    "type": "category",
+                    "required": false
+                },
+                {
+                    "id": "customCategoryName8",
+                    "name": "Custom Category Name 08",
+                    "description": "Overwrite the category name if needed.",
+                    "type": "string",
+                    "required": false
+                },
+                {
+                    "id": "category9",
+                    "name": "Category 09",
+                    "description": "Select Category to be displayed.",
+                    "type": "category",
+                    "required": false
+                },
+                {
+                    "id": "customCategoryName9",
+                    "name": "Custom Category Name 09",
+                    "description": "Overwrite the category name if needed.",
+                    "type": "string",
+                    "required": false
+                },
+                {
+                    "id": "category10",
+                    "name": "Category 10",
+                    "description": "Select Category to be displayed.",
+                    "type": "category",
+                    "required": false
+                },
+                {
+                    "id": "customCategoryName10",
+                    "name": "Custom Category Name 10",
+                    "description": "Overwrite the category name if needed.",
+                    "type": "string",
+                    "required": false
+                },
+                {
+                    "id": "category11",
+                    "name": "Category 11",
+                    "description": "Select Category to be displayed.",
+                    "type": "category",
+                    "required": false
+                },
+                {
+                    "id": "customCategoryName11",
+                    "name": "Custom Category Name 11",
+                    "description": "Overwrite the category name if needed.",
+                    "type": "string",
+                    "required": false
+                },
+                {
+                    "id": "category12",
+                    "name": "Category 12",
+                    "description": "Select Category to be displayed.",
+                    "type": "category",
+                    "required": false
+                },
+                {
+                    "id": "customCategoryName12",
+                    "name": "Custom Category Name 12",
+                    "description": "Overwrite the category name if needed.",
+                    "type": "string",
+                    "required": false
+                }
+            ]
+        }
+    ],
+    "region_definitions": []
+}

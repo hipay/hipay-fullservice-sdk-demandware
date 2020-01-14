@@ -1,0 +1,33 @@
+<iscontent type="application/json" charset="UTF-8" compact="true"/>
+<isinclude template="util/jsonmodule"/>
+<iscomment>
+	This template renders the attributes of a customer credit card payment instrument as JSON response.
+</iscomment>
+<iscomment> HiPay custom code – start </iscomment> 
+<isset name="hipayEnabled" value="${dw.system.Site.getCurrent().getCustomPreferenceValue('hipayEnabled')}" scope="page"/> 
+<isif condition="${hipayEnabled}" > 
+    <isscript> 
+        var cc = { 
+            maskedNumber:pdict.SelectedCreditCard.maskedCreditCardNumber, 
+            holder:pdict.SelectedCreditCard.creditCardHolder, 
+            type:pdict.SelectedCreditCard.creditCardType, 
+            expirationMonth:pdict.SelectedCreditCard.creditCardExpirationMonth, 
+            expirationYear:pdict.SelectedCreditCard.creditCardExpirationYear, 
+            uuid:pdict.SelectedCreditCard.UUID 
+        } 
+        var json = JSON.stringify(cc); 
+    </isscript> 
+<iselse/> 
+    <isscript> 
+        var cc = { 
+            maskedNumber:pdict.SelectedCreditCard.maskedCreditCardNumber, 
+            holder:pdict.SelectedCreditCard.creditCardHolder, 
+            type:pdict.SelectedCreditCard.creditCardType, 
+            expirationMonth:pdict.SelectedCreditCard.creditCardExpirationMonth, 
+            expirationYear:pdict.SelectedCreditCard.creditCardExpirationYear 
+        } 
+        var json = JSON.stringify(cc); 
+    </isscript> 
+</isif> 
+<iscomment> HiPay custom code – end </iscomment> 
+<isprint value="${json}" encoding="off"/>

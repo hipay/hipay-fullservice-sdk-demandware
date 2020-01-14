@@ -1,0 +1,36 @@
+<isscript>
+    var assets = require('*/cartridge/scripts/assets.js');
+    assets.addCss('/css/experience/components/commerceAssets/category.css');
+</isscript>
+<div class="container">
+    <div class="row shop-category-component ${pdict.image && pdict.applyImageShade ? 'shop-category-component-filter' : ''}"
+        <isif condition="${pdict.image}">
+            style="background-image: url('${pdict.image.url}');
+                   background-position-x: ${pdict.image.focalPointX};
+                   background-position-y: ${pdict.image.focalPointY};"
+        </isif>
+    >
+        <div class="col-auto shop-category-header 
+                    ${pdict.image && pdict.changeTextColor ? 'shop-category-header-text-color-other' : ''}
+                    text-center mw-100 m-auto"
+        >
+            <isprint value="${pdict.textHeadline}" encoding="off">
+        </div>
+        
+        <div class="mw-100 m-auto">
+            <div class="row">
+                <isif condition="${pdict.categories}">
+                    <isloop items="${pdict.categories}" var="category">
+                        <div class="col-auto m-auto text-center mw-100 text-truncate shop-category-label">
+                            <a href="${category.url}" id="${category.id}" 
+                               class="shop-category-label-a ${pdict.image && pdict.changeTextColor ? 'shop-category-label-a-color-other ' : ''}"
+                            >
+                                ${pdict.customCategoryNames[category.id] ? pdict.customCategoryNames[category.id] : category.name}
+                            </a>
+                        </div>
+                    </isloop>
+                </isif>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+<div class="row tile-body-footer">
+    <div class="ratings col-xs-12 col-sm-6">
+        <span class="sr-only">${Resource.msgf('label.product.ratings', 'common', null, product.rating)}</span>
+        <isinclude template="product/components/ratings" />
+    </div>
+</div>

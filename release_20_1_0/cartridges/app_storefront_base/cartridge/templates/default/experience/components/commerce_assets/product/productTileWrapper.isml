@@ -1,0 +1,6 @@
+<div 
+    data-position="<isprint value="${pdict.index}" formatter="#"/>" 
+    class="carousel-item ${ pdict.index == 0 ? 'active': ''} ${pdict.display.xs} ${pdict.display.sm} ${pdict.display.md}">
+    <isinclude template="experience/components/commerce_assets/product/productTile"/>
+</div>
+

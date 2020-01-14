@@ -1,0 +1,13 @@
+<isif condition="${lineItem.isBonusProductLineItem}" />
+	<div>${Resource.msg('msg.bonus.product','cart',null)}</div>
+</isif>
+<div class="line-item-header">
+    <div class="line-item-name">
+        ${lineItem.productName}
+    </div>
+    <isif condition="${!lineItem.isBonusProductLineItem}"/>
+        <div class="remove-line-item d-lg-none">
+            <isinclude template="components/deleteButton" />
+        </div>
+    </isif>
+</div>

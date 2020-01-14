@@ -1,0 +1,16 @@
+<input type="hidden" name="${pdict.CurrentForms.billing.paymentMethods.browserInfo.htmlName}" id="browserInfo">
+
+<script language="javascript" src="https://libs.hipay.com/js/sdkjs.js">
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        const hipay = HiPay({
+            username: 'public',
+            password: 'password'
+        });
+
+        let browserInfo = hipay.getBrowserInfo();
+        $("#browserInfo").val(JSON.stringify(browserInfo));
+    });    
+</script>

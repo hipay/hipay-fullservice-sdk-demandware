@@ -1,0 +1,33 @@
+<isset name="escapedProductName" value="${encodeURIComponent(product.productName)}" scope="page"/>
+<isset name="productImageLarge" value="${encodeURIComponent(product.images['large'][0].absURL)}" scope="page"/>
+<isset name="productUrlencode" value="${encodeURIComponent(URLUtils.https('Product-Show', 'pid', product.id))}" scope="page"/>
+<div class="col-12 social-container hidden-sm-down">
+	<ul class="social-icons social-icons d-flex justify-content-center">
+		<li>
+		    <a href="https://pinterest.com/pin/create/button/?url=${productUrlencode}&description=${escapedProductName}&media=${productImageLarge}" title="${Resource.msgf('label.social.pinterest', 'product', null, product.productName)}" aria-label="${Resource.msgf('label.social.pinterest', 'product', null, product.productName)}" class="share-icons" target="_blank">
+		    	<i class="fa fa-pinterest"></i>
+		    </a>
+	    </li>
+	    <li>
+		    <a href="https://www.facebook.com/share.php?u=${productUrlencode}" title="${Resource.msgf('label.social.facebook', 'product', null, product.productName)}" data-share="facebook" aria-label="${Resource.msgf('label.social.facebook', 'product', null, product.productName)}" class="share-icons" target="_blank">
+		    	<i class="fa fa-facebook-official"></i>
+		    </a>
+	    </li>
+	    <li>
+		    <a href="https://twitter.com/share?url=${productUrlencode}&text=${product.productName}" data-share="twitter" title="${Resource.msgf('label.social.twitter', 'product', null, product.productName)}" aria-label="${Resource.msgf('label.social.twitter', 'product', null, product.productName)}" class="share-icons" target="_blank">
+		    	<i class="fa fa-twitter"></i>
+		    </a>
+	    </li>
+	    <li>
+	    <a href="#copy-link-message" class="share-icons" id="fa-link" role="button" title="${Resource.msgf('label.social.link', 'product', null, product.productName)}" aria-label="${Resource.msgf('label.social.link', 'product', null, product.productName)}">
+            <i class="fa fa-link"></i>
+        </a>
+        <input type="hidden" id="shareUrl" value="${URLUtils.https('Product-Show', 'pid', product.id)}"/>
+        </li>
+    </ul>
+</div>
+<div class="copy-link-message d-none">
+    <div class="alert alert-success text-center">
+        ${Resource.msgf('text.alert.social.linkcopysuccess', 'product', null, product.productName)}
+    </div>
+</div>

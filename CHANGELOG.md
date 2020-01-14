@@ -1,3 +1,6 @@
+# Version 20.1.0
+- Add DSP2 parameters
+
 # Version 2.1.0
 - Update with latest module version
 

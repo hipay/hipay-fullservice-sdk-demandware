@@ -1,9 +1,0 @@
-<!--- Edit product --->
-<div class="product-edit">
-    <a href="${URLUtils.url('Cart-GetProduct', 'uuid', lineItem.UUID)}" class="edit"
-       data-toggle="modal" data-target="#editProductModal"
-       aria-label="${Resource.msgf('text.edit.line.item','cart', null, lineItem.productName)}"
-       title="${Resource.msg('link.edit.item', 'cart',null)}">
-           ${Resource.msg('link.edit.item', 'cart', null)}
-    </a>
-</div>

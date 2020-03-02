@@ -1,5 +1,0 @@
-<isif condition="${pdict.schemaData}">
-   <script type="application/ld+json">
-        <isprint value="${JSON.stringify(pdict.schemaData)}" encoding="off" />
-    </script>
-</isif>

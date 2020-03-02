@@ -1,6 +1,6 @@
 const hipay = HiPay({
-    username: 'public',
-    password: 'password'
+    username: 'test',
+    password: 'test'
 });
 
 let browserInfo = hipay.getBrowserInfo();

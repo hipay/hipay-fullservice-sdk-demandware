@@ -1,4 +1,0 @@
-<!-- Availability -->
-<div class="row availability product-availability" data-ready-to-order="${product.readyToOrder}" data-available="${product.available}">
-    <isinclude template="product/components/availability" />
-</div>

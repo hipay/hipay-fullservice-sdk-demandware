@@ -1,0 +1,215 @@
+[class^="payment-product-sprite-"] {
+    display: block;
+    height: 2.5em;
+    width: 4.167em;
+    background-image: url("../images/payment-products/paymentProductSpritesSmall.png");
+    background-repeat: no-repeat;
+    cursor: pointer
+}
+
+i.payment-product-sprite-hosted {
+    background-image: url("../images/payment-products/paymentProductHosted.png");
+    background-size: cover;
+    width: 4.333em;
+}
+
+i.payment-product-sprite-mastercard {
+    background-position: 0em 0em;
+}
+
+i.payment-product-sprite-visa {
+    background-position: -4.167em 0em;
+}
+
+i.payment-product-sprite-maestro {
+    background-position: -8.333em 0em;
+}
+
+i.payment-product-sprite-american-express {
+    background-position: -12.5em 0em;
+}
+
+i.payment-product-sprite-kbc-online {
+    background-position: -25em 0em;
+}
+
+i.payment-product-sprite-cbc-online {
+    background-position: -29.167em 0em;
+}
+
+i.payment-product-sprite-sofort-uberweisung {
+    background-position: -34.333em 0em;
+}
+
+i.payment-product-sprite-ing-homepay {
+    background-position: 0em -2.5em;
+}
+
+i.payment-product-sprite-ideal {
+    background-position: -4.167em -2.5em;
+}
+
+i.payment-product-sprite-giropay {
+    background-position: -8.333em -2.5em;
+}
+
+i.payment-product-sprite-dexia-directnet {
+    background-position: -16.667em -2.5em;
+}
+
+i.payment-product-sprite-bcmc {
+    background-position: -20.833em -2.5em;
+}
+
+i.payment-product-sprite-cb {
+    background-position: -29.167em -2.5em;
+}
+
+i.payment-product-sprite-sisal {
+    background-position: 0em -5em;
+}
+
+i.payment-product-sprite-yandex {
+    background-position: -4.167em -5em;
+}
+
+i.payment-product-sprite-webmoney-transfer {
+    background-position: -8.333em -5em;
+}
+
+i.payment-product-sprite-qiwi-wallet {
+    background-position: -12.5em -5em;
+}
+
+i.payment-product-sprite-przelewy24 {
+    background-position: -16.667em -5em;
+}
+
+i.payment-product-sprite-payulatam {
+    background-position: -25em -5em;
+}
+
+i.payment-product-sprite-cobro-express {
+    background-position: -8.333em -7.5em;
+}
+
+i.payment-product-sprite-naranja {
+    background-position: -12.5em -7.5em;
+}
+
+i.payment-product-sprite-cabal {
+    background-position: -16.667em -7.5em;
+}
+
+i.payment-product-sprite-tarjeta-shopping {
+    background-position: -20.833em -7.5em;
+}
+
+i.payment-product-sprite-provincia {
+    background-position: -25em -7.5em;
+}
+
+i.payment-product-sprite-ripsa {
+    background-position: -29.167em -7.5em;
+}
+
+i.payment-product-sprite-argencard {
+    background-position: -33.333em -7.5em;
+}
+
+i.payment-product-sprite-pago-facil {
+    background-position: 0em -10em;
+}
+
+i.payment-product-sprite-rapipago {
+    background-position: -4.167em -10em;
+}
+
+i.payment-product-sprite-censosud {
+    background-position: -8.333em -10em;
+}
+
+i.payment-product-sprite-diners {
+    background-position: -12.5em -10em;
+}
+
+i.payment-product-sprite-elo {
+    background-position: -16.667em -10em;
+}
+
+i.payment-product-sprite-baloto {
+    background-position: -20.833em -10em;
+}
+
+i.payment-product-sprite-efecty {
+    background-position: -25em -10em;
+}
+
+i.payment-product-sprite-oxxo {
+    background-position: -29.167em -10em;
+}
+
+i.payment-product-sprite-ixe {
+    background-position: -33.333em -10em;
+}
+
+i.payment-product-sprite-bcp {
+    background-position: 0em -12.5em;
+}
+
+i.payment-product-sprite-paysafecard {
+    background-position: -33.333em -5em;
+}
+
+i.payment-product-sprite-klarna {
+    background-position: -29.167em -5em;
+}
+
+i.payment-product-sprite-klarnacheckout {
+    background-position: -29.167em -5em;
+}
+
+i.payment-product-sprite-klarnainvoice {
+    background-position: -4.167em -7.5em;
+}
+
+i.payment-product-sprite-bank-transfer {
+    background-position: -8.333em -12.5em;
+}
+
+i.payment-product-sprite-paypal {
+    background-position: -12.5em -12.5em;
+}
+
+i.payment-product-sprite-bitcoin {
+    background-position: -16.667em -12.5em;
+}
+
+i.payment-product-sprite-cofinoga {
+    background-position: -20.833em -5em;
+}
+
+i.payment-product-sprite-3xcb {
+    background-position: -4.167em -15em;
+}
+
+i.payment-product-sprite-4xcb {
+    background-position: -4.167em -15em;
+}
+
+i.payment-product-sprite-3xcb-no-fees {
+    background-position: -4.167em -15em;
+}
+
+i.payment-product-sprite-4xcb-no-fees {
+    background-position: -4.167em -15em;
+}
+
+i.payment-product-sprite-carte-accord {
+    background-position: 0em -15em;
+}
+
+.payment-method-options .form-row {
+    clear: none;
+    float: left;
+    width: 33%; }

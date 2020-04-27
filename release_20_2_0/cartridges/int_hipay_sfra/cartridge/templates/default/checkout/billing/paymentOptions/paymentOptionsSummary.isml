@@ -1,0 +1,10 @@
+<div class="payment-details">
+    <isloop items="${pdict.order.billing.payment.selectedPaymentInstruments}" var="payment">
+        <isif condition="${payment.paymentMethod.indexOf('CREDIT_CARD') < 0}">
+            <isinclude template="checkout/billing/paymentOptions/hiPaySummary" />
+
+            <iselse/>
+                <isinclude template="checkout/billing/paymentOptions/creditCardSummary" />
+        </isif>
+    </isloop>
+</div>

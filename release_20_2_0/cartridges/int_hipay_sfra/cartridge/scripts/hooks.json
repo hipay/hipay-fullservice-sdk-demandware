@@ -1,0 +1,12 @@
+{
+    "hooks": [
+        {
+            "name"   : "app.payment.processor.hipay_hosted",
+            "script" : "../scripts/hooks/hipayHosted"
+        },
+        {
+            "name"   : "app.payment.processor.hipay",
+            "script" : "../scripts/hooks/hipay"
+        }
+    ]
+}

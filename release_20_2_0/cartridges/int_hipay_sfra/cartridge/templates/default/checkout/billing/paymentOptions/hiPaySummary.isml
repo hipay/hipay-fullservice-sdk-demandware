@@ -1,0 +1,5 @@
+<isscript>
+    var PaymentMgr = require('dw/order/PaymentMgr');
+    var paymentMethodName = PaymentMgr.getPaymentMethod(payment.paymentMethod).name;
+ </isscript>
+ ${paymentMethodName}

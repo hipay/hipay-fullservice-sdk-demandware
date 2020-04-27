@@ -1,0 +1,23 @@
+{
+  "init": [
+    "./cartridge/scripts/init/hiPayServiceInit.js"
+  ],
+  "hooks": "./cartridge/scripts/hooks.json",
+  "name": "int_hipay_sfra",
+  "version": "1.0.0",
+  "description": "HiPay integration cartridge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/hipaydwcartridge/hipay.git"
+  },
+  "keywords": [
+    "HiPay"
+  ],
+  "author": "OSF Global",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/hipaydwcartridge/hipay#readme"
+}

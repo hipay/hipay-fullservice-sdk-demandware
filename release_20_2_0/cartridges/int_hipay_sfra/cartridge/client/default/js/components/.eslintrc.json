@@ -1,0 +1,12 @@
+{
+    "env": {
+        "jquery": true
+    },
+    "rules": {
+        "spaced-comment": "off",
+        "indent": "off",
+		"keyword-spacing": "off",
+		"curly": "off",
+		"curly": "off"
+    }
+}

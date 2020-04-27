@@ -1,0 +1,11 @@
+<!--- TEMPLATENAME: hipayiframe.isml --->
+<isdecorate template="common/layout/checkout">
+    <isif condition="${!empty(pdict.HiPayRedirectURL)}">
+        <isscript>
+            var HiPayConfig = require('*/cartridge/config/hipayConfig').HiPayConfig;
+            var iframeHeight = HiPayConfig.hipayIframeHeight;
+            var iframeWidth = HiPayConfig.hipayIframeWidth;
+        </isscript>
+        <iframe name="hipay" width="100%" height="${iframeHeight}" src="${pdict.HiPayRedirectURL}" style="border: none; background: #fff; margin: 0.556em auto; display: flex; justify-content: center;"></iframe>
+    </isif>
+</isdecorate>

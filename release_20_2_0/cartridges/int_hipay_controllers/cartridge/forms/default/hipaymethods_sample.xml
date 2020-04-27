@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+    <group formid="giropay">
+        <field formid="bic" label="hipay.label.bic" type="string" mandatory="true"  missing-error="error.message.required"/>
+    </group>
+
+    <group formid="klarna">
+        <field formid="birthdate" label="hipay.label.birthdate" type="string" mandatory="true" missing-error="error.message.required"/>
+
+        <field formid="houseNumber" label="hipay.label.housenumber" type="integer" binding="houseNumber" mandatory="true" missing-error="error.message.required"/>
+    </group>
+
+    <field formid="issuer_bank_id" label="hipay.label.issuer_bank_id" default="ABNANL2A" type="string" mandatory="true" >
+        <options>
+            <option optionid="" label="resource.select"	value=""/>
+            <option optionid="ABNANL2A" value="ABNANL2A" label="ABN AMRO"/>
+            <option optionid="INGBNL2A" value="INGBNL2A" label="ING"/>
+            <option optionid="RABONL2U" value="RABONL2U" label="Rabobank"/>
+            <option optionid="SNSBNL2A" value="SNSBNL2A" label="SNS Bank"/>
+            <option optionid="ASNBNL21" value="ASNBNL21" label="ASN Bank"/>
+            <option optionid="FRBKNL2L" value="FRBKNL2L" label="Friesland Bank"/>
+            <option optionid="KNABNL2H" value="KNABNL2H" label="Knab"/>
+            <option optionid="RBRBNL21" value="RBRBNL21" label="SNS Regio Bank"/>
+            <option optionid="TRIONL2U" value="TRIONL2U" label="Triodos bank"/>
+            <option optionid="FVLBNL22" value="FVLBNL22" label="Van Lanschot"/>
+        </options>
+    </field>
+</form>

@@ -36,10 +36,8 @@ function submitOrder(orderId, req, res, next) {
     var placeOrderResult = COHelpers.placeOrder(order, fraudDetectionStatus);
 
     if (placeOrderResult.error) {
-        res.json({
-            error: true,
-            errorMessage: Resource.msg('error.technical', 'checkout', null)
-        });
+        var message = Resource.msg('error.technical', 'checkout', null);
+        res.redirect(URLUtils.https('Checkout-Begin', 'stage', 'payment', 'authMessage', message));
 
         return next();
     } else if (!empty(req.querystring.paymentStatus)) {

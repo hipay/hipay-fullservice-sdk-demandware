@@ -137,6 +137,12 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <default-value>false</default-value>
             </attribute-definition>
+			<attribute-definition attribute-id="hipayExpiryLimit">
+                <display-name xml:lang="x-default">The expiry limit in number of days</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>                
+            </attribute-definition>	
         </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="HiPay">
@@ -160,6 +166,7 @@
                 <attribute attribute-id="hipayIdealBankID"/>
                 <attribute attribute-id="hipayBic"/>
                 <attribute attribute-id="hipayOneClickDisabled"/>
+				<attribute attribute-id="hipayExpiryLimit"/>
             </attribute-group>
         </group-definitions>
     </type-extension>
@@ -232,6 +239,26 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
+			<attribute-definition attribute-id="hipayExpiryLimit">
+                <display-name xml:lang="x-default">The expiry limit in number of days</display-name>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition>
+                        <display xml:lang="x-default">days</display>
+                        <value>3</value>
+                    </value-definition>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">days</display>
+                        <value>30</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">days</display>
+                        <value>90</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="HiPay">
@@ -240,6 +267,7 @@
                 <attribute attribute-id="hipayPaymentProductList"/>
                 <attribute attribute-id="hipayPaymentCategoryList"/>
                 <attribute attribute-id="hipayOnlyCompleteCapture"/>
+				<attribute attribute-id="hipayExpiryLimit"/>
             </attribute-group>
         </group-definitions>
     </type-extension>

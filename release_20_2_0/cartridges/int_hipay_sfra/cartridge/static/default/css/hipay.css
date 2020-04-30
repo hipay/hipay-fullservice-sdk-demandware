@@ -29,6 +29,11 @@ i.payment-product-sprite-american-express {
     background-position: -12.5em 0em;
 }
 
+
+i.payment-product-sprite-multibanco {
+    background-position: -21.2em 0em;
+}
+
 i.payment-product-sprite-kbc-online {
     background-position: -25em 0em;
 }
@@ -207,6 +212,10 @@ i.payment-product-sprite-4xcb-no-fees {
 
 i.payment-product-sprite-carte-accord {
     background-position: 0em -15em;
+}
+
+i.payment-product-sprite-mbway {
+    background-position: -8.333em -15em;
 }
 
 .payment-method-options .form-row {

@@ -15,16 +15,21 @@ function acceptPayment(res, next) {
     var error;
     var redirectURL;
 
-    if (isHashValid) {
-        processOrder = HiPayOrderModule.hiPayProcessOrderCall();
-        order = processOrder.order;
-        error = processOrder.error;
-        params = {
-            order: order,
-            hiPayState: error
-        };
+    processOrder = HiPayOrderModule.hiPayProcessOrderCall();
+    order = processOrder.order;
+    error = processOrder.error;
 
+    // Lorsqu'on a "orderid" retourné par 'Multibanco' dans hiPayProcessOrderCall
+    // donc on a processOrder et processOrder.order
+    // ==> il faut voir dans order SI on a la méthode de payment
+    // ==> par Exemple pour 'Multibanco' et 'Mbway' isHashValid
+
+    if (isHashValid) {   
         if (error) {
+            params = {
+                order: order,
+                hiPayState: error
+            };
             redirectURL = HiPayProcess.failOrder(params);
             res.redirect(redirectURL);
         } else {
@@ -38,6 +43,30 @@ function acceptPayment(res, next) {
         redirectURL = HiPayProcess.failOrder(params);
         res.redirect(redirectURL);
     }
+
+    // if (isHashValid) {
+    //     processOrder = HiPayOrderModule.hiPayProcessOrderCall();
+    //     order = processOrder.order;
+    //     error = processOrder.error;
+    //     params = {
+    //         order: order,
+    //         hiPayState: error
+    //     };
+
+    //     if (error) {
+    //         redirectURL = HiPayProcess.failOrder(params);
+    //         res.redirect(redirectURL);
+    //     } else {
+    //         HiPayProcess.proceedWithOrder(order, res, next);
+    //     }
+    // } else {
+    //     params = {
+    //         order: order,
+    //         hiPayState: 'error'
+    //     };
+    //     redirectURL = HiPayProcess.failOrder(params);
+    //     res.redirect(redirectURL);
+    // }
 
     return next();
 }

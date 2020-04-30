@@ -22,6 +22,8 @@ function hiPayProcessOrderCall() {
     var orderid;
     var order;
 
+    var test2 = request;
+
     log.info('HiPay Order Call :: ' + params);
     
     if (params.isParameterSubmitted('orderid')) {

@@ -23,27 +23,60 @@ function acceptPayment(res, next) {
     // donc on a processOrder et processOrder.order
     // ==> il faut voir dans order SI on a la méthode de payment
     // ==> par Exemple pour 'Multibanco' et 'Mbway' isHashValid
+    if (error) {
+        if (order === undefined) {
+            // V1 : Dans Cas Multibanco / Mbway / Sisal
+            // redirection la page avec le message : Votre commande est enregistrée, traitement en cours.
+            // res.redirect(redirectURL); avec message
 
-    if (isHashValid) {   
-        if (error) {
+        } else {
             params = {
                 order: order,
                 hiPayState: error
             };
             redirectURL = HiPayProcess.failOrder(params);
             res.redirect(redirectURL);
-        } else {
-            HiPayProcess.proceedWithOrder(order, res, next);
         }
-    } else {
-        params = {
-            order: order,
-            hiPayState: 'error'
-        };
-        redirectURL = HiPayProcess.failOrder(params);
-        res.redirect(redirectURL);
+
+    } else if (isHashValid) {
+        HiPayProcess.proceedWithOrder(order, res, next);
+    } else if (!isHashValid) {
+        if (order) { // +  si order.methode-payment === Multibanco / Mbway / Sisal
+            // V1 : Dans Cas Multibanco / Mbway / Sisal
+            HiPayProcess.proceedWithOrder(order, res, next);
+        } else {
+            params = {
+                order: order,
+                hiPayState: 'error'
+            };
+            redirectURL = HiPayProcess.failOrder(params);
+            res.redirect(redirectURL);
+        }        
     }
 
+
+    // // Hicham 1
+    // if (isHashValid) {   
+    //     if (error) {
+    //         params = {
+    //             order: order,
+    //             hiPayState: error
+    //         };
+    //         redirectURL = HiPayProcess.failOrder(params);
+    //         res.redirect(redirectURL);
+    //     } else {
+    //         HiPayProcess.proceedWithOrder(order, res, next);
+    //     }
+    // } else {
+    //     params = {
+    //         order: order,
+    //         hiPayState: 'error'
+    //     };
+    //     redirectURL = HiPayProcess.failOrder(params);
+    //     res.redirect(redirectURL);
+    // }
+
+    // // Par OSF
     // if (isHashValid) {
     //     processOrder = HiPayOrderModule.hiPayProcessOrderCall();
     //     order = processOrder.order;

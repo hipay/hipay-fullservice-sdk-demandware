@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jobs xmlns="http://www.demandware.com/xml/impex/jobs/2015-07-01">
     <job job-id="ClearHungOrders" priority="0">
-        <description>Clear all orders which are hung status CREATED</description>
+        <description>Clear all orders which are hung status CREATED, except payment modes: Multibanco, Mbway and Sisal</description>
         <parameters/>
         <flow>
             <context site-id="RefArchGlobal"/>
             <step step-id="ClearHungOrders" type="ExecuteScriptModule" enforce-restart="false">
                 <description/>
                 <parameters>
-                    <parameter name="ExecuteScriptModule.Module">int_hipay_sfra/cartridge/scripts/lib/hipay/HiPayProcess.js</parameter>
-                    <parameter name="ExecuteScriptModule.FunctionName">ClearHungOrders</parameter>
+                    <parameter name="ExecuteScriptModule.Module">bm_hipay_controllers/cartridge/controllers/jobs/stepClearHungOrders</parameter>
+                    <parameter name="ExecuteScriptModule.FunctionName">StepClearHungOrders</parameter>
                     <parameter name="ExecuteScriptModule.Transactional">false</parameter>
                 </parameters>
             </step>

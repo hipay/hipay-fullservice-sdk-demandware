@@ -2,6 +2,7 @@
 
 var guard = require('~/cartridge/scripts/guard');
 var ISML = require('dw/template/ISML');
+var URLUtils = require('dw/web/URLUtils');
 var HiPayOrderModule = require('*/cartridge/scripts/lib/hipay/HiPayOrderModule');
 var HiPayProcess = require('*/cartridge/controllers/HiPayProcess');
 
@@ -13,26 +14,41 @@ function Accept() {
     var order;
     var error;
 
-    if (isHashValid) {
-        processOrder = HiPayOrderModule.hiPayProcessOrderCall();
-        order = processOrder.order;
-        error = processOrder.error;
-        params = {
-            order: order,
-            hiPayState: error
-        };
+    processOrder = HiPayOrderModule.hiPayProcessOrderCall();
+    order = processOrder.order;
+    error = processOrder.error;
 
-        if (error) {
-            HiPayProcess.failOrder(params);
+    if (error) {
+        if (order === undefined) {
+            // Dans Cas Multibanco / Mbway / Sisal 
+            var hiPayRedirectURL = URLUtils.https('Home-Show');
+            ISML.renderTemplate('hipay/hosted/hipayredirect', {
+                HiPayRedirectURL: hiPayRedirectURL
+            });
         } else {
-            HiPayProcess.proceedWithOrder(order);
+            params = {
+                order: order,
+                hiPayState: error
+            };
+            redirectURL = HiPayProcess.failOrder(params);
+            res.redirect(redirectURL);
         }
-    } else {
-        params = {
-            order: order,
-            hiPayState: 'error'
-        };
-        HiPayProcess.failOrder(params);
+    } else if (isHashValid) {
+        HiPayProcess.proceedWithOrder(order);
+    } else if (!isHashValid) {
+        if (order) {             
+            // SANS HashValid : Dans le Cas Multibanco / Mbway / Sisal
+            var paymentMethod = order.paymentInstrument.paymentMethod;
+            if (paymentMethod.equals('HIPAY_MULTIBANCO') || paymentMethod.equals('HIPAY_MBWAY')  || paymentMethod.equals('HIPAY_SISAL')) {                   
+                HiPayProcess.proceedWithOrder(order);
+            }            
+        } else {
+            params = {
+                order: order,
+                hiPayState: 'error'
+            };            
+            HiPayProcess.failOrder(params);
+        }        
     }
 }
 

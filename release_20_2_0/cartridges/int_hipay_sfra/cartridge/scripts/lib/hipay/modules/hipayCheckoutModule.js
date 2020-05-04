@@ -359,11 +359,8 @@ HiPayCheckoutModule.hiPayOrderRequest = function (paymentInstrument, order, devi
                     return response;
 
                 case status.FORWARDING.code:
-                    var testorder = order;
-                    var test2 = responseMsg.forwardUrl;
                     response.error = false;
                     response.hiPayRedirectURL = responseMsg.forwardUrl;
-                    // response.orderId = order.currentOrderNo;
                     return response;
 
                 case status.DECLINED.code:

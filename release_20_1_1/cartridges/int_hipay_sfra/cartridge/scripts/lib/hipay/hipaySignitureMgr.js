@@ -55,6 +55,10 @@ HiPaySignitureMgr.calculateSigniture = function (paramsMap, passPhrase) {
         stringToHash += names[i] + paramsMap.get(names[i])[0] + passPhrase;
     }
 
+    var HiPayLogger = require('*/cartridge/scripts/lib/hipay/hipayLogger');
+    var log = new HiPayLogger('calculateSigniture');
+    log.error('HICHAM ::: names ::: ' + names);
+
     // SHA-256 Hash the final string
     var digest = new MessageDigest(MessageDigest.DIGEST_SHA_256);
     var sha256Hash = Encoding.toHex(digest.digest(MessageDigest.DIGEST_SHA_256, new Bytes(stringToHash, 'UTF-8')));

@@ -39,15 +39,23 @@ function acceptPayment(res, next) {
             var paymentMethod = order.paymentInstrument.paymentMethod;
             if (paymentMethod.equals('HIPAY_MULTIBANCO') || paymentMethod.equals('HIPAY_MBWAY')  || paymentMethod.equals('HIPAY_SISAL')) {                   
                 HiPayProcess.proceedWithOrder(order, res, next);
-            }            
-        } else {
-            params = {
-                order: order,
-                hiPayState: 'error'
-            };
-            redirectURL = HiPayProcess.failOrder(params);
-            res.redirect(redirectURL);
-        }        
+                return next();
+            } else {
+                params = {
+                    order: order,
+                    hiPayState: 'error'
+                };
+                redirectURL = HiPayProcess.failOrder(params);
+                res.redirect(redirectURL);
+                return next();
+            }              
+        } 
+        params = {
+            order: order,
+            hiPayState: 'error'
+        };
+        redirectURL = HiPayProcess.failOrder(params);
+        res.redirect(redirectURL); 
     }
     return next();
 }

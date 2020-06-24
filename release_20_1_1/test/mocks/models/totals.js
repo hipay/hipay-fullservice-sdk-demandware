@@ -15,7 +15,7 @@ function proxyModel() {
         'dw/util/Template': function () {
             return {
                 render: function () {
-                    return { text: 'someString' };
+                    return {text: 'someString'};
                 }
             };
         },

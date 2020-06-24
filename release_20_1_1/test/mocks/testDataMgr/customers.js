@@ -70,7 +70,7 @@ export class Customer {
     }
 
     getPreferredAddress() {
-        return _.find(this.addresses, { preferred: true });
+        return _.find(this.addresses, {preferred: true});
     }
 }
 
@@ -94,7 +94,7 @@ export function getCustomer(customers, login) {
 export function parseCustomers(rawCustomers, currentCustomers) {
     let parsedCustomers = currentCustomers || {};
 
-    rawCustomers.customers.customer.forEach(customer => {
+    rawCustomers.customers.customer.forEach((customer) => {
         const login = customer.credentials[0].login[0];
         parsedCustomers[login] = customer;
     });

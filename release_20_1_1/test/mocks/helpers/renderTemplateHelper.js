@@ -8,7 +8,7 @@ var templateStub = sinon.stub();
 
 templateStub.returns({
     render: function () {
-        return { text: 'rendered html' };
+        return {text: 'rendered html'};
     }
 });
 

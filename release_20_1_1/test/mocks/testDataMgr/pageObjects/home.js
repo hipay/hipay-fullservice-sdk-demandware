@@ -41,9 +41,7 @@ export function navigateTo() {
 
 export function getProductTileCount() {
     return browser.elements(productTile)
-        .then(prodTiles => {
-            return prodTiles.value.length;
-        });
+        .then((prodTiles) => prodTiles.value.length);
 }
 
 export function getNthProductTileImageSrc(tileIdx) {

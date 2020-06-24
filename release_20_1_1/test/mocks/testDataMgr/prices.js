@@ -17,7 +17,7 @@ export function getPricesForProduct(priceBooks, productId, currencyCode = 'usd')
 
     for (let type of priceTypes) {
         let products = priceBooks[getPriceBookName(type, currencyCode)].products;
-        let price = _.findWhere(products, { productId: productId });
+        let price = _.findWhere(products, {productId: productId});
         prices[type] = price ? _.result(price, 'amount') : undefined;
     }
     return prices;
@@ -32,7 +32,7 @@ export function getPricesForProduct(priceBooks, productId, currencyCode = 'usd')
 export function parsePriceBooks(priceBooks, currentPricebooks) {
     let priceBookList = currentPricebooks || {};
 
-    priceBooks.pricebooks.pricebook.forEach(element => {
+    priceBooks.pricebooks.pricebook.forEach((element) => {
         let header = element.header[0];
         let priceBookId = header.$['pricebook-id'];
         let priceTables = element['price-tables'][0]['price-table'];
@@ -44,7 +44,7 @@ export function parsePriceBooks(priceBooks, currentPricebooks) {
             onlineFlag: header['online-flag'][0] === 'true'
         };
 
-        priceTables.forEach(priceTable => {
+        priceTables.forEach((priceTable) => {
             let proxy = {
                 productId: priceTable.$['product-id'],
                 amount: priceTable.amount[0]._,

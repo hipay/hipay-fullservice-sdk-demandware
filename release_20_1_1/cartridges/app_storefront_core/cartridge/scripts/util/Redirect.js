@@ -7,6 +7,7 @@ var URLUtils = require('dw/web/URLUtils');
  * @input CurrentRequest : dw.system.Request
  * @output Location : String
  */
+// eslint-disable-next-line no-unused-vars
 function execute(args) {
     args.Location = validateURL(args.CurrentHttpParameterMap.Location.stringValue);
     return PIPELET_NEXT;

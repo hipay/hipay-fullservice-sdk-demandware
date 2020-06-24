@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 'use strict';
 
 var CatalogMgr = require('dw/catalog/CatalogMgr');
@@ -67,7 +68,7 @@ function ProductUtils(pdict) {
     };
 
     var getVariantHierarchy = function () {
-        if (_product === null) { return null; }
+        if (_product === null) {return null;}
         var vh = {};
         if (!_variantHierarchy) {
             _variantHierarchy = ProductUtils.getVariantHierarchy(_product, _variationModel, _httpMap.Quantity.stringValue);
@@ -89,7 +90,7 @@ function ProductUtils(pdict) {
         var vh = getVariantHierarchy();
         if (selected.length === 0) {
             for (att in vh.attributes) {
-                if (att.selected) {	break; }
+                if (att.selected) {break;}
             }
             arr.push(att.id + '-' + att.value);
         } else {
@@ -104,13 +105,13 @@ function ProductUtils(pdict) {
         for (var i = 0, len = arr.length; i < len; i++) {
             attribute = atts[arr[i]];
             if (!attribute) {
-                if (current) { arr.pop(); }
+                if (current) {arr.pop();}
                 return false;
             }
-            if (!attribute.attributes) { break; }
+            if (!attribute.attributes) {break;}
             atts = attribute.attributes;
         }
-        if (current) { arr.pop(); }
+        if (current) {arr.pop();}
         return getAttributeAvailability(attribute);
     };
 
@@ -131,7 +132,7 @@ function ProductUtils(pdict) {
     };
 
     var getVariationAttributes = function (item) {
-        var variations = { attributes: [] };
+        var variations = {attributes: []};
 
         if (!item.isVariant() && !item.isMaster()) {
             return variations;
@@ -154,7 +155,7 @@ function ProductUtils(pdict) {
             var attValIterator = pvm.getAllValues(attr).iterator();
             while (attValIterator.hasNext()) {
                 var attrValue = attValIterator.next();
-                if (!masterPvm.hasOrderableVariants(attr, attrValue)) { continue; }
+                if (!masterPvm.hasOrderableVariants(attr, attrValue)) {continue;}
                 var pvaVal = {
                     id: attrValue.ID,
                     val: attrValue.displayValue ? attrValue.displayValue : attrValue.value
@@ -361,8 +362,8 @@ ProductUtils.getSimpleBonusProduct = function (item, lineItem) {
         ID: item.ID,
         qty: lineItem.quantityValue,
         lineItemCtnrUUID: lineItem.lineItemCtnr.UUID,
-        variations: { attributes: [] },
-        options: { attributes: [] }
+        variations: {attributes: []},
+        options: {attributes: []}
     };
 
     // if product is variant or master, get selected  attribute definitions
@@ -376,7 +377,7 @@ ProductUtils.getSimpleBonusProduct = function (item, lineItem) {
                 displayID: attDef.ID,
                 displayName: attDef.displayName,
                 selectedDisplayValue: selectedValue.displayValue,
-                selectedValue: selectedValue.value });
+                selectedValue: selectedValue.value});
         }
     }
 
@@ -411,7 +412,7 @@ ProductUtils.getSimpleBonusProduct = function (item, lineItem) {
  * @returns {String}
  */
 ProductUtils.getBonusProductJson = function (item, lineItem) {
-    var o = { data: ProductUtils.getSimpleBonusProduct(item, lineItem) };
+    var o = {data: ProductUtils.getSimpleBonusProduct(item, lineItem)};
     return JSON.stringify(o);
 };
 
@@ -423,13 +424,13 @@ ProductUtils.getBonusProductJson = function (item, lineItem) {
  * @returns {dw.catalog.ProductVariationAttributeValue}
  */
 ProductUtils.getSelectedColor = function (product, pvm) {
-    if (product === null) { return null; }
+    if (product === null) {return null;}
     var vm = pvm === null ? product.variationModel : pvm;
     var cvm = product.isVariant() ? product.masterProduct.variationModel : product.variationModel;
 
     var selectedColor = null;
     var colorVA = vm.getProductVariationAttribute('color');
-    if (colorVA === null) { return null; }
+    if (colorVA === null) {return null;}
 
     selectedColor = vm.getSelectedValue(colorVA);
 
@@ -447,11 +448,9 @@ ProductUtils.getSelectedColor = function (product, pvm) {
 
     var cv = vm.getVariationValue(variant, colorVA);
     if (!cvm.hasOrderableVariants(colorVA, cv)) {
-        var found = false;
         for (var i = 0, il = vm.variants.length; i < il; i++) {
             cv = cvm.getVariationValue(vm.variants[i], colorVA);
             if (cvm.hasOrderableVariants(colorVA, cv)) {
-                found = true;
                 break;
             }
         }
@@ -495,10 +494,10 @@ ProductUtils.getQueryString = function (map, fields) {
     var parms = [];
     for (var i = 0, il = fields.length; i < il; i++) {
         var key = fields[i];
-        if (!key || !map.isParameterSubmitted(key)) { continue; }
+        if (!key || !map.isParameterSubmitted(key)) {continue;}
 
         var parm = map.get(key);
-        if (!parm || parm.stringValue.length === 0) { continue; }
+        if (!parm || parm.stringValue.length === 0) {continue;}
 
         // only get here if we have a match
         parms.push(sanitize(key) + '=' + sanitize(parm.stringValue));
@@ -550,7 +549,7 @@ ProductUtils.getVariants = function (item, pvm, quantity) {
         for (var a = 0, alen = pvm.productVariationAttributes.length; a < alen; a++) {
             var att = pvm.productVariationAttributes[a];
             var variationValue = pvm.getVariationValue(v, att);
-            if (!variationValue) { continue; }
+            if (!variationValue) {continue;}
             attKey.push(att.ID + '-' + variationValue.value);
             variant.attributes[att.ID] = !variationValue.displayValue ? variationValue.value : variationValue.displayValue;
         }
@@ -571,7 +570,7 @@ ProductUtils.getVariants = function (item, pvm, quantity) {
  */
 ProductUtils.getVariantHierarchy = function (item, productVariationModel, quantity) {
     var variants = {};
-    if (!item.isVariant() && !item.isMaster()) { return variants; }
+    if (!item.isVariant() && !item.isMaster()) {return variants;}
 
     var allVariants = productVariationModel.variants;
     var allVariationAttributes = productVariationModel.productVariationAttributes;
@@ -582,7 +581,7 @@ ProductUtils.getVariantHierarchy = function (item, productVariationModel, quanti
         for (var j = 0, numVariationAttributes = allVariationAttributes.length; j < numVariationAttributes; j++) {
             var attribute = allVariationAttributes[j];
             var variationValue = productVariationModel.getVariationValue(variant, attribute);
-            if (!variationValue) { continue; }
+            if (!variationValue) {continue;}
             var key = attribute.ID + '-' + variationValue.value;
             if (!('attributes' in target)) {
                 target.attributes = {};
@@ -635,7 +634,7 @@ ProductUtils.getSelectedAttributes = function (pvm) {
  */
 ProductUtils.getDefaultVariant = function (pvm) {
     var variant = pvm.selectedVariant;
-    if (variant) { return variant; }
+    if (variant) {return variant;}
 
     var attDefs = pvm.getProductVariationAttributes();
     var map = new HashMap();

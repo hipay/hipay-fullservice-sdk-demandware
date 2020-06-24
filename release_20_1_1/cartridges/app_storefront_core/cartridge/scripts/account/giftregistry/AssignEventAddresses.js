@@ -1,14 +1,115 @@
+
+/* eslint-disable valid-jsdoc */
 /**
- * Handles Pipeline call for assignEventAddresses
+ * Compare a form address with an address from the address book.
+ * Return true if they are different.
  *
- * @input ProductList : dw.customer.ProductList The product list representing the gift registry.
- * @input GiftRegistryForm : dw.web.FormGroup The form definition representing the gift registry.
- * @input Customer : dw.customer.Customer The current customer's addressbook.
+ * @param {dw.web.FormGroup} addressFields the adresse Fields
+ * @param {dw.customer.CustomerAddress} address the adress
+ * @returns boolean
+ */
+function isAddressChanged(addressFields, address) {
+    if (address == null) return true;
+
+    if (addressFields.firstname.value !== address.firstName) {
+        return true;
+    }
+
+    if (addressFields.lastname.value !== address.lastName) {
+        return true;
+    }
+
+    if (addressFields.address1.value !== address.address1) {
+        return true;
+    }
+
+    if (addressFields.address2.value !== address.address2) {
+        return true;
+    }
+
+    if (addressFields.city.value !== address.city) {
+        return true;
+    }
+
+    if (addressFields.postal.value !== address.postalCode) {
+        return true;
+    }
+
+    if (addressFields.states.state.value !== address.stateCode) {
+        return true;
+    }
+
+    if (addressFields.country.value !== address.countryCode) {
+        return true;
+    }
+
+    if (addressFields.phone.value !== address.phone) {
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * Add a new address to the address book.
+ *
+ * @param {dw.web.FormGroup} addressFields
+ * @param {dw.customer.CustomerAddress} address
+ * @returns AdressId
  *
  */
-function execute(pdict) {
-    assignEventAddresses(pdict);
-    return PIPELET_NEXT;
+function determineAddressId(addressFields, addressBook) {
+    var addressID;
+    var candidateID;
+    var counter = 0;
+    var existingAddress;
+
+    if (addressFields.addressid.value) {
+        addressID = addressFields.addressid.value;
+        if (addressBook.getAddress(addressID)) {
+            addressID = addressFields.city.value;
+        }
+    } else {
+        addressID = addressFields.city.value;
+    }
+
+    candidateID = addressID;
+
+    while (!existingAddress) {
+        existingAddress = addressBook.getAddress(candidateID);
+
+        if (existingAddress) {
+            // this ID is already taken, increment the counter
+            // and try the next one
+            if (isAddressChanged(addressFields, existingAddress)) {
+                counter++;
+                candidateID = addressFields.city.value + '-' + counter;
+                existingAddress = null;
+            } else {
+                return null;
+            }
+        } else {
+            return candidateID;
+        }
+    }
+    return null;
+}
+
+// eslint-disable-next-line require-jsdoc
+function addAddress(addressFields, addressBook, addressID) {
+    var address;
+
+    // create the new address and copy the form values
+    address = addressBook.createAddress(addressID);
+    address.setFirstName(addressFields.firstname.value);
+    address.setLastName(addressFields.lastname.value);
+    address.setAddress1(addressFields.address1.value);
+    address.setAddress2(addressFields.address2.value);
+    address.setCity(addressFields.city.value);
+    address.setPostalCode(addressFields.postal.value);
+    address.setStateCode(addressFields.states.state.value);
+    address.setCountryCode(addressFields.country.value);
+    address.setPhone(addressFields.phone.value);
 }
 
 /**
@@ -73,112 +174,18 @@ function assignEventAddresses(pdict) {
     }
 }
 
-/**
- * Add a new address to the address book.
- *
- * @param {dw.web.FormGroup} addressFields
- * @param {dw.customer.CustomerAddress} address
- *
- */
-function determineAddressId(addressFields, addressBook) {
-    var addressID;
-    var candidateID;
-    var counter = 0;
-    var existingAddress;
-
-    if (addressFields.addressid.value) {
-        addressID = addressFields.addressid.value;
-        if (addressBook.getAddress(addressID)) {
-            addressID = addressFields.city.value;
-        }
-    } else {
-        addressID = addressFields.city.value;
-    }
-
-    candidateID = addressID;
-
-    while (!existingAddress) {
-        existingAddress = addressBook.getAddress(candidateID);
-
-        if (existingAddress) {
-            // this ID is already taken, increment the counter
-            // and try the next one
-            if (isAddressChanged(addressFields, existingAddress)) {
-                counter++;
-                candidateID = addressFields.city.value + '-' + counter;
-                existingAddress = null;
-            } else {
-                return null;
-            }
-        } else {
-            return candidateID;
-        }
-    }
-}
-
-function addAddress(addressFields, addressBook, addressID) {
-    var address;
-
-    // create the new address and copy the form values
-    address = addressBook.createAddress(addressID);
-    address.setFirstName(addressFields.firstname.value);
-    address.setLastName(addressFields.lastname.value);
-    address.setAddress1(addressFields.address1.value);
-    address.setAddress2(addressFields.address2.value);
-    address.setCity(addressFields.city.value);
-    address.setPostalCode(addressFields.postal.value);
-    address.setStateCode(addressFields.states.state.value);
-    address.setCountryCode(addressFields.country.value);
-    address.setPhone(addressFields.phone.value);
-}
 
 /**
- * Compare a form address with an address from the address book.
- * Return true if they are different.
+ * Handles Pipeline call for assignEventAddresses
  *
- * @param {dw.web.FormGroup} addressFields
- * @param {dw.customer.CustomerAddress} address
+ * @input ProductList : dw.customer.ProductList The product list representing the gift registry.
+ * @input GiftRegistryForm : dw.web.FormGroup The form definition representing the gift registry.
+ * @input Customer : dw.customer.Customer The current customer's addressbook.
+ *
  */
-function isAddressChanged(addressFields, address) {
-    if (address == null) return true;
-
-    if (addressFields.firstname.value != address.firstName) {
-        return true;
-    }
-
-    if (addressFields.lastname.value != address.lastName) {
-        return true;
-    }
-
-    if (addressFields.address1.value != address.address1) {
-        return true;
-    }
-
-    if (addressFields.address2.value != address.address2) {
-        return true;
-    }
-
-    if (addressFields.city.value != address.city) {
-        return true;
-    }
-
-    if (addressFields.postal.value != address.postalCode) {
-        return true;
-    }
-
-    if (addressFields.states.state.value != address.stateCode) {
-        return true;
-    }
-
-    if (addressFields.country.value != address.countryCode) {
-        return true;
-    }
-
-    if (addressFields.phone.value != address.phone) {
-        return true;
-    }
-
-    return false;
+function execute(pdict) {
+    assignEventAddresses(pdict);
+    return PIPELET_NEXT;
 }
 
 module.exports = {

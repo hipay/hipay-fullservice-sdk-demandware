@@ -9,7 +9,7 @@
 function execute(pdict) {
     var isInvalidated = invalidatePaymentCardForm(pdict.Status, pdict.CreditCardForm);
 
-    if(!isInvalidated) {
+    if (!isInvalidated) {
         return PIPELET_ERROR;
     }
 
@@ -42,7 +42,7 @@ function invalidatePaymentCardForm(status, creditCardForm) {
     while (items.hasNext()) {
         var item = items.next();
 
-        switch(item.code) {
+        switch (item.code) {
             case PaymentStatusCodes.CREDITCARD_INVALID_CARD_NUMBER:
                 creditCardForm.number.setValue(creditCardForm.number.htmlValue);
                 creditCardForm.number.invalidateFormElement();

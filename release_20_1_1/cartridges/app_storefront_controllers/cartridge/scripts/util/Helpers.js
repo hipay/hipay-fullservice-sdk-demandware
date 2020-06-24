@@ -25,5 +25,5 @@ function writeToCustomObject(params) {
 }
 
 /* Exports of the modules */
- exports.writeToCustomObject = writeToCustomObject;
+exports.writeToCustomObject = writeToCustomObject;
  

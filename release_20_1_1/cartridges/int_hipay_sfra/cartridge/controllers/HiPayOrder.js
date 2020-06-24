@@ -4,10 +4,9 @@ var server = require('server');
 var URLUtils = require('dw/web/URLUtils');
 var OrderMgr = require('dw/order/OrderMgr');
 
-var HiPayOrderModule = require('*/cartridge/scripts/lib/hipay/modules/hipayOrderModule');
-var HiPayProcess = require('*/cartridge/scripts/lib/hipay/hipayProcess');
-
 function acceptPayment(res, next) {    
+    var HiPayOrderModule = require('*/cartridge/scripts/lib/hipay/modules/hipayOrderModule');
+    var HiPayProcess = require('*/cartridge/scripts/lib/hipay/hipayProcess');
     var isHashValid = HiPayProcess.verifyHash();
     var params = {};
     var processOrder;
@@ -61,6 +60,8 @@ function acceptPayment(res, next) {
 }
 
 function declinePayment(req, res, next) {
+    var HiPayOrderModule = require('*/cartridge/scripts/lib/hipay/modules/hipayOrderModule');
+    var HiPayProcess = require('*/cartridge/scripts/lib/hipay/hipayProcess');
     var isHashValid = HiPayProcess.verifyHash();
     var order = OrderMgr.getOrder(req.querystring.orderid);
     var hiPayState = req.querystring.state;

@@ -3,9 +3,10 @@
  * and applies only the selected one for case if HiPay enabled.
  */
 
+// eslint-disable-next-line no-unused-vars
 function execute(args) {
-    var HiPayLogger = require("*/cartridge/scripts/lib/hipay/HiPayLogger"),
-        log = new HiPayLogger("HiPayResetPaymentForms");
+    var HiPayLogger = require('*/cartridge/scripts/lib/hipay/HiPayLogger'),
+        log = new HiPayLogger('HiPayResetPaymentForms');
 
     try {
         if (require('*/cartridge/scripts/lib/hipay/HiPayCheckoutModule').resetPaymentForms()) {

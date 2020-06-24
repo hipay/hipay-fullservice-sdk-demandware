@@ -17,7 +17,7 @@ var sanitize = require('~/cartridge/scripts/util/StringHelpers').sanitize;
  *
  * @param {dw.system.PipelineDictionary} pdict
  */
-function ProductUtils (pdict) {
+function ProductUtils(pdict) {
     var _product = pdict.Product || null;
     var _httpMap = pdict.CurrentHttpParameterMap;
     var _variationModel = pdict.hasOwnProperty('CurrentVariationModel') && pdict.CurrentVariationModel ?
@@ -59,8 +59,7 @@ function ProductUtils (pdict) {
             };
             p.availability = ProductUtils.getAvailability(item, _httpMap.Quantity.stringValue);
             p.variants = ProductUtils.getVariants(item, _variationModel, _httpMap.Quantity.stringValue);
-        }
-        catch (error) {
+        } catch (error) {
             p.error = error;
         }
 
@@ -84,7 +83,8 @@ function ProductUtils (pdict) {
      * @param {array} selected
      */
     var getVariantAvailability = function (current, selected) {
-        var arr = [], att = null;
+        var arr = [],
+            att = null;
 
         var vh = getVariantHierarchy();
         if (selected.length === 0) {
@@ -101,11 +101,11 @@ function ProductUtils (pdict) {
         }
         var atts = vh.attributes;
         var attribute = {};
-        for (var i = 0,len = arr.length; i < len; i++) {
+        for (var i = 0, len = arr.length; i < len; i++) {
             attribute = atts[arr[i]];
             if (!attribute) {
                 if (current) { arr.pop(); }
-                 return false;
+                return false;
             }
             if (!attribute.attributes) { break; }
             atts = attribute.attributes;
@@ -128,12 +128,10 @@ function ProductUtils (pdict) {
             available = attribute.availability.availableForSale;
         }
         return available;
-
     };
 
     var getVariationAttributes = function (item) {
-
-        var variations = {attributes: []};
+        var variations = { attributes: [] };
 
         if (!item.isVariant() && !item.isMaster()) {
             return variations;
@@ -172,17 +170,15 @@ function ProductUtils (pdict) {
                     // get swatch image
                     var swatch = attrValue.getImage('swatch');
                     if (swatch) {
-
                         pvaVal.images.swatch = {
-                            url:swatch.getURL(),
-                            alt:swatch.alt,
-                            title:swatch.title
+                            url: swatch.getURL(),
+                            alt: swatch.alt,
+                            title: swatch.title
                         };
                     }
                 }
                 // add the product variation attribute value
                 pva.vals.push(pvaVal);
-
             } /* END pvm.getAllValues(v_att) */
 
             // add the product variation attribute
@@ -196,9 +192,9 @@ function ProductUtils (pdict) {
         var imgArray = [];
         for (var i = 0, len = imgs.length; i < len; i++) {
             imgArray.push({
-                url:imgs[i].getURL().toString(),
-                alt:imgs[i].alt,
-                title:imgs[i].title
+                url: imgs[i].getURL().toString(),
+                alt: imgs[i].alt,
+                title: imgs[i].title
             });
         }
         return imgArray;
@@ -365,8 +361,8 @@ ProductUtils.getSimpleBonusProduct = function (item, lineItem) {
         ID: item.ID,
         qty: lineItem.quantityValue,
         lineItemCtnrUUID: lineItem.lineItemCtnr.UUID,
-        variations: {attributes: []},
-        options: {attributes: []}
+        variations: { attributes: [] },
+        options: { attributes: [] }
     };
 
     // if product is variant or master, get selected  attribute definitions
@@ -380,7 +376,7 @@ ProductUtils.getSimpleBonusProduct = function (item, lineItem) {
                 displayID: attDef.ID,
                 displayName: attDef.displayName,
                 selectedDisplayValue: selectedValue.displayValue,
-                selectedValue: selectedValue.value});
+                selectedValue: selectedValue.value });
         }
     }
 
@@ -415,7 +411,7 @@ ProductUtils.getSimpleBonusProduct = function (item, lineItem) {
  * @returns {String}
  */
 ProductUtils.getBonusProductJson = function (item, lineItem) {
-    var o = {data: ProductUtils.getSimpleBonusProduct(item, lineItem)};
+    var o = { data: ProductUtils.getSimpleBonusProduct(item, lineItem) };
     return JSON.stringify(o);
 };
 
@@ -439,29 +435,28 @@ ProductUtils.getSelectedColor = function (product, pvm) {
 
     if (selectedColor) {
         return selectedColor;
-    } else {
-        var variant = product;
-        if (!product.isVariant()) {
-            if (vm.defaultVariant) {
-                variant = vm.defaultVariant;
-            } else if (vm.variants.length > 0) {
-                variant = vm.variants[0];
-            }
-        }
-
-        var cv = vm.getVariationValue(variant, colorVA);
-        if (!cvm.hasOrderableVariants(colorVA, cv)) {
-            var found = false;
-            for (var i = 0, il = vm.variants.length; i < il; i++) {
-                cv = cvm.getVariationValue(vm.variants[i], colorVA);
-                if (cvm.hasOrderableVariants(colorVA, cv)) {
-                    found = true;
-                    break;
-                }
-            }
-        }
-        return cv;
     }
+    var variant = product;
+    if (!product.isVariant()) {
+        if (vm.defaultVariant) {
+            variant = vm.defaultVariant;
+        } else if (vm.variants.length > 0) {
+            variant = vm.variants[0];
+        }
+    }
+
+    var cv = vm.getVariationValue(variant, colorVA);
+    if (!cvm.hasOrderableVariants(colorVA, cv)) {
+        var found = false;
+        for (var i = 0, il = vm.variants.length; i < il; i++) {
+            cv = cvm.getVariationValue(vm.variants[i], colorVA);
+            if (cvm.hasOrderableVariants(colorVA, cv)) {
+                found = true;
+                break;
+            }
+        }
+    }
+    return cv;
 };
 
 /**
@@ -542,8 +537,7 @@ ProductUtils.getVariants = function (item, pvm, quantity) {
         return variants;
     }
 
-    for (var i = 0,len = pvm.variants.length; i < len; i++) {
-
+    for (var i = 0, len = pvm.variants.length; i < len; i++) {
         var v = pvm.variants[i];
         var variant = {
             id: v.ID,
@@ -650,7 +644,7 @@ ProductUtils.getDefaultVariant = function (pvm) {
         var attribute = attDefs[i];
         var selectedValue = pvm.getSelectedValue(attribute);
         if (selectedValue && selectedValue.displayValue.length > 0) {
-            map.put(attribute.ID,selectedValue.ID);
+            map.put(attribute.ID, selectedValue.ID);
         }
     }
 

@@ -10,7 +10,6 @@
 var ISML = require('dw/template/ISML');
 
 /* Script Modules */
-var hiPayModule = require('*/cartridge/scripts/lib/hipay/HiPayCheckoutModule');
 var sitePrefs = require('dw/system/Site').getCurrent().getPreferences().getCustom();
 
 /**
@@ -22,6 +21,7 @@ var sitePrefs = require('dw/system/Site').getCurrent().getPreferences().getCusto
 * @return {Object} Object indicating success or error
 */
 function creditCardHandle(paymentInstrument) {
+    var hiPayModule = require('*/cartridge/scripts/lib/hipay/HiPayCheckoutModule');
     var PaymentMgr = require('dw/order/PaymentMgr');
     var Transaction = require('dw/system/Transaction');
     var creditCard = session.forms.billing.paymentMethods.creditCard;
@@ -56,7 +56,7 @@ function creditCardHandle(paymentInstrument) {
 
         if (creditCardStatus.error) {
             hiPayModule.invalidatePaymentCardFormElements(creditCardStatus, creditCard);
-            return { error: true };
+            return {error: true};
         }
     }
 
@@ -84,7 +84,7 @@ function creditCardHandle(paymentInstrument) {
         }
 
         if (empty(selectedCreditCard)) {
-            return { error: true };
+            return {error: true};
         }
 
         hiPayCardNumber = selectedCreditCard.creditCardNumber;
@@ -109,15 +109,15 @@ function creditCardHandle(paymentInstrument) {
             hiPayToken = hiPayTokenResult.HiPayToken;
             hiPayCardNumber = hiPayTokenResult.HiPayPan;
         } else {
-            return { error: true };
+            return {error: true};
         }
     }
     
     //Init flag saveCardChecked (depending on the storedPaymentUUID)    
     if (empty(creditCard.uuid.value) && session.forms.billing.paymentMethods.creditCard.saveCard.value) {
-        session.custom['saveCardChecked'] = session.forms.billing.paymentMethods.creditCard.saveCard.value;
+        session.custom.saveCardChecked = session.forms.billing.paymentMethods.creditCard.saveCard.value;
     } else {
-        session.custom['saveCardChecked'] = false;  
+        session.custom.saveCardChecked = false;  
     }
 
     if (hiPayToken != null) {
@@ -130,10 +130,10 @@ function creditCardHandle(paymentInstrument) {
             paymentInstrument.setCreditCardToken(hiPayToken);
         });
     } else {
-        return { error: true };
+        return {error: true};
     }
 
-    return { success: true };
+    return {success: true};
 }
 
 /**
@@ -142,6 +142,7 @@ function creditCardHandle(paymentInstrument) {
 * @return {Object} success if the payment instrument is created, error otherwise
 */
 function Handle(args) {
+    var hiPayModule = require('*/cartridge/scripts/lib/hipay/HiPayCheckoutModule');
     var basket = args.Basket;
     var paymentMethod = session.forms.billing.paymentMethods.selectedPaymentMethodID.value;
     var paymentInstrument;
@@ -150,22 +151,22 @@ function Handle(args) {
         paymentInstrument = hiPayModule.createPaymentInstrument(basket, paymentMethod, true);
 
         if (paymentInstrument === null) {
-            return { error: true };
+            return {error: true};
         }
 
         hiPayModule.hiPayUpdatePaymentInstrument(paymentInstrument);
 
         if (paymentMethod === 'HIPAY_CREDIT_CARD') {
             if (creditCardHandle(paymentInstrument).success) {
-                return { success: true };
+                return {success: true};
             } else { // eslint-disable-line
-                return { error: true };
+                return {error: true};
             }
         } else { // eslint-disable-line
-            return { success: true };
+            return {success: true};
         }
     } else {
-        return { error: true };
+        return {error: true};
     }
 }
 
@@ -177,6 +178,7 @@ function Handle(args) {
 * @return {Object} Object indicating authorized if successful or error otherwise
 */
 function Authorize(args) {
+    var hiPayModule = require('*/cartridge/scripts/lib/hipay/HiPayCheckoutModule');
     var PaymentMgr = require('dw/order/PaymentMgr');
     var Transaction = require('dw/system/Transaction');
     var hipayEnableOneClick = sitePrefs.hipayEnableOneClick;
@@ -212,20 +214,20 @@ function Authorize(args) {
                 };
             } else { // eslint-disable-line
                 if (empty(response.hiPayRedirectURL)) { // eslint-disable-line
-                    return { authorized: true };
+                    return {authorized: true};
                 } else { // eslint-disable-line
                     ISML.renderTemplate('hipay/hosted/hipayredirect', {
                         HiPayRedirectURL: response.hiPayRedirectURL
                     });
 
-                    return { success: true };
+                    return {success: true};
                 }
             }
         } else {
-            return { error: true };
+            return {error: true};
         }
     } else {
-        return { error: true };
+        return {error: true};
     }
 }
 

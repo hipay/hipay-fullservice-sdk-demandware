@@ -11,11 +11,12 @@ var ajax = require('../../ajax'),
  * @param {Object} data The Credit Card data (holder, type, masked number, expiration month/year)
  */
 function setCCFields(data) {
+    var $creditCard;
     if (SitePreferences.HIPAY_ENABLED) {
-        var $creditCard = $('[data-method="HIPAY_CREDIT_CARD"]');
+        $creditCard = $('[data-method="HIPAY_CREDIT_CARD"]');
         $creditCard.find('input[name$="uuid"]').val(data.uuid).trigger('change');
     } else {
-        var $creditCard = $('[data-method="CREDIT_CARD"]');
+        $creditCard = $('[data-method="CREDIT_CARD"]');
     }
 
     $creditCard.find('input[name$="creditCard_owner"]').val(data.holder).trigger('change');
@@ -108,7 +109,7 @@ exports.init = function () {
 
     if (SitePreferences.HIPAY_ENABLED) {
         // select payment method if available
-        if(selectedPaymentMethod){
+        if (selectedPaymentMethod){
             updatePaymentMethod(selectedPaymentMethod);
         }
         $selectPaymentMethod.on('click', 'input[type="radio"]', function () {
@@ -145,51 +146,50 @@ exports.init = function () {
     if (SitePreferences.HIPAY_ENABLED) {
         var $creditCard = $('[data-method="HIPAY_CREDIT_CARD"]');
     	//on init, set limit for a selected card. After change limits accordingly
-        var initCard = $creditCard.find('select[name$="_type"]').find(":selected").text();
-        if (initCard == "Amex") {
+        var initCard = $creditCard.find('select[name$="_type"]').find(':selected').text();
+        if (initCard == 'Amex') {
             $creditCard.find('input[name$="_cvn"]').attr({maxLength : 4});
         } else {
             $creditCard.find('input[name$="_cvn"]').attr({maxLength : 3});
         }
 
-        $creditCard.find('select[name$="_type"]').on('change', function () {
-        	console.log('another card selected');
+        $creditCard.find('select[name$="_type"]').on('change', function () {        	
 
-           var cvv = $creditCard.find('.cvn-wrap');
-           var hiPaySaveOptions = $('*[data-hipay-cardtype="'+$(this).val()+'"]');
-           var selectedCard = $(this).val();
+            var cvv = $creditCard.find('.cvn-wrap');
+            var hiPaySaveOptions = $('*[data-hipay-cardtype="'+$(this).val()+'"]');
+            var selectedCard = $(this).val();
 
            //CVC digits min and max
-           if (selectedCard == "Maestro" || selectedCard == "Master Card" || selectedCard == "Visa" || selectedCard == "CarteBancaire") {
-               $creditCard.find('input[name$="_cvn"]').attr({maxLength : 3});
-           } else if (selectedCard == "Amex") {
-               $creditCard.find('input[name$="_cvn"]').attr({maxLength : 4});
-           }
+            if (selectedCard == 'Maestro' || selectedCard == 'Master Card' || selectedCard == 'Visa' || selectedCard == 'CarteBancaire') {
+                $creditCard.find('input[name$="_cvn"]').attr({maxLength : 3});
+            } else if (selectedCard == 'Amex') {
+                $creditCard.find('input[name$="_cvn"]').attr({maxLength : 4});
+            }
 
            //hide cvv for Mister Cash
-           if (selectedCard == "BancontactMisterCash") {
-              cvv.hide();
-              $creditCard.find('input[name$="_cvn"]').val('000').trigger('change');
-           } else {
-              $creditCard.find('input[name$="_cvn"]').val('').trigger('change');
-              cvv.show();
-           }
+            if (selectedCard == 'BancontactMisterCash') {
+                cvv.hide();
+                $creditCard.find('input[name$="_cvn"]').val('000').trigger('change');
+            } else {
+                $creditCard.find('input[name$="_cvn"]').val('').trigger('change');
+                cvv.show();
+            }
 
-           if (hiPaySaveOptions.attr('data-hipay-cvv-disabled') == 'true') {
-               $creditCard.find('input[name$="_cvn"]').removeClass('required');
-               $creditCard.find('input[name$="_cvn"]').val(' ');
-               $creditCard.find('div.cvn').removeClass('required');
-               $creditCard.find('div.cvn').find('span.required-indicator').hide();
+            if (hiPaySaveOptions.attr('data-hipay-cvv-disabled') == 'true') {
+                $creditCard.find('input[name$="_cvn"]').removeClass('required');
+                $creditCard.find('input[name$="_cvn"]').val(' ');
+                $creditCard.find('div.cvn').removeClass('required');
+                $creditCard.find('div.cvn').find('span.required-indicator').hide();
                
-               if (selectedCard == 'Maestro') {
+                if (selectedCard == 'Maestro') {
             	   $creditCard.find('input[name$="_cvn"]').addClass('optional');
             	   $creditCard.find('div.cvn').addClass('optional');
-               } else {
+                } else {
             	   $creditCard.find('input[name$="_cvn"]').removeClass('optional');
             	   $creditCard.find('div.cvn').removeClass('optional');
-               }
+                }
                
-           } else {
+            } else {
         	   $creditCard.find('input[name$="_cvn"]').addClass('required');
         	   $creditCard.find('div.cvn').addClass('required');
         	   $creditCard.find('span.required-indicator').show();
@@ -198,26 +198,26 @@ exports.init = function () {
         		   $creditCard.find('input[name$="_cvn"]').removeClass('optional');
             	   $creditCard.find('div.cvn').removeClass('optional');
         	   }
-           }
+            }
            
-           if (selectedCard == "Amex") {
-              $(".owner-single").addClass("hide");
-              $(".owner-split").removeClass("hide");
-           } else {
-              $(".owner-split").addClass("hide");
-    	      $(".owner-single").removeClass("hide");
+            if (selectedCard == 'Amex') {
+                $('.owner-single').addClass('hide');
+                $('.owner-split').removeClass('hide');
+            } else {
+                $('.owner-split').addClass('hide');
+    	      $('.owner-single').removeClass('hide');
     	   }
            
            //hide 'Save Card' based on custom.hipayOneClickDisabled
-           var saveCard = $creditCard.find('.save-card');
-           var saveCardBox = saveCard.find('input[name$="_saveCard"]');
-           if (hiPaySaveOptions.attr('data-hipay-oneclick-disabled') == 'true') {
+            var saveCard = $creditCard.find('.save-card');
+            var saveCardBox = saveCard.find('input[name$="_saveCard"]');
+            if (hiPaySaveOptions.attr('data-hipay-oneclick-disabled') == 'true') {
         	   saveCardBox.prop('checked', false);
         	   saveCard.hide();
-           } else {
+            } else {
         	   saveCardBox.prop('checked', true);
         	   saveCard.show();
-           }
+            }
         });
    	}
 

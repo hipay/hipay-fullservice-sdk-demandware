@@ -8,8 +8,8 @@ var URLUtils = require('dw/web/URLUtils');
  * @output Location : String
  */
 function execute(args) {
-	args.Location = validateURL(args.CurrentHttpParameterMap.Location.stringValue);
-	return PIPELET_NEXT;
+    args.Location = validateURL(args.CurrentHttpParameterMap.Location.stringValue);
+    return PIPELET_NEXT;
 }
 
 /**
@@ -19,16 +19,16 @@ function execute(args) {
  */
 function validateURL(url) {
 	// match hostname, only if followed by / or ends
-	var hostRegExp = new RegExp('^https?://' + request.getHttpHost() + '(?=/|$)');
-	var location;
-	if (!url || !hostRegExp.test(url)) {
-		location = URLUtils.httpHome().toString();
-	} else {
-		location = url;
-	}
-	return location;
+    var hostRegExp = new RegExp('^https?://' + request.getHttpHost() + '(?=/|$)');
+    var location;
+    if (!url || !hostRegExp.test(url)) {
+        location = URLUtils.httpHome().toString();
+    } else {
+        location = url;
+    }
+    return location;
 }
 
 module.exports = {
-	validateURL: validateURL
+    validateURL: validateURL
 };

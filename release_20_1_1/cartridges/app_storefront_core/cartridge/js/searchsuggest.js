@@ -150,7 +150,7 @@ var searchsuggest = {
      * @description
      */
     clearResults: function () {
-        if (!$resultsContainer) { return; }
+        if (!$resultsContainer) {return;}
         $resultsContainer.fadeOut(200, function () {$resultsContainer.empty();});
     },
     /**

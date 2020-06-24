@@ -9,7 +9,6 @@
  */
 
 /* Script Modules */
-var app = require('~/cartridge/scripts/app');
 var guard = require('~/cartridge/scripts/guard');
 
 /**
@@ -18,6 +17,7 @@ var guard = require('~/cartridge/scripts/guard');
  * The system registers at most one checkout per basket per session.
  */
 function startCheckout() {
+    var app = require('~/cartridge/scripts/app');
     var cart = app.getModel('Cart').get();
 
     if (cart) {

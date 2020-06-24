@@ -40,7 +40,7 @@ function assignEventAddresses(pdict) {
     // if the before event address was changed add it to the address book
     if (hasChangedBeforeAddress) {
         beforeAddressId = determineAddressId(addressBeforeEvent, addressBook);
-        if(beforeAddressId) {
+        if (beforeAddressId) {
             addAddress(addressBeforeEvent, addressBook, beforeAddressId);
         }
     }
@@ -105,7 +105,7 @@ function determineAddressId(addressFields, addressBook) {
             // and try the next one
             if (isAddressChanged(addressFields, existingAddress)) {
                 counter++;
-                candidateID = addressFields.city.value + "-" + counter;
+                candidateID = addressFields.city.value + '-' + counter;
                 existingAddress = null;
             } else {
                 return null;
@@ -120,16 +120,16 @@ function addAddress(addressFields, addressBook, addressID) {
     var address;
 
     // create the new address and copy the form values
-    address = addressBook.createAddress( addressID );
-    address.setFirstName( addressFields.firstname.value );
-    address.setLastName( addressFields.lastname.value );
-    address.setAddress1( addressFields.address1.value );
-    address.setAddress2( addressFields.address2.value );
-    address.setCity( addressFields.city.value );
-    address.setPostalCode( addressFields.postal.value );
-    address.setStateCode( addressFields.states.state.value );
-    address.setCountryCode( addressFields.country.value );
-    address.setPhone( addressFields.phone.value );
+    address = addressBook.createAddress(addressID);
+    address.setFirstName(addressFields.firstname.value);
+    address.setLastName(addressFields.lastname.value);
+    address.setAddress1(addressFields.address1.value);
+    address.setAddress2(addressFields.address2.value);
+    address.setCity(addressFields.city.value);
+    address.setPostalCode(addressFields.postal.value);
+    address.setStateCode(addressFields.states.state.value);
+    address.setCountryCode(addressFields.country.value);
+    address.setPhone(addressFields.phone.value);
 }
 
 /**
@@ -140,42 +140,41 @@ function addAddress(addressFields, addressBook, addressID) {
  * @param {dw.customer.CustomerAddress} address
  */
 function isAddressChanged(addressFields, address) {
-
     if (address == null) return true;
 
-    if ( addressFields.firstname.value != address.firstName ) {
+    if (addressFields.firstname.value != address.firstName) {
         return true;
     }
 
-    if ( addressFields.lastname.value != address.lastName ) {
+    if (addressFields.lastname.value != address.lastName) {
         return true;
     }
 
-    if ( addressFields.address1.value != address.address1 ) {
+    if (addressFields.address1.value != address.address1) {
         return true;
     }
 
-    if ( addressFields.address2.value != address.address2 ) {
+    if (addressFields.address2.value != address.address2) {
         return true;
     }
 
-    if ( addressFields.city.value != address.city ) {
+    if (addressFields.city.value != address.city) {
         return true;
     }
 
-    if ( addressFields.postal.value != address.postalCode ) {
+    if (addressFields.postal.value != address.postalCode) {
         return true;
     }
 
-    if ( addressFields.states.state.value != address.stateCode ) {
+    if (addressFields.states.state.value != address.stateCode) {
         return true;
     }
 
-    if ( addressFields.country.value != address.countryCode) {
+    if (addressFields.country.value != address.countryCode) {
         return true;
     }
 
-    if ( addressFields.phone.value != address.phone ) {
+    if (addressFields.phone.value != address.phone) {
         return true;
     }
 

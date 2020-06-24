@@ -30,11 +30,12 @@ var guard = require('~/cartridge/scripts/guard');
  */
 function list() {
     var wallet = customer.getProfile().getWallet();
+    var paymentInstruments;
 
     if (!empty(sitePrefs.hipayEnabled) && sitePrefs.hipayEnabled && !empty(sitePrefs.hipayEnableOneClick) && sitePrefs.hipayEnableOneClick) {
-        var paymentInstruments = wallet.getPaymentInstruments('HIPAY_CREDIT_CARD');
+        paymentInstruments = wallet.getPaymentInstruments('HIPAY_CREDIT_CARD');
     } else {
-        var paymentInstruments = wallet.getPaymentInstruments(dw.order.PaymentInstrument.METHOD_CREDIT_CARD);
+        paymentInstruments = wallet.getPaymentInstruments(dw.order.PaymentInstrument.METHOD_CREDIT_CARD);
     }
 
     var pageMeta = require('~/cartridge/scripts/meta');

@@ -167,7 +167,7 @@ var HiPayStatus = {
     AUTHENTICATION_REQUESTED: {
         code: '140',
         value: 'Authentication Requested',
-        description: 'The payment method used requires authentication, authentication request was send and system is waiting for a customers’ action.'
+        description: 'The payment method used requires authentication, authentication request was send and system is waiting for a customersï¿½ action.'
     },
     AUTHENTICATED: {
         code: '141',

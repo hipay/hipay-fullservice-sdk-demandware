@@ -4,6 +4,7 @@
 * @output ValidPaymentInstruments : dw.util.Collection The collection of valid payment instruments.
 */
 
+// eslint-disable-next-line no-unused-vars
 function execute(args) {
     var countryCode = args.CountryCode,
         paymentAmount = args.PaymentAmount;

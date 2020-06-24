@@ -44,15 +44,15 @@ function isOverThreshold(counterLabel) {
 /*
  * @describe hides the Captcha by unsetting the session attribute
  */
-function hideCaptcha () {
-   session.privacy.showCaptcha = false;
+function hideCaptcha() {
+    session.privacy.showCaptcha = false;
 }
 
 /*
  * @describe shows the Captcha by setting the session attribute
  */
-function showCaptcha () {
-   session.privacy.showCaptcha = true;
+function showCaptcha() {
+    session.privacy.showCaptcha = true;
 }
 
 /** Testable functions **/

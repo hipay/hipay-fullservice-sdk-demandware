@@ -105,7 +105,7 @@ var formHelpers = require('base/checkout/formErrors');
                             success: function (data) {
                                 if (!data.error) {
                                     $('body').trigger('checkout:updateCheckoutView',
-                                        { order: data.order, customer: data.customer });
+                                        {order: data.order, customer: data.customer});
                                     defer.resolve();
                                 } else if ($('.shipping-error .alert-danger').length < 1) {
                                     var errorMsg = data.message;
@@ -163,7 +163,7 @@ var formHelpers = require('base/checkout/formErrors');
                     $('body').trigger('checkout:serializeBilling', {
                         form: $('#dwfrm_billing'),
                         data: paymentForm,
-                        callback: function (data) { paymentForm = data; }
+                        callback: function (data) {paymentForm = data;}
                     });
 
                     if ($('.data-checkout-stage').data('customer-type') === 'registered') {
@@ -242,7 +242,7 @@ var formHelpers = require('base/checkout/formErrors');
                                 // Populate the Address Summary
                                 //
                                 $('body').trigger('checkout:updateCheckoutView',
-                                    { order: data.order, customer: data.customer });
+                                    {order: data.order, customer: data.customer});
 
                                 if (data.renderedPaymentInstruments) {
                                     $('.stored-payments').empty().html(

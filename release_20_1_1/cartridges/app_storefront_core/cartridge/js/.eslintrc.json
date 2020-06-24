@@ -108,14 +108,7 @@
         ],
         // "sort-imports": 2,
         "sort-vars": 0,
-        "space-after-keywords": [
-            2,
-            "always"
-        ],
-        "space-before-keywords": [
-            2,
-            "always"
-        ],
+		"keyword-spacing": 2,
         "space-in-parens": [
             2,
             "never"
@@ -123,6 +116,8 @@
         "space-unary-ops": 0,
         "strict": [2, "global"],
         "wrap-regex": 2,
-        "yoda": 0
+        "yoda": 0,
+		// "custom"
+        "no-mixed-spaces-and-tabs": 0
     }
 }

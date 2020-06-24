@@ -14,7 +14,7 @@ HiPayMaintenanceService.prototype.initiateCapture = function (transactionReferen
         operation: operation,
     };
     if (!empty(amount)) {
-    params.amount = amount;
+        params.amount = amount;
     }
 
     var response = service.call(params);

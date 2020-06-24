@@ -64,7 +64,7 @@ var validateOwner = function (value) {
 };
 
 var validateCVC = function (value, el) {
-	var selectedCard = $(el).closest('form').find('select[id$="creditCard_type"]').find(":selected").text();
+    var selectedCard = $(el).closest('form').find('select[id$="creditCard_type"]').find(':selected').text();
 
     if (selectedCard == 'MasterCard' || selectedCard == 'Carte Bancaire' || selectedCard == 'Visa') {
         if (value.length == 3) {
@@ -116,7 +116,7 @@ $.validator.addMethod('gift-cert-amount', function (value, el) {
  * Text fields must have 'positivenumber' css class to be validated as positivenumber
  */
 $.validator.addMethod('positivenumber', function (value) {
-    if ($.trim(value).length === 0) { return true; }
+    if ($.trim(value).length === 0) {return true;}
     return (!isNaN(value) && Number(value) >= 0);
 }, ''); // '' should be replaced with error message if needed
 

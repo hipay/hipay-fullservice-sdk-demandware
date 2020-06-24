@@ -1,6 +1,5 @@
 'use strict';
 
-var server = require('server');
 var BasketMgr = require('dw/order/BasketMgr');
 var HookMgr = require('dw/system/HookMgr');
 var OrderMgr = require('dw/order/OrderMgr');
@@ -13,15 +12,12 @@ var Site = require('dw/system/Site');
 var Transaction = require('dw/system/Transaction');
 var CustomObjectMgr = require('dw/object/CustomObjectMgr');
 
-var AddressModel = require('*/cartridge/models/address');
-var formErrors = require('*/cartridge/scripts/formErrors');
-var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
-var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
-var collections = require('*/cartridge/scripts/util/collections');
-var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
-// Import Constants
-var Constants = require('bm_hipay_controllers/cartridge/scripts/util/Constants');
+
+
+
+
+
 
 // static functions needed for Checkout Controller logic
 
@@ -30,6 +26,7 @@ var Constants = require('bm_hipay_controllers/cartridge/scripts/util/Constants')
  * @returns {Object} processed Shipping form object
  */
 function prepareShippingForm() {
+    var server = require('server');
     var shippingForm = server.forms.getForm('shipping');
 
     shippingForm.clear();
@@ -42,6 +39,7 @@ function prepareShippingForm() {
  * @returns {Object} processed Billing form object
  */
 function prepareBillingForm() {
+    var server = require('server');
     var billingForm = server.forms.getForm('billing');
     billingForm.clear();
 
@@ -54,6 +52,8 @@ function prepareBillingForm() {
  * @returns {Object} the names of the invalid form fields
  */
 function validateFields(form) {
+    var formErrors = require('*/cartridge/scripts/formErrors');
+
     return formErrors.getFormErrors(form);
 }
 
@@ -158,6 +158,7 @@ function copyCustomerAddressToBilling(address) {
  * @param {dw.order.Shipment} [shipmentOrNull] - the target Shipment
  */
 function copyShippingAddressToShipment(shippingData, shipmentOrNull) {
+    var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
     var currentBasket = BasketMgr.getCurrentBasket();
     var shipment = shipmentOrNull || currentBasket.defaultShipment;
 
@@ -246,6 +247,7 @@ function getFirstNonDefaultShipmentWithProductLineItems(currentBasket) {
  * @returns {boolean} - allValid
  */
 function ensureValidShipments(lineItemContainer) {
+    var collections = require('*/cartridge/scripts/util/collections');
     var shipments = lineItemContainer.shipments;
     var allValid = collections.every(shipments, function (shipment) {
         if (shipment) {
@@ -263,6 +265,8 @@ function ensureValidShipments(lineItemContainer) {
  * @param {Object} req - the request object needed to access session.privacyCache
  */
 function ensureNoEmptyShipments(req) {
+    var AddressModel = require('*/cartridge/models/address');
+    var collections = require('*/cartridge/scripts/util/collections');
     Transaction.wrap(function () {
         var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -322,6 +326,7 @@ function ensureNoEmptyShipments(req) {
  * @param {dw.order.Basket} currentBasket - the target Basket
  */
 function recalculateBasket(currentBasket) {
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
     // Calculate the basket
     Transaction.wrap(function () {
         basketCalculationHelpers.calculateTotals(currentBasket);
@@ -385,7 +390,7 @@ function validateCreditCard(form) {
  * @returns {Object} an error object
  */
 function calculatePaymentTransaction(currentBasket) {
-    var result = { error: false };
+    var result = {error: false};
 
     try {
         Transaction.wrap(function () {
@@ -495,7 +500,7 @@ function handlePayments(order, orderNumber, storedPaymentUUID) {
         var paymentInstruments = order.paymentInstruments;
 
         if (paymentInstruments.length === 0) {
-            Transaction.wrap(function () { OrderMgr.failOrder(order, true); });
+            Transaction.wrap(function () {OrderMgr.failOrder(order, true);});
             result.error = true;
         }
 
@@ -530,7 +535,7 @@ function handlePayments(order, orderNumber, storedPaymentUUID) {
                     }
 
                     if (authorizationResult.error) {
-                        Transaction.wrap(function () { OrderMgr.failOrder(order, true); });
+                        Transaction.wrap(function () {OrderMgr.failOrder(order, true);});
                         result.error = true;
 
                         if (!empty(authorizationResult.PlaceOrderError)) {
@@ -565,9 +570,9 @@ function sendConfirmationEmail(order, locale) {
 
     var currentLocale = Locale.getLocale(locale);
 
-    var orderModel = new OrderModel(order, { countryCode: currentLocale.country });
+    var orderModel = new OrderModel(order, {countryCode: currentLocale.country});
 
-    var orderObject = { order: orderModel };
+    var orderObject = {order: orderModel};
 
     var emailObj = {
         to: order.customerEmail,
@@ -586,7 +591,7 @@ function sendConfirmationEmail(order, locale) {
  * @returns {Object} an error object
  */
 function placeOrder(order, fraudDetectionStatus) {
-    var result = { error: false };
+    var result = {error: false};
     var Logger = require('dw/system/Logger');
 
     try {
@@ -606,7 +611,7 @@ function placeOrder(order, fraudDetectionStatus) {
         order.setExportStatus(Order.EXPORT_STATUS_READY);
         Transaction.commit();
     } catch (e) {
-        Transaction.wrap(function () { OrderMgr.failOrder(order, true); });
+        Transaction.wrap(function () {OrderMgr.failOrder(order, true);});
         Logger.error('[checkoutHelpets.js] crashed on line: ' + e.lineNumber + ' with error: ' + e);
         result.error = true;
     }
@@ -662,6 +667,7 @@ function savePaymentInstrumentToWallet(billingData, currentBasket, customer) {
  * @returns {string|null} newly stored payment Instrument
  */
 function getRenderedPaymentInstruments(req, accountModel) {
+    var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
     var result;
 
     if (req.currentCustomer.raw.authenticated
@@ -671,7 +677,7 @@ function getRenderedPaymentInstruments(req, accountModel) {
         var context;
         var template = 'checkout/billing/storedPaymentInstruments';
 
-        context = { customer: accountModel };
+        context = {customer: accountModel};
         result = renderTemplateHelper.getRenderedHtml(
             context,
             template
@@ -689,7 +695,7 @@ function getRenderedPaymentInstruments(req, accountModel) {
  * @returns {Object} object containing error information
  */
 function setGift(shipment, isGift, giftMessage) {
-    var result = { error: false, errorMessage: null };
+    var result = {error: false, errorMessage: null};
 
     try {
         Transaction.wrap(function () {
@@ -714,6 +720,7 @@ function setGift(shipment, isGift, giftMessage) {
  * @returns STATUS_ERROR or STATUS_OK
  */
 function writeToCustomObject(params) {
+    var Constants = require('bm_hipay_controllers/cartridge/scripts/util/Constants');
     var Logger = require('dw/system/Logger');
     var UUIDUtils = require('dw/util/UUIDUtils');
 

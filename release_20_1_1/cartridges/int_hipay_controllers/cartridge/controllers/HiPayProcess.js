@@ -1,9 +1,8 @@
 'use strict';
 
-var HiPayOrderModule = require('*/cartridge/scripts/lib/hipay/HiPayOrderModule');
-
 /** Verifies HiPay requests */
 function verifyHash() {
+    var HiPayOrderModule = require('*/cartridge/scripts/lib/hipay/HiPayOrderModule');
     return HiPayOrderModule.hiPayVerifyRequest();
 }
 

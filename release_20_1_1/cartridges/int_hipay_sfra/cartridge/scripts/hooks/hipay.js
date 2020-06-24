@@ -5,10 +5,6 @@ var Resource = require('dw/web/Resource');
 var PaymentStatusCodes = require('dw/order/PaymentStatusCodes');
 var Transaction = require('dw/system/Transaction');
 var PaymentMgr = require('dw/order/PaymentMgr');
-
-/* Script Modules */
-var hiPayCheckoutModule = require('*/cartridge/scripts/lib/hipay/modules/hipayCheckoutModule');
-var collections = require('*/cartridge/scripts/util/collections');
 var sitePrefs = require('dw/system/Site').getCurrent().getPreferences().getCustom();
 
 /**
@@ -20,6 +16,8 @@ var sitePrefs = require('dw/system/Site').getCurrent().getPreferences().getCusto
 * @return {Object} Object indicating success or error
 */
 function creditCardHandle(paymentInstrument, paymentInformation, paymentUUID) {
+    var hiPayCheckoutModule = require('*/cartridge/scripts/lib/hipay/modules/hipayCheckoutModule');
+    var collections = require('*/cartridge/scripts/util/collections');
     var creditCard = paymentInformation;
     var hipayEnableOneClick = sitePrefs.hipayEnableOneClick;
     var hiPayMultiUseToken = false;
@@ -89,7 +87,7 @@ function creditCardHandle(paymentInstrument, paymentInformation, paymentUUID) {
                 }
             });
 
-            return { fieldErrors: [cardErrors], serverErrors: serverErrors, error: true };
+            return {fieldErrors: [cardErrors], serverErrors: serverErrors, error: true};
         }
     }
 
@@ -121,7 +119,7 @@ function creditCardHandle(paymentInstrument, paymentInformation, paymentUUID) {
         }
 
         if (empty(selectedCreditCard)) {
-            return { error: true };
+            return {error: true};
         }
 
         hiPayCardNumber = selectedCreditCard.creditCardNumber;
@@ -152,7 +150,7 @@ function creditCardHandle(paymentInstrument, paymentInformation, paymentUUID) {
             hiPayToken = hiPayTokenResult.HiPayToken;
             hiPayCardNumber = hiPayTokenResult.HiPayPan;
         } else {
-            return { error: true };
+            return {error: true};
         }
     }
 
@@ -166,10 +164,10 @@ function creditCardHandle(paymentInstrument, paymentInformation, paymentUUID) {
             paymentInstrument.setCreditCardToken(hiPayToken);
         });
     } else {
-        return { error: true };
+        return {error: true};
     }
 
-    return { success: true };
+    return {success: true};
 }
 
 /**
@@ -178,6 +176,7 @@ function creditCardHandle(paymentInstrument, paymentInformation, paymentUUID) {
 * @return {Object} success if the payment instrument is created, error otherwise
 */
 function Handle(currentBasket, paymentInformation, paymentUUID) {
+    var hiPayCheckoutModule = require('*/cartridge/scripts/lib/hipay/modules/hipayCheckoutModule');
     var basket = currentBasket;
     var paymentMethod = session.forms.billing.paymentMethod.value;
     var paymentInstrument;
@@ -186,7 +185,7 @@ function Handle(currentBasket, paymentInformation, paymentUUID) {
         paymentInstrument = hiPayCheckoutModule.createPaymentInstrument(basket, paymentMethod, true);
 
         if (paymentInstrument == null) {
-            return { error: true };
+            return {error: true};
         }
 
         hiPayCheckoutModule.hiPayUpdatePaymentInstrument(paymentInstrument, paymentInformation);
@@ -195,15 +194,15 @@ function Handle(currentBasket, paymentInformation, paymentUUID) {
             var handleResponse = creditCardHandle(paymentInstrument, paymentInformation, paymentUUID);
 
             if (handleResponse.success) {
-                return { success: true };
+                return {success: true};
             } else { // eslint-disable-line
-                return { fieldErrors: handleResponse.fieldErrors, serverErrors: handleResponse.serverErrors, error: true };
+                return {fieldErrors: handleResponse.fieldErrors, serverErrors: handleResponse.serverErrors, error: true};
             }
         } else { // eslint-disable-line
-            return { success: true };
+            return {success: true};
         }
     } else {
-        return { error: true };
+        return {error: true};
     }
 }
 
@@ -215,6 +214,7 @@ function Handle(currentBasket, paymentInformation, paymentUUID) {
 * @return {Object} Object indicating authorized if successful or error otherwise
 */
 function Authorize(orderNumber, paymentInstrument, paymentProcessor, storedPaymentUUID) {
+    var hiPayCheckoutModule = require('*/cartridge/scripts/lib/hipay/modules/hipayCheckoutModule');
     var hipayEnableOneClick = sitePrefs.hipayEnableOneClick;
     var order = OrderMgr.getOrder(orderNumber);
     var paymentProcessor = null; // eslint-disable-line no-redeclare
@@ -250,7 +250,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, storedPayme
                 }
 
                 if (empty(response.hiPayRedirectURL)) {
-                    return { authorized: true };
+                    return {authorized: true};
                 } else { // eslint-disable-line
                     return {
                         HiPay: true,
@@ -261,10 +261,10 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, storedPayme
                 }
             }
         } else {
-            return { error: true };
+            return {error: true};
         }
     } else {
-        return { error: true };
+        return {error: true};
     }
 }
 

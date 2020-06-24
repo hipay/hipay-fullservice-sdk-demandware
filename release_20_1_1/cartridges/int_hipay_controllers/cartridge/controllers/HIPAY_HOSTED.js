@@ -25,12 +25,12 @@ function Handle(args) {
             hiPayCheckoutModule.hiPayUpdatePaymentInstrument(paymentInstrument);
         } catch (e) {
             log.error(e);
-            return { error: true };
+            return {error: true};
         }
 
-        return { success: true };
+        return {success: true};
     } else { // eslint-disable-line
-        return { error: true };
+        return {error: true};
     }
 }
 
@@ -52,7 +52,7 @@ function Authorize(args) {
         var result = require('*/cartridge/scripts/lib/hipay/HiPayCheckoutModule').hiPayHostedPageRequest(order, paymentInstrument);
 
         if (result.error) {
-            return { error: true };
+            return {error: true};
         }
 
         if (result.hiPayIFrameEnabled) {
@@ -65,9 +65,9 @@ function Authorize(args) {
             });
         }
 
-        return { success: true };
+        return {success: true};
     } else { // eslint-disable-line
-        return { error: true };
+        return {error: true};
     }
 }
 

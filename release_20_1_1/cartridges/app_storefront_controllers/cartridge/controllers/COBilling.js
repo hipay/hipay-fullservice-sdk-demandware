@@ -151,13 +151,13 @@ function initCreditCardList(cart) {
     applicableCreditCards = null;
 
     if (customer.authenticated) {
-    	if (!empty(sitePrefs.hipayEnabled) && sitePrefs.hipayEnabled && !empty(sitePrefs.hipayEnableOneClick) && sitePrefs.hipayEnableOneClick) { /* if hipay and one click payment enabled */
+     	if (!empty(sitePrefs.hipayEnabled) && sitePrefs.hipayEnabled && !empty(sitePrefs.hipayEnableOneClick) && sitePrefs.hipayEnableOneClick) {/* if hipay and one click payment enabled */
     		applicableCreditCards = require('int_hipay_controllers/cartridge/scripts/lib/hipay/HiPayCheckoutModule').getApplicableCreditCards(countryCode, paymentAmount.getValue()).ValidPaymentInstruments;
     	} else {
     		var profile = app.getModel('Profile').get();
-            if (profile) {
-                applicableCreditCards = profile.validateWalletPaymentInstruments(countryCode, paymentAmount.getValue()).ValidPaymentInstruments;
-            }
+         if (profile) {
+             applicableCreditCards = profile.validateWalletPaymentInstruments(countryCode, paymentAmount.getValue()).ValidPaymentInstruments;
+         }
     	}
     }
 
@@ -391,7 +391,7 @@ function validateBilling() {
         return require('int_hipay_controllers/cartridge/scripts/lib/hipay/HiPayCheckoutModule').validateBilling();
     }
 
-	if (!app.getForm('billing').object.billingAddress.valid) {
+    if (!app.getForm('billing').object.billingAddress.valid) {
         return false;
     }
 
@@ -584,7 +584,7 @@ function redeemGiftCertificateJson() {
     giftCertCode = request.httpParameterMap.giftCertCode.stringValue;
     giftCertStatus = redeemGiftCertificate(giftCertCode);
 
-    let responseUtils = require('~/cartridge/scripts/util/Response');
+    var responseUtils = require('~/cartridge/scripts/util/Response');
 
     if (request.httpParameterMap.format.stringValue !== 'ajax') {
         // @FIXME we could also build an ajax guard?

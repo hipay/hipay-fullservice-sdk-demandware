@@ -21,7 +21,7 @@ function proxyModel() {
         '*/cartridge/scripts/util/collections': collections,
         '*/cartridge/scripts/factories/product': {
             get: function () {
-                return { bonusProducts: null, bonusProductLineItemUUID: null };
+                return {bonusProducts: null, bonusProductLineItemUUID: null};
             }
         }
     });

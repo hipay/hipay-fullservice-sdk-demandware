@@ -27,7 +27,7 @@ export function createCssNthLineItem(itemIdx, attrIdx) {
 // Public methods
 export function navigateTo() {
     return getCartURL()
-        .then(cartUrl => browser.url(cartUrl));
+        .then((cartUrl) => browser.url(cartUrl));
 }
 
 export function getCartURL() {
@@ -103,7 +103,7 @@ export function getShippingMethodAtIndex(index) {
  */
 function getDeleteItemSelector(selector) {
     return browser.isVisible(selector)
-        .then(isVisible => {
+        .then((isVisible) => {
             if (Array.isArray(isVisible)) {
                 if (isVisible[0] === true) {
                     return selector;
@@ -123,24 +123,20 @@ export function emptyCart() {
     var mySelector;
     return navigateTo()
         .then(() => getDeleteItemSelector(BTN_DELETE))
-        .then(selector => {
+        .then((selector) => {
             mySelector = selector;
             return browser.elements(mySelector);
         })
-        .then(removeLinks => {
-            return removeLinks.value.reduce(removeItem => {
-                return removeItem.then(() => browser.click(mySelector))
+        .then((removeLinks) => removeLinks.value.reduce((removeItem) => removeItem.then(() => browser.click(mySelector))
                     .then(() => browser.waitForVisible(DELETE_CONFIRMATION, 2000))
                     .then(() => browser.click(DELETE_CONFIRMATION))
                     .then(() => browser.pause(2000))
                     .then(() => browser.isVisible(DELETE_CONFIRMATION))
-                    .then(isVisible => {
+                    .then((isVisible) => {
                         if (isVisible) {
                             return browser.click('.modal-content .close');
                         }
                         return Promise.resolve();
                     })
-                    .then(() => browser.pause(2000));
-            }, Promise.resolve());
-        });
+                    .then(() => browser.pause(2000)), Promise.resolve()));
 }

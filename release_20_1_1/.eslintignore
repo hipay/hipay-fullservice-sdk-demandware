@@ -1,0 +1,11 @@
+cartridges/app_storefront_base/cartridge/static/
+cartridges/bm_app_storefront_base/cartridge/static/
+coverage/
+doc/
+bin/
+codecept.conf.js
+
+cartridges/app_storefront_core/cartridge/static/
+cartridges/bm_hipay_controllers/cartridge/static/
+cartridges/int_hipay_controllers/cartridge/static/
+cartridges/int_hipay_sfra/cartridge/static/

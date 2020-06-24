@@ -5,15 +5,15 @@ var productInventoryMgr = {
         var inventoryListId0001 = {
             getRecord: function (productID) {
                 var product000001 = {
-                    ATS: { value: 10 }
+                    ATS: {value: 10}
                 };
 
                 var product000002 = {
-                    ATS: { value: 3 }
+                    ATS: {value: 3}
                 };
 
                 var product000003 = {
-                    ATS: { value: 5 }
+                    ATS: {value: 5}
                 };
 
                 if (productID === '000001') {
@@ -31,15 +31,15 @@ var productInventoryMgr = {
         var inventoryListId0002 = {
             getRecord: function (productID) {
                 var product000001 = {
-                    ATS: { value: 0 }
+                    ATS: {value: 0}
                 };
 
                 var product000002 = {
-                    ATS: { value: 8 }
+                    ATS: {value: 8}
                 };
 
                 var product000003 = {
-                    ATS: { value: 10 }
+                    ATS: {value: 10}
                 };
 
                 if (productID === '000001') {
@@ -57,15 +57,15 @@ var productInventoryMgr = {
         var inventoryListId0003 = {
             getRecord: function (productID) {
                 var product000001 = {
-                    ATS: { value: 10 }
+                    ATS: {value: 10}
                 };
 
                 var product000002 = {
-                    ATS: { value: 15 }
+                    ATS: {value: 15}
                 };
 
                 var product000003 = {
-                    ATS: { value: 8 }
+                    ATS: {value: 8}
                 };
 
                 if (productID === '000001') {

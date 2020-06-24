@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 'use strict';
 
 var CatalogMgr = require('dw/catalog/CatalogMgr');
@@ -17,7 +18,7 @@ var sanitize = require('~/cartridge/scripts/util/StringHelpers').sanitize;
  *
  * @param {dw.system.PipelineDictionary} pdict
  */
-function ProductUtils (pdict) {
+function ProductUtils(pdict) {
     var _product = pdict.Product || null;
     var _httpMap = pdict.CurrentHttpParameterMap;
     var _variationModel = pdict.hasOwnProperty('CurrentVariationModel') && pdict.CurrentVariationModel ?
@@ -59,8 +60,7 @@ function ProductUtils (pdict) {
             };
             p.availability = ProductUtils.getAvailability(item, _httpMap.Quantity.stringValue);
             p.variants = ProductUtils.getVariants(item, _variationModel, _httpMap.Quantity.stringValue);
-        }
-        catch (error) {
+        } catch (error) {
             p.error = error;
         }
 
@@ -68,7 +68,7 @@ function ProductUtils (pdict) {
     };
 
     var getVariantHierarchy = function () {
-        if (_product === null) { return null; }
+        if (_product === null) {return null;}
         var vh = {};
         if (!_variantHierarchy) {
             _variantHierarchy = ProductUtils.getVariantHierarchy(_product, _variationModel, _httpMap.Quantity.stringValue);
@@ -84,12 +84,13 @@ function ProductUtils (pdict) {
      * @param {array} selected
      */
     var getVariantAvailability = function (current, selected) {
-        var arr = [], att = null;
+        var arr = [],
+            att = null;
 
         var vh = getVariantHierarchy();
         if (selected.length === 0) {
             for (att in vh.attributes) {
-                if (att.selected) {	break; }
+                if (att.selected) {break;}
             }
             arr.push(att.id + '-' + att.value);
         } else {
@@ -101,16 +102,16 @@ function ProductUtils (pdict) {
         }
         var atts = vh.attributes;
         var attribute = {};
-        for (var i = 0,len = arr.length; i < len; i++) {
+        for (var i = 0, len = arr.length; i < len; i++) {
             attribute = atts[arr[i]];
             if (!attribute) {
-                if (current) { arr.pop(); }
-                 return false;
+                if (current) {arr.pop();}
+                return false;
             }
-            if (!attribute.attributes) { break; }
+            if (!attribute.attributes) {break;}
             atts = attribute.attributes;
         }
-        if (current) { arr.pop(); }
+        if (current) {arr.pop();}
         return getAttributeAvailability(attribute);
     };
 
@@ -128,11 +129,9 @@ function ProductUtils (pdict) {
             available = attribute.availability.availableForSale;
         }
         return available;
-
     };
 
     var getVariationAttributes = function (item) {
-
         var variations = {attributes: []};
 
         if (!item.isVariant() && !item.isMaster()) {
@@ -156,7 +155,7 @@ function ProductUtils (pdict) {
             var attValIterator = pvm.getAllValues(attr).iterator();
             while (attValIterator.hasNext()) {
                 var attrValue = attValIterator.next();
-                if (!masterPvm.hasOrderableVariants(attr, attrValue)) { continue; }
+                if (!masterPvm.hasOrderableVariants(attr, attrValue)) {continue;}
                 var pvaVal = {
                     id: attrValue.ID,
                     val: attrValue.displayValue ? attrValue.displayValue : attrValue.value
@@ -172,17 +171,15 @@ function ProductUtils (pdict) {
                     // get swatch image
                     var swatch = attrValue.getImage('swatch');
                     if (swatch) {
-
                         pvaVal.images.swatch = {
-                            url:swatch.getURL(),
-                            alt:swatch.alt,
-                            title:swatch.title
+                            url: swatch.getURL(),
+                            alt: swatch.alt,
+                            title: swatch.title
                         };
                     }
                 }
                 // add the product variation attribute value
                 pva.vals.push(pvaVal);
-
             } /* END pvm.getAllValues(v_att) */
 
             // add the product variation attribute
@@ -196,9 +193,9 @@ function ProductUtils (pdict) {
         var imgArray = [];
         for (var i = 0, len = imgs.length; i < len; i++) {
             imgArray.push({
-                url:imgs[i].getURL().toString(),
-                alt:imgs[i].alt,
-                title:imgs[i].title
+                url: imgs[i].getURL().toString(),
+                alt: imgs[i].alt,
+                title: imgs[i].title
             });
         }
         return imgArray;
@@ -427,41 +424,38 @@ ProductUtils.getBonusProductJson = function (item, lineItem) {
  * @returns {dw.catalog.ProductVariationAttributeValue}
  */
 ProductUtils.getSelectedColor = function (product, pvm) {
-    if (product === null) { return null; }
+    if (product === null) {return null;}
     var vm = pvm === null ? product.variationModel : pvm;
     var cvm = product.isVariant() ? product.masterProduct.variationModel : product.variationModel;
 
     var selectedColor = null;
     var colorVA = vm.getProductVariationAttribute('color');
-    if (colorVA === null) { return null; }
+    if (colorVA === null) {return null;}
 
     selectedColor = vm.getSelectedValue(colorVA);
 
     if (selectedColor) {
         return selectedColor;
-    } else {
-        var variant = product;
-        if (!product.isVariant()) {
-            if (vm.defaultVariant) {
-                variant = vm.defaultVariant;
-            } else if (vm.variants.length > 0) {
-                variant = vm.variants[0];
-            }
-        }
-
-        var cv = vm.getVariationValue(variant, colorVA);
-        if (!cvm.hasOrderableVariants(colorVA, cv)) {
-            var found = false;
-            for (var i = 0, il = vm.variants.length; i < il; i++) {
-                cv = cvm.getVariationValue(vm.variants[i], colorVA);
-                if (cvm.hasOrderableVariants(colorVA, cv)) {
-                    found = true;
-                    break;
-                }
-            }
-        }
-        return cv;
     }
+    var variant = product;
+    if (!product.isVariant()) {
+        if (vm.defaultVariant) {
+            variant = vm.defaultVariant;
+        } else if (vm.variants.length > 0) {
+            variant = vm.variants[0];
+        }
+    }
+
+    var cv = vm.getVariationValue(variant, colorVA);
+    if (!cvm.hasOrderableVariants(colorVA, cv)) {
+        for (var i = 0, il = vm.variants.length; i < il; i++) {
+            cv = cvm.getVariationValue(vm.variants[i], colorVA);
+            if (cvm.hasOrderableVariants(colorVA, cv)) {
+                break;
+            }
+        }
+    }
+    return cv;
 };
 
 /**
@@ -500,10 +494,10 @@ ProductUtils.getQueryString = function (map, fields) {
     var parms = [];
     for (var i = 0, il = fields.length; i < il; i++) {
         var key = fields[i];
-        if (!key || !map.isParameterSubmitted(key)) { continue; }
+        if (!key || !map.isParameterSubmitted(key)) {continue;}
 
         var parm = map.get(key);
-        if (!parm || parm.stringValue.length === 0) { continue; }
+        if (!parm || parm.stringValue.length === 0) {continue;}
 
         // only get here if we have a match
         parms.push(sanitize(key) + '=' + sanitize(parm.stringValue));
@@ -542,8 +536,7 @@ ProductUtils.getVariants = function (item, pvm, quantity) {
         return variants;
     }
 
-    for (var i = 0,len = pvm.variants.length; i < len; i++) {
-
+    for (var i = 0, len = pvm.variants.length; i < len; i++) {
         var v = pvm.variants[i];
         var variant = {
             id: v.ID,
@@ -556,7 +549,7 @@ ProductUtils.getVariants = function (item, pvm, quantity) {
         for (var a = 0, alen = pvm.productVariationAttributes.length; a < alen; a++) {
             var att = pvm.productVariationAttributes[a];
             var variationValue = pvm.getVariationValue(v, att);
-            if (!variationValue) { continue; }
+            if (!variationValue) {continue;}
             attKey.push(att.ID + '-' + variationValue.value);
             variant.attributes[att.ID] = !variationValue.displayValue ? variationValue.value : variationValue.displayValue;
         }
@@ -577,7 +570,7 @@ ProductUtils.getVariants = function (item, pvm, quantity) {
  */
 ProductUtils.getVariantHierarchy = function (item, productVariationModel, quantity) {
     var variants = {};
-    if (!item.isVariant() && !item.isMaster()) { return variants; }
+    if (!item.isVariant() && !item.isMaster()) {return variants;}
 
     var allVariants = productVariationModel.variants;
     var allVariationAttributes = productVariationModel.productVariationAttributes;
@@ -588,7 +581,7 @@ ProductUtils.getVariantHierarchy = function (item, productVariationModel, quanti
         for (var j = 0, numVariationAttributes = allVariationAttributes.length; j < numVariationAttributes; j++) {
             var attribute = allVariationAttributes[j];
             var variationValue = productVariationModel.getVariationValue(variant, attribute);
-            if (!variationValue) { continue; }
+            if (!variationValue) {continue;}
             var key = attribute.ID + '-' + variationValue.value;
             if (!('attributes' in target)) {
                 target.attributes = {};
@@ -641,7 +634,7 @@ ProductUtils.getSelectedAttributes = function (pvm) {
  */
 ProductUtils.getDefaultVariant = function (pvm) {
     var variant = pvm.selectedVariant;
-    if (variant) { return variant; }
+    if (variant) {return variant;}
 
     var attDefs = pvm.getProductVariationAttributes();
     var map = new HashMap();
@@ -650,7 +643,7 @@ ProductUtils.getDefaultVariant = function (pvm) {
         var attribute = attDefs[i];
         var selectedValue = pvm.getSelectedValue(attribute);
         if (selectedValue && selectedValue.displayValue.length > 0) {
-            map.put(attribute.ID,selectedValue.ID);
+            map.put(attribute.ID, selectedValue.ID);
         }
     }
 

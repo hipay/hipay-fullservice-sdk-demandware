@@ -2,10 +2,10 @@
 
 var OrderMgr = require('dw/order/OrderMgr');
 var Transaction = require('dw/system/Transaction');
-var HiPayOrderModule = require('*/cartridge/scripts/lib/hipay/modules/hipayOrderModule');
 
 // Verifies HiPay requests
 function verifyHash() {
+    var HiPayOrderModule = require('*/cartridge/scripts/lib/hipay/modules/hipayOrderModule');
     return HiPayOrderModule.hiPayVerifyRequest();
 }
 

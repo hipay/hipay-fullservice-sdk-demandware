@@ -61,7 +61,7 @@ function hiPayProcessOrderCall() {
             response.hiPayPaymentStatus = state; // completed, declined, pending
             paymentInstr = helper.getOrderPaymentInstrument(order);
             reference = params.reference.stringValue; // set the reference from hipay = 200628176332
-            if(!empty(reference)){
+            if (!empty(reference)){
                 paymentTransaction = paymentInstr.getPaymentTransaction();
                 paymentTransaction.setTransactionID(reference);
             }

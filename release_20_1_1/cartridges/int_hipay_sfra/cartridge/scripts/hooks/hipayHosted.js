@@ -19,12 +19,12 @@ function Handle(currentBasket) {
             hiPayCheckoutModule.hiPayUpdatePaymentInstrument(paymentInstrument);
         } catch (e) {
             log.error(e);
-            return { error: true };
+            return {error: true};
         }
 
-        return { error: false };
-    } else { // eslint-disable-line
-        return { error: true };
+        return {error: false};
+    } else { 
+        return {error: true};
     }
 }
 
@@ -45,7 +45,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor) {
         var result = require('*/cartridge/scripts/lib/hipay/modules/hipayCheckoutModule').hiPayHostedPageRequest(order, paymentInstrument);
 
         if (result.error) {
-            return { error: true };
+            return {error: true};
         }
 
         if (result.hiPayIFrameEnabled) {
@@ -55,15 +55,15 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor) {
                 Iframe: true,
                 Template: 'hipay/hosted/hipayIframe'
             };
-        } else { // eslint-disable-line
+        } else {
             return {
                 HiPay: true,
                 HiPayRedirectURL: result.hiPayRedirectURL,
                 Hosted: true
             };
         }
-    } else { // eslint-disable-line
-        return { error: true };
+    } else {
+        return {error: true};
     }
 }
 

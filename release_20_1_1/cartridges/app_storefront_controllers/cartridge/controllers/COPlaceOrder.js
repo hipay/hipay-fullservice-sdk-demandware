@@ -77,7 +77,7 @@ function handlePayments(order) {
                 
                 if (!empty(sitePrefs.hipayEnabled) && sitePrefs.hipayEnabled && authorizationResult.authorized) {
                     return {
-                        authorized : true
+                        authorized: true
                     }
                 }
             }
@@ -124,7 +124,7 @@ function start() {
     });
 
     // If Card not exist in the list of PaymentInstruments : Incrementing the attempts (Create Custom Object for attempts)  
-    var incrementAttempt = session.custom['saveCardChecked'];
+    var incrementAttempt = session.custom.saveCardChecked;
     var varCustomer = cart.getCustomer();  
     if (varCustomer.isAuthenticated() && varCustomer.isRegistered() && incrementAttempt) {   
         var params = {
@@ -132,7 +132,7 @@ function start() {
             data: { 
                 customerNo: cart.getCustomerNo(),
                 attemptDate: new Date()
-                }
+            }
         };
         var result = Helpers.writeToCustomObject(params); 
         if (result === 'ERROR') {
@@ -201,9 +201,10 @@ function start() {
         });
     }
 
+    var orderPlacementStatus;
     if (!empty(sitePrefs.hipayEnabled) && sitePrefs.hipayEnabled) {
         if (handlePaymentsResult.authorized) {
-            var orderPlacementStatus = Order.submit(order);
+            orderPlacementStatus = Order.submit(order);
             if (!orderPlacementStatus.error) {
                 clearForms();
             }
@@ -215,7 +216,7 @@ function start() {
             };
         }
     } else {
-        var orderPlacementStatus = Order.submit(order);
+        orderPlacementStatus = Order.submit(order);
         if (!orderPlacementStatus.error) {
             clearForms();
         }

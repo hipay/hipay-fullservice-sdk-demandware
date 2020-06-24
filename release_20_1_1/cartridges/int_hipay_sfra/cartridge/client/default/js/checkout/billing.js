@@ -48,6 +48,7 @@ function updateBillingAddressFormValues(order) {
 /**
  * clears the billing address form values
  */
+// eslint-disable-next-line no-unused-vars
 function clearBillingAddressFormValues() {
     updateBillingAddressFormValues({
         billing: {

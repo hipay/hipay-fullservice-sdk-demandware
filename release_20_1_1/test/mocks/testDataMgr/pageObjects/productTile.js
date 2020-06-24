@@ -41,7 +41,7 @@ export function getProductTileProductName(pid) {
 export function getProductTileColorSwatchCount(pid) {
     let selector = getProductTileById(pid) + ' ' + swatchCircle;
     return browser.elements(selector)
-        .then(swatches => swatches.value.length);
+        .then((swatches) => swatches.value.length);
 }
 export function getProductTileMoreColorSwatchHref(pid) {
     let selector = getProductTileById(pid) + ' ' + SWATCHES + ' > span > a';

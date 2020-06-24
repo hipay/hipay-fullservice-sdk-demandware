@@ -1,11 +1,10 @@
 'use strict';
 
-const ProductUtils = require('~/cartridge/scripts/product/ProductUtils.js');
-const ProductMgr = require('dw/catalog/ProductMgr');
-const URLUtils = require('dw/web/URLUtils');
-const Resource = require('dw/web/Resource');
+var ProductMgr = require('dw/catalog/ProductMgr');
+var URLUtils = require('dw/web/URLUtils');
+var Resource = require('dw/web/Resource');
 
-const attrsWithSwatches = ['color', 'size', 'width', 'waist', 'length'];
+var attrsWithSwatches = ['color', 'size', 'width', 'waist', 'length'];
 
 module.exports = {
     getContext: getContext
@@ -18,30 +17,31 @@ module.exports = {
  * @return {Object} Context variables used to populate template placeholders
  */
 function getContext (pdict) {
-    const product = pdict.Product;
-    const variationMaster = pdict.CurrentVariationModel == null
+    var ProductUtils = require('~/cartridge/scripts/product/ProductUtils.js');
+    var product = pdict.Product;
+    var variationMaster = pdict.CurrentVariationModel == null
         ? pdict.Product.getVariationModel()
         : pdict.CurrentVariationModel;
 
-    const selectedAttrs = product.isVariant() || product.isVariationGroup()
+    var selectedAttrs = product.isVariant() || product.isVariationGroup()
         ? ProductUtils.getSelectedAttributes(variationMaster)
         : {};
 
-    const context = {
+    var context = {
         attrs: [],
         isValidProductType: product.isVariant() || product.isVariationGroup() || product.isMaster(),
         selectedAttrs: JSON.stringify(selectedAttrs)
     };
 
-    const variationAttrs = variationMaster.getProductVariationAttributes();
-    const variationAttrsLength = variationAttrs.getLength();
+    var variationAttrs = variationMaster.getProductVariationAttributes();
+    var variationAttrsLength = variationAttrs.getLength();
 
-    for (let i = 0; i < variationAttrsLength; i++) {
-        let attr = variationAttrs[i];
-        let attrAttributeId = attr.getAttributeID();
-        let hasSwatch = _getHasSwatch(attrAttributeId);
+    for (var i = 0; i < variationAttrsLength; i++) {
+        var attr = variationAttrs[i];
+        var attrAttributeId = attr.getAttributeID();
+        var hasSwatch = _getHasSwatch(attrAttributeId);
 
-        let processedAttr = {
+        var processedAttr = {
             displayName: attr.getDisplayName(),
             attributeId: attrAttributeId,
             hasSwatch: hasSwatch,
@@ -83,20 +83,21 @@ function getContext (pdict) {
  * @return {Object []}
  */
 function _getAttrValues (params) {
-    const pdict = params.pdict;
-    const attr = params.attr;
-    const variationMaster = params.variationMaster;
-    const attrValues = variationMaster.getAllValues(attr);
+    var ProductUtils = require('~/cartridge/scripts/product/ProductUtils.js');
+    var pdict = params.pdict;
+    var attr = params.attr;
+    var variationMaster = params.variationMaster;
+    var attrValues = variationMaster.getAllValues(attr);
 
-    let results = [];
+    var results = [];
 
-    for (let i = 0; i < attrValues.size(); i++) {
-        let attrValue = attrValues[i];
-        let attrAttributeId = attr.getAttributeID();
-        let hasSwatch = _getHasSwatch(attrAttributeId);
+    for (var i = 0; i < attrValues.size(); i++) {
+        var attrValue = attrValues[i];
+        var attrAttributeId = attr.getAttributeID();
+        var hasSwatch = _getHasSwatch(attrAttributeId);
 
         // Set common values between attributes with swatch and pull-down values
-        let processedValue = _setCommonAttrValues({
+        var processedValue = _setCommonAttrValues({
             pdict: pdict,
             attr: attr,
             attrValue: attrValue,
@@ -112,7 +113,7 @@ function _getAttrValues (params) {
                 attrValue: attrValue
             });
 
-            let qs = ProductUtils.getQueryString(pdict.CurrentHttpParameterMap, ['source', 'uuid']);
+            var qs = ProductUtils.getQueryString(pdict.CurrentHttpParameterMap, ['source', 'uuid']);
             processedValue.linkUrl += qs.length == 0 ? '' : ('&' + qs);
 
             if (processedValue.isSelected) {
@@ -129,8 +130,8 @@ function _getAttrValues (params) {
 
         // Set additional properties needed by attributes that display values in a pull-down menu
         } else {
-            let linkUrl = variationMaster.urlSelectVariationValue('Product-Variation', attr, attrValue);
-            let source = pdict.CurrentHttpParameterMap.get('source').getStringValue();
+            var linkUrl = variationMaster.urlSelectVariationValue('Product-Variation', attr, attrValue);
+            var source = pdict.CurrentHttpParameterMap.get('source').getStringValue();
 
             processedValue.selected = variationMaster.isSelectedAttributeValue(attr, attrValue) ? 'selected="selected"' : '';
             processedValue.optionValue = linkUrl + '&source=' + (source || 'detail');
@@ -151,8 +152,8 @@ function _getAttrValues (params) {
  * @return {String} - Selected value
  */
 function _getSelectedValue (attrValues) {
-    for (let i = 0; i < attrValues.length; i++) {
-        let value = attrValues[i];
+    for (var i = 0; i < attrValues.length; i++) {
+        var value = attrValues[i];
         if (value.isSelected) {
             return value.displayValue;
         }
@@ -174,19 +175,19 @@ function _getSelectedValue (attrValues) {
  * @returns {Object}
  */
 function _getSizeChart (params) {
-    const attrAttributeId = params.attrAttributeId;
-    const product = params.product;
-    const processedAttr = params.processedAttr;
+    var attrAttributeId = params.attrAttributeId;
+    var product = params.product;
+    var processedAttr = params.processedAttr;
 
     if (attrAttributeId != 'color' && !processedAttr.sizeChart) {
-        let category = product.getPrimaryCategory();
+        var category = product.getPrimaryCategory();
 
         if (!category && (product.isVariant() || product.isVariationGroup())) {
             category = product.getMasterProduct().getPrimaryCategory();
         }
 
         while (category && !processedAttr.sizeChart) {
-            let sizeChartId = category.custom.sizeChartID;
+            var sizeChartId = category.custom.sizeChartID;
 
             if (sizeChartId) {
                 return {
@@ -213,16 +214,16 @@ function _getSizeChart (params) {
  * @return {Object}
  */
 function _setCommonAttrValues(params) {
-    const pdict = params.pdict;
-    const attr = params.attr;
-    const attrValue = params.attrValue;
-    const variationMaster = params.variationMaster;
+    var pdict = params.pdict;
+    var attr = params.attr;
+    var attrValue = params.attrValue;
+    var variationMaster = params.variationMaster;
 
-    const product = pdict.Product;
-    const cleanvariationMaster = _getCleanPvm(product);
-    const largeImage = variationMaster.getImage('large', attr, attrValue);
+    var product = pdict.Product;
+    var cleanvariationMaster = _getCleanPvm(product);
+    var largeImage = variationMaster.getImage('large', attr, attrValue);
 
-    const processedValue = {
+    var processedValue = {
         displayValue: attrValue.getDisplayValue() || attrValue.getValue(),
         isAvailable: variationMaster.hasOrderableVariants(attr, attrValue),
         isOrderableInMaster: cleanvariationMaster.hasOrderableVariants(attr, attrValue),
@@ -249,18 +250,18 @@ function _setCommonAttrValues(params) {
  * @return {Object}
  */
 function _setAttrValuesWithSwatch (params) {
-    const processedValue = params.processedValue;
-    const attr = params.attr;
-    const attrValue = params.attrValue;
-    const variationMaster = params.variationMaster;
+    var processedValue = params.processedValue;
+    var attr = params.attr;
+    var attrValue = params.attrValue;
+    var variationMaster = params.variationMaster;
 
-    const attrAttributeId = attr.getAttributeID();
-    const attrValueDisplayName = attrValue.getDisplayValue();
+    var attrAttributeId = attr.getAttributeID();
+    var attrValueDisplayName = attrValue.getDisplayValue();
 
-    const isSelectable = variationMaster.hasOrderableVariants(attr, attrValue);
-    const swatchImage = attrValue.getImage('swatch');
-    const isSelected = variationMaster.isSelectedAttributeValue(attr, attrValue);
-    const linkUrl = isSelected
+    var isSelectable = variationMaster.hasOrderableVariants(attr, attrValue);
+    var swatchImage = attrValue.getImage('swatch');
+    var isSelected = variationMaster.isSelectedAttributeValue(attr, attrValue);
+    var linkUrl = isSelected
         ? variationMaster.urlUnselectVariationValue('Product-Variation', attr)
         : variationMaster.urlSelectVariationValue('Product-Variation', attr, attrValue);
 
@@ -268,7 +269,7 @@ function _setAttrValuesWithSwatch (params) {
     processedValue.isSelectable = isSelectable;
     processedValue.isSelected = isSelected;
     processedValue.linkUrl = linkUrl;
-    processedValue.isColorSwatch = swatchImage && attrAttributeId == 'color' ? true : false;
+    processedValue.isColorSwatch = !!(swatchImage && attrAttributeId == 'color');
     processedValue.swatchClass = isSelectable ? 'selectable' : 'unselectable';
     processedValue.swatchImageUrl = swatchImage ? swatchImage.getURL() : undefined;
     processedValue.resourceVariationsLabel = Resource.msgf('product.variations.label', 'product', null, attr.getDisplayName(), attrValueDisplayName);
@@ -288,14 +289,14 @@ function _setAttrValuesWithSwatch (params) {
  * @return {Object}
  */
 function _handleVariationGroup (params) {
-    const attr = params.attr;
-    const pdict = params.pdict;
-    const processedValue = params.processedValue;
-    const variationMaster = params.variationMaster;
+    var attr = params.attr;
+    var pdict = params.pdict;
+    var processedValue = params.processedValue;
+    var variationMaster = params.variationMaster;
 
-    const product = pdict.Product;
-    const variationGroupId = pdict.CurrentHttpParameterMap.vgid;
-    const variationGroup = product.isVariationGroup()
+    var product = pdict.Product;
+    var variationGroupId = pdict.CurrentHttpParameterMap.vgid;
+    var variationGroup = product.isVariationGroup()
         ? product
         : variationGroupId
             ? ProductMgr.getProduct(variationGroupId)

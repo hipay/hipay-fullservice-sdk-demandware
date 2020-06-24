@@ -54,19 +54,13 @@ export function clickOnNextImageIcon() {
 
     return browser.waitForVisible(nextBtnSelector)
         .then(() => getActiveImageSrc())
-        .then(activeImageSrc => {
+        .then((activeImageSrc) => {
             initialActiveImageSrc = activeImageSrc;
             return Promise.resolve();
         })
         .then(() => browser.click(nextBtnSelector))
-        .then(() => {
-            return browser.waitUntil(() => {
-                return getActiveImageSrc()
-                    .then(activeImageSrc => {
-                        return activeImageSrc !== initialActiveImageSrc;
-                    });
-            }, 3000, 'expected Quickview image src to be different after clicking next');
-        });
+        .then(() => browser.waitUntil(() => getActiveImageSrc()
+                    .then((activeImageSrc) => activeImageSrc !== initialActiveImageSrc), 3000, 'expected Quickview image src to be different after clicking next'));
 }
 
 export function closeQuickview() {

@@ -133,7 +133,7 @@ export function localizeNumber(price, locale = 'en-US') {
  */
 export function getPercentageDiscountedPrice(expectedSalePrice, locale, discountAmount) {
     const price = getCurrencyValue(expectedSalePrice, locale);
-    const discount = parseInt(discountAmount, 10) / 100;
+    const discount = parseInt(discountAmount) / 100;
 
     return price - (price * discount);
 }

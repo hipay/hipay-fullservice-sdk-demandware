@@ -9,7 +9,6 @@
 *
 */
 
-var checkoutUtils = require('app_storefront_core/cartridge/scripts/checkout/Utils.ds');
 var ArrayList = require('dw/util/ArrayList');
 var UUIDUtils = require('dw/util/UUIDUtils');
 
@@ -97,6 +96,7 @@ function removeNonDefaultShipments(basket) {
 }
 
 function createNewShipmentsAndProductLineItems(addressRelations, bonusDiscountLineItem, basket) {
+    var checkoutUtils = require('app_storefront_core/cartridge/scripts/checkout/Utils.ds');
     // Build new ProductLineItems and Shipments with the new created data structure
     var addressIds = Object.keys(addressRelations);
     var shipment;

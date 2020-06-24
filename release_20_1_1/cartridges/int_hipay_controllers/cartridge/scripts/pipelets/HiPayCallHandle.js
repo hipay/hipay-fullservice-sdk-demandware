@@ -4,16 +4,15 @@
 * @input Cart : dw.order.Basket
 */
 
+// eslint-disable-next-line no-unused-vars
 function execute(args) {
-    var Cart = args.Cart,
-        ProcessorID = args.ProcessorID,
-        PaymentMethod = args.PaymentMethodID,
+    var ProcessorID = args.ProcessorID,
         extensionPoint = 'app.payment.processor.' + ProcessorID;
 
     if (dw.system.HookMgr.hasHook(extensionPoint)) {
         var response = dw.system.HookMgr.callHook(extensionPoint, 'Handle', {
-            Basket          : args.Cart,
-            PaymentMethodID : args.PaymentMethodID
+            Basket: args.Cart,
+            PaymentMethodID: args.PaymentMethodID
         });
 
         if (response.error) {

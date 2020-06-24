@@ -37,7 +37,7 @@ function start() {
         var orderNo = session.forms.searchorder.orderID.value;
         var order = OrderMgr.getOrder(orderNo);
 
-        if (empty(order)) { /* can not load requested order. */
+        if (empty(order)) {/* can not load requested order. */
             operationStatus.valid = false;
             operationStatus.msg = Resource.msg('hipay_bm.capture.order.error', 'hipay_bm', null);
         } else {

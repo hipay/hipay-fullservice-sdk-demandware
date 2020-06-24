@@ -27,7 +27,7 @@ var jQuery;
 export function getVisibleSelector(selector1, selector2) {
     let mySelector;
     return browser.isVisible(selector1)
-        .then(visible => {
+        .then((visible) => {
             if (visible) {
                 mySelector = selector1;
                 return mySelector;
@@ -41,10 +41,8 @@ export function selectAttributeByIndex(attributeName, index) {
     let selector = '[data-attr = ' + attributeName + '] a:nth-child(' + index + ') span';
     return browser.waitForVisible(selector)
     // TODO:Before clicking on an attribute value, we must check whether it has already been selected.
-        .then(() => {
-            return browser.click(selector)
-                .waitForVisible('[data-attr = ' + attributeName + ']');
-        });
+        .then(() => browser.click(selector)
+                .waitForVisible('[data-attr = ' + attributeName + ']'));
 }
 
 export function selectAttributeByDropDown(attributeName, index) {
@@ -90,10 +88,8 @@ export function addProductVariationToBasket(product, btnAdd) {
             }
             return Promise.resolve();
         })
-        .then(() => {
-            return browser.waitForEnabled(btnAdd, 1000)
-                .click(btnAdd);
-        })
+        .then(() => browser.waitForEnabled(btnAdd, 1000)
+                .click(btnAdd))
         .then(() => Promise.resolve());
 }
 
@@ -110,26 +106,22 @@ export function convertHTTPsToHTTP(url) {
 }
 
 export function waitUntilPageLoaded() {
-    return browser.waitUntil(() => {
-        return browser.execute(() => document.readyState)
-            .then(loaded => loaded.value === 'complete');
-    }, 5000);
+    return browser.waitUntil(() => browser.execute(() => document.readyState)
+            .then((loaded) => loaded.value === 'complete'), 5000);
 }
 
 export function waitUntilAjaxCallEnded() {
-    return browser.waitUntil(() => {
-        return browser.execute(() => jQuery.active)
-            .then(loaded => loaded.value === 0);
-    }, 5000);
+    return browser.waitUntil(() => browser.execute(() => jQuery.active)
+            .then((loaded) => loaded.value === 0), 5000);
 }
 
 export function getSearchParams() {
     return browser.url()
-        .then(url => {
+        .then((url) => {
             let parsedUrl = nodeUrl.parse(url.value);
             let search = parsedUrl.search ? parsedUrl.search.replace('?', '') : '';
             let params = _.fromPairs(
-                _.map(search.split('&amp;'), param => param.split('='))
+                _.map(search.split('&amp;'), (param) => param.split('='))
             );
             return Promise.resolve(params);
         });
@@ -147,7 +139,7 @@ export function getSearchParams() {
  */
 export function isQuickViewExpected() {
     return browser.isVisible(header.NAV_BAR_TOGGLER)
-        .then(navBarVisible => {
+        .then((navBarVisible) => {
             if (navBarVisible) {
                 return false;
             }
@@ -272,7 +264,7 @@ export function createPaymentData(creditCard) {
 export function checkCheckbox(selector) {
     return browser.click(selector)
         .isSelected(selector)
-        .then(selected => {
+        .then((selected) => {
             if (!selected) {
                 return browser.click(selector);
             }
@@ -283,7 +275,7 @@ export function checkCheckbox(selector) {
 export function uncheckCheckbox(selector) {
     return browser.click(selector)
         .isSelected(selector)
-        .then(selected => {
+        .then((selected) => {
             if (selected) {
                 return browser.click(selector);
             }

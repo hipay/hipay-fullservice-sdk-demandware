@@ -20,13 +20,13 @@ export function parsePromotions(rawPromotions, processedPromotions, file) {
     parsedPromotions[site].promotions = {};
     parsedPromotions[site].promotionCampaignAssignments = {};
 
-    rawPromotions.promotions.campaign.forEach(campaign => {
+    rawPromotions.promotions.campaign.forEach((campaign) => {
         parsedPromotions[site].campaigns[campaign.$['campaign-id']] = campaign;
     });
-    rawPromotions.promotions.promotion.forEach(promotion => {
+    rawPromotions.promotions.promotion.forEach((promotion) => {
         parsedPromotions[site].promotions[promotion.$['promotion-id']] = promotion;
     });
-    rawPromotions.promotions['promotion-campaign-assignment'].forEach(assignment => {
+    rawPromotions.promotions['promotion-campaign-assignment'].forEach((assignment) => {
         parsedPromotions[site].promotionCampaignAssignments[assignment.$['promotion-id']] = assignment;
     });
 
@@ -64,7 +64,7 @@ export function getCampaign(campaigns, id) {
  * @return {PromotionCampaignAssignment} - Promotion-Campaign Assignment instance
  */
 export function getPromotionCampaignAssignment(assignments, promotionId, campaignId) {
-    const assignment = _.findWhere(assignments, { $: { 'promotion-id': promotionId, 'campaign-id': campaignId } });
+    const assignment = _.findWhere(assignments, {$: {'promotion-id': promotionId, 'campaign-id': campaignId}});
     return new PromotionCampaignAssignment(assignment);
 }
 
@@ -88,7 +88,7 @@ export class PromotionCampaignAssignment {
         }
 
         if (Object.hasOwnProperty.call(assignment, 'coupons')) {
-            this.coupons = assignment.coupons.coupon.map(coupon => coupon.$['coupon-id']);
+            this.coupons = assignment.coupons.coupon.map((coupon) => coupon.$['coupon-id']);
         }
     }
 }
@@ -114,7 +114,7 @@ export class Promotion extends common.AbstractDwModelMock {
 
         // Promotions have three different promotion rules of which only one can be applied: order, product, or shipping
         const ruleKeySuffix = '-promotion-rule';
-        const promotionRuleKey = _.find(Object.keys(promotion), key => key.endsWith(ruleKeySuffix));
+        const promotionRuleKey = _.find(Object.keys(promotion), (key) => key.endsWith(ruleKeySuffix));
         const promotionRule = promotion[promotionRuleKey][0];
 
         this.promotionRuleType = promotionRuleKey.split(ruleKeySuffix)[0];
@@ -162,7 +162,7 @@ export class Promotion extends common.AbstractDwModelMock {
         }
 
         if (Object.hasOwnProperty.call(promotionRule, 'max-applications')) {
-            this.maxApplications = parseInt(promotionRule['max-applications'][0], 10);
+            this.maxApplications = parseInt(promotionRule['max-applications'][0]);
         }
 
         if (Object.hasOwnProperty.call(promotionRule, 'identical-products')) {
@@ -266,7 +266,7 @@ function processIncludedProducts(includedProductsRaw) {
         }
     };
 
-    Object.keys(includedConditionGroup).forEach(condition => {
+    Object.keys(includedConditionGroup).forEach((condition) => {
         const conditionType = condition.replace('-condition', '');
         includedProducts[conditionType] = processConditionType[conditionType](includedConditionGroup[condition][0]);
     });
@@ -277,21 +277,19 @@ function processIncludedProducts(includedProductsRaw) {
 function processDiscounts(promotionRule) {
     const discounts = promotionRule.discounts[0];
     const discount = discounts.discount[0];
-    const discountType = _.remove(Object.keys(discount), key => key !== 'threshold')[0];
+    const discountType = _.remove(Object.keys(discount), (key) => key !== 'threshold')[0];
     let value;
 
     if (['percentage', 'amount'].indexOf(discountType) > -1) {
         value = discount[discountType][0];
     } else if (discountType === 'bonus-choice') {
         value = {
-            bonusProducts: _.map(discount['bonus-choice'][0]['bonus-products'][0]['bonus-product'], bonusProduct => {
-                return {
-                    productId: bonusProduct.$['product-id'],
-                    bonusProductPrice: bonusProduct['bonus-product-price'][0]
-                };
-            }),
+            bonusProducts: _.map(discount['bonus-choice'][0]['bonus-products'][0]['bonus-product'], (bonusProduct) => ({
+                productId: bonusProduct.$['product-id'],
+                bonusProductPrice: bonusProduct['bonus-product-price'][0]
+            })),
             maxBonusItems: Object.hasOwnProperty.call(discount['bonus-choice'][0], 'max-bonus-items') ?
-                parseInt(discount['bonus-choice'][0]['max-bonus-items'][0], 10) : null
+                parseInt(discount['bonus-choice'][0]['max-bonus-items'][0]) : null
         };
     }
 

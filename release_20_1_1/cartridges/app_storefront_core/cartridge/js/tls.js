@@ -46,8 +46,8 @@ function getTLS(url, callback) {
 
     /** This list derived from https://www.ssllabs.com/ssltest/clients.html **/
     var badBrowsers = ['MSIE 6.0','MSIE 7.0','MSIE 8.0','MSIE 9.0','MSIE 10.0',
-                       'Android 2.3.7', 'Android 4.0.4', 'Android 4.1.1', 'Android 4.2.2', 'Android 4.3',
-                       'Safari 5.1.9 / OS X 10.6.8', 'Safari 6.0.4 / OS X 10.8.4 '];
+        'Android 2.3.7', 'Android 4.0.4', 'Android 4.1.1', 'Android 4.2.2', 'Android 4.3',
+        'Safari 5.1.9 / OS X 10.6.8', 'Safari 6.0.4 / OS X 10.8.4 '];
     function checkTLSLevel(data) {
         // If we can determine the TLS level, check to see if it's less than 1.2
         if (parseFloat(data.tls_version.split(' ')[1]) < 1.1) {

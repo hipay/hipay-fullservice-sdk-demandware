@@ -27,10 +27,10 @@ function getBonusProducts() {
         if (bp.options) {
             for (a = 0, alen = bp.options.length; a < alen; a++) {
                 var opt = bp.options[a];
-                p.options = {optionName:opt.name, optionValue:opt.value};
+                p.options = {optionName: opt.name, optionValue: opt.value};
             }
         }
-        bonusproducts.push({product:p});
+        bonusproducts.push({product: p});
     }
     return {bonusproducts: bonusproducts};
 }
@@ -121,8 +121,8 @@ function initializeGrid () {
         attributes.each(function () {
             var li = $(this);
             product.attributes[li.data('attributeId')] = {
-                displayName:li.children('.display-name').html(),
-                displayValue:li.children('.display-value').html()
+                displayName: li.children('.display-name').html(),
+                displayValue: li.children('.display-value').html()
             };
         });
         selectedList.push(product);
@@ -192,7 +192,7 @@ function initializeGrid () {
     .on('click', '.remove-link', function (e) {
         e.preventDefault();
         var container = $(this).closest('.selected-bonus-item');
-        if (!container.data('uuid')) { return; }
+        if (!container.data('uuid')) {return;}
 
         var uuid = container.data('uuid');
         var i, len = selectedList.length;
@@ -242,7 +242,7 @@ function initializeGrid () {
 
         //get the next page of choice of bonus products
         var lineItemDetail = JSON.parse($('#bonus-product-list').attr('data-line-item-detail'));
-        lineItemDetail.pageStart = lineItemDetail.pageStart + lineItemDetail.pageSize;
+        lineItemDetail.pageStart += lineItemDetail.pageSize;
         $('#bonus-product-list').attr('data-line-item-detail', JSON.stringify(lineItemDetail));
 
         var url = util.appendParamsToUrl(Urls.getBonusProducts, {
@@ -305,7 +305,7 @@ var bonusProductsView = {
     loadBonusOption: function () {
         var    self = this,
             bonusDiscountContainer = document.querySelector('.bonus-discount-container');
-        if (!bonusDiscountContainer) { return; }
+        if (!bonusDiscountContainer) {return;}
 
         // get the html from minicart, then trash it
         var bonusDiscountContainerHtml = bonusDiscountContainer.outerHTML;

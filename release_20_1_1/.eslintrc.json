@@ -10,6 +10,10 @@
         "vars-on-top": "off",
         "global-require": "off",
         "no-shadow": ["error", { "allow": ["err", "callback"]}],
-        "max-len": "off"
+
+        "max-len": "off",
+        "linebreak-style": ["error", "windows"],
+        "keyword-spacing": 2,
+        "no-mixed-spaces-and-tabs": 0
     }
 }

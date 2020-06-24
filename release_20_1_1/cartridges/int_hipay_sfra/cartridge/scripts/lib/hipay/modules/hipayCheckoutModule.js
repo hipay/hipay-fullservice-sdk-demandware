@@ -8,10 +8,7 @@ var Logger = require('dw/system/Logger');
 var Transaction = require('dw/system/Transaction');
 var PaymentMgr = require('dw/order/PaymentMgr');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
-
-var HiPayLogger = require('*/cartridge/scripts/lib/hipay/hipayLogger');
 var HiPayConfig = require('*/cartridge/config/hipayConfig').HiPayConfig;
-var HiPayHelper = require('*/cartridge/scripts/lib/hipay/hipayHelper');
 
 var HiPayCheckoutModule = function () {};
 
@@ -108,6 +105,7 @@ HiPayCheckoutModule.hiPayUpdatePaymentInstrument = function (paymentInstrument, 
 HiPayCheckoutModule.hiPayGenerateToken = function (hiPayCardBrand, hiPayCardNumber, hiPayCardExpiryMonth,
     hiPayCardExpiryYear, hiPayCardHolder, hiPayCardCVC, hiPayMultiUseToken) {
     var HiPayTokenService = require('*/cartridge/scripts/lib/hipay/services/hipayTokenService');
+    var HiPayLogger = require('*/cartridge/scripts/lib/hipay/hipayLogger');
     var log = new HiPayLogger('HiPayGenerateToken');
     var hiPayTokenService = new HiPayTokenService();
     var params = {};
@@ -133,14 +131,14 @@ HiPayCheckoutModule.hiPayGenerateToken = function (hiPayCardBrand, hiPayCardNumb
             msg = JSON.parse(hipayResponse.object.text);
         } catch (e) {
             log.error('Response text cannot be parsed as JSON ::: ' + JSON.stringify(hipayResponse.object.text, undefined, 2));
-            return { error: true };
+            return {error: true};
         }
 
         token = msg.token;
         pan = msg.pan;
     } else {
         log.error(hipayResponse.msg);
-        return { error: true };
+        return {error: true};
     }
 
     log.info(JSON.stringify(msg, undefined, 2));
@@ -167,12 +165,12 @@ HiPayCheckoutModule.invalidatePaymentCardFormElements = function (status, credit
 
     // verify that we have a status object and a valid credit card form
     if (status === null || !creditCardForm.valid) {
-        return { error: true };
+        return {error: true};
     }
 
     // we are fine, if status is OK
     if (status.status === Status.OK) {
-        return { success: true };
+        return {success: true};
     }
 
     // invalidate the payment card form elements
@@ -196,7 +194,7 @@ HiPayCheckoutModule.invalidatePaymentCardFormElements = function (status, credit
         }
     }
 
-    return { success: true };
+    return {success: true};
 };
 
 /**
@@ -270,6 +268,8 @@ HiPayCheckoutModule.calculateNonGiftCertificateAmount = function (basket) {
  */
 HiPayCheckoutModule.hiPayOrderRequest = function (paymentInstrument, order, deviceFingerprint, recurring) {
     var HiPayOrderService = require('*/cartridge/scripts/lib/hipay/services/hipayOrderService');
+    var HiPayLogger = require('*/cartridge/scripts/lib/hipay/hipayLogger');
+    var HiPayHelper = require('*/cartridge/scripts/lib/hipay/hipayHelper');
     var status = require('*/cartridge/config/hipayStatus').HiPayStatus;
     var log = new HiPayLogger('HiPayOrderRequest');
     var hiPayOrderService = new HiPayOrderService();
@@ -301,11 +301,11 @@ HiPayCheckoutModule.hiPayOrderRequest = function (paymentInstrument, order, devi
         } else if (pi.paymentMethod.equals('HIPAY_GIROPAY')) {
             params.issuer_bank_id = pi.custom.hipayBic;
         } else if (pi.paymentMethod.equals('HIPAY_MULTIBANCO') || pi.paymentMethod.equals('HIPAY_MBWAY')) {                   
-            params.expiration_limit = parseInt( pi.custom.hipayExpiryLimit, 10);
+            params.expiration_limit = parseInt(pi.custom.hipayExpiryLimit);
         }
 
         params.payment_product = pi.custom.hipayProductName;
-        params.eci = recurring ? "9" : "7";
+        params.eci = recurring ? '9' : '7';
         params.device_fingerprint = fingeprint;
         params.cdata1 = order.getOrderToken();
         helper.fillHeaderData(HiPayConfig, order, params); // fill in the common params
@@ -410,6 +410,8 @@ HiPayCheckoutModule.hiPayHostedPageRequest = function (order, paymentInstrument)
         var Site = require('dw/system/Site');
         var URLUtils = require('dw/web/URLUtils');
         var HiPayHostedService = require('*/cartridge/scripts/lib/hipay/services/hipayHostedService');
+        var HiPayLogger = require('*/cartridge/scripts/lib/hipay/hipayLogger');
+        var HiPayHelper = require('*/cartridge/scripts/lib/hipay/hipayHelper');
         var log = new HiPayLogger('HiPayHostedPageRequest');
         var hiPayHostedService = new HiPayHostedService();
         var helper = new HiPayHelper();
@@ -423,7 +425,7 @@ HiPayCheckoutModule.hiPayHostedPageRequest = function (order, paymentInstrument)
         try {
             var params = {};
             params.operation = HiPayConfig.hipayPaymentAction;
-            params.eci = "7";
+            params.eci = '7';
             params.css = URLUtils.https('HiPayResource-Style').toString();
             params.template = HiPayConfig.getTemplateType();
             params.merchant_display_name = Site.current.getName();

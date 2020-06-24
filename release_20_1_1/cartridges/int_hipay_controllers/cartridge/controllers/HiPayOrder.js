@@ -3,11 +3,11 @@
 var guard = require('~/cartridge/scripts/guard');
 var ISML = require('dw/template/ISML');
 var URLUtils = require('dw/web/URLUtils');
-var HiPayOrderModule = require('*/cartridge/scripts/lib/hipay/HiPayOrderModule');
-var HiPayProcess = require('*/cartridge/controllers/HiPayProcess');
 
 /** Handles HiPay accepted payment */
 function Accept() {
+    var HiPayOrderModule = require('*/cartridge/scripts/lib/hipay/HiPayOrderModule');
+    var HiPayProcess = require('*/cartridge/controllers/HiPayProcess');
     var isHashValid = HiPayProcess.verifyHash();
     var params = {};
     var processOrder;
@@ -30,7 +30,8 @@ function Accept() {
                 order: order,
                 hiPayState: error
             };
-            redirectURL = HiPayProcess.failOrder(params);
+            var redirectURL = HiPayProcess.failOrder(params);
+            var res;
             res.redirect(redirectURL);
         }
     } else if (isHashValid) {
@@ -59,6 +60,8 @@ function Pending() {
 
 /** Handles HiPay declined payment */
 function Decline() {
+    var HiPayOrderModule = require('*/cartridge/scripts/lib/hipay/HiPayOrderModule');
+    var HiPayProcess = require('*/cartridge/controllers/HiPayProcess');
     var URLUtils = require('dw/web/URLUtils');
     var isHashValid = HiPayProcess.verifyHash();
     var hiPayState = 'decline';
@@ -92,6 +95,8 @@ function Decline() {
 
 /** Handles HiPay cancelled payment */
 function Cancel() {
+    var HiPayOrderModule = require('*/cartridge/scripts/lib/hipay/HiPayOrderModule');
+    var HiPayProcess = require('*/cartridge/controllers/HiPayProcess');
     var URLUtils = require('dw/web/URLUtils');
     var isHashValid = HiPayProcess.verifyHash();
     var hiPayState = 'cancel';

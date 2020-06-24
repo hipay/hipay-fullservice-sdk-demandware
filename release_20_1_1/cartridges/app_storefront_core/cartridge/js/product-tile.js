@@ -55,7 +55,7 @@ function initializeEvents() {
     });
     $('.swatch-list .swatch').on('click', function (e) {
         e.preventDefault();
-        if ($(this).hasClass('selected')) { return; }
+        if ($(this).hasClass('selected')) {return;}
 
         var $tile = $(this).closest('.product-tile');
         $(this).closest('.swatch-list').find('.swatch.selected').removeClass('selected');
@@ -99,7 +99,7 @@ function initializeEvents() {
 
 exports.init = function () {
     var $tiles = $('.tiles-container .product-tile');
-    if ($tiles.length === 0) { return; }
+    if ($tiles.length === 0) {return;}
     imagesLoaded('.tiles-container').on('done', function () {
         $tiles.syncHeight()
             .each(function (idx) {

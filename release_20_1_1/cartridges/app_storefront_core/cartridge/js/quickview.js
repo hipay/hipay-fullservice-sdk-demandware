@@ -104,7 +104,7 @@ var quickview = {
                 title: Resources.QUICK_VIEW_POPUP,
                 open: function () {
                     this.setup(url);
-                    if (typeof options.callback === 'function') { options.callback(); }
+                    if (typeof options.callback === 'function') {options.callback();}
                 }.bind(this)
             }
         });

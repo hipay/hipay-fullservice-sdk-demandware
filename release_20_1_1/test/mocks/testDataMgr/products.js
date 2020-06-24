@@ -2,7 +2,7 @@
 
 import _ from 'lodash';
 import * as common from './helpers/common';
-import { AbstractDwModelMock } from './common';
+import {AbstractDwModelMock} from './common';
 
 let defaultLocale = common.defaultLocale;
 
@@ -104,7 +104,7 @@ export function isProductStandard(product) {
 }
 
 export function getVariationMasterInstances(catalogProducts) {
-    return _.filter(catalogProducts, product => isProductVariationMaster(product));
+    return _.filter(catalogProducts, (product) => isProductVariationMaster(product));
 }
 
 /**
@@ -116,9 +116,9 @@ export function getVariationMasterInstances(catalogProducts) {
  */
 export function getVariantParent(catalog, variantID) {
     const variationMasters = getVariationMasterInstances(catalog.products);
-    const variantParent = _.find(variationMasters, master => {
+    const variantParent = _.find(variationMasters, (master) => {
         const variants = master.variations[0].variants;
-        return variants ? _.some(variants[0].variant, { $: { 'product-id': variantID } }) : false;
+        return variants ? _.some(variants[0].variant, {$: {'product-id': variantID}}) : false;
     });
 
     return new ProductVariationMaster(variantParent, catalog);
@@ -142,7 +142,7 @@ export class Category {
 
     getDisplayName(locale = defaultLocale) {
         let parsedLocale = locale;
-        if (locale === 'en_GB') { parsedLocale = defaultLocale; }
+        if (locale === 'en_GB') {parsedLocale = defaultLocale;}
         return this.displayName[parsedLocale];
     }
 
@@ -234,7 +234,7 @@ export class AbstractProductBase extends AbstractDwModelMock {
      * @returns {Array.<String>} Image path values, i.e., ['small/PG.15J0037EJ.SLABLFB.PZ.jpg', small/PG.15J0037EJ.SLABLFB.BZ.jpg]
      */
     getImages(viewType, attrValue) {
-        return _.find(this.images, { viewType: viewType, variationValue: attrValue }).paths;
+        return _.find(this.images, {viewType: viewType, variationValue: attrValue}).paths;
     }
 }
 
@@ -253,7 +253,7 @@ export class ProductStandard extends AbstractProductBase {
 
     getDisplayName(locale = defaultLocale) {
         let parsedLocale;
-        if (locale === 'en_GB') { parsedLocale = defaultLocale; }
+        if (locale === 'en_GB') {parsedLocale = defaultLocale;}
         return this.master.displayName[parsedLocale];
     }
 }
@@ -280,7 +280,7 @@ export class ProductSet extends AbstractProductBase {
     }
 
     getProducts(catalog) {
-        return this.getProductIds().map(id => getProduct(catalog, id));
+        return this.getProductIds().map((id) => getProduct(catalog, id));
     }
 
 }
@@ -297,7 +297,7 @@ export class ProductVariationMaster extends AbstractProductBase {
 
         let variationAttrs = product.variations[0].attributes[0]['variation-attribute'];
 
-        _.each(variationAttrs, value => {
+        _.each(variationAttrs, (value) => {
             let proxy = {};
             proxy.values = [];
 
@@ -308,7 +308,7 @@ export class ProductVariationMaster extends AbstractProductBase {
                 }
             });
 
-            _.each(value['variation-attribute-values'][0]['variation-attribute-value'], val => {
+            _.each(value['variation-attribute-values'][0]['variation-attribute-value'], (val) => {
                 proxy.values.push({
                     value: val.$.value,
                     displayValues: getLocalizedValues(val['display-value'])
@@ -348,11 +348,11 @@ export class ProductVariationMaster extends AbstractProductBase {
     }
 
     getAttrTypeValueIndex(type, value) {
-        return _.findIndex(this.variationAttributes[type].values, { value: value });
+        return _.findIndex(this.variationAttributes[type].values, {value: value});
     }
 
     getAttrDisplayValue(type, codedValue, locale = defaultLocale) {
-        let attrValues = _.find(this.variationAttributes[type].values, { value: codedValue });
+        let attrValues = _.find(this.variationAttributes[type].values, {value: codedValue});
         let parsedLocale = validateLocale(attrValues.displayValues, locale);
         return attrValues ? attrValues.displayValues[parsedLocale] : undefined;
     }
@@ -363,7 +363,7 @@ export class ProductVariationMaster extends AbstractProductBase {
 
     getAttrValuesByType(type) {
         let definedValues = _.map(this.variationAttributes[type].values, 'value');
-        let implementedValues = this.variants.map(variant => {
+        let implementedValues = this.variants.map((variant) => {
             if (variant.onlineFlag && variant.availableFlag) {
                 return variant.customAttributes[type];
             }
@@ -388,7 +388,7 @@ export class ProductBundle extends AbstractProductBase {
     }
 
     getProducts(catalog) {
-        return this.getProductIds().map(id => getProduct(catalog, id));
+        return this.getProductIds().map((id) => getProduct(catalog, id));
     }
 
     getOptions() {
@@ -417,14 +417,14 @@ function parseImages(images) {
     let imageList = images['image-group'];
     let parsed = [];
 
-    imageList.forEach(image => {
+    imageList.forEach((image) => {
         let proxy = {
             viewType: image.$['view-type'],
             variationValue: image.$['variation-value'] || undefined,
             paths: []
         };
 
-        image.image.forEach(path => {
+        image.image.forEach((path) => {
             proxy.paths.push(path.$.path);
         });
 
@@ -439,7 +439,7 @@ function parsePageAttrs(attrs) {
 }
 
 function parseCustomAttrs(attrs) {
-    return _.fromPairs(_.map(attrs, attr => [attr.$['attribute-id'], attr._]));
+    return _.fromPairs(_.map(attrs, (attr) => [attr.$['attribute-id'], attr._]));
 }
 
 function parseOptions(options) {
@@ -447,7 +447,7 @@ function parseOptions(options) {
 }
 
 function getLocalizedValues(values) {
-    return _.fromPairs(_.map(values, value => {
+    return _.fromPairs(_.map(values, (value) => {
         // Format key to match country code values in countries.json
         let key = value.$['xml:lang'].replace('-', '_');
         return [key, value._];

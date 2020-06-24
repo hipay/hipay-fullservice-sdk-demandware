@@ -3,6 +3,7 @@ var PaymentInstrument = require('dw/order/PaymentInstrument');
 var Logger = require('dw/system/Logger');
 
 exports.authorizeOrderPayment = function (order) {
+    // eslint-disable-next-line no-multi-str
     order.addNote('Payment Authorization Warning!', 'This is a dummy \
 authorizeOrderPayment hook implementation. Please disable it to use \
 the built-in PSP API, or implement the necessary calls to the \

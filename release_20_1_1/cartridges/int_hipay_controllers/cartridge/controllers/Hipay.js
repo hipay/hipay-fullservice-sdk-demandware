@@ -3,7 +3,7 @@
 /**
  * Controller that handles HiPay payments
  *
- * @module controllers/HIPAY
+ * @module controllers/Hipay
  */
 
 /* API Includes */

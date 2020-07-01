@@ -1,9 +1,9 @@
 'use strict';
 
 /**
-* HIPAY_HOSTED.js
+* HiPayHosted.js
 *
-* @module  controllers/HIPAY_HOSTED
+* @module  controllers/HiPayHosted
 */
 
 /* API Includes */

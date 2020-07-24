@@ -2,6 +2,7 @@
  * Performs validation steps, based upon the entered billing information.
  */
 
+// eslint-disable-next-line no-unused-vars
 function execute(args) {
     var HiPayLogger = require('*/cartridge/scripts/lib/hipay/HiPayLogger');
     var log = new HiPayLogger('HiPayValidateBilling');

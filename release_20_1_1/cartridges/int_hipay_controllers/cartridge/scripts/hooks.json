@@ -2,11 +2,11 @@
     "hooks": [
         {
             "name"   : "app.payment.processor.HIPAY_HOSTED",
-            "script" : "../controllers/HIPAY_HOSTED"
+            "script" : "../controllers/HiPayHosted"
         },
         {
             "name"   : "app.payment.processor.HIPAY",
-            "script" : "../controllers/HIPAY"
+            "script" : "../controllers/Hipay"
         }
     ]
 }

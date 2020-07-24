@@ -19,9 +19,9 @@ function HiPayConfig() {
     };
 
     this.THREEDSECURE_AUTH = {
-        BYPASS      : 0,
-        IFAVAILABLE : 1,
-        MANDATORY   : 2
+        BYPASS      : "0",
+        IFAVAILABLE : "1",
+        MANDATORY   : "2"
     };
 
     this.HOSTED_SCRIPT = "basic-js";

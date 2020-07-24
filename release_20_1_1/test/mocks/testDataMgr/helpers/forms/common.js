@@ -25,7 +25,7 @@ export function populateField(selector, value, fieldType = 'input') {
         // Sets HTML5 input date field
         case 'date':
             return browser.element(selector)
-                .then(el => browser.elementIdValue(el.value.ELEMENT, value));
+                .then((el) => browser.elementIdValue(el.value.ELEMENT, value));
         default:
             return Promise.resolve();
     }

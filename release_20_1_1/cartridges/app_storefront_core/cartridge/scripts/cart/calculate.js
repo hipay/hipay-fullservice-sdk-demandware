@@ -100,7 +100,7 @@ exports.calculate = function (basket) {
  *
  * @param {object} basket The basket containing the elements to be computed
  */
-function calculateProductPrices (basket) {
+function calculateProductPrices(basket) {
     // get total quantities for all products contained in the basket
     var productQuantities = basket.getProductQuantities();
     var productQuantitiesIt = productQuantities.keySet().iterator();
@@ -179,7 +179,7 @@ function calculateProductPrices (basket) {
  *
  * @param {object} basket The basket containing the gift certificates
  */
-function calculateGiftCertificatePrices (basket) {
+function calculateGiftCertificatePrices(basket) {
     var giftCertificates = basket.getGiftCertificateLineItems().iterator();
     while (giftCertificates.hasNext()) {
         var giftCertificate = giftCertificates.next();
@@ -206,7 +206,7 @@ function calculateGiftCertificatePrices (basket) {
  *
  * @param {object} basket The basket containing the elements for which taxes need to be calculated
  */
-function calculateTax (basket) {
+function calculateTax(basket) {
     var shipments = basket.getShipments().iterator();
     while (shipments.hasNext()) {
         var shipment = shipments.next();
@@ -283,7 +283,7 @@ function calculateTax (basket) {
     // this includes order-level shipping price adjustments
     if (!basket.getPriceAdjustments().empty || !basket.getShippingPriceAdjustments().empty) {
     // calculate a mix tax rate from
-    var basketPriceAdjustmentsTaxRate = (basket.getMerchandizeTotalGrossPrice().value / basket.getMerchandizeTotalNetPrice().value) - 1;
+        var basketPriceAdjustmentsTaxRate = (basket.getMerchandizeTotalGrossPrice().value / basket.getMerchandizeTotalNetPrice().value) - 1;
 
         var basketPriceAdjustments = basket.getPriceAdjustments().iterator();
         while (basketPriceAdjustments.hasNext()) {

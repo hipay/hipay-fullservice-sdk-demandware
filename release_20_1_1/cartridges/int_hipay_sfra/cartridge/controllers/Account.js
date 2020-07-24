@@ -43,7 +43,7 @@ function getModel(req) {
             numberOfLineItems: 'single'
         };
 
-        orderModel = new OrderModel(order, { config: config, countryCode: currentLocale.country });
+        orderModel = new OrderModel(order, {config: config, countryCode: currentLocale.country});
     } else {
         orderModel = null;
     }
@@ -179,7 +179,7 @@ server.post(
         }
 
         if (customerLoginResult.authenticatedCustomer) {
-            res.setViewData({ authenticatedCustomer: customerLoginResult.authenticatedCustomer });
+            res.setViewData({authenticatedCustomer: customerLoginResult.authenticatedCustomer});
             res.json({
                 success: true,
                 redirectUrl: accountHelpers.getLoginRedirectURL(req.querystring.rurl, req.session.privacyCache, false)
@@ -187,7 +187,7 @@ server.post(
 
             req.session.privacyCache.set('args', null);
         } else {
-            res.json({ error: [Resource.msg('error.message.login.form', 'login', null)] });
+            res.json({error: [Resource.msg('error.message.login.form', 'login', null)]});
         }
 
         return next();
@@ -251,14 +251,14 @@ server.post(
         if (registrationForm.valid) {
             res.setViewData(registrationFormObj);
 
-            this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+            this.on('route:BeforeComplete', function (req, res) {  
                 var Transaction = require('dw/system/Transaction');
                 var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
                 var authenticatedCustomer;
                 var serverError;
 
                 // getting variables for the BeforeComplete function
-                var registrationForm = res.getViewData(); // eslint-disable-line
+                var registrationForm = res.getViewData();  
 
                 if (registrationForm.validForm) {
                     var login = registrationForm.email;
@@ -272,14 +272,14 @@ server.post(
 
                             var authenticateCustomerResult = CustomerMgr.authenticateCustomer(login, password);
                             if (authenticateCustomerResult.status !== 'AUTH_OK') {
-                                error = { authError: true, status: authenticateCustomerResult.status };
+                                error = {authError: true, status: authenticateCustomerResult.status};
                                 throw error;
                             }
 
                             authenticatedCustomer = CustomerMgr.loginCustomer(authenticateCustomerResult, false);
 
                             if (!authenticatedCustomer) {
-                                error = { authError: true, status: authenticateCustomerResult.status };
+                                error = {authError: true, status: authenticateCustomerResult.status};
                                 throw error;
                             } else {
                                 // assign values to the profile
@@ -293,7 +293,7 @@ server.post(
                                 // Updated the date of the last password change
                                 var dateNow = new Date();                   
                                 Transaction.wrap(function () {
-                                    newCustomerProfile.custom.datePasswordLastChange = dateNow.toISOString().slice(0,10).replace(/-/g,"");
+                                    newCustomerProfile.custom.datePasswordLastChange = dateNow.toISOString().slice(0,10).replace(/-/g,'');
                                 });
                             }
                         });
@@ -328,7 +328,7 @@ server.post(
                     // send a registration email
                     accountHelpers.sendCreateAccountEmail(authenticatedCustomer.profile);
 
-                    res.setViewData({ authenticatedCustomer: authenticatedCustomer });
+                    res.setViewData({authenticatedCustomer: authenticatedCustomer});
                     res.json({
                         success: true,
                         redirectUrl: accountHelpers.getLoginRedirectURL(req.querystring.rurl, req.session.privacyCache, true)
@@ -422,7 +422,7 @@ server.post(
         };
         if (profileForm.valid) {
             res.setViewData(result);
-            this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+            this.on('route:BeforeComplete', function (req, res) {  
                 var formInfo = res.getViewData();
                 var customer = CustomerMgr.getCustomerByCustomerNumber(
                     req.currentCustomer.profile.customerNo
@@ -568,7 +568,7 @@ server.post(
 
         if (profileForm.valid) {
             res.setViewData(result);
-            this.on('route:BeforeComplete', function () { // eslint-disable-line no-shadow
+            this.on('route:BeforeComplete', function () {  
                 var formInfo = res.getViewData();                
                 var customer = CustomerMgr.getCustomerByCustomerNumber(
                     session.customer.profile.customerNo  //     req.currentCustomer.profile.customerNo
@@ -604,25 +604,25 @@ server.post(
                     var email = customer.profile.email;
                     var url = URLUtils.https('Account-EditPassword');
                     var objectForEmail = {
-                                 firstName: customer.profile.firstName,
-                                 lastName: customer.profile.lastName,
-                                  url: url,
-                                  resettingCustomer:customer
-                                 };
+                        firstName: customer.profile.firstName,
+                        lastName: customer.profile.lastName,
+                        url: url,
+                        resettingCustomer: customer
+                    };
 
                     var emailObj = {
-                           to: email,
-                           subject: Resource.msg('subject.profile.resetpassword.email', 'login', null),
-                           from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@salesforce.com',
-                           type: emailHelpers.emailTypes.passwordChanged
-                            };
+                        to: email,
+                        subject: Resource.msg('subject.profile.resetpassword.email', 'login', null),
+                        from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@salesforce.com',
+                        type: emailHelpers.emailTypes.passwordChanged
+                    };
 
                     emailHelpers.sendEmail(emailObj, 'account/password/passwordChangedEmail', objectForEmail);        
                    
                     // Updated the date of the last password change
                     var dateNow = new Date();                   
                     Transaction.wrap(function () {
-                        customer.profile.custom.datePasswordLastChange = dateNow.toISOString().slice(0,10).replace(/-/g,"");
+                        customer.profile.custom.datePasswordLastChange = dateNow.toISOString().slice(0,10).replace(/-/g,'');
                     });
                     
                     res.json({
@@ -691,7 +691,7 @@ server.post('PasswordResetDialogForm', server.middleware.https, function (req, r
 });
 
 server.get('PasswordReset', server.middleware.https, function (req, res, next) {
-    res.render('account/password/requestPasswordReset', { mobile: true });
+    res.render('account/password/requestPasswordReset', {mobile: true});
     next();
 });
 
@@ -706,7 +706,7 @@ server.get('SetNewPassword', server.middleware.https, consentTracking.consent, f
     if (!resettingCustomer) {
         res.redirect(URLUtils.url('Account-PasswordReset'));
     } else {
-        res.render('account/password/newPassword', { passwordForm: passwordForm, token: token });
+        res.render('account/password/newPassword', {passwordForm: passwordForm, token: token});
     }
     next();
 });
@@ -734,7 +734,7 @@ server.post('SaveNewPassword', server.middleware.https, function (req, res, next
             passwordForm: passwordForm
         };
         res.setViewData(result);
-        this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+        this.on('route:BeforeComplete', function (req, res) {  
             var CustomerMgr = require('dw/customer/CustomerMgr');
             var URLUtils = require('dw/web/URLUtils');
             var Site = require('dw/system/Site');
@@ -763,39 +763,39 @@ server.post('SaveNewPassword', server.middleware.https, function (req, res, next
                 var email = resettingCustomer.profile.email;
                 var url = URLUtils.https('Login-Show');
                 var objectForEmail = {
-                        firstName: resettingCustomer.profile.firstName,
-                        lastName: resettingCustomer.profile.lastName,
-                        url: url,
-                        resettingCustomer:resettingCustomer
-                    };
+                    firstName: resettingCustomer.profile.firstName,
+                    lastName: resettingCustomer.profile.lastName,
+                    url: url,
+                    resettingCustomer: resettingCustomer
+                };
 
                 var emailObj = {
-                        to: email,
-                        subject: Resource.msg('subject.profile.resetpassword.email', 'login', null),
-                        from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@salesforce.com',         
-                        type: emailHelpers.emailTypes.passwordChanged
-                    };
+                    to: email,
+                    subject: Resource.msg('subject.profile.resetpassword.email', 'login', null),
+                    from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@salesforce.com',         
+                    type: emailHelpers.emailTypes.passwordChanged
+                };
 
                 emailHelpers.sendEmail(emailObj, 'account/password/passwordChangedEmail', objectForEmail);
 
                 // Updated the date of the last password change
                 var dateNow = new Date();                   
                 Transaction.wrap(function () {
-                    resettingCustomer.profile.custom.datePasswordLastChange = dateNow.toISOString().slice(0,10).replace(/-/g,"");
+                    resettingCustomer.profile.custom.datePasswordLastChange = dateNow.toISOString().slice(0,10).replace(/-/g,'');
                 });
                 
                 res.redirect(URLUtils.url('Login-Show'));
             }
         });
     } else {
-        res.render('account/password/newPassword', { passwordForm: passwordForm, token: token });
+        res.render('account/password/newPassword', {passwordForm: passwordForm, token: token});
     }
     next();
 });
 
 server.get('Header', server.middleware.include, function (req, res, next) {
     var template = req.querystring.mobile ? 'account/mobileHeader' : 'account/header';
-    res.render(template, { name:
+    res.render(template, {name:
         req.currentCustomer.profile ? req.currentCustomer.profile.firstName : null
     });
     next();

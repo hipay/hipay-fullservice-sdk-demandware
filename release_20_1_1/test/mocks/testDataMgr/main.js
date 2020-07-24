@@ -78,12 +78,12 @@ export let parsedData = {};
  * @returns {Promise} - Indicates when data has been loaded and processed
  */
 export function load() {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
         let promises = [];
 
         parsedData = {};
 
-        Object.keys(subjectMeta).forEach(subject => {
+        Object.keys(subjectMeta).forEach((subject) => {
             promises.push(loadAndJsonifyXmlData(subject));
         });
 
@@ -95,11 +95,11 @@ function loadAndJsonifyXmlData(subject) {
     return new Promise((resolve) => {
         let localPromises = [];
         parsedData[subject] = Object.hasOwnProperty.call(parsedData, subject) ? parsedData[subject] : {};
-        subjectMeta[subject].files.forEach(file => {
-            localPromises.push(new Promise(innerResolve =>
-                fs.readFile(file, (err, data) => {
+        subjectMeta[subject].files.forEach((file) => {
+            localPromises.push(new Promise((innerResolve) =>
+                fs.readFile(file, (_err, data) => {
                     let parser = xml2js.Parser();
-                    parser.parseString(data, (err, result) => {
+                    parser.parseString(data, (_err, result) => {
                         // file is an optional processor parameter
                         parsedData[subject] = subjectMeta[subject].processor(result, parsedData[subject], file);
                         innerResolve(parsedData[subject]);
@@ -124,7 +124,7 @@ export function getProductById(productId) {
 
     switch (product.type) {
         case 'variationMaster':
-            product.variants = product.getVariantProductIds().map(variantId =>
+            product.variants = product.getVariantProductIds().map((variantId) =>
                 products.getProduct(parsedData.catalog, variantId)
             );
             break;
@@ -202,7 +202,7 @@ export function getPricesByProductId(productId, locale = 'x_default') {
     const product = getProductById(productId);
     let applicablePricebooks = {};
 
-    prices.priceTypes.forEach(type => {
+    prices.priceTypes.forEach((type) => {
         const pricebookName = [currencyCode, type, 'prices'].join('-');
         applicablePricebooks[type] = parsedData.pricebooks[pricebookName];
     });
@@ -224,8 +224,8 @@ export function getPricesByProductId(productId, locale = 'x_default') {
 function getPricesForStandardProduct(pricebooks, productId, locale = 'x_default') {
     let priceResults = {};
 
-    prices.priceTypes.forEach(type => {
-        let entry = _.find(pricebooks[type].products, { productId: productId });
+    prices.priceTypes.forEach((type) => {
+        let entry = _.find(pricebooks[type].products, {productId: productId});
 
         if (entry) {
             const localizedNumber = pricingHelpers.localizeNumber(entry.amount, locale);
@@ -240,9 +240,9 @@ function getPricesForVariationMaster(productId, locale = 'x_default') {
     const variationMaster = getProductById(productId);
     let priceResults = {};
 
-    variationMaster.getVariantProductIds().forEach(variantId => {
+    variationMaster.getVariantProductIds().forEach((variantId) => {
         let variantPrices = getPricesByProductId(variantId, locale);
-        prices.priceTypes.forEach(type => {
+        prices.priceTypes.forEach((type) => {
             if (variantPrices[type]) {
                 let variantPrice = pricingHelpers.getCurrencyValue(variantPrices[type], locale);
                 let priceResult = Object.hasOwnProperty.call(priceResults, type)
@@ -262,10 +262,10 @@ function getPricesForProductSet(productId, locale = 'x_default') {
     let productSet = getProductById(productId);
     let price = 0.00;
 
-    productSet.getProductIds().forEach(productSetItemProductId => {
+    productSet.getProductIds().forEach((productSetItemProductId) => {
         let productSetItemPrices = getPricesByProductId(productSetItemProductId, locale);
         let values = _.values(productSetItemPrices);
-        values = values.map(value => pricingHelpers.getCurrencyValue(value, locale));
+        values = values.map((value) => pricingHelpers.getCurrencyValue(value, locale));
         price += _.min(values);
     });
 
@@ -273,7 +273,7 @@ function getPricesForProductSet(productId, locale = 'x_default') {
 }
 
 function getPricesForProductBundle(pricebooks, productId, locale = 'x_default') {
-    let entry = _.find(pricebooks.list.products, { productId: productId });
+    let entry = _.find(pricebooks.list.products, {productId: productId});
     return pricingHelpers.getFormattedPrice(entry.amount, locale);
 }
 

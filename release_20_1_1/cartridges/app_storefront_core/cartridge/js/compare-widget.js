@@ -61,7 +61,7 @@ function addToList(data) {
  * description Removes an item from the compare container and refreshes it
  */
 function removeFromList($item) {
-    if ($item.length === 0) { return; }
+    if ($item.length === 0) {return;}
     // remove class, data and id from item
     $item.removeClass('active')
         .removeAttr('data-uuid')
@@ -166,11 +166,11 @@ function addProduct(args) {
     return promise.then(function () {
         return addProductAjax(args).then(function () {
             addToList(args);
-            if ($cb && $cb.length > 0) { $cb[0].checked = true; }
+            if ($cb && $cb.length > 0) {$cb[0].checked = true;}
             refreshContainer();
         });
     }).then(null, function () {
-        if ($cb && $cb.length > 0) { $cb[0].checked = false; }
+        if ($cb && $cb.length > 0) {$cb[0].checked = false;}
     });
 }
 
@@ -184,10 +184,10 @@ function removeProduct(args) {
     return removeProductAjax(args).then(function () {
         var $item = $('[data-uuid="' + args.uuid + '"]');
         removeFromList($item);
-        if ($cb && $cb.length > 0) { $cb[0].checked = false; }
+        if ($cb && $cb.length > 0) {$cb[0].checked = false;}
         refreshContainer();
     }, function () {
-        if ($cb && $cb.length > 0) { $cb[0].checked = true; }
+        if ($cb && $cb.length > 0) {$cb[0].checked = true;}
     });
 }
 

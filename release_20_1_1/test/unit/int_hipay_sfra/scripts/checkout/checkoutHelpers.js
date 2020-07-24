@@ -23,14 +23,14 @@ describe('checkoutHelpers', function () {
     describe('validateShippingForm', function () {
         it('should return empty object when no invalid form field - with state field', function () {
             var shippingForm = {
-                firstName: { valid: true, formType: 'formField' },
-                lastName: { valid: true, formType: 'formField' },
-                address1: { valid: true, formType: 'formField' },
-                address2: { valid: true, formType: 'formField' },
-                city: { valid: true, formType: 'formField' },
-                states: { valid: true, formType: 'formField' },
-                postalCode: { valid: true, formType: 'formField' },
-                country: { valid: true, formType: 'formField' }
+                firstName: {valid: true, formType: 'formField'},
+                lastName: {valid: true, formType: 'formField'},
+                address1: {valid: true, formType: 'formField'},
+                address2: {valid: true, formType: 'formField'},
+                city: {valid: true, formType: 'formField'},
+                states: {valid: true, formType: 'formField'},
+                postalCode: {valid: true, formType: 'formField'},
+                country: {valid: true, formType: 'formField'}
             };
 
             var invalidFields = checkoutHelpers.validateShippingForm(shippingForm);
@@ -39,13 +39,13 @@ describe('checkoutHelpers', function () {
 
         it('should return empty object when no invalid form field - without state field', function () {
             var shippingForm = {
-                firstName: { valid: true, formType: 'formField' },
-                lastName: { valid: true, formType: 'formField' },
-                address1: { valid: true, formType: 'formField' },
-                address2: { valid: true, formType: 'formField' },
-                city: { valid: true, formType: 'formField' },
-                postalCode: { valid: true, formType: 'formField' },
-                country: { valid: true, formType: 'formField' }
+                firstName: {valid: true, formType: 'formField'},
+                lastName: {valid: true, formType: 'formField'},
+                address1: {valid: true, formType: 'formField'},
+                address2: {valid: true, formType: 'formField'},
+                city: {valid: true, formType: 'formField'},
+                postalCode: {valid: true, formType: 'formField'},
+                country: {valid: true, formType: 'formField'}
             };
 
             var invalidFields = checkoutHelpers.validateShippingForm(shippingForm);
@@ -54,18 +54,18 @@ describe('checkoutHelpers', function () {
 
         it('should return an object containing invalid form field', function () {
             var shippingForm = {
-                firstName: { valid: true, formType: 'formField' },
-                lastName: { valid: true, formType: 'formField' },
-                address1: { valid: true, formType: 'formField' },
+                firstName: {valid: true, formType: 'formField'},
+                lastName: {valid: true, formType: 'formField'},
+                address1: {valid: true, formType: 'formField'},
                 address2: {
                     valid: false,
                     htmlName: 'htmlNameAddress2',
                     error: 'address2 is an invalid field.',
                     formType: 'formField'
                 },
-                city: { valid: true, formType: 'formField' },
-                states: { valid: true, formType: 'formField' },
-                postalCode: { valid: true, formType: 'formField' },
+                city: {valid: true, formType: 'formField'},
+                states: {valid: true, formType: 'formField'},
+                postalCode: {valid: true, formType: 'formField'},
                 country: {
                     valid: false,
                     htmlName: 'htmlNameCountry',
@@ -114,7 +114,7 @@ describe('checkoutHelpers', function () {
             address2: 'suite 20',
             city: 'London',
             postalCode: '02345',
-            countryCode: { value: 'uk' },
+            countryCode: {value: 'uk'},
             phone: '603-333-1212',
             stateCode: 'NH'
         };
@@ -128,19 +128,19 @@ describe('checkoutHelpers', function () {
                     address2: '',
                     city: 'Boston',
                     postalCode: '01234',
-                    countryCode: { value: 'us' },
+                    countryCode: {value: 'us'},
                     phone: '617-777-1010',
                     stateCode: 'MA',
 
-                    setFirstName: function (firstNameInput) { this.firstName = firstNameInput; },
-                    setLastName: function (lastNameInput) { this.lastName = lastNameInput; },
-                    setAddress1: function (address1Input) { this.address1 = address1Input; },
-                    setAddress2: function (address2Input) { this.address2 = address2Input; },
-                    setCity: function (cityInput) { this.city = cityInput; },
-                    setPostalCode: function (postalCodeInput) { this.postalCode = postalCodeInput; },
-                    setStateCode: function (stateCodeInput) { this.stateCode = stateCodeInput; },
-                    setCountryCode: function (countryCodeInput) { this.countryCode.value = countryCodeInput; },
-                    setPhone: function (phoneInput) { this.phone = phoneInput; }
+                    setFirstName: function (firstNameInput) {this.firstName = firstNameInput;},
+                    setLastName: function (lastNameInput) {this.lastName = lastNameInput;},
+                    setAddress1: function (address1Input) {this.address1 = address1Input;},
+                    setAddress2: function (address2Input) {this.address2 = address2Input;},
+                    setCity: function (cityInput) {this.city = cityInput;},
+                    setPostalCode: function (postalCodeInput) {this.postalCode = postalCodeInput;},
+                    setStateCode: function (stateCodeInput) {this.stateCode = stateCodeInput;},
+                    setCountryCode: function (countryCodeInput) {this.countryCode.value = countryCodeInput;},
+                    setPhone: function (phoneInput) {this.phone = phoneInput;}
                 }
             };
 
@@ -168,19 +168,19 @@ describe('checkoutHelpers', function () {
                         address2: '',
                         city: '',
                         postalCode: '',
-                        countryCode: { value: '' },
+                        countryCode: {value: ''},
                         phone: '',
                         stateCode: '',
 
-                        setFirstName: function (firstNameInput) { this.firstName = firstNameInput; },
-                        setLastName: function (lastNameInput) { this.lastName = lastNameInput; },
-                        setAddress1: function (address1Input) { this.address1 = address1Input; },
-                        setAddress2: function (address2Input) { this.address2 = address2Input; },
-                        setCity: function (cityInput) { this.city = cityInput; },
-                        setPostalCode: function (postalCodeInput) { this.postalCode = postalCodeInput; },
-                        setStateCode: function (stateCodeInput) { this.stateCode = stateCodeInput; },
-                        setCountryCode: function (countryCodeInput) { this.countryCode.value = countryCodeInput; },
-                        setPhone: function (phoneInput) { this.phone = phoneInput; }
+                        setFirstName: function (firstNameInput) {this.firstName = firstNameInput;},
+                        setLastName: function (lastNameInput) {this.lastName = lastNameInput;},
+                        setAddress1: function (address1Input) {this.address1 = address1Input;},
+                        setAddress2: function (address2Input) {this.address2 = address2Input;},
+                        setCity: function (cityInput) {this.city = cityInput;},
+                        setPostalCode: function (postalCodeInput) {this.postalCode = postalCodeInput;},
+                        setStateCode: function (stateCodeInput) {this.stateCode = stateCodeInput;},
+                        setCountryCode: function (countryCodeInput) {this.countryCode.value = countryCodeInput;},
+                        setPhone: function (phoneInput) {this.phone = phoneInput;}
                     };
                     return this.shippingAddress;
                 }
@@ -225,7 +225,7 @@ describe('checkoutHelpers', function () {
                     address2: '',
                     city: 'Boston',
                     postalCode: '01234',
-                    countryCode: { value: 'us' },
+                    countryCode: {value: 'us'},
                     phone: '617-777-1010',
                     stateCode: 'MA',
 
@@ -293,19 +293,19 @@ describe('checkoutHelpers', function () {
                         address2: '',
                         city: '',
                         postalCode: '',
-                        countryCode: { value: '' },
+                        countryCode: {value: ''},
                         phone: '',
                         stateCode: '',
 
-                        setFirstName: function (firstNameInput) { this.firstName = firstNameInput; },
-                        setLastName: function (lastNameInput) { this.lastName = lastNameInput; },
-                        setAddress1: function (address1Input) { this.address1 = address1Input; },
-                        setAddress2: function (address2Input) { this.address2 = address2Input; },
-                        setCity: function (cityInput) { this.city = cityInput; },
-                        setPostalCode: function (postalCodeInput) { this.postalCode = postalCodeInput; },
-                        setStateCode: function (stateCodeInput) { this.stateCode = stateCodeInput; },
-                        setCountryCode: function (countryCodeInput) { this.countryCode.value = countryCodeInput; },
-                        setPhone: function (phoneInput) { this.phone = phoneInput; }
+                        setFirstName: function (firstNameInput) {this.firstName = firstNameInput;},
+                        setLastName: function (lastNameInput) {this.lastName = lastNameInput;},
+                        setAddress1: function (address1Input) {this.address1 = address1Input;},
+                        setAddress2: function (address2Input) {this.address2 = address2Input;},
+                        setCity: function (cityInput) {this.city = cityInput;},
+                        setPostalCode: function (postalCodeInput) {this.postalCode = postalCodeInput;},
+                        setStateCode: function (stateCodeInput) {this.stateCode = stateCodeInput;},
+                        setCountryCode: function (countryCodeInput) {this.countryCode.value = countryCodeInput;},
+                        setPhone: function (phoneInput) {this.phone = phoneInput;}
                     };
                     return this.shippingAddress;
                 }
@@ -338,7 +338,7 @@ describe('checkoutHelpers', function () {
                     address2: '',
                     city: 'Boston',
                     postalCode: '01234',
-                    countryCode: { value: 'us' },
+                    countryCode: {value: 'us'},
                     phone: '617-777-1010',
                     stateCode: 'MA',
 
@@ -404,9 +404,9 @@ describe('checkoutHelpers', function () {
                         },
                         default: true,
                         productLineItems: [
-                            { 'id': '011111' },
-                            { 'id': '011112' },
-                            { 'id': '011113' }
+                            {'id': '011111'},
+                            {'id': '011112'},
+                            {'id': '011113'}
                         ]
                     },
                     {
@@ -417,9 +417,9 @@ describe('checkoutHelpers', function () {
                         },
                         default: false,
                         productLineItems: [
-                            { 'id': '022221' },
-                            { 'id': '022222' },
-                            { 'id': '022223' }
+                            {'id': '022221'},
+                            {'id': '022222'},
+                            {'id': '022223'}
                         ]
                     },
                     {
@@ -430,9 +430,9 @@ describe('checkoutHelpers', function () {
                         },
                         default: false,
                         productLineItems: [
-                            { 'id': '033331' },
-                            { 'id': '033332' },
-                            { 'id': '033333' }
+                            {'id': '033331'},
+                            {'id': '033332'},
+                            {'id': '033333'}
                         ]
                     }
                 ]
@@ -454,10 +454,10 @@ describe('checkoutHelpers', function () {
         it('should return the specified product line item', function () {
             var basket = {
                 productLineItems: [
-                    { 'UUID': 'pliuuid011111' },
-                    { 'UUID': 'pliuuid011112' },
-                    { 'UUID': 'pliuuid011113' },
-                    { 'UUID': 'pliuuid011114' }
+                    {'UUID': 'pliuuid011111'},
+                    {'UUID': 'pliuuid011112'},
+                    {'UUID': 'pliuuid011113'},
+                    {'UUID': 'pliuuid011114'}
                 ]
             };
 
@@ -470,14 +470,14 @@ describe('checkoutHelpers', function () {
     describe('validateBillingForm', function () {
         it('should return empty object when no invalid form field - with state field', function () {
             var billingForm = {
-                firstName: { valid: true, formType: 'formField' },
-                lastName: { valid: true, formType: 'formField' },
-                address1: { valid: true, formType: 'formField' },
-                address2: { valid: true, formType: 'formField' },
-                city: { valid: true, formType: 'formField' },
-                states: { valid: true, formType: 'formField' },
-                postalCode: { valid: true, formType: 'formField' },
-                country: { valid: true, formType: 'formField' }
+                firstName: {valid: true, formType: 'formField'},
+                lastName: {valid: true, formType: 'formField'},
+                address1: {valid: true, formType: 'formField'},
+                address2: {valid: true, formType: 'formField'},
+                city: {valid: true, formType: 'formField'},
+                states: {valid: true, formType: 'formField'},
+                postalCode: {valid: true, formType: 'formField'},
+                country: {valid: true, formType: 'formField'}
             };
 
             var invalidFields = checkoutHelpers.validateBillingForm(billingForm);
@@ -486,13 +486,13 @@ describe('checkoutHelpers', function () {
 
         it('should return empty object when no invalid form field - without state field', function () {
             var billingForm2 = {
-                firstName: { valid: true, formType: 'formField' },
-                lastName: { valid: true, formType: 'formField' },
-                address1: { valid: true, formType: 'formField' },
-                address2: { valid: true, formType: 'formField' },
-                city: { valid: true, formType: 'formField' },
-                postalCode: { valid: true, formType: 'formField' },
-                country: { valid: true, formType: 'formField' }
+                firstName: {valid: true, formType: 'formField'},
+                lastName: {valid: true, formType: 'formField'},
+                address1: {valid: true, formType: 'formField'},
+                address2: {valid: true, formType: 'formField'},
+                city: {valid: true, formType: 'formField'},
+                postalCode: {valid: true, formType: 'formField'},
+                country: {valid: true, formType: 'formField'}
             };
 
             var invalidFields = checkoutHelpers.validateBillingForm(billingForm2);
@@ -501,18 +501,18 @@ describe('checkoutHelpers', function () {
 
         it('should return an object containing invalid form field', function () {
             var billingForm3 = {
-                firstName: { valid: true, formType: 'formField' },
-                lastName: { valid: true, formType: 'formField' },
-                address1: { valid: true, formType: 'formField' },
+                firstName: {valid: true, formType: 'formField'},
+                lastName: {valid: true, formType: 'formField'},
+                address1: {valid: true, formType: 'formField'},
                 address2: {
                     valid: false,
                     htmlName: 'htmlNameAddress2',
                     error: 'address2 is an invalid field.',
                     formType: 'formField'
                 },
-                city: { valid: true, formType: 'formField' },
-                states: { valid: true, formType: 'formField' },
-                postalCode: { valid: true, formType: 'formField' },
+                city: {valid: true, formType: 'formField'},
+                states: {valid: true, formType: 'formField'},
+                postalCode: {valid: true, formType: 'formField'},
                 country: {
                     valid: false,
                     htmlName: 'htmlNameCountry',
@@ -536,12 +536,12 @@ describe('checkoutHelpers', function () {
                     htmlName: 'htmlName payment method error'
                 },
                 creditCardFields: {
-                    cardNumber: { valid: true },
-                    expirationYear: { valid: true },
-                    expirationMonth: { valid: true },
-                    securityCode: { valid: true },
-                    email: { valid: true },
-                    phone: { valid: true }
+                    cardNumber: {valid: true},
+                    expirationYear: {valid: true},
+                    expirationMonth: {valid: true},
+                    securityCode: {valid: true},
+                    email: {valid: true},
+                    phone: {valid: true}
                 }
             };
 
@@ -556,12 +556,12 @@ describe('checkoutHelpers', function () {
                     htmlName: 'htmlNamePaymentMethodError'
                 },
                 creditCardFields: {
-                    cardNumber: { valid: true },
-                    expirationYear: { valid: true },
-                    expirationMonth: { valid: true },
-                    securityCode: { valid: true },
-                    email: { valid: true },
-                    phone: { valid: true }
+                    cardNumber: {valid: true},
+                    expirationYear: {valid: true},
+                    expirationMonth: {valid: true},
+                    securityCode: {valid: true},
+                    email: {valid: true},
+                    phone: {valid: true}
                 }
             };
 

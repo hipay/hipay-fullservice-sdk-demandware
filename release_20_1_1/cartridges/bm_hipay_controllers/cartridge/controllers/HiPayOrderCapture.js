@@ -37,7 +37,7 @@ function start() {
         var orderNo = session.forms.searchorder.orderID.value;
         var order = OrderMgr.getOrder(orderNo);
 
-        if (empty(order)) { /* can not load requested order. */
+        if (empty(order)) {/* can not load requested order. */
             operationStatus.valid = false;
             operationStatus.msg = Resource.msg('hipay_bm.capture.order.error', 'hipay_bm', null);
         } else {
@@ -81,9 +81,9 @@ function handleForm() { // eslint-disable-line consistent-return
         }
 
         try {
-            response = require('int_hipay_controllers/cartridge/scripts/lib/hipay/HiPayMaintenanceModule').hiPayMaintenanceRequest(order, captureAmount);
+            response = require('*/cartridge/scripts/lib/hipay/HiPayMaintenanceModule').hiPayMaintenanceRequest(order, captureAmount);
         } catch (e) {
-            response = require('int_hipay_sfra/cartridge/scripts/lib/hipay/modules/hipayMaintenanceModule').hiPayMaintenanceRequest(order, captureAmount);
+            response = require('*/cartridge/scripts/lib/hipay/modules/hipayMaintenanceModule').hiPayMaintenanceRequest(order, captureAmount);
         }
 
         if (response.error) {

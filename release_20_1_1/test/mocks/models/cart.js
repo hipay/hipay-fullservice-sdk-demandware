@@ -60,7 +60,7 @@ function proxyModel() {
         '*/cartridge/models/productLineItems': ProductLineItemsModel,
         '*/cartridge/scripts/checkout/shippingHelpers': ShippingHelpers,
         '*/cartridge/scripts/helpers/hooks': function () {
-            return { error: false, message: 'some message' };
+            return {error: false, message: 'some message'};
         },
         '*/cartridge/scripts/hooks/validateBasket': function () {},
         'dw/web/URLUtils': URLUtils,

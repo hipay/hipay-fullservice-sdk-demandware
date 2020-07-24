@@ -23,7 +23,7 @@
  * @output EnableCheckout : Boolean
  */
 
-function execute (pdict) {
+function execute(pdict) {
     validate(pdict);
 
     return PIPELET_NEXT;
@@ -141,7 +141,7 @@ function validateProductExistence(basket, pdict) {
             return false;
         }
 
-        //RAP-2490 : if this pli is marked as an instore item use the store inventory instead of the default inventory when diabling the cart based on inventory levels
+        // RAP-2490 : if this pli is marked as an instore item use the store inventory instead of the default inventory when diabling the cart based on inventory levels
         if (pli.custom.hasOwnProperty('fromStoreId') && !empty(pli.custom.fromStoreId)) {
             // type: dw.catalog.Store
             var store = StoreMgr.getStore(pli.custom.fromStoreId);
@@ -171,7 +171,7 @@ function validateContent(basket) {
     // type: dw.util.Collection
     var gclis = basket.getGiftCertificateLineItems();
 
-    return (plis.size() === 0 && gclis.size() === 0) ? false : true;
+    return !((plis.size() === 0 && gclis.size() === 0));
 }
 
 /**

@@ -24,7 +24,7 @@ export class AbstractDwModelMock {
 export function parseLocalizedValues(values) {
     let result = {};
 
-    values.forEach(value => {
+    values.forEach((value) => {
         let key = value.$['xml:lang'].replace('-', '_');
         result[key] = value._;
     });

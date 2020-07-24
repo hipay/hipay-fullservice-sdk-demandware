@@ -57,9 +57,9 @@ var dialog = {
     openWithContent: function (params) {
         var content, position, callback;
 
-        if (!this.$container) { return; }
+        if (!this.$container) {return;}
         content = params.content || params.html;
-        if (!content) { return; }
+        if (!content) {return;}
         this.$container.empty().html(content);
         if (!this.$container.dialog('isOpen')) {
             this.$container.dialog('open');

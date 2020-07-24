@@ -29,4 +29,3 @@ export function clickAddToCartButton() {
         .click(BTN_ADD_TO_CART)
         .then(() => browser.waitForVisible(MINI_CART));
 }
-

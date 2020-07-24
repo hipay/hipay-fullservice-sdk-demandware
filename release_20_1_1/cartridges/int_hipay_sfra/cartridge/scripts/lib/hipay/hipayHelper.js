@@ -10,10 +10,6 @@ var TaxMgr = require('dw/order/TaxMgr');
 var Logger = require('dw/system/Logger');
 var Transaction = require('dw/system/Transaction');
 var statuses = require('~/cartridge/config/hipayStatus').HiPayStatus;
-var hipayUtils = require('*/cartridge/scripts/lib/hipay/hipayUtils');
-
-// Import Constants
-var Constants = require('bm_hipay_controllers/cartridge/scripts/util/Constants');
 
 /**
  * HiPayHelper class manages common HiPay functions.
@@ -45,10 +41,10 @@ HiPayHelper.prototype.fillHeaderData = function (HiPayConfig, order, params) {
     }
 
     // use the rule to enforce 3DS depending on the total
-    params.authentication_indicator = enforceThresholdRule ? HiPayConfig.THREEDSECURE_AUTH.MANDATORY : HiPayConfig.hipayEnable3dSecure;  // eslint-disable-line
-    params.ipaddr = request.getHttpRemoteAddress();  // eslint-disable-line
-    params.http_accept = request.httpHeaders.get('accept');  // eslint-disable-line
-    params.http_user_agent = request.getHttpUserAgent();  // eslint-disable-line
+    params.authentication_indicator = enforceThresholdRule ? HiPayConfig.THREEDSECURE_AUTH.MANDATORY : HiPayConfig.hipayEnable3dSecure;    
+    params.ipaddr = request.getHttpRemoteAddress();    
+    params.http_accept = request.httpHeaders.get('accept');    
+    params.http_user_agent = request.getHttpUserAgent();    
 
     // if request.getHttpLocale() === null or had only 'ru' or 'ro' or 'en' etc. Try to check geolocation
     if (language.length === 2) {
@@ -60,31 +56,33 @@ HiPayHelper.prototype.fillHeaderData = function (HiPayConfig, order, params) {
     }
 
     if (language === 'default') {
-        language = "en_GB";
+        language = 'en_GB';
     }
 
     // always send the redirect urls
-    params.language = language;  // eslint-disable-line
-    params.accept_url = HiPayConfig.acceptURL;  // eslint-disable-line
-    params.decline_url = HiPayConfig.declineURL;  // eslint-disable-line
-    params.pending_url = HiPayConfig.pendingURL;  // eslint-disable-line
-    params.exception_url = HiPayConfig.errorURL;  // eslint-disable-line
-    params.cancel_url = HiPayConfig.cancelURL;  // eslint-disable-line
-    params.notify_url = HiPayConfig.notifyURL;  // eslint-disable-line
+    params.language = language;    
+    params.accept_url = HiPayConfig.acceptURL;    
+    params.decline_url = HiPayConfig.declineURL;    
+    params.pending_url = HiPayConfig.pendingURL;    
+    params.exception_url = HiPayConfig.errorURL;    
+    params.cancel_url = HiPayConfig.cancelURL;    
+    params.notify_url = HiPayConfig.notifyURL;    
 
     if (!empty(hipayForm.klarna.houseNumber.value)) {
-        params.house_number = hipayForm.klarna.houseNumber.value;  // eslint-disable-line
+        params.house_number = hipayForm.klarna.houseNumber.value;    
     }
 
     if (!empty(hipayForm.klarna.birthdate.value)) {
         var birthdate = hipayForm.klarna.birthdate.value.replace(/-/g, '');
 
-        params.birthdate = birthdate;  // eslint-disable-line
+        params.birthdate = birthdate;    
     }
 };
 
 /* Fills HiPay request data based on DW Order information */
 HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
+    var Constants = require('bm_hipay_controllers/cartridge/scripts/util/Constants');
+    var hipayUtils = require('*/cartridge/scripts/lib/hipay/hipayUtils');
     var totalAmount = null;
     var items = null;
     var categoryList = [];
@@ -113,17 +111,17 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
         }
     }
 
-    params.currency = order.getCurrencyCode(); // eslint-disable-line
-    params.orderid = order.orderNo + '_' + Date.now(); // eslint-disable-line
-    params.description = order.orderNo; // eslint-disable-line
-    params.cid = order.customer.ID; // eslint-disable-line
-    params.amount = totalAmount.value; // eslint-disable-line
-    params.shipping = order.getAdjustedShippingTotalPrice().value; // eslint-disable-line
-    params.tax = order.getTotalTax().value; // eslint-disable-line
-    params.payment_product_category_list = categoryList.join(','); // eslint-disable-line
-    params.source = JSON.stringify({ 'source': 'CMS', 'brand': 'Demandware', 'brand_version': '1.0.0', 'integration_version': '1.0.0' }); // eslint-disable-line
+    params.currency = order.getCurrencyCode();   
+    params.orderid = order.orderNo + '_' + Date.now();   
+    params.description = order.orderNo;   
+    params.cid = order.customer.ID;   
+    params.amount = totalAmount.value;   
+    params.shipping = order.getAdjustedShippingTotalPrice().value;   
+    params.tax = order.getTotalTax().value;   
+    params.payment_product_category_list = categoryList.join(',');   
+    params.source = JSON.stringify({'source': 'CMS', 'brand': 'Demandware', 'brand_version': '1.0.0', 'integration_version': '1.0.0'});   
 
-    params.long_description = productNames.join(','); // eslint-disable-line
+    params.long_description = productNames.join(',');   
     customer = order.customer;
     billingAddress = order.billingAddress;
 
@@ -144,59 +142,59 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
     }
 
     if (!empty(billingAddress)) {
-        params.email = order.customerEmail; // eslint-disable-line
-        params.phone = !empty(billingAddress.phone) ? billingAddress.phone.replace(/\s/g, '') : null; // eslint-disable-line
+        params.email = order.customerEmail;   
+        params.phone = !empty(billingAddress.phone) ? billingAddress.phone.replace(/\s/g, '') : null;   
 
         if (pi.paymentMethod.indexOf('KLARNA') > -1) {
-            params.msisdn = !empty(params.phone) ? params.phone : null; // eslint-disable-line
+            params.msisdn = !empty(params.phone) ? params.phone : null;   
 
             if (empty(gender)) {
                 gender = session.forms.billing.hipayMethodsFields.klarna.gender.value;
             }
         }
 
-        params.firstname = billingAddress.firstName; // eslint-disable-line
-        params.lastname = billingAddress.lastName; // eslint-disable-line
+        params.firstname = billingAddress.firstName;   
+        params.lastname = billingAddress.lastName;   
     }
 
-    params.gender = gender; // eslint-disable-line
+    params.gender = gender;   
 
     // guest or no saved address
     if (!empty(billingAddress)) {
-        params.recipientinfo = billingAddress.companyName; // eslint-disable-line
-        params.streetaddress = billingAddress.address1; // eslint-disable-line
+        params.recipientinfo = billingAddress.companyName;   
+        params.streetaddress = billingAddress.address1;   
 
         if (!empty(billingAddress.address2)) {
-            params.streetaddress2 = billingAddress.address2; // eslint-disable-line
+            params.streetaddress2 = billingAddress.address2;   
         }
 
-        params.city = billingAddress.city; // eslint-disable-line
+        params.city = billingAddress.city;   
 
         if (!empty(billingAddress.stateCode)) {
-            params.state = billingAddress.stateCode; // eslint-disable-line
+            params.state = billingAddress.stateCode;   
         }
 
-        params.zipcode = billingAddress.postalCode; // eslint-disable-line
-        params.country = billingAddress.countryCode.value.toUpperCase(); // eslint-disable-line
+        params.zipcode = billingAddress.postalCode;   
+        params.country = billingAddress.countryCode.value.toUpperCase();   
     }
 
     // Shipping info
     if (pi.paymentMethod.indexOf('KLARNA') < 0) {
-        shippingAddress = order.defaultShipment.shippingAddress; // eslint-disable-line
-        params.shipto_firstname = shippingAddress.firstName; // eslint-disable-line
-        params.shipto_lastname = shippingAddress.lastName; // eslint-disable-line
-        params.shipto_recipientinfo = shippingAddress.companyName; // eslint-disable-line
-        params.shipto_streetaddress = shippingAddress.address1; // eslint-disable-line
-        params.shipto_streetaddress2 = shippingAddress.address2; // eslint-disable-line
-        params.shipto_city = shippingAddress.city; // eslint-disable-line
+        shippingAddress = order.defaultShipment.shippingAddress;   
+        params.shipto_firstname = shippingAddress.firstName;   
+        params.shipto_lastname = shippingAddress.lastName;   
+        params.shipto_recipientinfo = shippingAddress.companyName;   
+        params.shipto_streetaddress = shippingAddress.address1;   
+        params.shipto_streetaddress2 = shippingAddress.address2;   
+        params.shipto_city = shippingAddress.city;   
 
         if (!empty(shippingAddress.stateCode)) {
-            params.shipto_state = shippingAddress.stateCode; // eslint-disable-line
+            params.shipto_state = shippingAddress.stateCode;   
         }
 
-        params.shipto_zipcode = shippingAddress.postalCode; // eslint-disable-line
-        params.shipto_country = shippingAddress.countryCode.value.toUpperCase(); // eslint-disable-line
-        params.shipto_phone = shippingAddress.phone; // eslint-disable-line
+        params.shipto_zipcode = shippingAddress.postalCode;   
+        params.shipto_country = shippingAddress.countryCode.value.toUpperCase();   
+        params.shipto_phone = shippingAddress.phone;   
     }
 
     if (pi.paymentMethod.indexOf('HIPAY_HOSTED_ONEY_FACILITY_PAY') > -1 || pi.paymentMethod.indexOf('HIPAY_ONEY_FACILITY_PAY') > -1 || pi.paymentMethod.indexOf('KLARNA') > -1) {
@@ -207,7 +205,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
         var shippingConfig = JSON.parse(shippingCO);
 
         if (pi.paymentMethod.indexOf('KLARNA') < 0) {
-            params.shipto_gender = gender; // eslint-disable-line
+            params.shipto_gender = gender;   
         }
 
         if (pi.paymentMethod.indexOf('HIPAY_HOSTED_ONEY_FACILITY_PAY') > -1 || pi.paymentMethod.indexOf('HIPAY_ONEY_FACILITY_PAY') > -1) {
@@ -219,7 +217,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                 deliveryMethod.mode = shipmentConfig.deliveryMode;
                 deliveryMethod.shipping = shipmentConfig.deliveryMethod;
 
-                params.delivery_method = JSON.stringify(deliveryMethod); // eslint-disable-line
+                params.delivery_method = JSON.stringify(deliveryMethod);   
 
                 // Estimated delivery date based on shipping method config from CO OneyExtensionConfig
                 // calculated with date of the day + Order preparation estimated time (n days) + Delivery estimated time (n days).
@@ -228,7 +226,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
 
                 calendar.add(Calendar.HOUR, etaDays);
 
-                params.delivery_date = StringUtils.formatCalendar(calendar, 'YYYY-MM-dd'); // eslint-disable-line
+                params.delivery_date = StringUtils.formatCalendar(calendar, 'YYYY-MM-dd');   
             }
         }
 
@@ -351,20 +349,20 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             }
         }
 
-        params.basket = JSON.stringify(basketObject); // eslint-disable-line
+        params.basket = JSON.stringify(basketObject);   
     }
 
-    // ### DPS2 params for Credit cards ### //
+    /**** DPS2 params for Credit cards ****/
     if (pi.paymentMethod === 'HIPAY_CREDIT_CARD' || pi.paymentMethod === 'HIPAY_HOSTED_CREDIT_CARD') {
 
         // Device channel always 2, BROWSER
-        params.device_channel = "2";
+        params.device_channel = '2';
         // Add DSP2 browser info
         params.browser_info = JSON.parse(session.forms.billing.browserInfo.value);
         // Add http_accept
-        params.browser_info['http_accept'] = params.http_accept;
+        params.browser_info.http_accept = params.http_accept;
         // Add Ip address
-        params.browser_info['ipaddr'] = params.ipaddr;
+        params.browser_info.ipaddr = params.ipaddr;
 
         /* Merchant risk statement */
 
@@ -379,8 +377,8 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
         var basketProductQuantities = [];
 
         // Check all items of basket
-        for (var i = 0; i < items.length; i++) {
-            productLineItem = items[i];
+        for (var j = 0; j < items.length; j++) {
+            productLineItem = items[j];
 
             if (!empty(productLineItem.product)) {
                 // Construct simple basket for auth users
@@ -431,7 +429,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             params.merchant_risk_statement.purchase_indicator = 2;
             if (latestDatePreOrderProduct) {
                 params.merchant_risk_statement.pre_order_date =
-                    parseInt(latestDatePreOrderProduct.toISOString().slice(0,10).replace(/-/g,""), 10);
+                    parseInt(latestDatePreOrderProduct.toISOString().slice(0,10).replace(/-/g,''));
             }
         } else {
             params.merchant_risk_statement.purchase_indicator = 1;
@@ -468,21 +466,21 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             /* Previous auth info*/
 
             // Get last processed order
-            var lastProcessedOrder = OrderMgr.searchOrders("customerNo = {0} AND status >= {1} AND status <= {2}",
-                "creationDate desc", customerNo, 3, 8).first();
+            var lastProcessedOrder = OrderMgr.searchOrders('customerNo = {0} AND status >= {1} AND status <= {2}',
+                'creationDate desc', customerNo, 3, 8).first();
 
             if (!empty(lastProcessedOrder) && !empty(lastProcessedOrder.paymentTransaction)) {
                 // Get transaction ID of order
-                var transaction_reference = lastProcessedOrder.paymentTransaction.transactionID;
+                var transactionReference = lastProcessedOrder.paymentTransaction.transactionID;
 
-                if (!empty(transaction_reference)) {
+                if (!empty(transactionReference)) {
                     // If longer than 16 digits, truncate
-                    if (transaction_reference.length > 16) {
-                        transaction_reference = transaction_reference.substring(0, 16);
+                    if (transactionReference.length > 16) {
+                        transactionReference = transactionReference.substring(0, 16);
                     }
                     // Fill transaction reference
                     params.previous_auth_info = {
-                        transaction_reference: transaction_reference
+                        transaction_reference: transactionReference
                     }
                 }
             }
@@ -498,32 +496,32 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             /* Account info - payment */
 
             // Identify one-click payment if eci = 9
-            if (!empty(params.eci) && params.eci === "9" && !empty(pi.creationDate)) {
+            if (!empty(params.eci) && params.eci === '9' && !empty(pi.creationDate)) {
                 // Get creation date of payment instrument
-                var oneClickCreationDate = pi.getCreationDate().toISOString().slice(0,10).replace(/-/g,"");
+                var oneClickCreationDate = pi.getCreationDate().toISOString().slice(0,10).replace(/-/g,'');
 
                 if (!empty(oneClickCreationDate)) {
                     params.account_info.payment = {
-                        enrollment_date: parseInt(oneClickCreationDate, 10)
+                        enrollment_date: parseInt(oneClickCreationDate)
                     }
                 }
             }
 
             /* Account info - Customer */
 
-            var creationDate = customer.profile.getCreationDate().toISOString().slice(0, 10).replace(/-/g, "");
+            var creationDate = customer.profile.getCreationDate().toISOString().slice(0, 10).replace(/-/g, '');
 
             // Add opening_account_date
-            params.account_info.customer.opening_account_date = parseInt(creationDate, 10);
+            params.account_info.customer.opening_account_date = parseInt(creationDate);
             // Add account_change
             params.account_info.customer.account_change =
-                parseInt(customer.profile.getLastModified().toISOString().slice(0, 10).replace(/-/g, ""), 10);
+                parseInt(customer.profile.getLastModified().toISOString().slice(0, 10).replace(/-/g, ''));
             // Add password_change
             var datePasswordLastChange = customer.profile.custom.datePasswordLastChange;
             if (!empty(datePasswordLastChange)) {
-                params.account_info.customer.password_change = parseInt(datePasswordLastChange, 10);
+                params.account_info.customer.password_change = parseInt(datePasswordLastChange);
             } else {
-                params.account_info.customer.password_change = parseInt(creationDate, 10);
+                params.account_info.customer.password_change = parseInt(creationDate);
                 Transaction.wrap(function () {
                     customer.profile.custom.datePasswordLastChange = creationDate;
                 });
@@ -541,7 +539,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
 
             // Add card_stored_24h (List of attempts by customerNo)
             var listAttempts = CustomObjectMgr.queryCustomObjects(Constants.OBJ_SAVE_ONE_CLICK,
-                "custom.customerNo = {0} AND custom.attemptDate >= {1}", "custom.attemptDate desc", customerNo, lastDay);
+                'custom.customerNo = {0} AND custom.attemptDate >= {1}', 'custom.attemptDate desc', customerNo, lastDay);
             if ('count' in listAttempts) {
                 params.account_info.purchase.card_stored_24h = listAttempts.count;
             } else {
@@ -549,13 +547,14 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             }
 
             // Get last processed orders from the last 24 hours
-            var ordersLastDay = OrderMgr.searchOrders("customerNo = {0} AND creationDate >= {1}",
-                "creationDate desc", customerNo, lastDay);
+            var ordersLastDay = OrderMgr.searchOrders('customerNo = {0} AND creationDate >= {1}',
+                'creationDate desc', customerNo, lastDay);
 
+            var currentOrder;
             var ordersNumberLastDay = 0;
             if (ordersLastDay && ordersLastDay.getCount() > 0) {
                 while (ordersLastDay.hasNext()) {
-                    var currentOrder = ordersLastDay.next();
+                    currentOrder = ordersLastDay.next();
                     if (currentOrder
                         && !empty(currentOrder.paymentTransaction)
                         && !empty(currentOrder.paymentTransaction.transactionID)
@@ -563,7 +562,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                         && !empty(currentOrder.paymentTransaction.paymentInstrument.paymentMethod)
                         && (
                             currentOrder.paymentTransaction.paymentInstrument.paymentMethod === 'HIPAY_CREDIT_CARD'
-                            || currentOrder.paymentTransaction.paymentInstrument.paymentMethod === 'HIPAY_HOSTED_CREDIT_CARD'
+                            || currentOrder.paymentTransaction.paymentInstrument.paymentMethod === 'HIPAY_HOSTED_CREDIT_CARD'
                         )
                     ) {
                         ordersNumberLastDay++;
@@ -574,13 +573,13 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             params.account_info.purchase.payment_attempts_24h = ordersNumberLastDay;
 
             // Get last processed orders from the last year
-            var ordersLastYear = OrderMgr.searchOrders("customerNo = {0} AND creationDate >= {1}",
-                "creationDate desc", customerNo, lastYear);
+            var ordersLastYear = OrderMgr.searchOrders('customerNo = {0} AND creationDate >= {1}',
+                'creationDate desc', customerNo, lastYear);
 
             var ordersNumberLastYear = 0;
             if (ordersLastYear && ordersLastYear.getCount() > 0) {
                 while (ordersLastYear.hasNext()) {
-                    var currentOrder = ordersLastYear.next();
+                    currentOrder = ordersLastYear.next();
                     if (currentOrder
                         && !empty(currentOrder.paymentTransaction)
                         && !empty(currentOrder.paymentTransaction.transactionID)
@@ -588,7 +587,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                         && !empty(currentOrder.paymentTransaction.paymentInstrument.paymentMethod)
                         && (
                             currentOrder.paymentTransaction.paymentInstrument.paymentMethod === 'HIPAY_CREDIT_CARD'
-                            || currentOrder.paymentTransaction.paymentInstrument.paymentMethod === 'HIPAY_HOSTED_CREDIT_CARD'
+                            || currentOrder.paymentTransaction.paymentInstrument.paymentMethod === 'HIPAY_HOSTED_CREDIT_CARD'
                         )
                     ) {
                         ordersNumberLastYear++;
@@ -599,8 +598,8 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             params.account_info.purchase.payment_attempts_1y = ordersNumberLastYear;
 
             // Add count (Number of orders during 6 previous months)
-            var ordersLastSixMonth = OrderMgr.searchOrders("customerNo = {0} AND creationDate >= {1}",
-                "creationDate desc", customerNo, lastSixMonth);
+            var ordersLastSixMonth = OrderMgr.searchOrders('customerNo = {0} AND creationDate >= {1}',
+                'creationDate desc', customerNo, lastSixMonth);
             if (ordersLastSixMonth && ordersLastSixMonth.getCount() > 0) {
                 params.account_info.purchase.count = ordersLastSixMonth.getCount();
             }
@@ -611,7 +610,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             /* Account info - Shipping */
 
             // Get all orders of customer
-            var ordersAll = OrderMgr.searchOrders("customerNo = {0}", "creationDate asc", customerNo);
+            var ordersAll = OrderMgr.searchOrders('customerNo = {0}', 'creationDate asc', customerNo);
 
             var addressFound = false;
             var reOrderFound = false;
@@ -619,7 +618,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
             // Loop over all orders to check if shipping address used before
             if (ordersAll && ordersAll.getCount() > 0) {
                 while ((!reOrderFound || !addressFound) && ordersAll.hasNext()) {
-                    var currentOrder = ordersAll.next();
+                    currentOrder = ordersAll.next();
 
                     if (!empty(currentOrder.defaultShipment) && !empty(currentOrder.defaultShipment.shippingAddress)) {
                         var currentOrderAddress = currentOrder.defaultShipment.shippingAddress;
@@ -640,7 +639,7 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                             }
                             // Add shipping_used_date (Date of first order with the same shipping address)
                             params.account_info.shipping.shipping_used_date =
-                                parseInt(currentOrderAddress.getCreationDate().toISOString().slice(0, 10).replace(/-/g, ""), 10);
+                                parseInt(currentOrderAddress.getCreationDate().toISOString().slice(0, 10).replace(/-/g, ''));
                         }
                     }
 
@@ -651,10 +650,10 @@ HiPayHelper.prototype.fillOrderData = function (order, params, pi) {
                     // If baskets not same length, it is not reorder
                     if (basketProductIDS.length !== currentOrderProducts.length) {
                         reOrderBasket = false;
-                    } else {
+                    } else {
                         // Loop over current order basket to check each product
-                        for (var i = 0; i < currentOrderProducts.length; i++) {
-                            var productLineItem = currentOrderProducts[i];
+                        for (var k = 0; k < currentOrderProducts.length; k++) {
+                            productLineItem = currentOrderProducts[k];
 
                             if (!empty(productLineItem.product)) {
                                 // Check if ID exists in order basket
@@ -727,7 +726,7 @@ HiPayHelper.prototype.formatRequestData = function (params) {
     }
 
     requestLog.sort();
-    return requestLog.join("\n"); // eslint-disable-line
+    return requestLog.join('\n');   
 };
 
 /* Updated the payment status of in the Order and manages the state of the transaction */
@@ -743,10 +742,10 @@ HiPayHelper.prototype.updatePaymentStatus = function (order, paymentInstr, param
 
     // set the payment instrument status
     // a key/value object here. 'for in' loop only here
-    for (var statusKey in statuses) { // eslint-disable-line
+    for (var statusKey in statuses) {   
         statusType = statuses[statusKey];
         if (paymentStatus === statusType.code) {
-            paymentInstr.custom.hipayTransactionStatus = statusType.value; // eslint-disable-line
+            paymentInstr.custom.hipayTransactionStatus = statusType.value;   
             break;
         }
     }
@@ -758,16 +757,16 @@ HiPayHelper.prototype.updatePaymentStatus = function (order, paymentInstr, param
             var capturedAmount = null;
 
             if (params instanceof HttpParameterMap) {
-                capturedAmount = params.captured_amount.doubleValue; // eslint-disable-line
+                capturedAmount = params.captured_amount.doubleValue;   
             } else {
                 capturedAmount = parseFloat(params.capturedAmount);
             }
 
-            paymentInstr.custom.hipayTransactionCapturedAmount = capturedAmount; // eslint-disable-line
-            order.paymentStatus = Order.PAYMENT_STATUS_PAID; // eslint-disable-line
+            paymentInstr.custom.hipayTransactionCapturedAmount = capturedAmount;   
+            order.paymentStatus = Order.PAYMENT_STATUS_PAID;   
             break;
         case statuses.PARTIALLY_CAPTURED.code:
-            order.paymentStatus = Order.PAYMENT_STATUS_PARTPAID; // eslint-disable-line
+            order.paymentStatus = Order.PAYMENT_STATUS_PARTPAID;   
             break;
         default:
             break;

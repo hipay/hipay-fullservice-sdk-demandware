@@ -1,11 +1,11 @@
 'use strict';
 
 var base = module.superModule;
-
 var PaymentMgr = require('dw/order/PaymentMgr');
-var collections = require('*/cartridge/scripts/util/collections');
 
 function getSelectedPaymentInstruments(selectedPaymentInstruments) {
+    var collections = require('*/cartridge/scripts/util/collections');
+    
     return collections.map(selectedPaymentInstruments, function (paymentInstrument) {
         var selectedPaymentMethod = PaymentMgr.getPaymentMethod(paymentInstrument.paymentMethod);
 

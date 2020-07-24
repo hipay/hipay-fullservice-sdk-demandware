@@ -1,12 +1,15 @@
+/* eslint-disable no-undef */
+/* eslint-disable camelcase */
+/* eslint-disable no-unused-vars */
 (function webpackUniversalModuleDefinition(root, factory) {
     if(typeof exports === 'object' && typeof module === 'object')
         module.exports = factory();
     else if(typeof define === 'function' && define.amd)
         define([], factory);
     else if(typeof exports === 'object')
-        exports["Cleave"] = factory();
+        exports.Cleave = factory();
     else
-        root["Cleave"] = factory();
+        root.Cleave = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -34,7 +37,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
-/******/ 	}
+/******/}
 
 
 /******/ 	// expose the modules object (__webpack_modules__)
@@ -44,13 +47,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/ 	__webpack_require__.p = '';
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
-/******/ })
-/************************************************************************/
-/******/ ([
+/******/ })([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -502,14 +503,14 @@ return /******/ (function(modules) { // webpackBootstrap
     Cleave.DefaultProperties = __webpack_require__(7);
 
     // for angular directive
-    ((typeof global === 'object' && global) ? global : window)['Cleave'] = Cleave;
+    ((typeof global === 'object' && global) ? global : window).Cleave = Cleave;
 
     // CommonJS
     module.exports = Cleave;
 
-    /* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+    /* WEBPACK VAR INJECTION */}.call(exports, (function() {return this;}())))
 
-/***/ }),
+/***/}),
 /* 1 */
 /***/ (function(module, exports) {
 
@@ -536,9 +537,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
     NumeralFormatter.groupStyle = {
         thousand: 'thousand',
-        lakh:     'lakh',
-        wan:      'wan',
-        none:     'none'
+        lakh: 'lakh',
+        wan: 'wan',
+        none: 'none'
     };
 
     NumeralFormatter.prototype = {
@@ -611,7 +612,7 @@ return /******/ (function(modules) { // webpackBootstrap
     module.exports = NumeralFormatter;
 
 
-/***/ }),
+/***/}),
 /* 2 */
 /***/ (function(module, exports) {
 
@@ -784,7 +785,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 
-/***/ }),
+/***/}),
 /* 3 */
 /***/ (function(module, exports) {
 
@@ -968,7 +969,7 @@ return /******/ (function(modules) { // webpackBootstrap
     module.exports = TimeFormatter;
 
 
-/***/ }),
+/***/}),
 /* 4 */
 /***/ (function(module, exports) {
 
@@ -1034,7 +1035,7 @@ return /******/ (function(modules) { // webpackBootstrap
     module.exports = PhoneFormatter;
 
 
-/***/ }),
+/***/}),
 /* 5 */
 /***/ (function(module, exports) {
 
@@ -1042,22 +1043,22 @@ return /******/ (function(modules) { // webpackBootstrap
 
     var CreditCardDetector = {
         blocks: {
-            uatp:                    [4, 5, 6],
-            amex:                    [4, 6, 5],
-            diners:                  [4, 6, 4],
-            discover:                [4, 4, 4, 4],
-            mastercard:              [4, 4, 4, 4],
-            dankort:                 [4, 4, 4, 4],
-            instapayment:            [4, 4, 4, 4],
-            jcb15:                   [4, 6, 5],
-            jcb:                     [4, 4, 4, 4],
-            maestro:                 [4, 4, 4, 4],
-            bancontactMisterCash:    [4, 4, 4, 7],
-            visa:                    [4, 4, 4, 4],
-            mir:                     [4, 4, 4, 4],
-            unionPay:                [4, 4, 4, 4],
-            general:                 [4, 4, 4, 4],
-            generalStrict:           [4, 4, 4, 7]
+            uatp: [4, 5, 6],
+            amex: [4, 6, 5],
+            diners: [4, 6, 4],
+            discover: [4, 4, 4, 4],
+            mastercard: [4, 4, 4, 4],
+            dankort: [4, 4, 4, 4],
+            instapayment: [4, 4, 4, 4],
+            jcb15: [4, 6, 5],
+            jcb: [4, 4, 4, 4],
+            maestro: [4, 4, 4, 4],
+            bancontactMisterCash: [4, 4, 4, 7],
+            visa: [4, 4, 4, 4],
+            mir: [4, 4, 4, 4],
+            unionPay: [4, 4, 4, 4],
+            general: [4, 4, 4, 4],
+            generalStrict: [4, 4, 4, 7]
         },
 
         re: {
@@ -1131,7 +1132,7 @@ return /******/ (function(modules) { // webpackBootstrap
             }
 
             return {
-                type:   'unknown',
+                type: 'unknown',
                 blocks: strictMode ? blocks.generalStrict : blocks.general
             };
         }
@@ -1140,7 +1141,7 @@ return /******/ (function(modules) { // webpackBootstrap
     module.exports = CreditCardDetector;
 
 
-/***/ }),
+/***/}),
 /* 6 */
 /***/ (function(module, exports) {
 
@@ -1374,7 +1375,7 @@ return /******/ (function(modules) { // webpackBootstrap
     module.exports = Util;
 
 
-/***/ }),
+/***/}),
 /* 7 */
 /***/ (function(module, exports) {
 
@@ -1467,9 +1468,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
     module.exports = DefaultProperties;
 
-    /* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+    /* WEBPACK VAR INJECTION */}.call(exports, (function() {return this;}())))
 
-/***/ })
+/***/})
 /******/ ])
 });
-;

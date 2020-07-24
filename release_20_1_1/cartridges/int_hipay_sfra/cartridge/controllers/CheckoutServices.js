@@ -3,11 +3,6 @@
 var page = module.superModule;
 var server = require('server');
 
-var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
-
-// Import Constants
-var Constants = require('bm_hipay_controllers/cartridge/scripts/util/Constants');
-
 server.extend(page);
 
 /**
@@ -17,6 +12,7 @@ server.replace(
     'SubmitPayment',
     server.middleware.https,
     function (req, res, next) {
+        var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
         var PaymentMgr = require('dw/order/PaymentMgr');
         var paymentForm = server.forms.getForm('billing');
         var paymentMethodID = paymentForm.paymentMethod.value;
@@ -65,19 +61,19 @@ server.replace(
             });
         } else {
             viewData.address = {
-                firstName: { value: paymentForm.addressFields.firstName.value },
-                lastName: { value: paymentForm.addressFields.lastName.value },
-                address1: { value: paymentForm.addressFields.address1.value },
-                address2: { value: paymentForm.addressFields.address2.value },
-                city: { value: paymentForm.addressFields.city.value },
-                postalCode: { value: paymentForm.addressFields.postalCode.value },
-                countryCode: { value: paymentForm.addressFields.country.value }
+                firstName: {value: paymentForm.addressFields.firstName.value},
+                lastName: {value: paymentForm.addressFields.lastName.value},
+                address1: {value: paymentForm.addressFields.address1.value},
+                address2: {value: paymentForm.addressFields.address2.value},
+                city: {value: paymentForm.addressFields.city.value},
+                postalCode: {value: paymentForm.addressFields.postalCode.value},
+                countryCode: {value: paymentForm.addressFields.country.value}
             };
 
             if (Object.prototype.hasOwnProperty
                 .call(paymentForm.addressFields, 'states')) {
                 viewData.address.stateCode =
-                    { value: paymentForm.addressFields.states.stateCode.value };
+                    {value: paymentForm.addressFields.states.stateCode.value};
             }
 
             viewData.paymentMethod = {
@@ -95,14 +91,11 @@ server.replace(
                     htmlName: paymentForm.creditCardFields.cardNumber.htmlName
                 },
                 expirationMonth: {
-                    value: parseInt(
-                        paymentForm.creditCardFields.expirationMonth.selectedOption,
-                        10
-                    ),
+                    value: parseInt(paymentForm.creditCardFields.expirationMonth.selectedOption),
                     htmlName: paymentForm.creditCardFields.expirationMonth.htmlName
                 },
                 expirationYear: {
-                    value: parseInt(paymentForm.creditCardFields.expirationYear.value, 10),
+                    value: parseInt(paymentForm.creditCardFields.expirationYear.value),
                     htmlName: paymentForm.creditCardFields.expirationYear.htmlName
                 },
                 cardOwner: {
@@ -126,9 +119,9 @@ server.replace(
                 value: paymentForm.addressFields.email.value
             };
 
-            viewData.phone = { value: paymentForm.creditCardFields.phone.value };
+            viewData.phone = {value: paymentForm.creditCardFields.phone.value};
 
-            viewData.saveCard = paymentForm.creditCardFields.saveCard.checked;            
+            viewData.saveCard = paymentForm.creditCardFields.saveCard.checked;
 
             res.setViewData(viewData);
 
@@ -150,11 +143,11 @@ server.replace(
 
                 // Init flag saveCardChecked (depending on the storedPaymentUUID)
                 if (billingData.storedPaymentUUID) {
-                    req.session.raw.custom['saveCardChecked'] = false;
+                    req.session.raw.privacy.saveCardChecked = false;
                 } else {
-                    req.session.raw.custom['saveCardChecked'] = billingData.saveCard;
+                    req.session.raw.privacy.saveCardChecked = billingData.saveCard;
                 }
-               
+
                 if (!currentBasket) {
                     delete billingData.paymentInformation;
 
@@ -261,7 +254,7 @@ server.replace(
                     billingData.paymentInformation.cardOwner = paymentInstrument
                     .raw.creditCardHolder;
                 }
-                
+
                 if (HookMgr.hasHook('app.payment.processor.' + processor.ID.toLowerCase())) {
 
                     result = HookMgr.callHook('app.payment.processor.' + processor.ID.toLowerCase(),
@@ -273,7 +266,7 @@ server.replace(
                 } else {
                     result = HookMgr.callHook('app.payment.processor.default', 'Handle');
                 }
- 
+
                 // need to invalidate credit card fields
                 if (result.error) {
                     delete billingData.paymentInformation;
@@ -316,7 +309,7 @@ server.replace(
                         )
                             ? saveCardResult.creditCardNumber
                             : null,
-                        raw: saveCardResult                        
+                        raw: saveCardResult
                     });
                 }
 
@@ -350,7 +343,7 @@ server.replace(
 
                 var basketModel = new OrderModel(
                     currentBasket,
-                    { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerView: 'basket' }
+                    {usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerView: 'basket'}
                 );
 
                 var accountModel = new AccountModel(req.currentCustomer);
@@ -386,9 +379,12 @@ server.replace('PlaceOrder', server.middleware.https, function (req, res, next) 
     var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
     var Logger = require('dw/system/Logger');
     var array = require('*/cartridge/scripts/util/array');
+    var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
+    var Constants = require('bm_hipay_controllers/cartridge/scripts/util/Constants');
 
-    var currentBasket = BasketMgr.getCurrentBasket(); 
-    var saveCardChecked = req.session.raw.custom['saveCardChecked'];  
+
+    var currentBasket = BasketMgr.getCurrentBasket();
+    var saveCardChecked = req.session.raw.privacy.saveCardChecked;
 
     if (!currentBasket) {
         res.json({
@@ -496,7 +492,7 @@ server.replace('PlaceOrder', server.middleware.https, function (req, res, next) 
         return next();
     }
 
-    // Check if the Card exists in the list of PaymentInstruments Only for Customer Authenticated   
+    // Check if the Card exists in the list of PaymentInstruments Only for Customer Authenticated
     if (req.currentCustomer && !empty(req.currentCustomer.wallet)) {
         var incrementAttempt = false;
         var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
@@ -505,19 +501,19 @@ server.replace('PlaceOrder', server.middleware.https, function (req, res, next) 
         });
         if (saveCardChecked && !paymentInstrument) {
             incrementAttempt = true;
-        }    
-        // If Card not exist in the list of PaymentInstruments : Incrementing the attempts (Create Custom Object for attempts)  
-        var varCustomer = currentBasket.customer;  
+        }
+        // If Card not exist in the list of PaymentInstruments : Incrementing the attempts (Create Custom Object for attempts)
+        var varCustomer = currentBasket.customer;
         var writeToCustomObject = varCustomer.isAuthenticated() && varCustomer.isRegistered() && incrementAttempt;
-        if (writeToCustomObject) {   
+        if (writeToCustomObject) {
             var params = {
                 objName: Constants.OBJ_SAVE_ONE_CLICK,
-                data: { 
+                data: {
                     customerNo: currentBasket.customerNo,
                     attemptDate: new Date()
-                    }
+                }
             };
-            var result = COHelpers.writeToCustomObject(params); 
+            var result = COHelpers.writeToCustomObject(params);
             if (result === Constants.STATUS_ERROR) {
                 Logger.error('writeToCustomObject : Fail to add the custom object : ' + params.objName);
             } else {
@@ -556,7 +552,7 @@ server.replace('PlaceOrder', server.middleware.https, function (req, res, next) 
     var fraudDetectionStatus = hooksHelper('app.fraud.detection', 'fraudDetection', currentBasket, require('*/cartridge/scripts/hooks/fraudDetection').fraudDetection);
 
     if (fraudDetectionStatus.status === 'fail') {
-        Transaction.wrap(function () { OrderMgr.failOrder(order, true); });
+        Transaction.wrap(function () {OrderMgr.failOrder(order, true);});
 
         // fraud detection failed
         req.session.privacyCache.set('fraudDetectionStatus', true);

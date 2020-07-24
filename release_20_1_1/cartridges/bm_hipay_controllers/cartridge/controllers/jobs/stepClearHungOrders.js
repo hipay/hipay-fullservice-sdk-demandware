@@ -18,11 +18,11 @@ function failHungOrder(order) {
         if (paymentMethod === 'HIPAY_MULTIBANCO' || paymentMethod === 'HIPAY_HOSTED_MULTIBANCO' 
         || paymentMethod === 'HIPAY_MBWAY' || paymentMethod === 'HIPAY_HOSTED_MBWAY'
         || paymentMethod === 'HIPAY_SISAL' || paymentMethod === 'HIPAY_HOSTED_SISAL') {
-            Logger.info('\n[The order : {0} remains in the status CREATED, with payment method : {1} ]', order.orderNo, paymentMethod );
+            Logger.info('\n[The order : {0} remains in the status CREATED, with payment method : {1} ]', order.orderNo, paymentMethod);
         } else {
             Transaction.wrap(function () {
-                        OrderMgr.failOrder(order, true);
-                    });
+                OrderMgr.failOrder(order, true);
+            });
             Logger.warn('\n### Set status from CREATED to FAILED of order :  {0}, with payment method : {1} ###', order.orderNo, paymentMethod);
         }
         
@@ -50,7 +50,7 @@ function stepClearHungOrders() {
     startDate.add(Calendar.MINUTE, -minutesBack);    
     
     try {  
-        OrderMgr.processOrders(failHungOrder, "status = {0} AND creationDate < {1}", Order.ORDER_STATUS_CREATED, startDate.getTime()); 
+        OrderMgr.processOrders(failHungOrder, 'status = {0} AND creationDate < {1}', Order.ORDER_STATUS_CREATED, startDate.getTime()); 
     } catch (e) {
         Logger.error('[stepCleanClearHungOrders.js] crashed on line: ' + e.lineNumber + ' with error: ' + e);
         return new Status(Status.ERROR);
@@ -63,4 +63,4 @@ function stepClearHungOrders() {
 /* Exports of the modules */
 /**
  * @see {@link modulecartridge/controllers/jobs/stepCleanSaveOneclick~StepCleanSaveOneclick} */
- exports.StepClearHungOrders = stepClearHungOrders;
+exports.StepClearHungOrders = stepClearHungOrders;

@@ -126,14 +126,14 @@ HiPayCheckoutModule.hiPayGenerateToken = function (hiPayCardNumber, hiPayCardExp
             msg = JSON.parse(hipayResponse.object.text);
         } catch (e) {
             log.error('Response text cannot be parsed as JSON ::: ' + JSON.stringify(hipayResponse.object.text, undefined, 2));
-            return { error: true };
+            return {error: true};
         }
 
         token = msg.token;
         pan = msg.pan;
     } else {
         log.error(hipayResponse.msg);
-        return { error: true };
+        return {error: true};
     }
 
     log.info(JSON.stringify(msg, undefined, 2));
@@ -165,7 +165,7 @@ HiPayCheckoutModule.invalidatePaymentCardFormElements = function (status, credit
 
     // we are fine, if status is OK
     if (status.status === Status.OK) {
-        return { success: true };
+        return {success: true};
     }
 
     // invalidate the payment card form elements
@@ -189,7 +189,7 @@ HiPayCheckoutModule.invalidatePaymentCardFormElements = function (status, credit
         }
     }
 
-    return { success: true };
+    return {success: true};
 };
 
 /**
@@ -298,11 +298,11 @@ HiPayCheckoutModule.hiPayOrderRequest = function (paymentInstrument, order, devi
         } else if (pi.paymentMethod.equals('HIPAY_GIROPAY')) {
             params.issuer_bank_id = pi.custom.hipayBic;
         }  else if (pi.paymentMethod.equals('HIPAY_MULTIBANCO') || pi.paymentMethod.equals('HIPAY_MBWAY')) {                   
-            params.expiration_limit = parseInt( pi.custom.hipayExpiryLimit, 10);
+            params.expiration_limit = parseInt(pi.custom.hipayExpiryLimit);
         }
 
         params.payment_product = pi.custom.hipayProductName;
-        params.eci = recurring ? "9" : "7";
+        params.eci = recurring ? '9' : '7';
         params.device_fingerprint = fingeprint;
         params.cdata1 = order.getOrderToken();
         helper.fillHeaderData(HiPayConfig, order, params, pi); // fill in the common params
@@ -424,7 +424,7 @@ HiPayCheckoutModule.hiPayHostedPageRequest = function (order, paymentInstrument)
         try {
             var params = {};
             params.operation = HiPayConfig.hipayPaymentAction;
-            params.eci = "7";
+            params.eci = '7';
             params.css = URLUtils.https('HiPayResource-Style').toString();
             params.template = HiPayConfig.getTemplateType();
             params.merchant_display_name = Site.current.getName();

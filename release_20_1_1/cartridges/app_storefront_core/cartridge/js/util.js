@@ -69,7 +69,7 @@ var util = {
      **/
     getQueryString: function (url) {
         var qs;
-        if (!_.isString(url)) { return; }
+        if (!_.isString(url)) {return;}
         var a = document.createElement('a');
         a.href = url;
         if (a.search) {
@@ -181,7 +181,7 @@ var util = {
      * @param {String} qs The query string from which the parameters will be extracted
      */
     getQueryStringParams: function (qs) {
-        if (!qs || qs.length === 0) { return {}; }
+        if (!qs || qs.length === 0) {return {};}
         var params = {},
             unescapedQS = decodeURIComponent(qs);
         // Use the String::replace method to iterate over each

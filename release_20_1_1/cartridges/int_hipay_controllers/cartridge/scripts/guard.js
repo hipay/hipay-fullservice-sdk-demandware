@@ -16,9 +16,6 @@
  * exports.Show = require('~/guard').ensure(['get','https','loggedIn'],show);
  */
 var CSRFProtection = require('dw/web/CSRFProtection');
-
-var app = require('~/cartridge/scripts/app');
-var browsing = require('~/cartridge/scripts/util/Browsing');
 var LOGGER = dw.system.Logger.getLogger('guard');
 
 /**
@@ -27,6 +24,7 @@ var LOGGER = dw.system.Logger.getLogger('guard');
  * @param {Object} params Parameters passed along by by ensure
  */
 function requireLogin(params) {
+    var browsing = require('~/cartridge/scripts/util/Browsing');
     if (customer.authenticated) {
         return true;
     }
@@ -63,10 +61,10 @@ function switchToHttps() {
 }
 
 function csrfValidationFailed() {
-
+    var app = require('~/cartridge/scripts/app');
     if (request.httpParameterMap.format.stringValue === 'ajax') {
         app.getModel('Customer').logout();
-        let r = require('~/cartridge/scripts/util/Response');
+        var r = require('~/cartridge/scripts/util/Response');
         r.renderJSON({
             error: 'CSRF Token Mismatch'
         });
@@ -74,8 +72,6 @@ function csrfValidationFailed() {
         app.getModel('Customer').logout();
         app.getView().render('csrf/csrffailed');
     }
-
-
     return false;
 }
 

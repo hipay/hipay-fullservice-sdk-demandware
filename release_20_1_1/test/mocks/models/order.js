@@ -37,7 +37,7 @@ function proxyModel() {
         '*/cartridge/models/productLineItems': ProductLineItemsModel,
         '*/cartridge/scripts/checkout/shippingHelpers': {
             getShippingModels: function () {
-                return [{ shippingAddress: {
+                return [{shippingAddress: {
                     firstName: 'someString',
                     lastName: null
                 }

@@ -19,12 +19,12 @@ var StoresModel = proxyquire('../../../cartridges/app_storefront_base/cartridge/
     'dw/util/Template': function () {
         return {
             render: function () {
-                return { text: 'someString' };
+                return {text: 'someString'};
             }
         };
     },
     '*/cartridge/scripts/renderTemplateHelper': {
-        getRenderedHtml: function () { return 'someString'; }
+        getRenderedHtml: function () {return 'someString';}
     },
 
     '*/cartridge/scripts/helpers/storeHelpers': {
@@ -70,7 +70,7 @@ var hashMap = function () {
 
 templateStub.returns({
     render: function () {
-        return { text: 'rendered html' };
+        return {text: 'rendered html'};
     }
 });
 

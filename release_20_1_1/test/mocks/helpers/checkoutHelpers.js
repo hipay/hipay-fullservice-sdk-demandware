@@ -48,13 +48,13 @@ var status = {
 
 var orderMgr = {
     createOrder: function () {
-        return { order: 'new order' };
+        return {order: 'new order'};
     },
     placeOrder: function () {
         return status.OK;
     },
     failOrder: function () {
-        return { order: 'failed order' };
+        return {order: 'failed order'};
     }
 };
 
@@ -68,7 +68,7 @@ function proxyModel() {
     return proxyquire('../../../cartridges/app_storefront_base/cartridge/scripts/checkout/checkoutHelpers', {
         'server': server,
         '*/cartridge/scripts/util/collections': collections,
-        '*/cartridge/scripts/helpers/basketCalculationHelpers': { calculateTotals: function () {} },
+        '*/cartridge/scripts/helpers/basketCalculationHelpers': {calculateTotals: function () {}},
 
         'dw/order/BasketMgr': basketMgr,
         'dw/util/HashMap': {},

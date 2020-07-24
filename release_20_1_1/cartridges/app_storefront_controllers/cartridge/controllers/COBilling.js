@@ -152,7 +152,7 @@ function initCreditCardList(cart) {
 
     if (customer.authenticated) {
      	if (!empty(sitePrefs.hipayEnabled) && sitePrefs.hipayEnabled && !empty(sitePrefs.hipayEnableOneClick) && sitePrefs.hipayEnableOneClick) {/* if hipay and one click payment enabled */
-    		applicableCreditCards = require('int_hipay_controllers/cartridge/scripts/lib/hipay/HiPayCheckoutModule').getApplicableCreditCards(countryCode, paymentAmount.getValue()).ValidPaymentInstruments;
+    		applicableCreditCards = require('*/cartridge/scripts/lib/hipay/HiPayCheckoutModule').getApplicableCreditCards(countryCode, paymentAmount.getValue()).ValidPaymentInstruments;
     	} else {
     		var profile = app.getModel('Profile').get();
          if (profile) {
@@ -349,7 +349,7 @@ function updateCreditCardSelection() {
  */
 function resetPaymentForms() {
     if (!empty(sitePrefs.hipayEnabled) && sitePrefs.hipayEnabled) {
-        return require('int_hipay_controllers/cartridge/scripts/lib/hipay/HiPayCheckoutModule').resetPaymentForms();
+        return require('*/cartridge/scripts/lib/hipay/HiPayCheckoutModule').resetPaymentForms();
     }
 
     var cart = app.getModel('Cart').get();
@@ -388,7 +388,7 @@ function resetPaymentForms() {
  */
 function validateBilling() {
     if (!empty(sitePrefs.hipayEnabled) && sitePrefs.hipayEnabled) {
-        return require('int_hipay_controllers/cartridge/scripts/lib/hipay/HiPayCheckoutModule').validateBilling();
+        return require('*/cartridge/scripts/lib/hipay/HiPayCheckoutModule').validateBilling();
     }
 
     if (!app.getForm('billing').object.billingAddress.valid) {
@@ -547,13 +547,13 @@ function billing() {
         save: function () {
             Transaction.wrap(function () {
                 var cart = app.getModel('Cart').get();
-	
+
                 if (!resetPaymentForms() || !validateBilling() || !handleBillingAddress(cart) || // Performs validation steps, based upon the entered billing address
                 // and address options.
                 handlePaymentSelection(cart).error) {// Performs payment method specific checks, such as credit card verification.
                     returnToForm(cart);
                 } else {
-    
+
                     if (customer.authenticated && app.getForm('billing').object.billingAddress.addToAddressBook.value) {
                         app.getModel('Profile').get(customer.profile).addAddressToAddressBook(cart.getBillingAddress());
                     }
@@ -790,7 +790,7 @@ function saveCreditCard() {
     var i, creditCards, newCreditCard;
 
     if (!empty(sitePrefs.hipayEnabled) && sitePrefs.hipayEnabled && !empty(sitePrefs.hipayEnableOneClick) && sitePrefs.hipayEnableOneClick) {
-        return require('int_hipay_controllers/cartridge/scripts/lib/hipay/HiPayCheckoutModule').validateBilling();
+        return require('*/cartridge/scripts/lib/hipay/HiPayCheckoutModule').validateBilling();
     }
 
     if (customer.authenticated && app.getForm('billing').object.paymentMethods.creditCard.saveCard.value) {

@@ -22,9 +22,9 @@ function HiPayConfig() {
     };
 
     this.THREEDSECURE_AUTH = {
-        BYPASS: 0,
-        IFAVAILABLE: 1,
-        MANDATORY: 2
+        BYPASS      : "0",
+        IFAVAILABLE : "1",
+        MANDATORY   : "2"
     };
 
     this.HOSTED_SCRIPT = 'basic-js';
@@ -40,7 +40,7 @@ function HiPayConfig() {
     this.hipayOperationMode = this.getSitePeference('hipayOperationMode').value;
     this.hipayEnableTestMode = this.getSitePeference('hipayEnableTestMode');
     this.hipayEnable3dSecure = this.getSitePeference('hipayEnable3dSecure').value;
-    this.hipayEnable3dSecureThresholdRule = this.getSitePeference('hipayEnable3dSecureThresholdRule').value;
+    this.hipayEnable3dSecureThresholdRule = this.getSitePeference('hipayEnable3dSecureThresholdRule');
     this.hipayApiPassphrase = this.getSitePeference('hipayApiPassphrase');
     this.hipayPaymentAction = this.getSitePeference('hipayPaymentAction').value;
     this.hipayIframeHeight = this.getSitePeference('hipayIframeHeight');

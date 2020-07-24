@@ -2,7 +2,7 @@
 <isdecorate template="hipay/hosted/pt_hipay">
     <isif condition="${!empty(pdict.HiPayRedirectURL)}">
         <isscript>
-            var HiPayConfig = require('int_hipay_controllers/cartridge/scripts/lib/hipay/HiPayConfig').HiPayConfig;
+            var HiPayConfig = require('*/cartridge/scripts/lib/hipay/HiPayConfig').HiPayConfig;
             var iframeHeight = HiPayConfig.hipayIframeHeight;
             var iframeWidth = HiPayConfig.hipayIframeWidth;
         </isscript>

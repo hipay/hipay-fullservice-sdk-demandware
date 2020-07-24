@@ -81,9 +81,9 @@ function handleForm() { // eslint-disable-line consistent-return
         }
 
         try {
-            response = require('int_hipay_controllers/cartridge/scripts/lib/hipay/HiPayMaintenanceModule').hiPayMaintenanceRequest(order, captureAmount);
+            response = require('*/cartridge/scripts/lib/hipay/HiPayMaintenanceModule').hiPayMaintenanceRequest(order, captureAmount);
         } catch (e) {
-            response = require('int_hipay_sfra/cartridge/scripts/lib/hipay/modules/hipayMaintenanceModule').hiPayMaintenanceRequest(order, captureAmount);
+            response = require('*/cartridge/scripts/lib/hipay/modules/hipayMaintenanceModule').hiPayMaintenanceRequest(order, captureAmount);
         }
 
         if (response.error) {

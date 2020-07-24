@@ -3,7 +3,7 @@
 /**
  * Controller that handles HiPay payments
  *
- * @module controllers/HIPAY
+ * @module controllers/Hipay
  */
 
 /* API Includes */
@@ -112,12 +112,12 @@ function creditCardHandle(paymentInstrument) {
             return {error: true};
         }
     }
-    
-    //Init flag saveCardChecked (depending on the storedPaymentUUID)    
+
+    //Init flag saveCardChecked (depending on the storedPaymentUUID)
     if (empty(creditCard.uuid.value) && session.forms.billing.paymentMethods.creditCard.saveCard.value) {
-        session.custom.saveCardChecked = session.forms.billing.paymentMethods.creditCard.saveCard.value;
+        session.privacy.saveCardChecked = session.forms.billing.paymentMethods.creditCard.saveCard.value;
     } else {
-        session.custom.saveCardChecked = false;  
+        session.privacy.saveCardChecked = false;
     }
 
     if (hiPayToken != null) {

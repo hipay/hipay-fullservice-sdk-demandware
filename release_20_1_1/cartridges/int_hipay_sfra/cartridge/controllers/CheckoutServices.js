@@ -121,7 +121,7 @@ server.replace(
 
             viewData.phone = {value: paymentForm.creditCardFields.phone.value};
 
-            viewData.saveCard = paymentForm.creditCardFields.saveCard.checked;            
+            viewData.saveCard = paymentForm.creditCardFields.saveCard.checked;
 
             res.setViewData(viewData);
 
@@ -143,11 +143,11 @@ server.replace(
 
                 // Init flag saveCardChecked (depending on the storedPaymentUUID)
                 if (billingData.storedPaymentUUID) {
-                    req.session.raw.custom.saveCardChecked = false;
+                    req.session.raw.privacy.saveCardChecked = false;
                 } else {
-                    req.session.raw.custom.saveCardChecked = billingData.saveCard;
+                    req.session.raw.privacy.saveCardChecked = billingData.saveCard;
                 }
-               
+
                 if (!currentBasket) {
                     delete billingData.paymentInformation;
 
@@ -254,7 +254,7 @@ server.replace(
                     billingData.paymentInformation.cardOwner = paymentInstrument
                     .raw.creditCardHolder;
                 }
-                
+
                 if (HookMgr.hasHook('app.payment.processor.' + processor.ID.toLowerCase())) {
 
                     result = HookMgr.callHook('app.payment.processor.' + processor.ID.toLowerCase(),
@@ -266,7 +266,7 @@ server.replace(
                 } else {
                     result = HookMgr.callHook('app.payment.processor.default', 'Handle');
                 }
- 
+
                 // need to invalidate credit card fields
                 if (result.error) {
                     delete billingData.paymentInformation;
@@ -309,7 +309,7 @@ server.replace(
                         )
                             ? saveCardResult.creditCardNumber
                             : null,
-                        raw: saveCardResult                        
+                        raw: saveCardResult
                     });
                 }
 
@@ -383,8 +383,8 @@ server.replace('PlaceOrder', server.middleware.https, function (req, res, next) 
     var Constants = require('bm_hipay_controllers/cartridge/scripts/util/Constants');
 
 
-    var currentBasket = BasketMgr.getCurrentBasket(); 
-    var saveCardChecked = req.session.raw.custom.saveCardChecked;  
+    var currentBasket = BasketMgr.getCurrentBasket();
+    var saveCardChecked = req.session.raw.privacy.saveCardChecked;
 
     if (!currentBasket) {
         res.json({
@@ -492,7 +492,7 @@ server.replace('PlaceOrder', server.middleware.https, function (req, res, next) 
         return next();
     }
 
-    // Check if the Card exists in the list of PaymentInstruments Only for Customer Authenticated   
+    // Check if the Card exists in the list of PaymentInstruments Only for Customer Authenticated
     if (req.currentCustomer && !empty(req.currentCustomer.wallet)) {
         var incrementAttempt = false;
         var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
@@ -501,19 +501,19 @@ server.replace('PlaceOrder', server.middleware.https, function (req, res, next) 
         });
         if (saveCardChecked && !paymentInstrument) {
             incrementAttempt = true;
-        }    
-        // If Card not exist in the list of PaymentInstruments : Incrementing the attempts (Create Custom Object for attempts)  
-        var varCustomer = currentBasket.customer;  
+        }
+        // If Card not exist in the list of PaymentInstruments : Incrementing the attempts (Create Custom Object for attempts)
+        var varCustomer = currentBasket.customer;
         var writeToCustomObject = varCustomer.isAuthenticated() && varCustomer.isRegistered() && incrementAttempt;
-        if (writeToCustomObject) {   
+        if (writeToCustomObject) {
             var params = {
                 objName: Constants.OBJ_SAVE_ONE_CLICK,
-                data: { 
+                data: {
                     customerNo: currentBasket.customerNo,
                     attemptDate: new Date()
                 }
             };
-            var result = COHelpers.writeToCustomObject(params); 
+            var result = COHelpers.writeToCustomObject(params);
             if (result === Constants.STATUS_ERROR) {
                 Logger.error('writeToCustomObject : Fail to add the custom object : ' + params.objName);
             } else {

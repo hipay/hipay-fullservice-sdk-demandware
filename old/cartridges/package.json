@@ -41,7 +41,7 @@
     "gulp-sass": "^2.0.0",
     "gulp-sourcemaps": "^1.5.1",
     "gulp-util": "^3.0.0",
-    "handlebars": "^3.0.1",
+    "handlebars": "^4.7.3",
     "hbsfy": "^2.2.1",
     "jscs": "^1.13.1",
     "jshint-stylish": "^1.0.0",
